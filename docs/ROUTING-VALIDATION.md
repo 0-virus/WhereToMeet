@@ -35,7 +35,7 @@ Per-scenario elapsed time includes quota waiting. Service time subtracts measure
 
 `tests/fixtures/routing-scenarios.ts` defines exactly 20 repeatable scenarios: 2–4 participants, duplicate origins, weekday/weekend meetings, early and late service, midnight, and Seoul–Suwon–Incheon–Seongnam combinations. Times are the next suitable Asia/Seoul local calendar occurrence more than four hours ahead and within seven days. The report records the scheduling reference and each attempted meeting timestamp. A long batch that crosses a usable departure time fails explicitly; regenerate future scenarios for a rerun.
 
-Seoul station coordinates resolve by name from the source-backed catalog. Separate public origins preserve these source coordinates:
+Seoul station origins preserve exact coordinates from named records in the checked-in official station master snapshot (record IDs appear in fixture provenance). They are independent of the destination sample, so excluded transfer stations do not prevent scheduling. Separate public origins preserve these source coordinates:
 
 | Public origin | Source |
 | --- | --- |

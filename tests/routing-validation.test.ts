@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { buildScenarios, compareResults, monotonicityLosses, percentile, selectHubs, summarize, validateRecommendations, createMeasuredFetch } from '../scripts/validate-routing.ts';
 import { scenarioDefinitions } from './fixtures/routing-scenarios.ts';
 import type { Hub, Recommendation } from '../src/shared.ts';
@@ -22,14 +23,19 @@ test('20 public-origin scenarios use the next suitable KST date within seven day
     }
   }
 });
-test('missing public origin and fewer than 100 hubs are explicit blockers', () => {
-  assert.throws(() => buildScenarios([], now), /SCENARIO_ORIGIN_MISSING/);
+test('fixed public origins are independent of destinations; fewer than 100 hubs blocks validation', () => {
+  assert.equal(buildScenarios([], now).length, 20);
   assert.throws(() => selectHubs([hub('a')], 100), /CATALOG_TOO_SMALL/);
 });
 test('100-hub sampling is stable across input order and rejects duplicate IDs', () => {
   const hubs = Array.from({ length: 120 }, (_, i) => hub(`h${i}`));
   assert.deepEqual(selectHubs(hubs, 100), selectHubs([...hubs].reverse(), 100));
   assert.throws(() => selectHubs([...hubs, hubs[0]], 100), /CATALOG_INVALID/);
+});
+
+test('the shipped 100-hub sample can schedule every scenario independently of destination selection', () => {
+  const sample = JSON.parse(readFileSync(new URL('../data/hubs.sample.json', import.meta.url), 'utf8'));
+  assert.equal(buildScenarios(sample.hubs, now).length, 20);
 });
 test('comparison detects missing results, excess error, and unsafe extra hubs', () => {
   assert.equal(compareResults([recommendation('a', 1180)], [recommendation('b', 1000), recommendation('a', 1180)]).within180Seconds, true);
