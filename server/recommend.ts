@@ -16,38 +16,55 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
   const identical=hubs.filter(h=>request.origins.every(o=>o.lat===h.lat&&o.lng===h.lng));
   if(identical.length) return finish(identical.map(h=>({hubId:h.id,routes:request.origins.map(o=>({originId:o.id,departureAt:request.meetingAt,arrivalAt:request.meetingAt,transfers:0}))})));
   if(!hubs.length) return [];
-  const cap=Math.min(14400,Math.floor((meeting-current)/1000));
-  if(cap<1) return [];
+  const currentCap=()=>Math.min(14400,Math.floor((meeting-provider.now())/1000));
+  if(currentCap()<1) return [];
   const samples=new Map<number,Map<string,Set<string>>>();
   const catalogIds=new Set(hubs.map(h=>h.id));
-  async function candidatesAt(seconds:number):Promise<Hub[]>{
-    provider.check();
-    let sample=samples.get(seconds);
-    if(!sample){
-      const reachable=await provider.reachable(request,hubs,seconds);
-      sample=new Map(originIds.map(id=>{
-        if(!Array.isArray(reachable[id])||reachable[id].some(h=>!catalogIds.has(h))) throw new RoutingError('provider_invalid_response',502);
-        return [id,new Set(reachable[id])];
-      }));
-      for(const [otherSeconds,otherSample] of samples){
-        for(const id of originIds){
-          const smaller=seconds<otherSeconds?sample.get(id)!:otherSample.get(id)!;
-          const larger=seconds<otherSeconds?otherSample.get(id)!:sample.get(id)!;
-          if([...smaller].some(h=>!larger.has(h))) throw new RoutingError('non_monotonic_reachability',502);
+  async function candidatesAt(requestedSeconds:number):Promise<{seconds:number;candidates:Hub[]}>{
+    for(;;){
+      provider.check();
+      const seconds=Math.min(requestedSeconds,currentCap());
+      if(seconds<1) return {seconds:0,candidates:[]};
+      let sample=samples.get(seconds);
+      if(!sample){
+        let reachable:Record<string,string[]>;
+        try{reachable=await provider.reachable(request,hubs,seconds);}
+        catch(error){
+          // The clock can cross an integer-second boundary between our cap and
+          // provider preflight. Only retry when elapsed time actually reduced it.
+          if(error instanceof RoutingError&&error.code==='departure_in_past'&&currentCap()<seconds) continue;
+          throw error;
         }
+        sample=new Map(originIds.map(id=>{
+          if(!Array.isArray(reachable[id])||reachable[id].some(h=>!catalogIds.has(h))) throw new RoutingError('provider_invalid_response',502);
+          return [id,new Set(reachable[id])];
+        }));
+        for(const [otherSeconds,otherSample] of samples){
+          for(const id of originIds){
+            const smaller=seconds<otherSeconds?sample.get(id)!:otherSample.get(id)!;
+            const larger=seconds<otherSeconds?otherSample.get(id)!:sample.get(id)!;
+            if([...smaller].some(h=>!larger.has(h))) throw new RoutingError('non_monotonic_reachability',502);
+          }
+        }
+        samples.set(seconds,sample);
       }
-      samples.set(seconds,sample);
+      return {seconds,candidates:hubs.filter(h=>originIds.every(id=>sample!.get(id)!.has(h.id)))};
     }
-    return hubs.filter(h=>originIds.every(id=>sample!.get(id)!.has(h.id)));
   }
-  let low=0,high=Math.min(1800,cap),finalCandidates=await candidatesAt(high);
-  while(!finalCandidates.length&&high<cap){
-    low=high;high=Math.min(high*2,cap);finalCandidates=await candidatesAt(high);
+  let probe=await candidatesAt(1800);
+  let low=0,high=probe.seconds,finalCandidates=probe.candidates;
+  while(!finalCandidates.length){
+    const next=Math.min(high*2,currentCap());
+    if(next<=high) return [];
+    low=high;probe=await candidatesAt(next);high=probe.seconds;finalCandidates=probe.candidates;
   }
-  if(!finalCandidates.length) return [];
   while(high-low>180){
-    const middle=Math.floor((low+high)/2), candidates=await candidatesAt(middle);
-    if(candidates.length){high=middle;finalCandidates=candidates;}else low=middle;
+    probe=await candidatesAt(Math.floor((low+high)/2));
+    if(probe.candidates.length){high=probe.seconds;finalCandidates=probe.candidates;}
+    else{
+      if(probe.seconds<=low) return [];
+      low=probe.seconds;
+    }
   }
   async function validate(candidates:Hub[]){
     if(candidates.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
@@ -55,9 +72,9 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
   }
   const ranked=await validate(finalCandidates);
   if(ranked.length) return ranked;
-  const enlarged=Math.min(high+180,cap,Math.floor((meeting-provider.now())/1000));
+  const enlarged=Math.min(high+180,currentCap());
   if(enlarged<=high) return [];
-  return validate(await candidatesAt(enlarged));
+  return validate((await candidatesAt(enlarged)).candidates);
 }
 export function rankCandidates(candidates:CandidateRoutes[],originIds:string[],meetingAt:string,now:string,options:{limit?:number|null}={}):Recommendation[] {
   const meeting = Date.parse(meetingAt), current = Date.parse(now);

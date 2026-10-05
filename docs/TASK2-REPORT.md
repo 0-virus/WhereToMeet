@@ -29,7 +29,9 @@ node --test tests/*.test.ts tests/*.test.mjs
 node node_modules/typescript/bin/tsc --noEmit
 ```
 
-Latest complete run: **39 tests passed, 0 failed**; typecheck passed. This includes the existing ten validation-harness tests and 29 routing/provider/adapter tests. Meaningful RED-to-GREEN runs were observed for initial ranking, provider, engine, adapter, Retry-After delay/status handling and invalid numeric delay headers. Tests use keyless external-provider fixtures; they do not measure live routing accuracy or latency.
+Latest complete run: **42 tests passed, 0 failed**; typecheck passed. This includes the existing ten validation-harness tests and 32 routing/provider/adapter tests. Meaningful RED-to-GREEN runs were observed for initial ranking, provider, engine, adapter, Retry-After delay/status handling, invalid numeric delay headers and the elapsed-clock cap regression. Tests use keyless external-provider fixtures; they do not measure live routing accuracy or latency.
+
+Review follow-up: near-meeting searches now recalculate the available departure cap at every probe and use the actual sampled duration for expansion/bisection bounds. A clock tick between the engine calculation and provider preflight retries only after the cap demonstrably shrinks; provider past-departure validation remains intact. The regression reproduces a meeting 40 minutes ahead with a one-second first request, confirms probes of 1800/2399 seconds, and verifies per-participant monotonicity still fails on a lost hub.
 
 Coverage includes polygon holes/boundaries/disconnected shapes, all-candidate batching, reversed response order, ranking ties/four cap/untruncated validation, duplicate coordinates, zero journeys, midnight, missing/late/past routes, mode rejection, monotonic failures, candidate/hit caps, canceled requests, stalled quota reservations, oversized/invalid responses, retry counts, Retry-After and safe errors.
 

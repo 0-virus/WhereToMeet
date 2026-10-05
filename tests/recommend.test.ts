@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { rankCandidates, recommend } from '../server/recommend.ts';
-import { RoutingError, type TravelTimeProvider } from '../server/travel-time.ts';
+import { createTravelTimeProvider, RoutingError, type TravelTimeProvider } from '../server/travel-time.ts';
 import type { Hub, RecommendRequest } from '../src/shared.ts';
 
 const at = (time: string) => `2026-09-26T${time}:00+09:00`;
@@ -99,4 +99,46 @@ test('identical origin and hub returns zero burden for every participant without
   const p=fake({async reachable(){throw Error('must not call');},async matrix(){throw Error('must not call');}});
   const result=await recommend(sameReq,hubs,p);
   assert.equal(result.length,4);assert.equal(result[0].sumBurdenSeconds,0);assert.equal(result[0].participantRoutes.length,2);
+});
+
+test('near-meeting expansion recalculates the departure cap after an elapsed provider call',async()=>{
+  let current=now;
+  const probes:number[]=[];
+  const p=createTravelTimeProvider({appId:'test',apiKey:'test',now:()=>current,fetchImpl:async(_url,init)=>{
+    const body=JSON.parse(String(init?.body));
+    probes.push(body.departure_searches[0].travel_time);
+    for(const search of body.departure_searches) assert.ok(Date.parse(search.departure_time)>=current);
+    current+=1000;
+    return new Response(JSON.stringify({results:body.departure_searches.map((search:{id:string})=>({search_id:search.id,shapes:[]}))}));
+  }});
+  assert.deepEqual(await recommend({...req,meetingAt:'2026-10-06T00:40:00Z'},hubs,p),[]);
+  assert.deepEqual(probes,[1800,2399]);
+  assert.equal(p.hits,4);
+});
+
+test('clock crossing the provider preflight boundary lowers the probe without spending a hit',async()=>{
+  let current=now;
+  const probes:number[]=[];
+  const p=createTravelTimeProvider({appId:'test',apiKey:'test',now:()=>current,fetchImpl:async(_url,init)=>{
+    const body=JSON.parse(String(init?.body));
+    return new Response(JSON.stringify({results:body.departure_searches.map((search:{id:string})=>({search_id:search.id,shapes:[]}))}));
+  }});
+  const reachable=p.reachable;
+  p.reachable=async(r,hs,seconds)=>{
+    probes.push(seconds);
+    if(probes.length===1) current++;
+    return reachable(r,hs,seconds);
+  };
+  assert.deepEqual(await recommend({...req,meetingAt:'2026-10-06T00:10:00Z'},hubs,p),[]);
+  assert.deepEqual(probes,[600,599]);
+  assert.equal(p.hits,2);
+});
+
+test('a clock-adjusted upper bound still checks participant monotonicity',async()=>{
+  let current=now;
+  const p=fake({now:()=>current,async reachable(_r,_h,seconds){
+    if(seconds===1800){current+=1000;return {a:['h0'],b:[]};}
+    assert.equal(seconds,2399);return {a:[],b:['h0']};
+  }});
+  await assert.rejects(recommend({...req,meetingAt:'2026-10-06T00:40:00Z'},hubs,p),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
 });
