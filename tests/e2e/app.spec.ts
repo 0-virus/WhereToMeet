@@ -304,3 +304,55 @@ test('leaving history while restore is pending does not replace the current scre
     await expect(page.getByRole('combobox').first()).toHaveValue('');
     await expect(page.getByRole('heading', { name: '사당역', exact: true })).toHaveCount(0);
 });
+
+test('three participants remain usable after add/remove with keyboard selection and focused invalidation feedback', async ({ page }) => {
+    await mock(page);
+    let searches = 0;
+    page.on('request', request => { if (request.url().endsWith('/api/recommendations')) searches++; });
+    await page.goto('/');
+    await expect(page.getByRole('combobox')).toHaveCount(2);
+    await page.getByRole('button', { name: /참가자 추가/ }).click();
+    await expect(page.getByRole('combobox')).toHaveCount(3);
+    await page.getByRole('button', { name: /참가자 추가/ }).click();
+    await expect(page.getByRole('combobox')).toHaveCount(4);
+    await expect(page.getByRole('button', { name: /참가자 추가/ })).toHaveCount(0);
+    await page.getByRole('button', { name: '참가자 4 삭제', exact: true }).click();
+    await expect(page.getByRole('combobox')).toHaveCount(3);
+    await expect(page.getByRole('button', { name: /참가자 추가/ })).toBeVisible();
+
+    for (const index of [0, 1, 2]) {
+        const input = page.getByRole('combobox').nth(index);
+        await input.fill('서울');
+        const option = page.getByRole('option', { name: /서울역/ });
+        await expect(option).toBeVisible();
+        await input.press('ArrowDown');
+        await expect(option).toHaveAttribute('aria-selected', 'true');
+        await expect(input).toHaveAttribute('aria-activedescendant', await option.getAttribute('id') as string);
+        await input.press('Enter');
+        await expect(input).toHaveValue('서울역');
+        await expect(input).toBeFocused();
+        await expect(input).toHaveAttribute('aria-expanded', 'false');
+    }
+
+    const first = page.getByRole('combobox').first();
+    await first.fill('서');
+    const submit = page.getByRole('region', { name: '만날 곳 검색' }).getByRole('button', { name: '만날 곳 찾기', exact: true });
+    await submit.focus();
+    await submit.press('Enter');
+    await expect(page.getByRole('alert')).toContainText('검색 결과에서 선택');
+    await expect(page.getByRole('alert')).toBeFocused();
+    expect(searches).toBe(0);
+
+    await first.fill('서울');
+    await expect(page.getByRole('option', { name: /서울역/ })).toBeVisible();
+    await first.press('ArrowDown');
+    await first.press('Enter');
+    const search = page.waitForRequest('**/api/recommendations');
+    await submit.focus();
+    await submit.press('Enter');
+    const submittedOrigins = (await search).postDataJSON().origins;
+    expect(submittedOrigins).toHaveLength(3);
+    expect(new Set(submittedOrigins.map((origin: { id: string }) => origin.id)).size).toBe(3);
+    for (const origin of submittedOrigins) expect(origin).toMatchObject({ label: '서울역', lat: places[0].lat, lng: places[0].lng });
+    await expect(page.getByRole('heading', { name: '사당역', exact: true })).toBeVisible();
+});
