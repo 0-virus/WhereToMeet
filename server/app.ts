@@ -1,6 +1,6 @@
 import type { Catalog, Category, Hub, Recommendation, RecommendRequest, RecommendResponse } from '../src/shared.ts';
 import { ApiFailure, safeFailure } from './errors.ts';
-import { anonymousIdentity, deleteExpiredHistory, deleteHistory, getHistory, listHistory, saveHistory, setBookmarks } from './history.ts';
+import { anonymousIdentity, deleteExpiredHistory, deleteHistory, getHistory, HistoryRollbackError, listHistory, saveHistory, setBookmarks } from './history.ts';
 import { kakaoPlaces, verifyRegions } from './kakao.ts';
 import { reserveQuota } from './quota.ts';
 import { deleteExpiredSearchEvents, queueSearchEvent } from './search-events.ts';
@@ -25,6 +25,7 @@ export function createWorker(deps:WorkerDependencies) {
   const timer=setTimeout(()=>controller.abort(new ApiFailure('TIMEOUT',504)),deps.budgetMs??30000);
   const deadlineMs=Date.now()+(deps.budgetMs??30000);
   let event:SearchEvent|undefined;let hits=()=>0;let release:(()=>Promise<void>)|undefined;
+  let historyTask:Promise<string>|undefined;
   const started=now();
   try {
    const task=async()=>{
@@ -70,7 +71,19 @@ export function createWorker(deps:WorkerDependencies) {
      check();
      const response:RecommendResponse={status:recommendations.length?'success':'no_routes',recommendations:recommendations.slice(0,4).map(r=>({...r,hub:findHub(r.hubId)})),requestId,calculatedAt:new Date(now()).toISOString(),dataVersion:catalog.version};
      event.status=response.status;event.errorCode=null;event.recommendedHubIds=response.recommendations.map(r=>r.hubId);event.durationMs=Math.max(0,now()-started);
-     try{check();response.historyId=await saveHistory(env.DB,identity.owner,input,now());response.historySaved=true;}catch(error){check();response.historySaved=false;response.warning='검색 결과를 기록에 저장하지 못했습니다.';console.warn(JSON.stringify({code:'HISTORY_WRITE_FAILED',requestId}));}
+     try {
+      check();
+      historyTask=saveHistory(env.DB,identity.owner,input,now(),controller.signal);
+      // Keep late D1 completion and cancellation compensation alive even when
+      // the outer abort race has already returned its HTTP response.
+      ctx.waitUntil(historyTask.catch(error=>{
+       if(error instanceof HistoryRollbackError)console.warn(JSON.stringify({code:'HISTORY_ROLLBACK_FAILED',requestId}));
+      }));
+      response.historyId=await historyTask;response.historySaved=true;
+     } catch(error) {
+      check();response.historySaved=false;response.warning='검색 결과를 기록에 저장하지 못했습니다.';
+      if(!(error instanceof HistoryRollbackError))console.warn(JSON.stringify({code:'HISTORY_WRITE_FAILED',requestId}));
+     }
      check();return json(response);
     }
     const historyPath=url.pathname.match(/^\/api\/history(?:\/([A-Za-z0-9_-]{1,100})(\/bookmarks)?)?$/);
@@ -100,7 +113,7 @@ export function createWorker(deps:WorkerDependencies) {
   }finally{
    clearTimeout(timer);request.signal.removeEventListener('abort',cancel);
    if(event){event.traveltimeHits=hits();if(!event.durationMs)event.durationMs=Math.max(0,now()-started);queueSearchEvent(ctx,env.DB,event);}
-   if(release)ctx.waitUntil(release().catch(()=>{console.warn(JSON.stringify({code:'QUOTA_RELEASE_FAILED',requestId}));}));
+   if(release){const releaseLease=release;ctx.waitUntil((historyTask??Promise.resolve()).catch(()=>{}).then(releaseLease).catch(()=>{console.warn(JSON.stringify({code:'QUOTA_RELEASE_FAILED',requestId}));}));}
   }
  },
  async scheduled(_event:unknown,env:Env,ctx:Context):Promise<void> {

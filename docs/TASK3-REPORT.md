@@ -21,3 +21,9 @@ Verification at task handoff:
 External blockers: reviewed production catalog is deliberately empty; actual supplier credentials/contracts/routing approval and live behavior, production DB/ratelimiter account binding, real HTTPS deployment and operational recovery remain unverified. This task does not authorize a public launch.
 
 Operations and query examples: [운영준비.md](./운영준비.md).
+
+## Review fixes
+
+Forced-interleaving regressions reproduced late writes after cancellation and stale expiry deletion, then verified the fixes. Migration0004 adds a search write revision. Refresh writes use a bounded compare-and-swap loop; cancellation or ambiguous write errors compensate only the exact owned revision. Existing search fields are restored without reverting concurrent bookmarks or a newer successful search. The API tracks late persistence/compensation with `waitUntil` and delays lease release until it settles. Compensation database failure has its own fixed `HISTORY_ROLLBACK_FAILED` diagnostic; an unavailable database or terminated runtime cannot offer a transactional rollback guarantee and requires operational recovery.
+
+Last-unpin deletion now evaluates current expiry and empty bookmarks atomically at deletion time. Existing anonymous cookies renew their one-year expiry on use without changing the token or security attributes.
