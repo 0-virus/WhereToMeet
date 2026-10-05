@@ -3,18 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24 <25" },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "dev:worker": "wrangler dev --ip 127.0.0.1 --port 8787",
-    "build": "vite build",
+    "build": "vite build && node scripts/build-pwa.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.ts tests/*.test.mjs",
     "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
     "catalog:build": "node scripts/build-hubs.mjs",
     "catalog:preview": "node scripts/build-hubs.mjs --preview",
     "db:migrate": "wrangler d1 migrations apply wheretomeet-search-events --local",
-    "worker:check": "wrangler deploy --dry-run"
+    "worker:check": "wrangler deploy --dry-run",
+    "test:fullstack": "playwright test -c tests/fullstack/playwright.config.ts",
+    "pwa:build": "node scripts/build-pwa.mjs",
+    "android:config": "node scripts/android-config.mjs",
+    "android:preflight": "powershell -NoProfile -File scripts/android.ps1 preflight",
+    "android:init": "powershell -NoProfile -File scripts/android.ps1 init",
+    "android:build": "powershell -NoProfile -File scripts/android.ps1 build",
+    "release:check": "node scripts/check-release.mjs"
   },
   "dependencies": {
     "@turf/boolean-point-in-polygon": "^7.3.0",
@@ -33,4 +42,3 @@
     "wrangler": "^4.147.0"
   }
 }
-

@@ -215,7 +215,7 @@ test('clipboard denial provides a manually selectable public URL', async ({ page
     await page.goto('/meet/hub-1');
     await page.getByRole('button', { name: '링크 복사' }).click();
     await expect(page.getByLabel('복사할 링크')).toHaveValue('http://127.0.0.1:4174/meet/hub-1');
-    await expect(page.getByRole('status')).toContainText('직접 선택');
+    await expect(page.getByRole('status').filter({ hasText: '직접 선택' })).toBeVisible();
 });
 test('empty routes and provider failures are distinct and accessible', async ({ page }) => {
     await mock(page);
