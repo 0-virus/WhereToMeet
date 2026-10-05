@@ -1,4 +1,4 @@
-# WhereToMeet · 어디서 만날까
+﻿# WhereToMeet · 어디서 만날까
 
 수도권에서 만나는 2~4명의 약속 시각까지의 부담을 비교하는 모바일 웹/PWA와 Android TWA입니다.
 
@@ -8,7 +8,7 @@ Node.js 24를 사용합니다. 의존성 설치 후 `.env.example`을 참고하�
 
 ```sh
 npm ci
-npm run db:migrate:local
+npm run db:migrate
 npm run dev:worker
 # 다른 터미널
 npm run dev
@@ -38,3 +38,4 @@ npm run test:e2e
 ## 구현 기준
 
 [승인된 구현 계획](docs/IMPLEMENTATION.md)이 원문 실행 계획·시나리오와 충돌하는 경우 우선합니다. 개발 키만으로 공개 서비스 운영 권한이나 처리량이 확보되었다고 보지 않습니다.
+
