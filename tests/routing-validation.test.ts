@@ -63,9 +63,10 @@ test('empty/partial runs never pass; percentiles are nearest rank', () => {
   assert.equal(percentile([], .5), null);
   assert.equal(summarize([], [], true).status, 'BLOCKED');
 });
-test('measured fetch counts search hits, strips raw provider errors and does not leak credentials', async () => {
+test('measured fetch preserves HTTP errors for the production retry policy without logging their bodies', async () => {
   const measured = createMeasuredFetch({ appId: 'secret-id', apiKey: 'secret-key', hitsPerMinute: 100, fetchImpl: async () => new Response('private-origin secret-key', { status: 401 }) });
-  await assert.rejects(() => measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { method: 'POST', body: JSON.stringify({ arrival_searches: [{ id: 'a' }, { id: 'b' }] }) }), /PROVIDER_HTTP_401/);
+  const response = await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { method: 'POST', body: JSON.stringify({ arrival_searches: [{ id: 'a' }, { id: 'b' }] }) });
+  assert.equal(response.status, 401);
   assert.equal(measured.metrics.requests, 1);
   assert.equal(measured.metrics.hits, 2);
   assert.doesNotMatch(JSON.stringify(measured.metrics), /secret|private-origin/);
@@ -82,7 +83,7 @@ test('quota pacing uses search hits and preserves separate waiting time', async 
   await assert.rejects(() => measured.fetch('https://example.com/v4/time-filter', request), /PROVIDER_ENDPOINT_REJECTED/);
 });
 test('raw timestamp semantics become aggregate observations only', async () => {
-  const payload = { results: [{ search_id: 'h', locations: [{ id: 'private-origin', properties: [{ travel_time: 900, route: { departure_time: '2026-10-06T05:40:00Z', arrival_time: '2026-10-06T05:55:00Z', parts: [{ mode: 'bus' }, { mode: 'underground' }] } }] }] }] };
+  const payload = { results: [{ search_id: 'h', locations: [{ id: 'private-origin', properties: [{ travel_time: 900, route: { departure_time: '2026-10-06T05:40:00Z', arrival_time: '2026-10-06T05:55:00Z', parts: [{ mode: 'bus' }, { mode: 'rail_underground' }] } }] }] }] };
   const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, fetchImpl: async () => Response.json(payload) });
   await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body: JSON.stringify({ arrival_searches: [{ id: 'h', arrival_time: at }] }) });
   assert.equal(measured.metrics.earlyArrivalSamples, 1);

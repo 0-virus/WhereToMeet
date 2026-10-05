@@ -126,7 +126,7 @@ function observeRoutes(body: unknown, requested: Record<string, number>, metrics
       let bus = false, rail = false;
       for (const part of route.parts ?? []) {
         if (part.mode === 'bus') { metrics.busParts++; bus = true; }
-        else if (['train', 'underground', 'overground', 'tram', 'rail', 'subway'].includes(part.mode)) { metrics.railParts++; rail = true; }
+        else if (['rail_underground', 'rail_overground'].includes(part.mode)) { metrics.railParts++; rail = true; }
         else if (!['walk', 'walking', 'wait'].includes(part.mode)) metrics.unknownModeParts++;
       }
       if (bus && rail) metrics.mixedRoutes++;
@@ -161,7 +161,9 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
     const start = now();
     try {
       const response = await implementation(input, { ...init, signal: init?.signal ? AbortSignal.any([init.signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
-      if (!response.ok) fail(`PROVIDER_HTTP_${response.status}`);
+      // Let the production adapter classify status and honor Retry-After.
+      // Never decode or include provider error bodies in validation reports.
+      if (!response.ok) return response;
       const requested = Object.fromEntries((body.arrival_searches ?? []).map((s: { id: string; arrival_time: string }) => [s.id, Date.parse(s.arrival_time)]));
       let payload: unknown;
       try { payload = await response.clone().json(); } catch { fail('PROVIDER_RESPONSE_INVALID'); }
@@ -176,6 +178,8 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
 }
 
 function safeError(error: unknown): string {
+  const routingCodes = ['provider_rejected', 'provider_rate_limited', 'provider_unavailable', 'provider_invalid_response', 'provider_not_configured', 'routing_timeout', 'routing_budget_exceeded', 'routing_response_too_large', 'quota_unavailable', 'cancelled', 'non_monotonic_isochrones', 'candidate_budget_exceeded', 'departure_in_past'];
+  if (error instanceof Error && 'code' in error && typeof error.code === 'string' && routingCodes.includes(error.code)) return error.code;
   const known = ['CATALOG_INVALID', 'CATALOG_TOO_SMALL', 'CATALOG_SIZE_INVALID', 'SCENARIO_ORIGIN_MISSING', 'SCENARIO_DATE_UNAVAILABLE', 'SCENARIO_EXPIRED', 'REACHABILITY_RESPONSE_INVALID', 'MODE_INVALID', 'PROVIDER_ENDPOINT_REJECTED', 'PROVIDER_REQUEST_INVALID', 'PROVIDER_HIT_BUDGET_INVALID', 'PROVIDER_RESPONSE_INVALID', 'PROVIDER_TIMEOUT', 'PROVIDER_NETWORK_ERROR'];
   return error instanceof Error && (known.includes(error.message) || /^PROVIDER_HTTP_[1-5][0-9]{2}$/.test(error.message)) ? error.message : 'VALIDATION_ERROR';
 }
@@ -245,7 +249,7 @@ async function main() {
       results.push(result);
       // Progress contains only fixed scenario IDs, never provider bodies or coordinates.
       process.stderr.write(`${scenario.id}: ${result.status}\n`);
-      if (result.errorCode && /PROVIDER_HTTP_(401|403|429)/.test(result.errorCode)) { blockers.push('PROVIDER_ACCESS_OR_QUOTA_BLOCKED'); break; }
+      if (result.errorCode && (/PROVIDER_HTTP_(401|403|429)/.test(result.errorCode) || ['provider_rejected', 'provider_rate_limited', 'provider_not_configured', 'quota_unavailable'].includes(result.errorCode))) { blockers.push('PROVIDER_ACCESS_OR_QUOTA_BLOCKED'); break; }
     }
   }
   if (results.length && !totalUsage.requests) blockers.push('NO_PROVIDER_REQUESTS_OBSERVED');
