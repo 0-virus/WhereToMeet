@@ -27,9 +27,11 @@ Node 22 can run the script/tests with `--experimental-strip-types` as a temporar
 - `matrix(request, hubs)` evaluates **all** supplied hubs and returns every valid ranked hub, without the UI result cap.
 - `reachable(request, hubs, seconds)` returns each participant's reachable hub IDs using forward departure at `D-seconds` and that travel allowance.
 
-The injected fetch counts every HTTP attempt and search hit, including retries. It allows only the regular TravelTime `/v4/time-map` and `/v4/time-filter` endpoints, paces requests through a rolling 60-second hit budget, rejects non-success HTTP responses with sanitized status codes, and limits each HTTP call to 30 seconds. The CLI adapter gets an explicit 24-hour validation deadline to accommodate free-tier pacing. Production handlers must retain their independent **30-second total search deadline**; the CLI must never enable its extended deadline in the HTTP application.
+The injected fetch counts every started HTTP attempt and search hit, including retries. It allows only the regular TravelTime `/v4/time-map` and `/v4/time-filter` endpoints, paces requests through a rolling 60-second hit budget, and limits each HTTP call to 30 seconds. Canceled quota waits settle promptly without starting or counting the queued request. Non-success HTTP responses pass unchanged to the production adapter, preserving classification and `Retry-After`. The CLI adapter gets an explicit 24-hour validation deadline to accommodate free-tier pacing. Production handlers must retain their independent **30-second total search deadline**; the CLI must never enable its extended deadline in the HTTP application.
 
-Per-scenario elapsed time includes quota waiting. Service time subtracts measured local quota waits, and still includes API calls, retry work, decoding, and ranking. The report gives nearest-rank p50/p95, average/max hits and request totals separately for each algorithm. Probe calls are separate from recommendation latency. `totalUsage` also includes calls consumed by a failed stage, whose complete timing sample may be unavailable. A timeout/error is not a successful latency sample. This controlled CLI service measurement does not replace a Workers production-deadline or CPU/memory test.
+Successful response bodies pass through a backpressured observation stream. Observation retains at most 8 MiB, matching the production parser's byte limit, and never consumes a cloned body ahead of it. Malformed JSON is left for the production parser to reject; observation failures cannot change its status or retry count. Current engine error codes, including `non_monotonic_reachability` and `routing_candidate_budget_exceeded`, survive sanitized reporting.
+
+Per-scenario elapsed time includes quota waiting. Service time subtracts measured local quota waits, and still includes API calls, streamed response transfer, retry work, decoding, and ranking. The `networkMs` counter measures the fetch wait until response headers; full body processing remains included in service time. The report gives nearest-rank p50/p95, average/max hits and request totals separately for each algorithm. Probe calls are separate from recommendation latency. `totalUsage` also includes calls consumed by a failed stage, whose complete timing sample may be unavailable. A timeout/error is not a successful latency sample. This controlled CLI service measurement does not replace a Workers production-deadline or CPU/memory test.
 
 ## Scenarios and provenance
 
@@ -50,7 +52,7 @@ The initial destination selection is 100 deterministic points spread across cata
 
 ## Comparisons and safeguards
 
-For each scenario the harness runs the production isochrone recommendation and full Arrival Matrix at the same future meeting time and over the same hubs. The primary error is the isochrone winner's maximum burden minus the full-matrix winner's maximum burden. At least 95% of all 20 paired cases must be between zero and 180 seconds. The report also records best-hub agreement and top-four overlap. A missing isochrone result when the matrix finds a route fails; two empty results agree but provide no transport-quality evidence.
+For each scenario the harness runs the production isochrone recommendation and full Arrival Matrix at the same future meeting time and over the same hubs. The primary error is the isochrone winner's maximum burden minus the full-matrix winner's maximum burden. All 20 cases must be compared, and at least 95% of cases where the matrix finds a valid route must be between zero and 180 seconds. `baselineRoutableScenarios` is this accuracy denominator. Missing isochrone results remain failures in that denominator. `emptyAgreements` counts two-empty outcomes separately; they do not improve accuracy or best-hub agreement. With no routable baseline evidence, accuracy is null and the run is `BLOCKED`. The report also records best-hub agreement and top-four overlap.
 
 Every recommendation is independently checked for all expected participant IDs, valid timestamp order, departure still in the future, arrival by the meeting, exact travel/early-wait/burden arithmetic, totals, valid hub ID, and duplicate hubs. Isochrone results absent from the matrix, or with inconsistent burden totals, count as unvalidated. Such a discrepancy may reflect supplier timetable variation between calls; it still needs investigation and must not silently pass. Production route parsing additionally owns transport-mode restrictions.
 
@@ -70,10 +72,10 @@ The [isochrone reference](https://docs.traveltime.com/api/reference/isochrones) 
 
 | Gate | Current evidence |
 | --- | --- |
-| Harness comparison, future dates, sanitization, pacing | 10 local regression tests passed; fixture evidence only |
+| Harness comparison, future dates, sanitization, pacing | 17 local regression tests passed; fixture evidence only |
 | Live 20 × 100 comparison and measured hits/latency | BLOCKED: credentials/confirmed account quota unavailable |
 | Reviewed 100-hub and full-scale catalogs | BLOCKED: catalog review belongs to task 1 |
-| Production adapter connection | Contract supplied; task 2 integrates production engine |
+| Production adapter connection | Integrated; real provider parser/retry parity covered by keyless regression tests |
 | Actual bus/rail/mixed routes, ≥10 each | BLOCKED: real route review absent |
 | Ten real user journeys | BLOCKED: participant/device travel observations absent |
 | Initial wait, early arrival, latest departure, urban-mode scope | BLOCKED: live responses/supplier confirmation absent |

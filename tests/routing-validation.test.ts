@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { buildScenarios, compareResults, monotonicityLosses, percentile, selectHubs, summarize, validateRecommendations, createMeasuredFetch } from '../scripts/validate-routing.ts';
+import { buildScenarios, compareResults, monotonicityLosses, percentile, selectHubs, summarize, validateRecommendations, createMeasuredFetch, safeError } from '../scripts/validate-routing.ts';
 import { scenarioDefinitions } from './fixtures/routing-scenarios.ts';
 import type { Hub, Recommendation } from '../src/shared.ts';
+import { createTravelTimeProvider, RoutingError } from '../server/travel-time.ts';
 
 const now = Date.parse('2026-10-05T03:00:00Z');
 const hub = (id: string, name = id): Hub => ({ id, name, lat: 37.5, lng: 127, regionCode: '11', kind: 'rail', sourceId: id, sourceUrl: 'https://example.org', sourceDate: '2026-10-01', verified: true });
@@ -41,7 +42,8 @@ test('comparison detects missing results, excess error, and unsafe extra hubs', 
   assert.equal(compareResults([recommendation('a', 1180)], [recommendation('b', 1000), recommendation('a', 1180)]).within180Seconds, true);
   assert.equal(compareResults([recommendation('a', 1181)], [recommendation('b', 1000), recommendation('a', 1181)]).within180Seconds, false);
   assert.equal(compareResults([], [recommendation('b', 1000)]).within180Seconds, false);
-  assert.equal(compareResults([], []).within180Seconds, true);
+  assert.equal(compareResults([], []).within180Seconds, false);
+  assert.equal(compareResults([], []).emptyAgreement, true);
   assert.equal(compareResults([recommendation('x', 900)], [recommendation('b', 1000)]).unvalidatedRecommendations, 1);
 });
 test('route validation rejects missing participants, late arrival, past departure and false totals', () => {
@@ -62,6 +64,85 @@ test('empty/partial runs never pass; percentiles are nearest rank', () => {
   assert.equal(percentile([1, 2, 3, 4, 100], .95), 100);
   assert.equal(percentile([], .5), null);
   assert.equal(summarize([], [], true).status, 'BLOCKED');
+});
+test('empty agreement cannot conceal a missed routable scenario or establish accuracy', () => {
+  const metrics = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10 }).metrics;
+  const measurement = { elapsedMs: 0, serviceMs: 0, metrics };
+  const empty = { scenarioId: 'empty', intent: 'test', status: 'MEASURED' as const, probes: measurement, isochrone: measurement, matrix: measurement, comparison: compareResults([], []) };
+  const missed = { ...empty, scenarioId: 'missed', comparison: compareResults([], [recommendation('a', 1000)]) };
+  const mostlyEmpty = summarize([...Array.from({ length: 19 }, () => empty), missed], [], true);
+  assert.equal(mostlyEmpty.within180SecondsRate, 0);
+  assert.equal(mostlyEmpty.status, 'FAIL');
+  assert.equal(mostlyEmpty.emptyAgreements, 19);
+  assert.equal(mostlyEmpty.baselineRoutableScenarios, 1);
+  const onlyEmpty = summarize(Array.from({ length: 20 }, () => empty), [], true);
+  assert.equal(onlyEmpty.within180SecondsRate, null);
+  assert.equal(onlyEmpty.status, 'BLOCKED');
+});
+test('safe error reporting preserves current engine diagnostic codes only', () => {
+  for (const code of ['non_monotonic_reachability', 'routing_candidate_budget_exceeded']) {
+    assert.equal(safeError(new RoutingError(code, 503)), code);
+  }
+  assert.equal(safeError(new RoutingError('non_monotonic_isochrones', 503)), 'VALIDATION_ERROR');
+  assert.equal(safeError(new RoutingError('private-origin-secret', 503)), 'VALIDATION_ERROR');
+});
+
+test('instrumentation preserves real provider malformed JSON classification and retry count', async () => {
+  const outcome = async (wrapped: boolean) => {
+    let calls = 0;
+    const fetchImpl = async () => { calls++; return new Response('{ broken JSON'); };
+    const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 100, fetchImpl });
+    const provider = createTravelTimeProvider({ appId: 'x', apiKey: 'y', now: () => now, fetchImpl: wrapped ? measured.fetch : fetchImpl });
+    let error: unknown;
+    try { await provider.reachable({ origins: [{ id: 'p1', label: 'public', lat: 37.5, lng: 127 }], meetingAt: at }, [], 1800); } catch (caught) { error = caught; }
+    assert.ok(error instanceof RoutingError);
+    return { code: error.code, status: error.status, calls };
+  };
+  const direct = await outcome(false);
+  assert.deepEqual(direct, { code: 'provider_invalid_response', status: 502, calls: 1 });
+  assert.deepEqual(await outcome(true), direct);
+});
+
+test('bounded observation does not consume an oversized body ahead of the provider', async () => {
+  let chunks = 0, cancelled = false;
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 100, fetchImpl: async () => new Response(new ReadableStream({
+    pull(controller) { chunks++; controller.enqueue(new Uint8Array(1024 * 1024).fill(32)); if (chunks === 20) controller.close(); },
+    cancel() { cancelled = true; },
+  })) });
+  const provider = createTravelTimeProvider({ appId: 'x', apiKey: 'y', now: () => now, fetchImpl: measured.fetch });
+  await assert.rejects(() => provider.reachable({ origins: [{ id: 'p1', label: 'public', lat: 37.5, lng: 127 }], meetingAt: at }, [], 1800), e => e instanceof RoutingError && e.code === 'routing_response_too_large');
+  assert.ok(chunks <= 11, `provider must stop near 8 MiB, read ${chunks} MiB`);
+  assert.equal(cancelled, true);
+  assert.equal(measured.metrics.requests, 1);
+});
+
+test('already aborted requests do not spend quota or start a network call', async () => {
+  let calls = 0;
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, fetchImpl: async () => { calls++; return Response.json({ results: [] }); } });
+  await assert.rejects(() => measured.fetch('https://api.traveltimeapp.com/v4/time-map', { body: JSON.stringify({ departure_searches: [{ id: 'a' }] }), signal: AbortSignal.abort() }));
+  assert.equal(calls, 0);
+  assert.equal(measured.metrics.requests, 0);
+  assert.equal(measured.metrics.hits, 0);
+});
+
+test('aborting quota wait settles promptly and never sends the queued request', async () => {
+  let calls = 0, beginWait!: () => void;
+  const startedWaiting = new Promise<void>(resolve => { beginWait = resolve; });
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, sleep: async () => { beginWait(); return new Promise<void>(() => {}); }, fetchImpl: async () => { calls++; return Response.json({ results: [] }); } });
+  const body = JSON.stringify({ arrival_searches: Array.from({ length: 10 }, (_, i) => ({ id: String(i), arrival_time: at })) });
+  await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  const controller = new AbortController();
+  const waiting = measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body, signal: controller.signal });
+  await startedWaiting;
+  controller.abort();
+  const settled = waiting.then(() => 'resolved', () => 'rejected');
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const result = await Promise.race([settled, new Promise<string>(resolve => { timer = setTimeout(() => resolve('stalled'), 100); })]);
+  clearTimeout(timer);
+  assert.equal(result, 'rejected');
+  assert.equal(calls, 1);
+  assert.equal(measured.metrics.requests, 1);
+  assert.equal(measured.metrics.hits, 10);
 });
 test('measured fetch preserves HTTP errors for the production retry policy without logging their bodies', async () => {
   const measured = createMeasuredFetch({ appId: 'secret-id', apiKey: 'secret-key', hitsPerMinute: 100, fetchImpl: async () => new Response('private-origin secret-key', { status: 401 }) });
@@ -85,7 +166,8 @@ test('quota pacing uses search hits and preserves separate waiting time', async 
 test('raw timestamp semantics become aggregate observations only', async () => {
   const payload = { results: [{ search_id: 'h', locations: [{ id: 'private-origin', properties: [{ travel_time: 900, route: { departure_time: '2026-10-06T05:40:00Z', arrival_time: '2026-10-06T05:55:00Z', parts: [{ mode: 'bus' }, { mode: 'rail_underground' }] } }] }] }] };
   const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, fetchImpl: async () => Response.json(payload) });
-  await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body: JSON.stringify({ arrival_searches: [{ id: 'h', arrival_time: at }] }) });
+  const response = await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body: JSON.stringify({ arrival_searches: [{ id: 'h', arrival_time: at }] }) });
+  await response.json();
   assert.equal(measured.metrics.earlyArrivalSamples, 1);
   assert.equal(measured.metrics.travelTimeEqualsJourney, 1);
   assert.equal(measured.metrics.travelTimeEqualsBurden, 0);

@@ -9,3 +9,11 @@ Official docs were reviewed. The Matrix arrival introduction says “no earlier 
 External blockers: TravelTime keys and confirmed quota, reviewed catalog, actual bus/rail/mixed journeys and transport-scope review, ten real user journeys, and live performance/semantics evidence. The production adapter is an explicit task 2 integration dependency, not a fabricated engine. No live API validation or deployment-readiness claim is made.
 
 Adapter contract commit: `b0e194c`. Remaining implementation is committed separately for coordinator cherry-pick. Ownership stayed within scripts/validation, routing fixture/tests, and task 0 docs; shared.ts and product code were not edited.
+
+## Core review fixes
+
+Synced the integration branch before editing, preserving independent source-backed origins, HTTP-error passthrough, and documented rail-mode metrics. Accuracy now uses only baseline-routable scenarios, reports empty agreements separately, fails missed routable results, and blocks when no routable evidence exists.
+
+Response observation now uses a backpressured stream with an 8 MiB capture limit. It leaves malformed JSON and oversized-response decisions to the production parser. A real-provider regression reproduced the previous malformed-JSON discrepancy (wrapped: two requests/503 versus direct: one request/502) and now confirms parity. An oversized stream stops near the production limit rather than being fully buffered first. Safe reporting preserves the actual monotonicity and candidate-budget error codes.
+
+Quota waits are abortable, including an injected stalled sleep; already-aborted and canceled queued requests do not count hits or start network calls. The six added regression tests were observed failing before their fixes. Final Node 24.21.0 checks: **17 harness tests passed; 45 combined harness/provider/recommendation tests passed; full project TypeScript check passed**. No dependency installation or live API call was needed. External live-evidence blockers remain unchanged.

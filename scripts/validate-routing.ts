@@ -10,7 +10,7 @@ type Scenario = { id: string; intent: string; request: RecommendRequest };
 type Snapshot = { seconds: number; reachable: Record<string, string[]> };
 type Metrics = { requests: number; hits: number; quotaWaitMs: number; networkMs: number; routeSamples: number; earlyArrivalSamples: number; travelTimeEqualsJourney: number; travelTimeEqualsBurden: number; lateArrivalSamples: number; unknownModeParts: number; busParts: number; railParts: number; mixedRoutes: number };
 type Measurement = { elapsedMs: number; serviceMs: number; metrics: Metrics };
-type Comparison = { within180Seconds: boolean; differenceSeconds: number | null; unvalidatedRecommendations: number; bestHubMatches: boolean; topFourOverlap: number };
+type Comparison = { baselineRoutable: boolean; emptyAgreement: boolean; within180Seconds: boolean; differenceSeconds: number | null; unvalidatedRecommendations: number; bestHubMatches: boolean; topFourOverlap: number };
 type ScenarioResult = { scenarioId: string; meetingAt?: string; status: 'MEASURED' | 'ERROR'; errorCode?: string; comparison?: Comparison; unsafeRecommendations?: number; monotonicityLosses?: number; isochrone?: Measurement; matrix?: Measurement; probes?: Measurement; intent: string };
 const emptyMetrics = (): Metrics => ({ requests: 0, hits: 0, quotaWaitMs: 0, networkMs: 0, routeSamples: 0, earlyArrivalSamples: 0, travelTimeEqualsJourney: 0, travelTimeEqualsBurden: 0, lateArrivalSamples: 0, unknownModeParts: 0, busParts: 0, railParts: 0, mixedRoutes: 0 });
 function fail(code: string): never { throw new Error(code); }
@@ -72,7 +72,7 @@ export function compareResults(isochrone: Recommendation[], matrix: Recommendati
   const baseline = new Map(full.map(r => [r.hubId, r]));
   const unvalidatedRecommendations = iso.filter(r => !baseline.has(r.hubId) || baseline.get(r.hubId)!.maxBurdenSeconds !== r.maxBurdenSeconds || baseline.get(r.hubId)!.sumBurdenSeconds !== r.sumBurdenSeconds).length;
   const differenceSeconds = iso[0] && full[0] ? iso[0].maxBurdenSeconds - full[0].maxBurdenSeconds : null;
-  return { differenceSeconds, unvalidatedRecommendations, within180Seconds: unvalidatedRecommendations === 0 && ((!iso.length && !full.length) || (differenceSeconds !== null && differenceSeconds >= 0 && differenceSeconds <= 180)), bestHubMatches: iso[0]?.hubId === full[0]?.hubId, topFourOverlap: iso.slice(0, 4).filter(r => full.slice(0, 4).some(f => f.hubId === r.hubId)).length };
+  return { baselineRoutable: full.length > 0, emptyAgreement: !iso.length && !full.length, differenceSeconds, unvalidatedRecommendations, within180Seconds: unvalidatedRecommendations === 0 && differenceSeconds !== null && differenceSeconds >= 0 && differenceSeconds <= 180, bestHubMatches: !!iso[0] && !!full[0] && iso[0].hubId === full[0].hubId, topFourOverlap: iso.slice(0, 4).filter(r => full.slice(0, 4).some(f => f.hubId === r.hubId)).length };
 }
 
 export function monotonicityLosses(snapshots: Snapshot[]): number {
@@ -94,19 +94,21 @@ export function percentile(values: number[], fraction: number): number | null {
 
 export function summarize(results: ScenarioResult[], blockers: string[], catalogVerified: boolean) {
   const compared = results.filter(r => r.comparison);
-  const accuracy = compared.length ? compared.filter(r => r.comparison!.within180Seconds).length / compared.length : null;
+  const routable = compared.filter(r => r.comparison!.baselineRoutable);
+  const emptyAgreements = compared.filter(r => r.comparison!.emptyAgreement).length;
+  const accuracy = routable.length ? routable.filter(r => r.comparison!.within180Seconds).length / routable.length : null;
   const times = results.flatMap(r => r.isochrone ? [r.isochrone.serviceMs] : []);
   const p50 = percentile(times, .5), p95 = percentile(times, .95);
   const unsafe = results.reduce((n, r) => n + (r.unsafeRecommendations ?? 0) + (r.comparison?.unvalidatedRecommendations ?? 0), 0);
   const losses = results.reduce((n, r) => n + (r.monotonicityLosses ?? 0), 0);
   const failures = unsafe > 0 || losses > 0 || (accuracy !== null && accuracy < .95) || (p50 !== null && p50 > 5000) || (p95 !== null && p95 > 10000) || times.some(t => t > 30000) || results.some(r => r.status === 'ERROR');
-  const complete = results.length === 20 && compared.length === 20 && results.every(r => r.probes) && catalogVerified && blockers.length === 0;
+  const complete = results.length === 20 && compared.length === 20 && routable.length > 0 && results.every(r => r.probes) && catalogVerified && blockers.length === 0;
   const usage = (mode: 'isochrone' | 'matrix') => {
     const measurements = results.flatMap(r => r[mode] ? [r[mode]!] : []);
     const hits = measurements.map(m => m.metrics.hits);
     return { samples: hits.length, averageHits: hits.length ? hits.reduce((a, b) => a + b, 0) / hits.length : null, maxHits: hits.length ? Math.max(...hits) : null, totalRequests: measurements.reduce((n, m) => n + m.metrics.requests, 0), totalQuotaWaitMs: measurements.reduce((n, m) => n + m.metrics.quotaWaitMs, 0), p50ServiceMs: percentile(measurements.map(m => m.serviceMs), .5), p95ServiceMs: percentile(measurements.map(m => m.serviceMs), .95) };
   };
-  return { status: failures ? 'FAIL' : complete ? 'PASS' : 'BLOCKED', completedScenarios: results.filter(r => r.status === 'MEASURED').length, comparedScenarios: compared.length, within180SecondsRate: accuracy, unsafeRecommendations: unsafe, monotonicityLosses: losses, p50ServiceMs: p50, p95ServiceMs: p95, over30Seconds: times.filter(t => t > 30000).length, latencyExcludesQuotaWaiting: true, isochrone: usage('isochrone'), matrix: usage('matrix') };
+  return { status: failures ? 'FAIL' : complete ? 'PASS' : 'BLOCKED', completedScenarios: results.filter(r => r.status === 'MEASURED').length, comparedScenarios: compared.length, baselineRoutableScenarios: routable.length, emptyAgreements, within180SecondsRate: accuracy, unsafeRecommendations: unsafe, monotonicityLosses: losses, p50ServiceMs: p50, p95ServiceMs: p95, over30Seconds: times.filter(t => t > 30000).length, latencyExcludesQuotaWaiting: true, isochrone: usage('isochrone'), matrix: usage('matrix') };
 }
 
 function observeRoutes(body: unknown, requested: Record<string, number>, metrics: Metrics) {
@@ -134,13 +136,50 @@ function observeRoutes(body: unknown, requested: Record<string, number>, metrics
   }
 }
 
+// Observe only the bytes the production parser pulls, up to its 8 MiB limit.
+// Observation never turns malformed input or cancellation into a fetch failure.
+function observeResponse(response: Response, requested: Record<string, number>, metrics: Metrics): Response {
+  const maxBytes = 8 * 1024 * 1024;
+  if (!response.body || Number(response.headers.get('content-length')) > maxBytes) return response;
+  const decoder = new TextDecoder();
+  let size = 0, text = '';
+  const stream = response.body.pipeThrough(new TransformStream<Uint8Array, Uint8Array>({
+    transform(chunk, controller) {
+      size += chunk.byteLength;
+      if (size <= maxBytes) text += decoder.decode(chunk, { stream: true });
+      else text = '';
+      controller.enqueue(chunk);
+    },
+    flush() {
+      if (size > maxBytes) return;
+      try { observeRoutes(JSON.parse(text + decoder.decode()), requested, metrics); } catch { /* The production parser owns response errors. */ }
+      text = '';
+    },
+  }));
+  return new Response(stream, { status: response.status, statusText: response.statusText, headers: response.headers });
+}
+
+function quotaWait(ms: number, signal: AbortSignal | undefined, sleep?: (ms: number) => Promise<void>): Promise<void> {
+  signal?.throwIfAborted();
+  return new Promise((resolve, reject) => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const clean = () => { clearTimeout(timer); signal?.removeEventListener('abort', abort); };
+    const abort = () => { clean(); reject(signal!.reason); };
+    const finish = () => { clean(); resolve(); };
+    signal?.addEventListener('abort', abort, { once: true });
+    if (sleep) Promise.resolve().then(() => sleep(ms)).then(finish, error => { clean(); reject(error); });
+    else timer = setTimeout(finish, ms);
+  });
+}
+
 export function createMeasuredFetch(options: { appId: string; apiKey: string; hitsPerMinute: number; fetchImpl?: typeof fetch; now?: () => number; sleep?: (ms: number) => Promise<void> }) {
   const metrics = emptyMetrics();
   const now = options.now ?? Date.now;
-  const sleep = options.sleep ?? (ms => new Promise(resolve => setTimeout(resolve, ms)));
   const implementation = options.fetchImpl ?? fetch;
   let recent: { at: number; hits: number }[] = [];
   const measured: typeof fetch = async (input, init) => {
+    const signal = init?.signal ?? (input instanceof Request ? input.signal : undefined);
+    signal?.throwIfAborted();
     const url = new URL(input instanceof Request ? input.url : String(input));
     if (url.origin !== 'https://api.traveltimeapp.com' || !['/v4/time-map', '/v4/time-filter'].includes(url.pathname) || url.search) fail('PROVIDER_ENDPOINT_REJECTED');
     let body: Record<string, any>;
@@ -152,23 +191,22 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
     while (recent.reduce((sum, entry) => sum + entry.hits, 0) + hits > options.hitsPerMinute) {
       const wait = Math.max(1, recent[0].at + 60001 - now());
       const start = now();
-      await sleep(wait);
-      metrics.quotaWaitMs += now() - start;
+      try { await quotaWait(wait, signal ?? undefined, options.sleep); }
+      finally { metrics.quotaWaitMs += now() - start; }
+      signal?.throwIfAborted();
       recent = recent.filter(entry => entry.at > now() - 60000);
     }
+    signal?.throwIfAborted();
     recent.push({ at: now(), hits });
     metrics.requests++; metrics.hits += hits;
     const start = now();
     try {
-      const response = await implementation(input, { ...init, signal: init?.signal ? AbortSignal.any([init.signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
+      const response = await implementation(input, { ...init, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
       // Let the production adapter classify status and honor Retry-After.
       // Never decode or include provider error bodies in validation reports.
       if (!response.ok) return response;
       const requested = Object.fromEntries((body.arrival_searches ?? []).map((s: { id: string; arrival_time: string }) => [s.id, Date.parse(s.arrival_time)]));
-      let payload: unknown;
-      try { payload = await response.clone().json(); } catch { fail('PROVIDER_RESPONSE_INVALID'); }
-      observeRoutes(payload, requested, metrics);
-      return response;
+      return observeResponse(response, requested, metrics);
     } catch (error) {
       if (error instanceof Error && /^PROVIDER_[A-Z_0-9]+$/.test(error.message)) throw error;
       fail(error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name) ? 'PROVIDER_TIMEOUT' : 'PROVIDER_NETWORK_ERROR');
@@ -177,8 +215,8 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
   return { fetch: measured, metrics };
 }
 
-function safeError(error: unknown): string {
-  const routingCodes = ['provider_rejected', 'provider_rate_limited', 'provider_unavailable', 'provider_invalid_response', 'provider_not_configured', 'routing_timeout', 'routing_budget_exceeded', 'routing_response_too_large', 'quota_unavailable', 'cancelled', 'non_monotonic_isochrones', 'candidate_budget_exceeded', 'departure_in_past'];
+export function safeError(error: unknown): string {
+  const routingCodes = ['provider_rejected', 'provider_rate_limited', 'provider_unavailable', 'provider_invalid_response', 'provider_not_configured', 'routing_timeout', 'routing_budget_exceeded', 'routing_response_too_large', 'quota_unavailable', 'cancelled', 'non_monotonic_reachability', 'routing_candidate_budget_exceeded', 'departure_in_past', 'invalid_validation_deadline', 'invalid_routing_budget', 'invalid_travel_limit', 'invalid_candidate_budget', 'invalid_routing_input'];
   if (error instanceof Error && 'code' in error && typeof error.code === 'string' && routingCodes.includes(error.code)) return error.code;
   const known = ['CATALOG_INVALID', 'CATALOG_TOO_SMALL', 'CATALOG_SIZE_INVALID', 'SCENARIO_ORIGIN_MISSING', 'SCENARIO_DATE_UNAVAILABLE', 'SCENARIO_EXPIRED', 'REACHABILITY_RESPONSE_INVALID', 'MODE_INVALID', 'PROVIDER_ENDPOINT_REJECTED', 'PROVIDER_REQUEST_INVALID', 'PROVIDER_HIT_BUDGET_INVALID', 'PROVIDER_RESPONSE_INVALID', 'PROVIDER_TIMEOUT', 'PROVIDER_NETWORK_ERROR'];
   return error instanceof Error && (known.includes(error.message) || /^PROVIDER_HTTP_[1-5][0-9]{2}$/.test(error.message)) ? error.message : 'VALIDATION_ERROR';
