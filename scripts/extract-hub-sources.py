@@ -28,5 +28,5 @@ with ZipFile(ROOT / 'data/raw/seoul-bus-20260902.xlsx') as archive:
             rows.append(values)
 assert rows[0] == ['NODE_ID', 'ARS_ID', '정류소명', 'X좌표', 'Y좌표', '정류소타입'], 'Source schema changed'
 records = [{'NODE_ID': str(int(r[0])), 'ARS_ID': str(r[1]), 'name': r[2], 'lng': r[3], 'lat': r[4], 'type': r[5]} for r in rows[1:]]
-(ROOT / 'data/raw/seoul-bus-20260902.json').write_text(json.dumps(records, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+(ROOT / 'data/raw/seoul-bus-20260902.json').write_text(json.dumps(records, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
 print(f'Extracted {len(records)} source bus records')

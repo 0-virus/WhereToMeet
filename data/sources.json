@@ -29,7 +29,7 @@
       "rows": 11236,
       "files": [
         { "path": "data/raw/seoul-bus-20260902.xlsx", "sha256": "73eb0a5f4fd0f6128237b5e23fa361fd1c6d8a31a83bcee2884e6a48481852bb", "role": "unaltered downloaded XLSX" },
-        { "path": "data/raw/seoul-bus-20260902.json", "sha256": "a63591ac97f4e7ff47441f7a6873e3cbd9b4a588373367add619ea0c745101bb", "role": "lossless field extraction by scripts/extract-hub-sources.py" }
+        { "path": "data/raw/seoul-bus-20260902.json", "sha256": "41193c19046771dc2ce22b0b55c9eb984ddfea1c30f64e4b5a3ef24bf1e553be", "role": "lossless field extraction by scripts/extract-hub-sources.py" }
       ]
     }
   ]
