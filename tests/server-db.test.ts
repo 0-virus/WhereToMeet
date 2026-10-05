@@ -42,6 +42,14 @@ test('D1 quota enforces global concurrency, rolling budget, dedup and lease reco
  const third=await reserveQuota(db,'r3','owner',limits,now+91001);
  await third.release();
 });
+test('owner lease covers delayed cancellation cleanup and then recovers',async()=>{
+ const {db}=testDb();const limits={hitsPerMinute:10000,maxConcurrent:10,hitsPerSearch:60};
+ await reserveQuota(db,'pending','owner',limits,now);
+ for(const elapsed of [36000,60000,89999])await assert.rejects(reserveQuota(db,`overlap-${elapsed}`,'owner',limits,now+elapsed));
+ const recovered=await reserveQuota(db,'recovered','owner',limits,now+90000);
+ await recovered.release();
+ await reserveQuota(db,'after-cleanup','owner',limits,now+90001);
+});
 test('bookmarks from different successful searches can exceed four',async()=>{
  const {db}=testDb();const id=await saveHistory(db,'owner',input,now);
  const hubIds=['a','b','c','d','e'];await setBookmarks(db,'owner',id,hubIds,now);

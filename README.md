@@ -23,9 +23,14 @@ npm test
 npm run typecheck
 npm run build
 npm run test:e2e
+npm run test:fullstack
+npm run worker:check
+npm run release:check
 ```
 
-공급자 실검증·거점 검수·Android 서명 검증은 자동 테스트와 별도입니다. 모든 준비 상태는 [검증표](docs/SCENARIOS.md)와 [진행 기록](docs/PROGRESS.md)에 기록합니다.
+공급자 실검증·거점 검수·Android 서명 검증은 자동 테스트와 별도입니다. 현재 **출시 차단 상태**이며 `release:check`는 미충족 조건을 출력하고 실패합니다. [검증 결과](docs/검증결과.md), [시나리오 검증표](docs/SCENARIOS.md), [운영 준비](docs/운영준비.md)를 확인하세요.
+
+이미 설치된 Chrome으로 검증하려면 PowerShell에서 `$env:PLAYWRIGHT_CHANNEL='chrome'`을 설정합니다. 화면 테스트는 4174, 브라우저→Worker→SQL 테스트는 4181 포트를 사용하며 외부 공급자 응답만 테스트용으로 대체합니다. 실제 API 품질 검증 결과로 사용하지 않습니다.
 
 ## 데이터와 개인정보
 
