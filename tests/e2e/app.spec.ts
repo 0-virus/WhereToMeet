@@ -4,6 +4,46 @@ const places = [{ id: '1', name: '서울역', lat: 37.55, lng: 126.97, address: 
 const origins = [{ id: 'person-1', label: '서울역', lat: 37.55, lng: 126.97 }, { id: 'person-2', label: '서울역', lat: 37.55, lng: 126.97 }];
 const future = () => new Date(Date.now() + 24 * 3600000).toISOString();
 const history = () => ({ id: 'history-1', origins, meetingAt: future(), searchedAt: new Date().toISOString(), bookmarkedHubIds: [] });
+
+test('late bookmark response from an older search cannot replace the new record bookmarks', async ({ page }) => {
+    await mock(page);
+    let searchCount = 0;
+    let releaseOldSave!: () => void;
+    const oldSaveGate = new Promise<void>(resolve => { releaseOldSave = resolve; });
+    await page.route('**/api/recommendations', route => {
+        searchCount++;
+        const body = route.request().postDataJSON();
+        return route.fulfill({ json: {
+            status: 'success', historyId: `history-${searchCount}`, historySaved: true,
+            requestId: `request-${searchCount}`, calculatedAt: new Date().toISOString(), dataVersion: 'test',
+            recommendations: [{ hubId: hub.id, hub, maxBurdenSeconds: 1800, sumBurdenSeconds: 3600,
+                participantRoutes: body.origins.map((origin: { id: string }) => ({ originId: origin.id,
+                    departureAt: new Date(Date.parse(body.meetingAt) - 1800000).toISOString(), arrivalAt: body.meetingAt,
+                    travelSeconds: 1800, earlyWaitSeconds: 0, burdenSeconds: 1800, transfers: 0 })) }],
+        } });
+    });
+    await page.route('**/api/history/history-2', route => route.fulfill({ json: { record: { ...history(), id: 'history-2', bookmarkedHubIds: ['keep-from-second-record'] } } }));
+    await page.route('**/api/history/history-1/bookmarks', async route => {
+        await oldSaveGate;
+        await route.fulfill({ json: { record: { ...history(), bookmarkedHubIds: [hub.id] } } });
+    });
+    await page.goto('/'); await selectOrigins(page);
+    const submit = page.getByRole('region', { name: '만날 곳 검색' }).getByRole('button', { name: '만날 곳 찾기', exact: true });
+    await submit.click();
+    const oldSaveStarted = page.waitForRequest('**/api/history/history-1/bookmarks');
+    await page.getByRole('button', { name: '사당역 즐겨찾기', exact: true }).click();
+    await oldSaveStarted;
+    await submit.click();
+    await expect(submit).toBeEnabled();
+    const oldSaveFinished = page.waitForResponse('**/api/history/history-1/bookmarks');
+    releaseOldSave();
+    await oldSaveFinished;
+    // The old response must not mark the same hub saved on the new record.
+    await expect(page.getByRole('button', { name: '사당역 즐겨찾기', exact: true })).toBeEnabled();
+    const newSaveStarted = page.waitForRequest('**/api/history/history-2/bookmarks');
+    await page.getByRole('button', { name: '사당역 즐겨찾기', exact: true }).click();
+    expect((await newSaveStarted).postDataJSON()).toEqual({ hubIds: ['keep-from-second-record', hub.id] });
+});
 async function mock(page: Page) {
     await page.route('**/api/**', async (route) => {
         const url = new URL(route.request().url());

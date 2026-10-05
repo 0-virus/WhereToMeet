@@ -31,3 +31,11 @@ Implemented the approved input → comparison → destination flow in React/Type
 Mocked browser flows are not proof of TravelTime/Kakao data quality or real API availability. Real Kakao SDK/domain-key validation, real provider routes and journeys, Android Chrome/Samsung Internet/iOS Safari devices, screen reader review and deployed Workers/D1 cookie/ownership behavior remain for integration/device validation. Vite rejects the raw malformed `/meet/%` URL before serving HTML; the React guard is tested by setting the URL before app boot. Deployed asset fallback should also be checked for this path. Operator identity/contact is not supplied and remains setup required. PWA/service worker/Android assets belong to task 5 and are not fabricated here.
 
 The worktree normalized the foundation package.json BOM locally to permit Vite builds. That package change is deliberately excluded from this task commit; coordinator commit `3a2c1b3` owns it.
+
+## Follow-up review — asynchronous bookmark isolation
+
+Synced the integrated `implementation` branch first, retaining the operator-name/contact environment configuration, PWA entry changes, and the scoped clipboard status assertion. Reproduced a delayed bookmark PATCH for history A overwriting the saved IDs displayed for newly loaded history B. The regression failed against the original implementation.
+
+Every result invalidation now synchronously advances a generation. Bookmark success, error and pending-state completion update the displayed result only while that generation is still current; the original server record may still finish saving and refresh the history list. New results release the old pending state. The browser regression delays A's response until B has loaded, verifies B remains unsaved for that hub, and checks the next B PATCH preserves B's existing bookmark IDs.
+
+Follow-up verification: combined `npm test` 83/83 passed, `npm run typecheck` passed, `npm run build` including PWA shell passed, Chrome E2E 18/18 passed. This fix does not change external validation blockers above.

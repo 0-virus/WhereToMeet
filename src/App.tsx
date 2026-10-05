@@ -52,12 +52,20 @@ export default function App() {
     const [now, setNow] = useState(Date.now());
     const request = useRef<AbortController | null>(null);
     const restoreRequest = useRef<AbortController | null>(null);
+    const resultGeneration = useRef(0);
     const alert = useRef<HTMLDivElement>(null);
     const resultRef = useRef<HTMLElement>(null);
     useEffect(() => { const online = () => setOffline(!navigator.onLine); addEventListener('online', online); addEventListener('offline', online); const timer = setInterval(() => setNow(Date.now()), 30000); return () => { removeEventListener('online', online); removeEventListener('offline', online); clearInterval(timer); request.current?.abort(); restoreRequest.current?.abort(); }; }, []);
     useEffect(() => { if (error)
         alert.current?.focus(); }, [error]);
-    function cancel() { request.current?.abort(); request.current = null; setBusy(false); setResult(null); setMessage('검색을 취소했어요. 조건을 바꾸고 다시 찾아보세요.'); }
+    function clearResult() {
+        // An old save may still finish on the server, but cannot affect a newer result.
+        resultGeneration.current++;
+        setResult(null);
+        setSaving(false);
+        setBookmarksReady(false);
+    }
+    function cancel() { request.current?.abort(); request.current = null; setBusy(false); clearResult(); setMessage('검색을 취소했어요. 조건을 바꾸고 다시 찾아보세요.'); }
     function navigate(next: 'search' | 'history') { restoreRequest.current?.abort(); restoreRequest.current = null; if (location.pathname !== '/') {
         location.href = next === 'history' ? '/?view=history' : '/';
         return;
@@ -65,7 +73,7 @@ export default function App() {
         cancel(); setPage(next); setError(''); }
     useEffect(() => { if (new URLSearchParams(location.search).get('view') === 'history')
         setPage('history'); }, []);
-    function edit() { setResult(null); setHistoryId(undefined); setError(''); setMessage(''); }
+    function edit() { clearResult(); setHistoryId(undefined); setError(''); setMessage(''); }
     async function search(selected: Origin[], time: string, recordId?: string) {
         if (request.current)
             return;
@@ -74,8 +82,7 @@ export default function App() {
         setBusy(true);
         setError('');
         setMessage('');
-        setResult(null);
-        setBookmarksReady(false);
+        clearResult();
         const timer = setTimeout(() => { if (request.current === controller) {
             controller.abort();
             request.current = null;
@@ -159,7 +166,7 @@ export default function App() {
             setOrigins(record.origins.map(origin => ({ id: origin.id, text: origin.label, selected: origin })));
             setMeeting(localKst(new Date(record.meetingAt)));
             setHistoryId(record.id);
-            setResult(null);
+            clearResult();
             setPage('search');
             if (Date.parse(record.meetingAt) <= Date.now() || Date.parse(record.meetingAt) > Date.now() + MAX_MEETING_DAYS * 86400000) {
                 setError('지난 약속이에요. 새 약속 시각을 선택하고 다시 검색해 주세요.');
@@ -177,23 +184,33 @@ export default function App() {
             setRefresh(value => value + 1);
         }
     }
-    async function bookmark(hubId: string) { if (!result?.historyId || result.historySaved === false || !bookmarksReady) {
-        setError('이 검색 기록이 저장되지 않아 즐겨찾기를 남길 수 없어요. 다시 검색해 주세요.');
-        return;
-    } setSaving(true); setError(''); try {
-        const hubIds = saved.includes(hubId) ? saved.filter(id => id !== hubId) : [...saved, hubId];
-        const value = await api<{
-            record: HistoryRecord | null;
-        }>(`/history/${encodeURIComponent(result.historyId)}/bookmarks`, { method: 'PATCH', body: JSON.stringify({ hubIds }) });
-        setSaved(value.record?.bookmarkedHubIds || []);
-        setRefresh(value => value + 1);
+    async function bookmark(hubId: string) {
+        if (saving) return;
+        if (!result?.historyId || result.historySaved === false || !bookmarksReady) {
+            setError('이 검색 기록이 저장되지 않아 즐겨찾기를 남길 수 없어요. 다시 검색해 주세요.');
+            return;
+        }
+        const generation = resultGeneration.current;
+        const recordId = result.historyId;
+        setSaving(true);
+        setError('');
+        try {
+            const hubIds = saved.includes(hubId) ? saved.filter(id => id !== hubId) : [...saved, hubId];
+            const value = await api<{ record: HistoryRecord | null }>(`/history/${encodeURIComponent(recordId)}/bookmarks`, { method: 'PATCH', body: JSON.stringify({ hubIds }) });
+            // Refresh the server history even if the user has moved to another result.
+            setRefresh(value => value + 1);
+            if (resultGeneration.current === generation)
+                setSaved(value.record?.bookmarkedHubIds || []);
+        }
+        catch (error) {
+            if (resultGeneration.current === generation)
+                setError(errorMessage(error));
+        }
+        finally {
+            if (resultGeneration.current === generation)
+                setSaving(false);
+        }
     }
-    catch (error) {
-        setError(errorMessage(error));
-    }
-    finally {
-        setSaving(false);
-    } }
     const hubMatch = location.pathname.match(/^\/meet\/([^/]+)\/?$/);
     let decodedHubId: string | null = null;
     if (hubMatch) {
@@ -212,7 +229,7 @@ export default function App() {
           <section className="hero"><span className="eyebrow">서울 · 경기 · 인천</span><h1>우리, <span>어디서 만날까요?</span></h1><p>각자의 출발지는 달라도, 만남은 가볍게.<br />모두의 대중교통 이동시간을 함께 비교해요.</p></section>
           <section className="search-section" aria-label="만날 곳 검색"><form onSubmit={submit} noValidate><div className="search-topline"><h2>어디에서 출발하나요?</h2><span>{origins.length}명 함께</span></div><div className="origin-grid">{origins.map((origin, index) => <PlaceInput key={origin.id} value={origin} index={index} disabled={busy} onChange={value => { edit(); setOrigins(items => items.map(item => item.id === value.id ? value : item)); }} onRemove={origins.length > 2 ? () => { edit(); setOrigins(items => items.filter(item => item.id !== origin.id)); } : undefined}/>)}</div>
             {origins.length < 4 && <button type="button" className="add-person" disabled={busy} onClick={() => { edit(); setOrigins(items => [...items, { id: `person-${crypto.randomUUID()}`, text: '' }]); }}>＋ 참가자 추가 <span>최대 4명</span></button>}
-            <div className="search-bottom"><div className="meeting-field"><span className="calendar-icon" aria-hidden="true">▦</span><div className="input-stack"><label htmlFor="meeting">언제 만날까요? <span>한국 시각</span></label><input type="datetime-local" id="meeting" aria-label="약속 날짜와 시각 (한국 시각)" value={meeting} min={localKst(new Date())} max={localKst(new Date(Date.now() + MAX_MEETING_DAYS * 86400000))} disabled={busy} onChange={event => { setMeeting(event.target.value); setResult(null); setError(''); }}/></div></div><button type="submit" className="primary search-button" disabled={busy || offline}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="6" stroke="currentColor" strokeWidth="2"/><path d="m15 15 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>{busy ? '만날 곳 찾는 중…' : '만날 곳 찾기'}</button></div>
+            <div className="search-bottom"><div className="meeting-field"><span className="calendar-icon" aria-hidden="true">▦</span><div className="input-stack"><label htmlFor="meeting">언제 만날까요? <span>한국 시각</span></label><input type="datetime-local" id="meeting" aria-label="약속 날짜와 시각 (한국 시각)" value={meeting} min={localKst(new Date())} max={localKst(new Date(Date.now() + MAX_MEETING_DAYS * 86400000))} disabled={busy} onChange={event => { setMeeting(event.target.value); clearResult(); setError(''); }}/></div></div><button type="submit" className="primary search-button" disabled={busy || offline}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="6" stroke="currentColor" strokeWidth="2"/><path d="m15 15 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>{busy ? '만날 곳 찾는 중…' : '만날 곳 찾기'}</button></div>
           </form><p className="search-caption">현재부터 7일 이내 · 버스와 지하철 · 위치 권한 없이 검색</p></section>
           {busy && <div className="search-progress"><span className="spinner" aria-hidden="true"/><div><strong role="status">모두에게 편한 길을 비교하고 있어요</strong><p>각자의 출발·도착 시각까지 확인해요. 최대 30초가 걸릴 수 있어요.</p></div><button className="text-button" onClick={cancel}>검색 취소</button></div>}
           {message && <p className="notice" role="status">{message}</p>}
