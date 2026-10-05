@@ -1,0 +1,4 @@
+# Preserve downloaded source bytes so provenance SHA-256 survives checkout.
+data/raw/* -text
+# Deterministic generated catalogs use LF on every platform.
+data/*.json text eol=lf

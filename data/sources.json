@@ -1,0 +1,36 @@
+{
+  "retrievedAt": "2026-10-05",
+  "attribution": "서울특별시 서울열린데이터광장 — 서울시 역사마스터 정보, 서울시 버스정류소 위치정보. 공공누리 제1유형: 출처표시. 원본에서 후보를 추출하고 중복·범위 검사를 적용함.",
+  "license": "KOGL Type 1 (attribution; commercial use and modification allowed)",
+  "sources": [
+    {
+      "id": "OA-21232",
+      "title": "서울시 역사마스터 정보",
+      "publisher": "서울특별시",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-21232/S/1/datasetView.do",
+      "sourceDate": "2026-10-02",
+      "dateMeaning": "dataset refresh date shown on official landing page; individual station survey dates not provided",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/sheet/json/download.do",
+      "downloadMethod": "POST form",
+      "downloadForm": { "srvType": "S", "infId": "OA-21232", "serviceKind": "0", "pageNo": "1", "ssUserId": "SAMPLE_VIEW", "strWhere": "", "strOrderby": "BLDN_ID DESC" },
+      "rows": 784,
+      "files": [{ "path": "data/raw/seoul-rail-20261002.json", "sha256": "96324048e8d6926c821043205af8348f14f499abb625e62b973b32294bbf7487", "role": "unaltered downloaded JSON" }]
+    },
+    {
+      "id": "OA-15067",
+      "title": "서울시 버스정류소 위치정보",
+      "publisher": "서울특별시",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do",
+      "sourceDate": "2026-09-02",
+      "dateMeaning": "date in official snapshot filename",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?useCache=false",
+      "downloadMethod": "POST form",
+      "downloadForm": { "infId": "OA-15067", "seq": "58", "infSeq": "1", "seqNo": "" },
+      "rows": 11236,
+      "files": [
+        { "path": "data/raw/seoul-bus-20260902.xlsx", "sha256": "73eb0a5f4fd0f6128237b5e23fa361fd1c6d8a31a83bcee2884e6a48481852bb", "role": "unaltered downloaded XLSX" },
+        { "path": "data/raw/seoul-bus-20260902.json", "sha256": "a63591ac97f4e7ff47441f7a6873e3cbd9b4a588373367add619ea0c745101bb", "role": "lossless field extraction by scripts/extract-hub-sources.py" }
+      ]
+    }
+  ]
+}
