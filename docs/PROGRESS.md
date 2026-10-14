@@ -1,22 +1,24 @@
-# Implementation ledger
+# 구현 진행 기록
 
-Plan: [IMPLEMENTATION.md](IMPLEMENTATION.md). Updated 2026-10-05.
+기준 계획: [승인된 구현 계획](IMPLEMENTATION.md). 기록 기준일: 2026-10-05.
 
-Six task-specific agents worked in isolated worktrees, up to three concurrently. Shared contracts and dependencies were exchanged during implementation; scoped commits were integrated into `implementation`.
+새 작업을 시작하기 전에 [작업 전 브리핑](작업전브리핑.md)을 읽는다. 2026-10-14 재검증 결과, 출시 차단 조건, 담당별 다음 작업과 근거 링크를 확인할 수 있다. 아래 내용은 2026-10-05 당시의 통합 이력을 보존한 기록이다.
 
-| Task | Implemented | Acceptance still blocked |
+작업별 에이전트 6개가 분리된 작업 폴더에서 최대 3개씩 동시에 작업했다. 구현 중 공통 인터페이스와 의존 관계를 공유했으며, 작업별 커밋을 `implementation` 브랜치에 통합했다.
+
+| 작업 | 구현한 내용 | 완료 판정을 위해 남은 조건 |
 |---|---|---|
-| 0 | 20-scenario/100-hub comparison CLI, full-catalog mode, sanitized usage/accuracy reports | Actual provider credentials, quota/rights, real comparisons and journeys |
-| 1 | Node/toolchain, sourced catalog normalization, provenance and review gates; 600 preview candidates and 100-point sample | All candidates need review; release catalog has zero hubs; regional coverage/count target |
-| 2 | Forward isochrones, bounded search, complete arrival validation and ranking, deadlines/retries | Actual Korean transport coverage, accuracy and production-scale latency |
-| 3 | Worker APIs, D1 migrations, anonymous history/bookmarks, retention, global quota, private-data-safe telemetry | Production bindings/secrets, deployed privacy and recovery rehearsal |
-| 4 | Korean responsive app, input/results/details/history, map fallback, public sharing, accessibility basics | Actual Kakao map, physical mobile browsers and screen reader verification |
-| 5 | Static-only PWA, offline behavior, Android configuration/build commands and release gates | Domain/package/signing identity, SDK/tools, generated signed APK/AAB and physical TWA validation |
+| 0 | 시나리오 20개·거점 100개 비교 명령 도구, 전체 카탈로그 검사, 민감정보를 제외한 사용량·정확도 보고 | 실제 공급자 키·호출 한도·사용권, 실제 경로 비교와 이동 관측 |
+| 1 | Node 실행·개발 도구, 출처가 있는 카탈로그 정규화, 출처 추적과 검수 차단 조건, 후보 600개·샘플 100개 | 후보 전체 검수, 현재 출시 거점 0개, 지역 범위와 거점 수 목표 충족 |
+| 2 | 출발 방향의 도달 가능 영역, 범위가 제한된 탐색, 전체 후보 도착 검증·정렬, 시간 제한·재시도 | 실제 한국 교통 지원 범위·정확도·운영 규모의 응답시간 |
+| 3 | Worker API, D1 마이그레이션, 익명 기록·즐겨찾기, 보존 기간, 전역 호출량 제한, 개인정보를 제외한 통계 | 운영 자원 연결·비밀키, 배포 환경의 개인정보 보호와 복구 리허설 |
+| 4 | 한국어 반응형 앱, 입력·결과·상세·기록, 지도 실패 대체 화면, 공개 장소 공유, 기본 접근성 | 실제 카카오 지도, 모바일 실기기 브라우저와 화면 읽기 도구 검증 |
+| 5 | 정적 파일만 저장하는 PWA, 오프라인 동작, Android 설정·빌드 명령, 출시 차단 검사 | 도메인·패키지·서명 정보, 개발 도구, 서명 APK·AAB 생성, 실기기 TWA 검증 |
 
-Integration includes browser→Worker→SQL history and ownership tests, offline service-worker checks, local D1 migrations, Worker dry-run, and separate core/app reviews. Results and remaining requirements are recorded in [검증결과.md](검증결과.md) and [SCENARIOS.md](SCENARIOS.md). Local fixture results do not establish deployment readiness.
+통합 검증에는 브라우저→Worker→SQL 기록·소유권 검사, 서비스 워커의 오프라인 동작, 로컬 D1 마이그레이션, Worker 배포 사전검사, 계산 핵심부와 앱의 별도 코드 검토가 포함됐다. 결과와 남은 조건은 [검증 결과](검증결과.md)와 [시나리오 검증표](SCENARIOS.md)에 기록했다. 로컬 테스트용 응답으로 통과한 결과를 배포 준비 완료의 근거로 사용하지 않는다.
 
-Review fixes cover routing clock drift, truthful accuracy denominators, bounded response observation, cancelable quota waits, canceled history persistence, concurrent expiry deletion, renewing anonymous cookies, and late UI bookmark responses. Detailed task reports retain the evidence at each handoff; the consolidated report is authoritative for integrated verification.
+검토 후 수정한 내용은 검색 중 시간 경과 반영, 정확도 계산의 올바른 분모, 응답 관측 크기 제한, 호출 예산 대기 취소, 취소된 검색의 기록 저장 보상, 동시 변경 중 만료 기록 삭제 방지, 익명 쿠키 만료 갱신, 늦은 즐겨찾기 응답의 화면 영향 차단이다. 작업별 보고서는 인수 당시의 증거를 보존하고, 통합 검증의 기준은 통합 검증 보고서로 삼는다.
 
-Environment: portable Node 24.21.0; existing Chrome; one browser worker to avoid resource exhaustion. Automatic approval review rejected recursive cleanup of downloaded browser/dependency directories, so those files remain. No user files were removed. A later test-server cleanup rejection was resolved by rechecking exact process identities before terminating only the test servers.
+검증 환경은 별도 설치 없이 실행하는 Node 24.21.0과 기존 Chrome이었다. 자원 부족을 피하도록 브라우저 검사는 실행 작업자 1개로 진행했다. 당시 자동 승인 검토가 내려받은 브라우저·의존성 폴더의 재귀 삭제를 거절해 해당 파일은 남겨 두었다. 사용자 파일은 삭제하지 않았다. 이후 테스트 서버 종료 거절은 정확한 프로세스 정보를 다시 확인한 뒤 해당 테스트 서버만 종료하는 방식으로 해결했다.
 
-No remote deployment, paid subscription, Play upload or real-route success is claimed. User-supplied external settings and evidence remain pending.
+원격 배포, 유료 구독, Play 업로드 또는 실제 경로 검증 성공을 완료로 기록하지 않았다. 사용자가 제공할 외부 설정과 검증 증거는 아직 준비가 필요하다.
