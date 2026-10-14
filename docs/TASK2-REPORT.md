@@ -1,44 +1,44 @@
-# Task 2 routing implementation — 2026-10-05
+# 작업 2 경로 구현 — 2026-10-05
 
-Implemented the production routing engine and the validation-only adapter. **Local checks pass; supplier adoption and launch remain BLOCKED.** No live credentials, reviewed journey observations, or actual supplier responses were available for this task.
+운영 경로 엔진과 검증 전용 어댑터를 구현했다. **로컬 검사는 통과했지만 공급자 채택과 출시는 차단(BLOCKED) 상태다.** 이 작업에는 실제 인증 정보, 검토된 이동 관찰 자료, 실제 공급자 응답이 없었다.
 
-## Integration contract
+## 통합 인터페이스
 
-- `createTravelTimeProvider({ appId, apiKey, fetchImpl?, now?, signal?, maxHits?, beforeRequest? })` in `server/travel-time.ts` creates one request-scoped provider. `beforeRequest(hits)` runs before every HTTP attempt, including retries. `provider.hits` counts search hits actually started; reservations that fail or time out do not count as started calls.
-- `recommend(request, hubs, provider, { maxCandidates? })` in `server/recommend.ts` returns at most four recommendations. Default candidate limit is 100 and default hit limit is 120; neither truncates a candidate set. Exceeding a processing budget fails the entire search with 503. The account quota must be configured independently in the API.
-- `RoutingError` exposes fixed safe message, `code`, and `status`. Provider quota is 429; malformed/rejected responses are 502; unavailable/configuration/processing-budget errors are 503; deadline is 504; cancellation is 499. Controlled `RoutingError`s from the quota callback retain their code/status. Other callback errors become safe `quota_unavailable` errors.
-- Provider methods are `reachable(request,hubs,seconds)`, `matrix(request,hubs)`, `check()`, and `now()`. Matrix returns unranked candidate route inputs; final timestamp validation belongs to `rankCandidates`, called immediately before the engine/adapter return.
-- `createRoutingValidationAdapter` matches `scripts/validation/types.ts` exactly. Its matrix returns the complete ranked set; recommend keeps the four-result cap. Only this CLI adapter uses the explicitly named extended-deadline factory; normal provider creation always fixes the total budget at 30 seconds.
+- `server/travel-time.ts`의 `createTravelTimeProvider({ appId, apiKey, fetchImpl?, now?, signal?, maxHits?, beforeRequest? })`는 요청 하나에 한정된 공급자 인스턴스를 생성한다. `beforeRequest(hits)`는 재시도를 포함한 모든 HTTP 시도 전에 실행한다. `provider.hits`는 실제 시작한 검색 사용량을 센다. 실패·시간 초과한 사용량 예약은 시작된 호출로 세지 않는다.
+- `server/recommend.ts`의 `recommend(request, hubs, provider, { maxCandidates? })`는 추천을 최대 네 개 반환한다. 기본 후보 한도는 100, 기본 검색 사용량 한도는 120이며 어느 쪽도 후보 집합을 잘라 내지 않는다. 처리 예산 초과 시 전체 검색을 503으로 실패시킨다. 계정 할당량은 API에서 별도로 설정해야 한다.
+- `RoutingError`는 고정된 안전한 메시지, `code`, `status`를 제공한다. 공급자 할당량은 429, 잘못되거나 거부된 응답은 502, 사용 불가·설정·처리 예산 오류는 503, 제한 시간 초과는 504, 취소는 499다. 할당량 콜백의 제어된 `RoutingError`는 코드·상태를 유지하며 다른 콜백 오류는 안전한 `quota_unavailable` 오류로 바꾼다.
+- 공급자 메서드는 `reachable(request,hubs,seconds)`, `matrix(request,hubs)`, `check()`, `now()`다. Matrix는 정렬 전 후보 경로 입력을 반환한다. 최종 타임스탬프 검증은 엔진·어댑터 반환 직전에 호출하는 `rankCandidates`가 담당한다.
+- `createRoutingValidationAdapter`는 `scripts/validation/types.ts`와 정확히 일치한다. matrix는 정렬된 전체 집합을 반환하며 recommend는 네 개 제한을 유지한다. 명시적인 이름의 제한 시간 확장 팩터리는 이 CLI 어댑터만 사용한다. 일반 공급자 생성은 전체 예산을 항상 30초로 고정한다.
 
-## Implemented safeguards
+## 구현한 안전장치
 
-Forward maps use departure `D-T`, travel allowance `T`, public transport and 900-second walking setting, with no range, polygon filtering, hole removal or invented buffer. Shells, holes, multiple polygons and boundary points are preserved through Turf. Identical coordinates share one map search while every participant keeps their own score. Exact origin/destination coordinates yield the explicit zero route at `D`.
+정방향 지도는 출발 `D-T`, 이동 허용 시간 `T`, 대중교통, 도보 900초 설정을 사용한다. range, 다각형 필터링, 내부 구멍 제거, 임의 완충 영역은 사용하지 않는다. 외곽·내부 구멍·다중 다각형·경계점을 Turf로 보존한다. 동일 좌표는 지도 검색 하나를 공유하되 참가자별 점수는 각각 유지한다. 출발지·목적지 좌표가 정확히 같으면 `D` 시점의 명시적인 이동 시간 0 경로를 반환한다.
 
-Upper bounds expand 30/60/120/240 minutes, capped by available departure time; bisection stops at a 180-second interval. Every observed pair of per-participant reachable sets is checked for monotonicity. Final high candidates are all revalidated using many-to-one arrival searches, ten searches per HTTP request, matched by opaque search/location IDs. If every final candidate is invalid, the engine enlarges high by 180 seconds once, within the current departure cap.
+상한은 30/60/120/240분으로 확장하고 출발 가능 시간으로 제한하며, 이분 탐색은 구간이 180초가 되면 멈춘다. 관찰된 참가자별 도달 집합의 모든 쌍에 대해 단조성을 검사한다. 최종 상한 후보는 모두 다대일 도착 검색으로 다시 검증하며, HTTP 요청당 검색 10개를 묶고 불투명 검색·위치 ID로 대응시킨다. 최종 후보가 전부 무효이면 현재 출발 한도 안에서 상한을 한 번만 180초 늘린다.
 
-Ranking uses maximum burden, total burden, then stable hub ID; journey, early waiting and burden use actual route timestamps. Missing participant/route/time, late arrival, past departure, invalid arithmetic, duplicate identities and prohibited/unknown modes cannot produce a recommendation. Final ranking reads the clock again after provider work.
+정렬 기준은 최대 부담, 총 부담, 안정적인 허브 ID 순이다. 이동·조기 도착 대기·부담은 실제 경로 타임스탬프로 계산한다. 참가자·경로·시간 누락, 늦은 도착, 과거 출발, 잘못된 산술, 중복 식별자, 금지되거나 알 수 없는 교통수단은 추천으로 만들지 않는다. 최종 정렬은 공급자 처리 후 시계를 다시 읽는다.
 
-The deadline includes quota reservation, network, streamed body decoding and retry wait. Abort interrupts pending requests. Response bodies are capped at 8 MiB. Transient failures retry once; present `Retry-After` seconds or HTTP-date values are honored only when the delay fits the remaining deadline. Invalid or excessive delays are not bypassed. HTTP 429 retries only with an acceptable header. Provider error bodies and credentials never enter error messages or logs.
+제한 시간에는 할당량 예약, 네트워크, 스트리밍 본문 해석, 재시도 대기가 포함된다. 취소는 진행 중인 요청을 중단한다. 응답 본문은 8 MiB로 제한한다. 일시적 실패는 한 번 재시도한다. `Retry-After`의 초 단위 값이나 HTTP 날짜는 남은 제한 시간에 들어갈 때만 따른다. 유효하지 않거나 과도한 대기를 우회하지 않는다. HTTP 429는 허용 가능한 헤더가 있을 때만 재시도한다. 공급자 오류 본문과 인증 정보는 오류 메시지나 로그에 넣지 않는다.
 
-## Verification
+## 검증
 
-Node 24.21.0, no new package installation:
+Node 24.21.0을 사용했으며 새 패키지는 설치하지 않았다.
 
 ```powershell
 node --test tests/*.test.ts tests/*.test.mjs
 node node_modules/typescript/bin/tsc --noEmit
 ```
 
-Latest complete run: **42 tests passed, 0 failed**; typecheck passed. This includes the existing ten validation-harness tests and 32 routing/provider/adapter tests. Meaningful RED-to-GREEN runs were observed for initial ranking, provider, engine, adapter, Retry-After delay/status handling, invalid numeric delay headers and the elapsed-clock cap regression. Tests use keyless external-provider fixtures; they do not measure live routing accuracy or latency.
+마지막 전체 실행: **42개 통과, 실패 0개**, 타입 검사 통과. 기존 검증 도구 테스트 10개와 경로·공급자·어댑터 테스트 32개를 포함한다. 초기 정렬, 공급자, 엔진, 어댑터, Retry-After 대기·상태 처리, 잘못된 숫자형 대기 헤더, 경과 시간에 따른 출발 한도 회귀에서 의미 있는 실패→통과 과정을 확인했다. 테스트는 키 없는 외부 공급자 고정 데이터를 사용하며 실제 경로 정확도나 지연 시간을 측정하지 않는다.
 
-Review follow-up: near-meeting searches now recalculate the available departure cap at every probe and use the actual sampled duration for expansion/bisection bounds. A clock tick between the engine calculation and provider preflight retries only after the cap demonstrably shrinks; provider past-departure validation remains intact. The regression reproduces a meeting 40 minutes ahead with a one-second first request, confirms probes of 1800/2399 seconds, and verifies per-participant monotonicity still fails on a lost hub.
+검토 후속 수정: 약속 시간이 가까운 검색은 매 탐색 시 출발 가능 한도를 다시 계산하고, 실제 표본으로 사용한 시간으로 확장·이분 탐색 경계를 정한다. 엔진 계산과 공급자 사전 점검 사이에 시각이 바뀌면 한도가 실제로 줄었음을 확인한 경우에만 재시도한다. 공급자의 과거 출발 검증은 유지한다. 회귀 테스트는 40분 뒤 약속과 1초가 걸리는 첫 요청을 재현하여 1800/2399초 탐색을 확인하고, 도달 가능한 허브를 잃었을 때 참가자별 단조성 검사가 여전히 실패하는지 검증한다.
 
-Coverage includes polygon holes/boundaries/disconnected shapes, all-candidate batching, reversed response order, ranking ties/four cap/untruncated validation, duplicate coordinates, zero journeys, midnight, missing/late/past routes, mode rejection, monotonic failures, candidate/hit caps, canceled requests, stalled quota reservations, oversized/invalid responses, retry counts, Retry-After and safe errors.
+검증 범위: 다각형 내부 구멍·경계·분리된 영역, 모든 후보 일괄 처리, 뒤바뀐 응답 순서, 정렬 동률·네 개 제한·잘리지 않은 검증, 중복 좌표, 이동 시간 0, 자정, 누락·지각·과거 경로, 교통수단 거부, 단조성 실패, 후보·사용량 한도, 취소된 요청, 멈춘 할당량 예약, 과대·잘못된 응답, 재시도 횟수, Retry-After, 안전한 오류.
 
-## Supplier evidence and remaining blockers
+## 공급자 근거와 남은 차단 요인
 
-The [regular matrix reference](https://docs.traveltime.com/api/reference/travel-time-distance-matrix) documents many-to-one arrival searches, ten searches per request and `route`/`travel_time`. Its arrival wording is still inconsistent with arrive-by semantics; actual late timestamps are always rejected. The [isochrone reference](https://docs.traveltime.com/api/reference/isochrones) documents forward departure searches and the four-hour standard allowance. The [official SDK route/transport types](https://github.com/traveltime-dev/traveltime-sdk-nodejs/blob/master/src/types/common.ts) list `walk`, `bus`, `rail_underground`, `rail_overground`, `rail_national`, `train`, `coach`, and other modes; `underground` alone is not a valid documented route mode.
+[일반 Matrix 명세](https://docs.traveltime.com/api/reference/travel-time-distance-matrix)는 다대일 도착 검색, 요청당 검색 10개, `route`/`travel_time`을 문서화한다. 도착 관련 표현은 지정 시각까지 도착한다는 의미와 여전히 불일치하며, 실제 타임스탬프가 늦으면 항상 거부한다. [등시간권 명세](https://docs.traveltime.com/api/reference/isochrones)는 정방향 출발 검색과 표준 허용 시간 4시간을 문서화한다. [공식 SDK 경로·교통수단 타입](https://github.com/traveltime-dev/traveltime-sdk-nodejs/blob/master/src/types/common.ts)은 `walk`, `bus`, `rail_underground`, `rail_overground`, `rail_national`, `train`, `coach` 등을 나열한다. `underground` 단독 값은 문서에 정의된 유효 경로 수단이 아니다.
 
-The engine conservatively allows walk, bus, underground and overground rail response modes and rejects national/ambiguous train, coach, vehicle, ferry and unknown modes. However, the documented `public_transport` request has **no custom allowed-mode subset**. Bus/overground labels alone do not prove exclusion of intercity/express services. This prevents claiming compliance or adopting the algorithm from fixture checks; the API must remain behind the coordinator's `ROUTING_APPROVED` gate until supplier scope and real responses have been reviewed. Do not silently broaden the allowlist to generic `train`.
+엔진은 도보·버스·지하철·지상철 응답 수단을 보수적으로 허용하며 전국 철도·모호한 train·장거리 버스·차량·페리·알 수 없는 수단은 거부한다. 그러나 문서화된 `public_transport` 요청에는 **허용 교통수단의 부분집합을 지정하는 기능이 없다**. 버스·지상철 표기만으로 시외·급행 서비스 제외를 증명할 수 없다. 따라서 고정 데이터 검사만으로 요구사항 충족이나 알고리즘 채택을 주장할 수 없다. 공급자 범위와 실제 응답을 검토할 때까지 API는 조정 담당자의 `ROUTING_APPROVED` 차단 조건을 유지해야 한다. 허용 목록을 일반 `train`으로 몰래 확대하지 않는다.
 
-Still required: live 20×100 and full-catalog matrix comparisons, Korean seven-day timetable coverage, waiting/arrive-by semantics, at least ten bus/rail/mixed cases each, ten real journeys, reviewed meeting entrances, account throughput confirmation, real Workers CPU/memory and production latency. See `docs/ROUTING-VALIDATION.md`. Coordinator was notified that the harness fetch wrapper must preserve non-success HTTP responses and recognize safe typed routing codes so it does not distort production retry behavior.
+남은 작업: 실제 20×100 및 전체 카탈로그 행렬 비교, 한국 7일 시간표 지원, 대기·지정 시각까지 도착 의미, 버스·철도·혼합 사례 각각 최소 10건, 실제 이동 10건, 검토된 만남 출입구, 계정 처리량 확인, 실제 Workers CPU·메모리와 운영 지연 시간. `docs/ROUTING-VALIDATION.md`를 참고한다. 검증 도구의 fetch 래퍼가 운영 재시도 동작을 왜곡하지 않도록 실패 HTTP 응답을 보존하고 안전한 타입 경로 오류 코드를 인식해야 한다고 조정 담당자에게 전달했다.

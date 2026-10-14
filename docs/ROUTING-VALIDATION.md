@@ -1,10 +1,10 @@
-# Routing validation
+# 경로 검증
 
-Status on 2026-10-05: **BLOCKED — no live API evidence**. The harness and its fixture tests are implemented. They do not establish Korean transport coverage, routing accuracy, production latency, or launch readiness. No paid service was activated.
+2026-10-05 상태: **차단(BLOCKED) — 실제 API 증빙 없음**. 검증 도구와 고정 데이터 테스트는 구현했다. 이것만으로 한국 교통망 지원, 경로 정확도, 운영 지연 시간, 출시 준비를 입증할 수 없다. 유료 서비스는 활성화하지 않았다.
 
-## Run
+## 실행
 
-Use Node 24. From the repository root:
+Node 24를 사용하고 저장소 루트에서 실행한다.
 
 ```powershell
 node --test tests/routing-validation.test.ts
@@ -13,72 +13,72 @@ node --env-file=.env scripts/validate-routing.ts --mode compare --catalog data/h
 node --env-file=.env scripts/validate-routing.ts --mode compare --catalog data/hubs.preview.json --catalog-size all --out artifacts/routing-full-catalog.json
 ```
 
-The live commands require `TRAVELTIME_APP_ID`, `TRAVELTIME_API_KEY`, and `TRAVELTIME_HITS_PER_MINUTE` in the local environment file. Set the hit limit to the account's confirmed entitlement; the harness does not guess it. `--hits-per-minute` overrides that limit. Credentials are passed in headers by the production adapter, never in URLs or reports. Do not commit the environment file.
+실제 호출 명령에는 로컬 환경 파일의 `TRAVELTIME_APP_ID`, `TRAVELTIME_API_KEY`, `TRAVELTIME_HITS_PER_MINUTE`가 필요하다. 사용량 한도는 계정의 확인된 사용 권한에 맞춰 설정한다. 검증 도구가 추정하지 않는다. `--hits-per-minute`는 이 한도를 덮어쓴다. 인증 정보는 운영 어댑터가 헤더로 전달하며 URL이나 보고서에는 넣지 않는다. 환경 파일은 커밋하지 않는다.
 
-`--mode isochrone` and `--mode matrix` support isolated measurements. Only `compare` provides paired quality evidence; single-mode runs remain blocked for adoption. A missing catalog, unresolved public station, unavailable adapter, missing key, or missing confirmed quota is an explicit blocker. Exit codes are 0 for a fully satisfied summary, 1 for measured failure, and 2 for blocked/incomplete evidence. The current CLI deliberately retains human-review blockers even after a successful live batch; adopt the algorithm only after the review below is recorded.
+`--mode isochrone`과 `--mode matrix`는 개별 측정을 지원한다. 짝지은 품질 증빙은 `compare`만 제공하며, 단일 모드 실행만으로는 채택할 수 없다. 카탈로그 누락, 공개 역 미확인, 어댑터 사용 불가, 키 누락, 확인된 할당량 누락은 명시적인 차단 요인이다. 종료 코드는 모든 조건을 충족한 요약 0, 측정된 실패 1, 차단·불완전한 증빙 2다. 현재 CLI는 실제 일괄 검증이 성공해도 의도적으로 사람의 검토 차단 조건을 유지한다. 아래 검토를 기록한 뒤에만 알고리즘을 채택한다.
 
-Node 22 can run the script/tests with `--experimental-strip-types` as a temporary development fallback. Node 24.21.0 was used for the final targeted checks.
+Node 22는 임시 개발 대안으로 `--experimental-strip-types`를 사용해 스크립트·테스트를 실행할 수 있다. 최종 대상 검사는 Node 24.21.0으로 수행했다.
 
-## Adapter and measurement contract
+## 어댑터와 측정 규칙
 
-`scripts/validation/types.ts` defines `createRoutingValidationAdapter(options)` exported by `server/validation-adapter.ts` (overridable with `--adapter`). It delegates to the production engine:
+`scripts/validation/types.ts`는 `server/validation-adapter.ts`가 내보내는 `createRoutingValidationAdapter(options)`를 정의한다. `--adapter`로 바꿀 수 있다. 이 어댑터는 운영 엔진에 처리를 위임한다.
 
-- `recommend(request, hubs)` returns at most four recommendations.
-- `matrix(request, hubs)` evaluates **all** supplied hubs and returns every valid ranked hub, without the UI result cap.
-- `reachable(request, hubs, seconds)` returns each participant's reachable hub IDs using forward departure at `D-seconds` and that travel allowance.
+- `recommend(request, hubs)`는 추천을 최대 네 개 반환한다.
+- `matrix(request, hubs)`는 제공된 **모든** 허브를 평가하고 UI 결과 제한 없이 유효한 허브 전체를 정렬해 반환한다.
+- `reachable(request, hubs, seconds)`는 `D-seconds`의 정방향 출발과 해당 이동 허용 시간으로 참가자별 도달 가능한 허브 ID를 반환한다.
 
-The injected fetch counts every started HTTP attempt and search hit, including retries. It allows only the regular TravelTime `/v4/time-map` and `/v4/time-filter` endpoints, paces requests through a rolling 60-second hit budget, and limits each HTTP call to 30 seconds. Canceled quota waits settle promptly without starting or counting the queued request. Non-success HTTP responses pass unchanged to the production adapter, preserving classification and `Retry-After`. The CLI adapter gets an explicit 24-hour validation deadline to accommodate free-tier pacing. Production handlers must retain their independent **30-second total search deadline**; the CLI must never enable its extended deadline in the HTTP application.
+주입된 fetch는 재시도를 포함해 시작된 모든 HTTP 시도와 검색 사용량을 센다. 일반 TravelTime `/v4/time-map`, `/v4/time-filter` 엔드포인트만 허용하고, 이동식 60초 사용량 예산에 따라 요청 간격을 조절하며 HTTP 호출 하나를 30초로 제한한다. 취소된 할당량 대기는 대기 중인 요청을 시작하거나 집계하지 않고 신속히 끝난다. 실패 HTTP 응답은 운영 어댑터에 그대로 전달하여 분류와 `Retry-After`를 보존한다. CLI 어댑터에는 무료 요금제 호출 간격을 수용하기 위해 명시적인 24시간 검증 제한을 부여한다. 운영 핸들러는 별도의 **검색 전체 30초 제한**을 유지해야 한다. CLI의 확장 제한을 HTTP 앱에서 활성화하면 안 된다.
 
-Successful response bodies pass through a backpressured observation stream. Observation retains at most 8 MiB, matching the production parser's byte limit, and never consumes a cloned body ahead of it. Malformed JSON is left for the production parser to reject; observation failures cannot change its status or retry count. Current engine error codes, including `non_monotonic_reachability` and `routing_candidate_budget_exceeded`, survive sanitized reporting.
+성공 응답 본문은 역압을 적용한 관찰 스트림을 통과한다. 관찰은 운영 파서의 바이트 한도와 같은 최대 8 MiB만 보관하며, 복제 본문을 파서보다 먼저 소비하지 않는다. 잘못된 JSON의 거부는 운영 파서에 맡기며 관찰 실패가 상태나 재시도 횟수를 바꾸면 안 된다. `non_monotonic_reachability`, `routing_candidate_budget_exceeded`를 포함한 현재 엔진 오류 코드는 민감 정보를 제거한 보고에도 유지된다.
 
-Per-scenario elapsed time includes quota waiting. Service time subtracts measured local quota waits, and still includes API calls, streamed response transfer, retry work, decoding, and ranking. The `networkMs` counter measures the fetch wait until response headers; full body processing remains included in service time. The report gives nearest-rank p50/p95, average/max hits and request totals separately for each algorithm. Probe calls are separate from recommendation latency. `totalUsage` also includes calls consumed by a failed stage, whose complete timing sample may be unavailable. A timeout/error is not a successful latency sample. This controlled CLI service measurement does not replace a Workers production-deadline or CPU/memory test.
+시나리오별 경과 시간은 할당량 대기를 포함한다. 서비스 시간은 측정된 로컬 할당량 대기만 빼며 API 호출, 스트리밍 응답 전송, 재시도, 해석, 정렬은 포함한다. `networkMs`는 응답 헤더 수신까지의 fetch 대기를 측정한다. 전체 본문 처리는 서비스 시간에 포함된다. 보고서는 알고리즘별로 최근접 순위 방식 p50/p95, 평균·최대 사용량, 요청 총수를 제공한다. 탐색 호출은 추천 지연 시간과 별도다. `totalUsage`에는 전체 시간 표본을 확보하지 못한 실패 단계에서 소모한 호출도 포함된다. 시간 초과·오류는 성공 지연 시간 표본이 아니다. 통제된 CLI 서비스 측정은 Workers 운영 제한 시간이나 CPU·메모리 테스트를 대체하지 않는다.
 
-## Scenarios and provenance
+## 시나리오와 출처
 
-`tests/fixtures/routing-scenarios.ts` defines exactly 20 repeatable scenarios: 2–4 participants, duplicate origins, weekday/weekend meetings, early and late service, midnight, and Seoul–Suwon–Incheon–Seongnam combinations. Times are the next suitable Asia/Seoul local calendar occurrence more than four hours ahead and within seven days. The report records the scheduling reference and each attempted meeting timestamp. A long batch that crosses a usable departure time fails explicitly; regenerate future scenarios for a rerun.
+`tests/fixtures/routing-scenarios.ts`는 정확히 20개의 반복 가능한 시나리오를 정의한다. 참가자 2–4명, 중복 출발지, 평일·주말 약속, 이른·늦은 운행 시간, 자정, 서울–수원–인천–성남 조합을 포함한다. 시간은 Asia/Seoul 현지 달력 기준으로 4시간보다 뒤이면서 7일 이내인 다음 적합한 시점이다. 보고서는 일정 생성 기준 시각과 시도한 각 약속 타임스탬프를 기록한다. 오래 실행한 일괄 검증이 출발 가능 시각을 넘기면 명시적으로 실패한다. 재실행할 때 미래 시나리오를 다시 생성한다.
 
-Seoul station origins preserve exact coordinates from named records in the checked-in official station master snapshot (record IDs appear in fixture provenance). They are independent of the destination sample, so excluded transfer stations do not prevent scheduling. Separate public origins preserve these source coordinates:
+서울의 역 출발지들은 저장소에 등록된 공식 역사마스터 스냅샷의 지정 레코드 좌표를 정확히 보존한다. 레코드 ID는 고정 데이터 출처 정보에 있다. 출발지는 목적지 표본과 독립적이므로 제외된 환승역 때문에 일정 생성이 막히지 않는다. 별도 공개 출발지는 다음 출처의 좌표를 유지한다.
 
-| Public origin | Source |
+| 공개 출발지 | 출처 |
 | --- | --- |
-| Suwon Messe, near Suwon Station | [Korea Tourism Organization location record](https://data.visitkorea.or.kr/linkedview/3075791) |
-| Incheon Open Port street | [Korea Tourism Organization location record](https://data.visitkorea.or.kr/linkedview/947611) |
-| Gwonsun Learning Center | [Suwon Youth and Young Adult Foundation directions](https://yeyak.syf.or.kr/www/119) |
-| Pangyo Station west bus stop 07-455; Taepyeong 2-dong administrative center stop 05-058 | [Seongnam public-location coordinate table](https://www.seongnam.go.kr/contents/down/10458_9.pdf) |
+| 수원역 인근 수원메쎄 | [한국관광공사 위치 레코드](https://data.visitkorea.or.kr/linkedview/3075791) |
+| 인천 개항장 거리 | [한국관광공사 위치 레코드](https://data.visitkorea.or.kr/linkedview/947611) |
+| 권선 학습센터 | [수원시청소년청년재단 오시는 길](https://yeyak.syf.or.kr/www/119) |
+| 판교역 서편 정류장 07-455, 태평2동 행정복지센터 정류장 05-058 | [성남 공공장소 좌표표](https://www.seongnam.go.kr/contents/down/10458_9.pdf) |
 
-Sources were inspected on 2026-10-05. The Seongnam PDF was available through indexed table extraction; direct retrieval timed out. These are public test coordinates, **not field-reviewed meeting entrances**. Bus/mixed scenario tags describe the intended investigation; they do not prove the provider chose those modes. Do not count tags toward the ten real bus, rail, and mixed cases required by the execution plan.
+출처는 2026-10-05 확인했다. 성남 PDF는 검색 색인에 추출된 표로 확인했으며 직접 다운로드는 시간 초과했다. 이 좌표는 공개 테스트 좌표이며 **현장 검토를 마친 만남 출입구가 아니다**. 버스·혼합 시나리오 태그는 조사 의도를 설명할 뿐 공급자가 실제로 해당 수단을 선택했다는 증거가 아니다. 실행 계획에서 요구한 실제 버스·철도·혼합 각 10건을 계산할 때 태그만으로 포함하지 않는다.
 
-The initial destination selection is 100 deterministic points spread across catalog entries ordered by region, kind, and stable ID. Input order does not change the selection. `--catalog-size all` tests the full actual catalog. A preview with `verified:false` may be measured, but remains blocked for release. Duplicate IDs, invalid coordinates, fewer than 100 destinations, or missing station origins fail preflight. Repeated platform entries in an upstream catalog still require catalog-owner deduplication review.
+초기 목적지는 지역·종류·안정적인 ID 순으로 정렬한 카탈로그에 걸쳐 결정적으로 선택한 100개 지점이다. 입력 순서가 바뀌어도 선택은 같다. `--catalog-size all`은 실제 전체 카탈로그를 테스트한다. `verified:false` 미리보기도 측정할 수 있지만 출시 차단은 유지한다. 중복 ID, 잘못된 좌표, 목적지 100개 미만, 역 출발지 누락은 사전 점검에서 실패한다. 상위 카탈로그의 중복 승강장 항목은 여전히 카탈로그 담당자의 중복 제거 검토가 필요하다.
 
-## Comparisons and safeguards
+## 비교와 안전장치
 
-For each scenario the harness runs the production isochrone recommendation and full Arrival Matrix at the same future meeting time and over the same hubs. The primary error is the isochrone winner's maximum burden minus the full-matrix winner's maximum burden. All 20 cases must be compared, and at least 95% of cases where the matrix finds a valid route must be between zero and 180 seconds. `baselineRoutableScenarios` is this accuracy denominator. Missing isochrone results remain failures in that denominator. `emptyAgreements` counts two-empty outcomes separately; they do not improve accuracy or best-hub agreement. With no routable baseline evidence, accuracy is null and the run is `BLOCKED`. The report also records best-hub agreement and top-four overlap.
+각 시나리오에서 검증 도구는 같은 미래 약속 시각과 같은 허브를 대상으로 운영 등시간권 추천과 전체 Arrival Matrix를 실행한다. 주요 오차는 등시간권 1위의 최대 부담에서 전체 행렬 1위의 최대 부담을 뺀 값이다. 20건 모두 비교해야 하며 행렬이 유효 경로를 찾은 사례 중 최소 95%에서 오차가 0–180초여야 한다. `baselineRoutableScenarios`가 이 정확도의 분모다. 등시간권 결과가 누락되어도 해당 분모에 남겨 실패로 처리한다. `emptyAgreements`는 양쪽 모두 빈 결과인 경우를 별도로 세며 정확도나 최적 허브 일치율을 높이지 않는다. 기준 경로 증빙이 하나도 없으면 정확도는 null이고 실행은 `BLOCKED`다. 보고서는 최적 허브 일치율과 상위 네 개의 겹침도 기록한다.
 
-Every recommendation is independently checked for all expected participant IDs, valid timestamp order, departure still in the future, arrival by the meeting, exact travel/early-wait/burden arithmetic, totals, valid hub ID, and duplicate hubs. Isochrone results absent from the matrix, or with inconsistent burden totals, count as unvalidated. Such a discrepancy may reflect supplier timetable variation between calls; it still needs investigation and must not silently pass. Production route parsing additionally owns transport-mode restrictions.
+모든 추천은 기대하는 참가자 ID 전체, 유효한 타임스탬프 순서, 여전히 미래인 출발, 약속까지의 도착, 정확한 이동·조기 대기·부담 산술, 합계, 유효한 허브 ID, 중복 허브를 독립적으로 검사한다. 행렬에 없는 등시간권 결과나 부담 합계가 일치하지 않는 결과는 미검증으로 센다. 호출 사이의 공급자 시간표 변화 때문일 수 있지만, 여전히 조사해야 하며 조용히 통과시켜서는 안 된다. 교통수단 제한은 운영 경로 파서가 추가로 담당한다.
 
-Forward reachable sets are probed at 15, 30, **45**, 60, 120, and 240 minutes. Monotonicity is checked per participant, so an intersection cannot conceal a lost destination. These discrete samples can reveal violations but do not prove monotonicity for every time or location. Route timestamps are reduced to aggregate counters: early/late arrivals, whether `travel_time` equals the timestamp journey or total burden, bus/rail parts, and mixed routes. Raw routes, origin coordinates/labels, provider bodies, and keys are never saved by this harness.
+정방향 도달 집합은 15, 30, **45**, 60, 120, 240분에서 탐색한다. 교집합 때문에 도달 목적지 누락이 가려지지 않도록 참가자별 단조성을 검사한다. 이산 표본은 위반을 드러낼 수 있지만 모든 시각·위치에서 단조성을 증명하지는 않는다. 경로 타임스탬프는 조기·늦은 도착, `travel_time`이 타임스탬프 이동 시간 또는 총 부담과 같은지, 버스·철도 구간, 혼합 경로의 집계 카운터로 축약한다. 이 도구는 원시 경로, 출발 좌표·레이블, 공급자 본문, 키를 저장하지 않는다.
 
-Targets are p50 service latency ≤5 seconds, p95 ≤10 seconds, and no service measurement over 30 seconds. Failure of accuracy, completeness, monotonicity, or latency is reported as `FAIL`; unresolved human/provider evidence remains `BLOCKED` even when measured checks look good.
+목표는 서비스 지연 p50 ≤5초, p95 ≤10초이며 30초를 넘는 서비스 측정이 없어야 한다. 정확도·완전성·단조성·지연 시간 실패는 `FAIL`로 보고한다. 측정 검사가 좋아 보여도 사람·공급자 증빙이 해결되지 않으면 `BLOCKED`를 유지한다.
 
-## Official supplier semantics checked on 2026-10-05
+## 2026-10-05 확인한 공식 공급자 의미
 
-The [TravelTime direction explanation](https://help.traveltime.com/en/articles/9503877-how-do-departure-and-arrival-searches-differ) distinguishes outward departure isochrones from inward arrival isochrones. Origin-centered arrival polygons therefore solve the wrong direction for this product. The [model-selection explanation](https://help.traveltime.com/en/articles/8523982-how-do-the-models-determine-which-route-to-take) says arrival searches optimize latest departure and departure searches optimize earliest arrival.
+[TravelTime 방향 설명](https://help.traveltime.com/en/articles/9503877-how-do-departure-and-arrival-searches-differ)은 바깥으로 향하는 출발 등시간권과 안으로 향하는 도착 등시간권을 구분한다. 따라서 출발지 중심의 도착 다각형은 이 제품에 필요한 방향과 반대 문제를 푼다. [모델 선택 설명](https://help.traveltime.com/en/articles/8523982-how-do-the-models-determine-which-route-to-take)은 도착 검색이 가장 늦은 출발을, 출발 검색이 가장 이른 도착을 최적화한다고 한다.
 
-The [regular Matrix reference](https://docs.traveltime.com/api/reference/travel-time-distance-matrix) documents many-to-one arrival searches, up to 10 searches per request, and `route`/`travel_time` properties. One search is required per destination hub. Its introductory arrival-search sentence currently says “no earlier than”, inconsistent with the intended arrive-by semantics in the SDK and help material. This is an unresolved documentation contradiction, not proof that late arrivals are acceptable. The harness and engine must inspect actual timestamps and reject arrival after `D`.
+[일반 Matrix 명세](https://docs.traveltime.com/api/reference/travel-time-distance-matrix)는 다대일 도착 검색, 요청당 최대 10개 검색, `route`/`travel_time` 속성을 문서화한다. 목적지 허브마다 검색 하나가 필요하다. 소개의 도착 검색 문장은 현재 “no earlier than”(지정 시각보다 이르지 않게)이라고 적혀 있어 SDK·도움말의 지정 시각까지 도착 의미와 불일치한다. 이는 해결되지 않은 문서 모순이지 늦은 도착을 허용해도 된다는 증거가 아니다. 검증 도구와 엔진은 실제 타임스탬프를 확인하고 `D` 이후 도착을 거부해야 한다.
 
-The [isochrone reference](https://docs.traveltime.com/api/reference/isochrones) and [route example](https://docs.traveltime.com/api/start/routes) define shapes and timestamp-bearing route properties. Documentation alone does not prove initial-wait inclusion, monotonicity, seven-day Korean timetables, walking connections, or exclusion of intercity/express rail and coaches. Request settings and real route parts require supplier/field review; a generic rail part counter cannot establish urban-rail scope.
+[등시간권 명세](https://docs.traveltime.com/api/reference/isochrones)와 [경로 예시](https://docs.traveltime.com/api/start/routes)는 도형과 타임스탬프가 있는 경로 속성을 정의한다. 문서만으로 초기 대기 포함, 단조성, 한국 7일 시간표, 도보 연결, 시외·급행 철도와 장거리 버스 제외를 입증할 수 없다. 요청 설정과 실제 경로 구간은 공급자·현장 검토가 필요하며, 일반 철도 구간 수만으로 도시철도 범위를 입증할 수 없다.
 
-## Evidence still required
+## 아직 필요한 증빙
 
-| Gate | Current evidence |
+| 조건 | 현재 증빙 |
 | --- | --- |
-| Harness comparison, future dates, sanitization, pacing | 17 local regression tests passed; fixture evidence only |
-| Live 20 × 100 comparison and measured hits/latency | BLOCKED: credentials/confirmed account quota unavailable |
-| Reviewed 100-hub and full-scale catalogs | BLOCKED: catalog review belongs to task 1 |
-| Production adapter connection | Integrated; real provider parser/retry parity covered by keyless regression tests |
-| Actual bus/rail/mixed routes, ≥10 each | BLOCKED: real route review absent |
-| Ten real user journeys | BLOCKED: participant/device travel observations absent |
-| Initial wait, early arrival, latest departure, urban-mode scope | BLOCKED: live responses/supplier confirmation absent |
-| Workers 30-second deadline and full-catalog resources | Separate production/integration verification required |
+| 검증 도구 비교·미래 날짜·민감 정보 제거·호출 간격 조절 | 로컬 회귀 테스트 17개 통과. 고정 데이터 증빙만 있음 |
+| 실제 20 × 100 비교와 사용량·지연 실측 | 차단(BLOCKED): 인증 정보·확인된 계정 할당량 없음 |
+| 검토된 100개 허브 및 전체 규모 카탈로그 | 차단(BLOCKED): 카탈로그 검토는 작업 1 담당 |
+| 운영 어댑터 연결 | 통합 완료. 실제 공급자 구현의 파서·재시도 동작 일치는 키 없는 회귀 테스트로 검증 |
+| 실제 버스·철도·혼합 경로 각 10건 이상 | 차단(BLOCKED): 실제 경로 검토 없음 |
+| 실제 사용자 이동 10건 | 차단(BLOCKED): 참가자·기기 이동 관찰 없음 |
+| 초기 대기·조기 도착·가장 늦은 출발·도시 교통수단 범위 | 차단(BLOCKED): 실제 응답·공급자 확인 없음 |
+| Workers 30초 제한과 전체 카탈로그 자원 | 별도의 운영·통합 검증 필요 |
 
-Do not promote this report's fixture checks to live PASS. On a measured failure, retain the sanitized report and public fixture ID, reproduce with a new future date, and present the isochrone/full-Matrix tradeoff for a user decision. Do not silently change to departure-time routing or a narrower geography.
+이 보고서의 고정 데이터 검사를 실제 검증 통과로 올려 표시하지 않는다. 실측 실패 시 민감 정보를 제거한 보고서와 공개 고정 데이터 ID를 보관하고 새 미래 날짜로 재현한다. 등시간권·전체 Matrix의 장단점을 제시하여 사용자가 결정하도록 한다. 출발 시각 기준 경로나 더 좁은 지역으로 몰래 바꾸지 않는다.

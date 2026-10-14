@@ -1,26 +1,26 @@
-# Task 1 — foundation and catalog
+# 작업 1 — 기반 구성과 카탈로그
 
-Implemented Node 24 / React / TypeScript / Vite with a locked npm dependency tree, Workers static assets + D1 configuration, browser/server environment example, node:test and Playwright dependencies/scripts. Shared types were not changed. The D1 UUID is an explicit all-zero local placeholder; no account, paid subscription or remote deployment was created.
+잠긴 npm 의존성 트리를 갖춘 Node 24 / React / TypeScript / Vite, Workers 정적 자산 + D1 설정, 브라우저·서버 환경 변수 예시, node:test·Playwright 의존성과 스크립트를 구현했다. 공통 타입은 변경하지 않았다. D1 UUID는 모두 0인 명시적 로컬 자리표시자이며 계정·유료 구독·원격 배포를 생성하지 않았다.
 
-The first foundation commit is `04e5b5e`. Coordinator subsequently fixed its PowerShell UTF-8 BOM in `package.json`; that correction must remain in integration. The foundation's npm install reported 0 vulnerabilities. Toolchain runs used portable Node 24.21.0 supplied by the coordinator, without global changes.
+첫 기반 커밋은 `04e5b5e`다. 이후 조정 담당자가 `package.json`의 PowerShell UTF-8 BOM을 수정했으며, 통합 시 이 수정을 유지해야 한다. 기반 작업의 npm 설치 결과 취약점은 0개였다. 도구 실행에는 조정 담당자가 제공한 휴대형 Node 24.21.0을 사용했고 전역 설정은 변경하지 않았다.
 
-Acquired two actual, licensed Seoul public sources and retained provenance, original bytes and hashes. Deterministic candidate normalization produces **600 unreviewed candidates (539 rail, 61 bus)** and **100 actual source points (50 each mode)**. A source fingerprint plus explicit evidence-bearing review record is required to set `verified: true`. The release catalog is empty and the default release command fails closed. Details, license attribution and rebuild/review instructions are in [data/README.md](../data/README.md).
+실제 라이선스가 확인된 서울 공공 출처 2개를 확보하고 출처 정보·원본 바이트·해시를 보존했다. 결정적 후보 정규화로 **미검토 후보 600개(철도 539, 버스 61)**와 **실제 출처 지점 100개(수단별 50개)**를 생성한다. `verified: true`를 설정하려면 출처 지문과 명시적인 증빙 포함 검토 기록이 필요하다. 출시용 카탈로그는 비어 있으며 기본 출시 명령은 조건 미충족 시 차단된다. 자세한 내용, 라이선스 출처 표기, 재생성·검토 절차는 [데이터 안내서](../data/README.md)에 있다.
 
-## Verification
+## 검증
 
-- `node --test tests/catalog.test.mjs`: **9 passed**, after observing failing tests before implementation/changes. Tests cover source preservation, invalid coordinates, ambiguous duplicate quarantine, duplicate source IDs, release rejection, stale/incomplete review evidence, deterministic ordering, the actual 100-point sample, and preserving release output on failed build.
-- `npm test`: **9 passed** in the Task 1 worktree (catalog suite only; other tasks are isolated).
-- `npm run typecheck`: **passed** for the foundation/shared types currently in this worktree.
-- `python scripts/extract-hub-sources.py`: **11,236 records extracted**, source schema asserted, Python standard library only.
-- `node scripts/build-hubs.mjs --preview`: **600 candidates, 0 reviewed, 11,420 exclusions**. Sample/source coordinate equality is checked in tests.
-- `node scripts/build-hubs.mjs`: **expected exit 1**, `unreviewed hub: seoul-bus-100000001`; existing `hubs.json` remains untouched. This is a blocked acceptance condition, not a passing release build.
-- Full frontend build, Worker dry-run, D1 migration and Playwright tests belong to integration because this worktree intentionally has no UI entrypoint, server handler or migrations. No temporary UI was committed and these checks are not claimed as passed here.
+- `node --test tests/catalog.test.mjs`: 구현·변경 전 테스트 실패를 확인한 뒤 **9개 통과**. 출처 보존, 잘못된 좌표, 모호한 중복의 격리, 중복 출처 ID, 출시 거부, 오래되거나 불완전한 검토 증빙, 결정적 순서, 실제 100개 표본, 빌드 실패 시 출시 결과물 보존을 다룬다.
+- `npm test`: 작업 1 작업 트리에서 **9개 통과**. 카탈로그 테스트만 포함하며 다른 작업은 격리되어 있다.
+- `npm run typecheck`: 현재 작업 트리의 기반·공통 타입에 대해 **통과**.
+- `python scripts/extract-hub-sources.py`: **11,236개 레코드 추출**, 원본 스키마 단언 확인, Python 표준 라이브러리만 사용.
+- `node scripts/build-hubs.mjs --preview`: **후보 600개, 검토 완료 0개, 제외 11,420개**. 표본과 출처 좌표의 일치 여부는 테스트에서 확인한다.
+- `node scripts/build-hubs.mjs`: **예상대로 종료 코드 1**, `unreviewed hub: seoul-bus-100000001`. 기존 `hubs.json`은 유지된다. 이는 인수 조건이 차단된 상태이며 출시 빌드 통과가 아니다.
+- 전체 프런트엔드 빌드, Worker 모의 실행, D1 마이그레이션, Playwright 테스트는 통합 단계의 담당 범위다. 이 작업 트리에는 의도적으로 UI 진입점·서버 핸들러·마이그레이션이 없다. 임시 UI를 커밋하지 않았으며 해당 검사를 여기서 통과했다고 주장하지 않는다.
 
-## Remaining release blockers
+## 남은 출시 차단 요인
 
-1. **0 verified hubs**, unknown administrative regions and no field/pedestrian-access verification. The API must report catalog unavailable rather than treat an empty release catalog as genuine no-routes. Never silently import `hubs.preview.json` for production recommendations.
-2. **600 candidates vs. the 1,000–3,000 target**, with conservative exclusion of repeated station/stop names, incomplete outer-region bus coverage and no route-degree hub selection. Counts were not padded by duplicated platforms/stops.
-3. KRIC source redistribution terms need clarification for the requested national railway source; the actual distributable dataset uses clearly licensed Seoul sources instead. No ambiguous KRIC snapshot was committed.
-4. Actual provider validation of 20 × 100 scenarios, full catalog performance/CPU/memory, bus/rail/mixed cases and real traveler journeys remains external work. Source availability and synthetic unit tests cannot establish provider or journey accuracy.
+1. **검증된 허브 0개**, 행정구역 미확인, 현장·보행 접근성 검증 없음. API는 빈 출시 카탈로그를 실제 경로 없음으로 취급하지 않고 카탈로그 사용 불가로 알려야 한다. 운영 추천에 `hubs.preview.json`을 몰래 가져오지 않는다.
+2. **목표 1,000–3,000개 대비 후보 600개**. 중복 역·정류장 이름을 보수적으로 제외했고 외곽 지역 버스 범위가 불완전하며 노선 연결 수 기반 허브 선정은 없다. 중복 승강장·정류장으로 개수를 부풀리지 않았다.
+3. 요청한 전국 철도 자료의 KRIC 재배포 조건을 확인해야 한다. 실제 배포 가능 데이터셋에는 라이선스가 명확한 서울 출처를 사용했다. 조건이 모호한 KRIC 스냅샷은 커밋하지 않았다.
+4. 실제 공급자를 이용한 20 × 100 시나리오, 전체 카탈로그 성능·CPU·메모리, 버스·철도·혼합 사례, 실제 여행자 이동 검증은 외부 작업으로 남아 있다. 출처 확보와 합성 단위 테스트로 공급자·이동 정확성을 입증할 수 없다.
 
-The foundation and preview pipeline are reviewable; Task 1's reviewed release-catalog acceptance criterion is **BLOCKED**.
+기반 구성과 미리보기 생성 절차는 검토 가능하다. 작업 1의 검토 완료 출시 카탈로그 인수 조건은 **차단(BLOCKED)** 상태다.

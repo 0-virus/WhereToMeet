@@ -1,41 +1,41 @@
-# Task 4 — Korean mobile web
+# 작업 4 — 한국어 모바일 웹
 
-Implemented the approved input → comparison → destination flow in React/TypeScript. White/ink/rausch design, responsive cards and pill search, native system fonts, accessible labels, keyboard autocomplete, focusable error/result regions, and reduced-motion support. No stock/fabricated photos, ratings, production fixtures, or stored route responses.
+승인된 입력 → 비교 → 목적지 흐름을 React/TypeScript로 구현했다. 흰색·먹색·Rausch 디자인, 반응형 카드와 알약 모양 검색창, 기본 시스템 글꼴, 접근성 레이블, 키보드 자동 완성, 초점을 받을 수 있는 오류·결과 영역, 동작 줄이기를 지원한다. 스톡·가짜 사진, 평점, 운영 고정 테스트 데이터, 저장된 경로 응답은 사용하지 않았다.
 
-## Delivered
+## 구현 결과
 
-- Two to four selected place inputs; editing a label invalidates its coordinates; abortable debounced autocomplete with keyboard selection. Explicit KST date conversion independent of device timezone, future/seven-day validation.
-- At most four recommendation cards, maximum burden and each participant's departure, arrival, travel, early wait and transfers. Calculation timestamp and stale-departure notice.
-- Request cancellation, duplicate-request guard, abandoned-history-restore cancellation, offline, quota, provider, expired-record and history-write failures. Missing history bookmark data cannot overwrite existing bookmarks.
-- Lazy map module and click-triggered restricted Kakao SDK (`VITE_KAKAO_JS_KEY`), load timeout, retry and permanent external map fallback. Nearby categories fetch only after explicit selection, with an 800m explanation and cap of 15.
-- Public `/meet/:hubId` pages containing no personal origins or meeting date. Malformed percent encoding is handled in React. Web Share cancellation, clipboard success, clipboard denial/manual selection. External places restricted to credential-free HTTPS Kakao origins.
-- Anonymous server history, fresh owned-record lookup before every restore, automatic recalculation for valid future meetings, new-time requirement for past meetings, favorites-first order, independently reachable bookmarked public hubs, bookmark removal and individual/all confirmed deletion.
-- `/privacy` and footer link describe anonymous cookies, server origin/meeting storage, 90-day normal retention, indefinite bookmarked retention, deletion, separate 90-day search summaries, no persisted routes, providers, and operator contact explicitly awaiting setup.
+- 장소를 선택한 입력 2–4개를 지원한다. 레이블을 수정하면 좌표를 무효화하고, 취소 가능한 디바운스 자동 완성과 키보드 선택을 제공한다. 기기 시간대와 무관한 명시적 KST 날짜 변환, 미래·7일 이내 검증을 구현했다.
+- 추천 카드 최대 네 개에 최대 부담과 참가자별 출발·도착·이동·조기 도착 대기·환승을 표시한다. 계산 시각과 출발 시각이 지난 경우의 안내를 제공한다.
+- 요청 취소, 중복 요청 방지, 중단된 기록 복원의 취소, 오프라인, 할당량, 공급자, 만료 기록, 기록 저장 실패를 처리한다. 기록의 즐겨찾기 데이터가 없다고 기존 즐겨찾기를 덮어쓰지 않는다.
+- 지도 모듈 지연 로딩과 클릭 시 로드하는 제한된 Kakao SDK(`VITE_KAKAO_JS_KEY`), 로딩 시간 초과, 재시도, 항상 사용할 수 있는 외부 지도 대체 수단을 제공한다. 주변 카테고리는 명시적으로 선택한 뒤에만 조회하고 반경 800m 설명과 최대 15개 제한을 표시한다.
+- 개인 출발지나 약속 날짜가 없는 공개 `/meet/:hubId` 페이지를 제공한다. 잘못된 퍼센트 인코딩은 React에서 처리한다. Web Share 취소, 클립보드 성공, 클립보드 거부·수동 선택을 지원한다. 외부 장소는 인증 정보가 없는 HTTPS Kakao 원본 주소로 제한한다.
+- 익명 서버 기록, 복원 전마다 최신 본인 기록 조회, 유효한 미래 약속의 자동 재계산, 과거 약속의 새 시간 요구, 즐겨찾기 우선 정렬, 독립적으로 접근할 수 있는 즐겨찾기 공개 허브, 즐겨찾기 해제, 확인을 거친 개별·전체 삭제를 구현했다.
+- `/privacy`와 푸터 링크에 익명 쿠키, 서버의 출발지·약속 저장, 일반 기록 90일 보존, 즐겨찾기 무기한 보존, 삭제, 별도 검색 요약 90일 보존, 경로 미보관, 공급자, 아직 설정되지 않은 운영자 연락처를 명시했다.
 
-## Verification — 2026-10-05
+## 검증 — 2026-10-05
 
-- `npm test`: 4 UI client tests passed in this isolated worktree. It contains no other agents' unit tests; the integration branch must run the combined suite.
-- `npm run typecheck`: passed.
-- `npm run build`: passed. Lazy map bundle ~1.84 kB (0.92 kB gzip); main bundle ~251.39 kB (78.51 kB gzip); CSS ~18.96 kB (4.60 kB gzip).
-- `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- --workers=2`: 17 passed, 38.2 seconds. Uses installed Chrome, 360×800, America/Los_Angeles device timezone, mocked API responses. Includes 768/1280 layouts and 200% CSS zoom.
-- Meaningful regression failures were reproduced for malformed URL handling, abandoned history restore, zoom overflow, and unsafe external URL credentials; corrected checks now pass. Early harness issues (pre-existing unrelated server on 5173 and foundation JSON BOM) were identified and isolated. E2E owns strict port 4174 and never reuses an unrelated server.
-- Inspected generated 360px home/results and 1280px home screenshots. Generated screenshots are intentionally local artifacts, not source assets:
+- `npm test`: 이 격리 작업 트리에서 UI 클라이언트 테스트 4개 통과. 다른 에이전트의 단위 테스트는 포함하지 않으며 통합 브랜치에서 전체 테스트를 실행해야 한다.
+- `npm run typecheck`: 통과.
+- `npm run build`: 통과. 지연 로딩 지도 번들 약 1.84 kB(gzip 0.92 kB), 주 번들 약 251.39 kB(gzip 78.51 kB), CSS 약 18.96 kB(gzip 4.60 kB).
+- `PLAYWRIGHT_CHANNEL=chrome npm run test:e2e -- --workers=2`: 17개 통과, 38.2초. 설치된 Chrome, 360×800, America/Los_Angeles 기기 시간대, 모의 API 응답을 사용한다. 768/1280 레이아웃과 CSS 200% 확대를 포함한다.
+- 잘못된 URL 처리, 중단된 기록 복원, 확대 시 넘침, 안전하지 않은 외부 URL 인증 정보에 대해 의미 있는 회귀 실패를 재현했으며 수정 후 검사는 통과했다. 초기 테스트 도구 문제인 5173 포트의 기존 무관한 서버와 기반 JSON BOM을 식별·분리했다. E2E는 4174 포트를 엄격하게 전용 사용하며 무관한 서버를 재사용하지 않는다.
+- 생성된 360px 홈·결과 및 1280px 홈 스크린샷을 확인했다. 생성 스크린샷은 의도적으로 로컬 결과물이며 소스 자산이 아니다.
   - `C:/Users/PC/Projects/WhereToMeet/.worktrees/task4/test-results/mobile-home.png`
   - `C:/Users/PC/Projects/WhereToMeet/.worktrees/task4/test-results/mobile-results.png`
   - `C:/Users/PC/Projects/WhereToMeet/.worktrees/task4/test-results/home-768.png`
   - `C:/Users/PC/Projects/WhereToMeet/.worktrees/task4/test-results/home-1280.png`
-  - Regenerate with `CAPTURE_UI=1` plus the E2E command.
+  - E2E 명령에 `CAPTURE_UI=1`을 더해 다시 생성한다.
 
-## External / integration verification still required
+## 아직 필요한 외부·통합 검증
 
-Mocked browser flows are not proof of TravelTime/Kakao data quality or real API availability. Real Kakao SDK/domain-key validation, real provider routes and journeys, Android Chrome/Samsung Internet/iOS Safari devices, screen reader review and deployed Workers/D1 cookie/ownership behavior remain for integration/device validation. Vite rejects the raw malformed `/meet/%` URL before serving HTML; the React guard is tested by setting the URL before app boot. Deployed asset fallback should also be checked for this path. Operator identity/contact is not supplied and remains setup required. PWA/service worker/Android assets belong to task 5 and are not fabricated here.
+모의 브라우저 흐름은 TravelTime/Kakao 데이터 품질이나 실제 API 가용성의 증거가 아니다. 실제 Kakao SDK·도메인 키 검증, 실제 공급자 경로와 이동, Android Chrome·Samsung Internet·iOS Safari 기기, 화면 읽기 프로그램 검토, 배포된 Workers/D1의 쿠키·소유권 동작은 통합·기기 검증으로 남아 있다. Vite는 HTML을 제공하기 전에 잘못된 원시 `/meet/%` URL을 거부한다. React 방어 처리는 앱 시작 전에 URL을 설정하는 방식으로 테스트했다. 배포 자산의 대체 응답도 이 경로에서 확인해야 한다. 운영자 신원·연락처는 제공되지 않아 설정이 필요하다. PWA·서비스 워커·Android 자산은 작업 5 담당이며 여기서 임의로 만들지 않았다.
 
-The worktree normalized the foundation package.json BOM locally to permit Vite builds. That package change is deliberately excluded from this task commit; coordinator commit `3a2c1b3` owns it.
+Vite 빌드를 위해 기반 package.json의 BOM을 작업 트리에서 로컬로 정규화했다. 해당 패키지 변경은 의도적으로 이 작업 커밋에서 제외했으며 조정 담당자 커밋 `3a2c1b3`가 담당한다.
 
-## Follow-up review — asynchronous bookmark isolation
+## 후속 검토 — 비동기 즐겨찾기 격리
 
-Synced the integrated `implementation` branch first, retaining the operator-name/contact environment configuration, PWA entry changes, and the scoped clipboard status assertion. Reproduced a delayed bookmark PATCH for history A overwriting the saved IDs displayed for newly loaded history B. The regression failed against the original implementation.
+먼저 통합된 `implementation` 브랜치를 동기화하여 운영자 이름·연락처 환경 설정, PWA 진입점 변경, 범위를 제한한 클립보드 상태 단언을 유지했다. 기록 A의 지연된 즐겨찾기 PATCH가 새로 불러온 기록 B 화면의 저장 ID를 덮어쓰는 문제를 재현했다. 회귀 테스트는 원래 구현에서 실패했다.
 
-Every result invalidation now synchronously advances a generation. Bookmark success, error and pending-state completion update the displayed result only while that generation is still current; the original server record may still finish saving and refresh the history list. New results release the old pending state. The browser regression delays A's response until B has loaded, verifies B remains unsaved for that hub, and checks the next B PATCH preserves B's existing bookmark IDs.
+결과를 무효화할 때마다 이제 세대 값을 동기적으로 증가시킨다. 즐겨찾기 성공·오류·대기 상태 완료는 해당 세대가 여전히 현재일 때만 화면 결과를 갱신한다. 원래 서버 기록은 저장을 끝내고 기록 목록을 갱신할 수 있다. 새 결과는 이전 대기 상태를 해제한다. 브라우저 회귀 테스트는 B가 로드될 때까지 A 응답을 지연시킨 뒤, B의 해당 허브가 저장되지 않은 상태를 유지하는지와 다음 B PATCH가 B의 기존 즐겨찾기 ID를 보존하는지 확인한다.
 
-Follow-up verification: combined `npm test` 83/83 passed, `npm run typecheck` passed, `npm run build` including PWA shell passed, Chrome E2E 18/18 passed. This fix does not change external validation blockers above.
+후속 검증: 통합 `npm test` 83/83 통과, `npm run typecheck` 통과, PWA 셸을 포함한 `npm run build` 통과, Chrome E2E 18/18 통과. 이 수정은 위의 외부 검증 차단 요인을 바꾸지 않는다.

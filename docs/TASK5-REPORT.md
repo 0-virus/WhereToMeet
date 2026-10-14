@@ -1,42 +1,42 @@
-# Task 5 report — PWA / Android / release operations
+# 작업 5 보고서 — PWA·Android·출시 운영
 
-Implemented on 2026-10-05. **PWA files and Android setup are implemented; production deployment, installable Android application and release readiness remain BLOCKED.**
+2026-10-05 구현. **PWA 파일과 Android 설정 절차는 구현했지만 운영 배포, 설치 가능한 Android 앱, 출시 준비는 차단(BLOCKED) 상태다.**
 
-## Delivered
+## 구현 결과
 
-- Korean `어디서 만나` PWA manifest, 192/512 PNG icons and a dedicated maskable PNG, original geometric SVG source, reproducible Windows icon generation, Korean standalone offline page.
-- Static-shell service worker with exact production precache allowlist and content-derived version; no API/map/private/runtime response caching, cookie-free install fetch, refused private/no-store/redirected/opaque responses, network navigation with static offline fallback, no forced activation during open work, and cleanup limited to this application's cache prefix.
-- Post-Vite `scripts/build-pwa.mjs`, Cloudflare asset freshness headers, strict explicit production identity/DAL generator, installed-tool-only Android preflight/init/build commands and Android setup/device/signing checklist.
-- Fail-closed release checker for empty/unverified catalog, routing approval/evidence, production domain/package/Play certificate, operator contact/name, missing/stale DAL, missing build files, missing TWA config, APK/AAB outputs and physical-device evidence.
-- Deployment operations covering separate real environment bindings/secrets, local-versus-remote D1, staging migration/restore rehearsal, privacy-safe logs, quota/outage handling, and rollback without deleting the production database.
+- 한국어 `어디서 만나` PWA 매니페스트, 192/512 PNG 아이콘과 전용 maskable PNG, 직접 제작한 기하학적 SVG 원본, 재현 가능한 Windows 아이콘 생성, 한국어 독립 오프라인 페이지.
+- 정확한 운영 사전 캐시 허용 목록과 콘텐츠 기반 버전을 갖춘 정적 셸 서비스 워커. API·지도·비공개·실행 중 응답은 캐시하지 않으며, 설치 fetch는 쿠키 없이 실행한다. private·no-store·리디렉션·불투명 응답은 거부하고, 탐색에는 네트워크와 정적 오프라인 대체 화면을 사용한다. 작업 중 창이 열려 있으면 강제 활성화하지 않으며, 캐시 정리는 이 앱의 접두사로 제한한다.
+- Vite 실행 후의 `scripts/build-pwa.mjs`, Cloudflare 자산 최신성 헤더, 명시적 운영 식별 정보·DAL의 엄격한 생성기, 설치된 도구만 사용하는 Android 사전 점검·초기화·빌드 명령, Android 설정·기기·서명 점검표.
+- 빈 카탈로그·미검증 카탈로그, 경로 승인·증빙, 운영 도메인·패키지·Play 인증서, 운영자 연락처·이름, 누락·오래된 DAL, 빌드 파일 누락, TWA 설정 누락, APK/AAB 결과물, 실기기 증빙에 대해 조건 미충족 시 출시를 차단하는 검사기.
+- 실제 환경별 바인딩·비밀 값 분리, 로컬·원격 D1 구분, 스테이징 마이그레이션·복원 예행연습, 개인정보를 보호하는 로그, 할당량·장애 대응, 운영 DB를 삭제하지 않는 롤백을 다루는 배포 운영 문서.
 
-No `assetlinks.json` or generated Android project is checked in because a real origin, package and Play certificate were not supplied. `android/README.md` and scripts are setup deliverables, not Android build artifacts. No domain purchase, SDK install, public deploy, remote migration, Play upload or paid action was taken.
+실제 원본 주소·패키지·Play 인증서가 제공되지 않아 `assetlinks.json`이나 생성된 Android 프로젝트는 저장소에 등록하지 않았다. `android/README.md`와 스크립트는 설정 결과물이며 Android 빌드 결과물이 아니다. 도메인 구매, SDK 설치, 공개 배포, 원격 마이그레이션, Play 업로드, 유료 작업은 수행하지 않았다.
 
-## Verification
+## 검증
 
-Node 24.21.0 portable runtime, Windows. Added tests failed initially for absent implementation, then passed after implementation.
+Windows의 휴대형 Node 24.21.0을 사용했다. 추가한 테스트는 구현이 없어 처음에는 실패했고 구현 후 통과했다.
 
-| Check | Observed result |
+| 검사 | 관찰 결과 |
 | --- | --- |
-| `node --test tests/pwa-android.test.mjs` / final full suite | Seven new tests covered by final suite |
-| `npm test` in task5 checkout | **31 passed, 0 failed** (includes catalog/routing/client tests available on this branch) |
-| `npm run typecheck` | Exit 0 |
-| `npm run build` then `node scripts/build-pwa.mjs` | Exit 0; ten cached static artifacts, generated version `3017cce1c0267e1bea0b` on this branch |
-| PNG decoding/header dimensions and manifest references | 192×192, 512×512 and maskable 512×512 pass; 512px icon visually inspected |
-| `node scripts/check-release.mjs` | Expected exit **1**, fifteen blockers; no false release pass |
-| `powershell -NoProfile -File scripts/android.ps1 preflight` | Expected exit **1**, explicit identity absent; no project generation |
-| `git diff --check` | Exit 0 |
+| `node --test tests/pwa-android.test.mjs` / 최종 전체 테스트 | 신규 테스트 7개가 최종 전체 테스트에 포함됨 |
+| 작업 5 체크아웃의 `npm test` | **31개 통과, 실패 0개**. 이 브랜치에서 사용할 수 있는 카탈로그·경로·클라이언트 테스트 포함 |
+| `npm run typecheck` | 종료 코드 0 |
+| `npm run build` 후 `node scripts/build-pwa.mjs` | 종료 코드 0. 정적 결과물 10개 캐시, 이 브랜치의 생성 버전 `3017cce1c0267e1bea0b` |
+| PNG 디코딩·헤더 크기 및 매니페스트 참조 | 192×192, 512×512, maskable 512×512 통과. 512px 아이콘 육안 확인 |
+| `node scripts/check-release.mjs` | 예상대로 종료 코드 **1**, 차단 요인 15개. 잘못된 출시 통과 없음 |
+| `powershell -NoProfile -File scripts/android.ps1 preflight` | 예상대로 종료 코드 **1**, 명시적 식별 정보 없음. 프로젝트 미생성 |
+| `git diff --check` | 종료 코드 0 |
 
-SW tests execute the real worker code in a VM with browser cache/network boundary stubs. They prove filtering/fallback/installation logic, not actual browser installation or Android lifecycle. Root integration must wire the manifest links, production SW registration and postbuild script; these shared edits were coordinated with the root owner. Actual browser offline/navigation/cache inspection remains an integration check. Server/worker/D1 verification belongs to integration because those files were absent in this task5 checkout.
+SW 테스트는 브라우저 캐시·네트워크 경계를 스텁으로 둔 VM에서 실제 Worker 코드를 실행한다. 필터링·대체 동작·설치 로직을 증명하며 실제 브라우저 설치나 Android 수명주기를 증명하지는 않는다. 루트 통합에서는 매니페스트 링크, 운영 SW 등록, 빌드 후 스크립트를 연결해야 하며 이 공통 변경은 루트 담당자와 조율했다. 실제 브라우저의 오프라인·탐색·캐시 확인은 통합 검사로 남아 있다. 서버·Worker·D1 파일은 작업 5 체크아웃에 없었으므로 해당 검증은 통합 담당이다.
 
-## Exact external blockers
+## 구체적인 외부 차단 요인
 
-1. Owned public HTTPS origin and Cloudflare deployment/account bindings not supplied; D1 local placeholder must not be used remotely.
-2. Permanent Android package ID, Play App Signing SHA-256, upload-key custody/backups and Play account access not supplied.
-3. Installed Bubblewrap/JDK/Android SDK and adequate disk space not prepared; no APK or AAB exists.
-4. Physical Android device, Play-signed internal distribution and link/lifecycle validation not performed. Desktop tests do not replace these.
-5. Verified catalog currently has zero hubs; official-source preview points are not review approval.
-6. Live provider usage rights, routing adoption evidence, full-scale timing, real journeys and production quota/budget remain unresolved.
-7. Real public operator name/contact, final privacy/store data, deployment/rollback rehearsal and explicit launch decision remain unresolved.
+1. 소유한 공개 HTTPS 원본 주소와 Cloudflare 배포·계정 바인딩이 제공되지 않았다. D1 로컬 자리표시자는 원격에서 사용하면 안 된다.
+2. 영구 Android 패키지 ID, Play App Signing SHA-256, 업로드 키 관리·백업, Play 계정 접근 권한이 제공되지 않았다.
+3. 설치된 Bubblewrap/JDK/Android SDK와 충분한 디스크 공간이 준비되지 않았으며 APK·AAB가 없다.
+4. 실제 Android 기기, Play 서명 내부 배포, 링크·수명주기 검증을 수행하지 않았다. 데스크톱 테스트로 대체할 수 없다.
+5. 검증된 카탈로그는 현재 허브 0개다. 공식 출처의 미리보기 지점이 검토 승인을 뜻하지는 않는다.
+6. 실제 공급자 사용 권한, 경로 채택 증빙, 전체 규모 시간 측정, 실제 이동, 운영 할당량·예산이 해결되지 않았다.
+7. 실제 공개 운영자 이름·연락처, 최종 개인정보·스토어 정보, 배포·롤백 예행연습, 명시적 출시 결정이 해결되지 않았다.
 
-The release checker is structural preflight. It checks evidence file existence and build ZIP signatures, not truth of evidence or Android signature validity. Human review of the signed artifacts, actual remote association, provider terms, test results and final launch decision remains required.
+출시 검사기는 구조적 사전 점검이다. 증빙 파일 존재와 빌드 ZIP 시그니처를 검사하며 증빙의 진실성이나 Android 서명의 유효성은 검사하지 않는다. 서명된 결과물, 실제 원격 연결, 공급자 약관, 테스트 결과, 최종 출시 결정은 사람의 검토가 필요하다.

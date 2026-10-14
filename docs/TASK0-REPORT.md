@@ -1,19 +1,19 @@
-# Task 0 report
+# 작업 0 보고서
 
-Implemented the standalone routing validation CLI, 20 future-date public-origin scenarios, validation adapter contract, and 10 regression tests. The CLI compares isochrone recommendations with the complete arrival matrix over 100 or all supplied hubs; records request/search hits, quota waiting, latency, timestamp semantics, safety checks and per-origin monotonicity; and emits sanitized JSON with explicit blockers.
+독립 실행형 경로 검증 CLI, 미래 날짜의 공개 출발지 시나리오 20개, 검증 어댑터 인터페이스, 회귀 테스트 10개를 구현했다. CLI는 100개 또는 제공된 전체 허브에서 등시간권 추천과 전체 도착 행렬을 비교한다. 요청 수·검색 사용량, 할당량 대기, 지연 시간, 타임스탬프 의미, 안전 점검, 출발지별 단조성을 기록하고 차단 요인을 명시한 민감 정보 제거 JSON을 출력한다.
 
-Validation on Node 24.21.0: all 10 routing-validation tests passed; targeted strict TypeScript check passed. Initial test run failed before the script existed. Keyless preflight produced `BLOCKED`, zero provider requests, no route samples, and null latency/accuracy metrics. Node 22 strip-types also passed the first eight tests before Node 24 became available.
+Node 24.21.0 검증: 경로 검증 테스트 10개 모두 통과, 대상 범위의 엄격한 TypeScript 검사 통과. 최초 테스트는 스크립트가 없어 실패했다. 키 없는 사전 점검은 `BLOCKED`, 공급자 요청 0회, 경로 표본 없음, 지연·정확도 지표 null을 출력했다. Node 24를 사용할 수 있게 되기 전에는 Node 22의 타입 제거 실행으로도 처음 8개 테스트가 통과했다.
 
-Official docs were reviewed. The Matrix arrival introduction says “no earlier than”, while TravelTime's route-selection explanation says latest departure for arrive-by searches; actual timestamps remain authoritative for safety. Public Suwon, Incheon and Seongnam coordinates are sourced in [ROUTING-VALIDATION.md](./ROUTING-VALIDATION.md).
+공식 문서를 검토했다. Matrix 도착 검색 소개에는 “no earlier than”(지정 시각보다 이르지 않게)이라고 적혀 있지만, TravelTime의 경로 선택 설명은 지정 시각까지 도착하는 검색에서 가장 늦은 출발을 선택한다고 한다. 안전 판단은 실제 타임스탬프를 기준으로 한다. 수원·인천·성남의 공개 좌표 출처는 [경로 검증 문서](./ROUTING-VALIDATION.md)에 기록했다.
 
-External blockers: TravelTime keys and confirmed quota, reviewed catalog, actual bus/rail/mixed journeys and transport-scope review, ten real user journeys, and live performance/semantics evidence. The production adapter is an explicit task 2 integration dependency, not a fabricated engine. No live API validation or deployment-readiness claim is made.
+외부 차단 요인: TravelTime 키와 확인된 할당량, 검토된 카탈로그, 실제 버스·철도·혼합 이동과 교통수단 범위 검토, 실제 사용자 이동 10건, 실제 성능·의미 검증 자료. 운영 어댑터는 작업 2와의 명시적 통합 의존 사항이며 임의 엔진으로 대체하지 않았다. 실제 API 검증이나 배포 준비 완료를 주장하지 않는다.
 
-Adapter contract commit: `b0e194c`. Remaining implementation is committed separately for coordinator cherry-pick. Ownership stayed within scripts/validation, routing fixture/tests, and task 0 docs; shared.ts and product code were not edited.
+어댑터 인터페이스 커밋: `b0e194c`. 나머지 구현은 조정 담당자가 cherry-pick할 수 있도록 별도 커밋했다. 담당 범위는 scripts/validation, 경로 고정 데이터·테스트, 작업 0 문서로 유지했으며 shared.ts와 제품 코드는 수정하지 않았다.
 
-## Core review fixes
+## 핵심 검토 수정 사항
 
-Synced the integration branch before editing, preserving independent source-backed origins, HTTP-error passthrough, and documented rail-mode metrics. Accuracy now uses only baseline-routable scenarios, reports empty agreements separately, fails missed routable results, and blocks when no routable evidence exists.
+수정 전에 통합 브랜치를 동기화하여 독립적인 출처 기반 출발지, HTTP 오류 원형 전달, 문서화된 철도 수단 지표를 보존했다. 정확도는 이제 기준 행렬에서 경로를 찾은 시나리오만 분모로 사용한다. 양쪽 모두 빈 결과인 경우는 별도로 보고하며, 경로가 있는 사례를 놓치면 실패하고 경로가 있는 증빙 자체가 없으면 차단한다.
 
-Response observation now uses a backpressured stream with an 8 MiB capture limit. It leaves malformed JSON and oversized-response decisions to the production parser. A real-provider regression reproduced the previous malformed-JSON discrepancy (wrapped: two requests/503 versus direct: one request/502) and now confirms parity. An oversized stream stops near the production limit rather than being fully buffered first. Safe reporting preserves the actual monotonicity and candidate-budget error codes.
+응답 관찰은 8 MiB 수집 한도를 가진 역압 스트림을 사용한다. 잘못된 JSON과 응답 크기 초과 판단은 운영 파서에 맡긴다. 실제 공급자 구현을 사용하는 회귀 테스트로 이전의 잘못된 JSON 처리 차이(래퍼 사용 시 요청 2회/503, 직접 호출 시 요청 1회/502)를 재현했으며 현재는 동일한 동작을 확인했다. 대형 스트림은 먼저 전체를 버퍼에 쌓지 않고 운영 한도 근처에서 중단한다. 안전한 보고에서도 실제 단조성·후보 처리 예산 오류 코드를 유지한다.
 
-Quota waits are abortable, including an injected stalled sleep; already-aborted and canceled queued requests do not count hits or start network calls. The six added regression tests were observed failing before their fixes. Final Node 24.21.0 checks: **17 harness tests passed; 45 combined harness/provider/recommendation tests passed; full project TypeScript check passed**. No dependency installation or live API call was needed. External live-evidence blockers remain unchanged.
+할당량 대기는 중단 가능한 구조이며, 주입된 멈춘 대기 함수도 포함한다. 이미 취소되었거나 대기열에서 취소된 요청은 사용량에 포함하지 않고 네트워크 호출도 시작하지 않는다. 추가한 회귀 테스트 6개는 수정 전에 실패하는 것을 확인했다. 최종 Node 24.21.0 검사: **검증 도구 테스트 17개 통과, 도구·공급자·추천 통합 테스트 45개 통과, 전체 프로젝트 TypeScript 검사 통과**. 의존성 설치나 실제 API 호출은 필요하지 않았다. 외부 실측 증빙 차단 요인은 그대로다.

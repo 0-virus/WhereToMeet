@@ -1,29 +1,29 @@
-# Task 3 server / D1 / history report
+# 작업 3 서버·D1·기록 보고서
 
-Implemented the shared HTTP contract in `server/app.ts`; `server/index.ts` wires the reviewed production catalog. Test dependency injection exists only in the worker factory, with no environment-triggered production fixture fallback. Task 2 owns the imported routing engine.
+`server/app.ts`에 공통 HTTP 인터페이스를 구현했고 `server/index.ts`는 검토된 운영 카탈로그를 연결한다. 테스트 의존성 주입은 Worker 팩터리에만 있으며 환경 변수로 운영 환경을 고정 테스트 데이터로 전환하는 대체 경로는 없다. 가져오는 경로 엔진은 작업 2 담당이다.
 
-Security and behavior: input and timezone/date validation, 2–4 participants, distinct IDs, finite WGS84 coordinates, future ≤7 days, Kakao administrative region verification, fixed provider endpoints, trusted HTTPS place links, nearby 800m/15 results, no-store responses, safe fixed errors, same-Origin writes, one 30-second cancellation budget, catalog/routing/config gates.
+보안·동작: 입력 및 시간대·날짜 검증, 참가자 2–4명, 서로 다른 ID, 유한한 WGS84 좌표, 7일 이내 미래 시간, Kakao 행정구역 검증, 고정 공급자 엔드포인트, 신뢰하는 HTTPS 장소 링크, 주변 반경 800m·결과 15개, no-store 응답, 안전한 고정 오류, 동일 Origin 쓰기, 단일 30초 취소 예산, 카탈로그·경로 승인·설정 차단 조건을 구현했다.
 
-History: 32-byte opaque Secure/HttpOnly/SameSite cookie; only its hash in D1; authorization before routing; automatic success/no_routes save; no route-response persistence; visible write-failure warning; bookmarks preserved across recalculation; bookmarks may span multiple searches; normal 90-day retention, bookmarked persistence and expired-last-unpin deletion; own record/all deletion. D1 retention and quota cleanup run daily.
+기록: 32바이트 불투명 Secure/HttpOnly/SameSite 쿠키, D1에는 해시만 저장, 경로 계산 전 소유권 확인, 성공·no_routes 자동 저장, 경로 응답 미보관, 저장 실패 경고 표시, 재계산 시 즐겨찾기 유지, 여러 검색에 걸친 즐겨찾기, 일반 기록 90일 보존, 즐겨찾기 기록 계속 보관, 만료 후 마지막 즐겨찾기 해제 시 삭제, 본인 기록 개별·전체 삭제를 구현했다. D1 보존 기간 정리와 할당량 정리는 매일 실행한다.
 
-Quota ruling: reserve the entire configured search hit budget for 90 seconds using one atomic D1 SQL statement, including the concurrency/owner checks; release its concurrency lease after history cleanup settles. The initial 35-second lease was extended to 90 seconds during integrated review to prevent a second canceled search from restoring the first canceled write while cleanup remains outstanding. This is intentionally conservative: lower throughput rather than unsafe refunds while cancellation/retry usage remains uncertain. Telemetry is not used as quota accounting. Production external-call endpoints additionally require the Cloudflare rate-limit binding; daily hashed network keys avoid raw IP storage.
+할당량 결정: 동시 실행·소유자 확인을 포함한 단일 원자적 D1 SQL 문으로 설정된 전체 검색 사용량 예산을 90초 예약하고, 기록 정리가 끝난 후 동시 실행 임대를 해제한다. 통합 검토에서 최초 35초 임대를 90초로 늘렸다. 정리가 진행 중일 때 두 번째 취소 검색이 첫 번째 취소 쓰기를 되살리는 것을 막기 위해서다. 취소·재시도 사용량이 불확실한 동안 안전하지 않은 환급보다 낮은 처리량을 택한 의도적인 보수적 동작이다. 사용 통계는 할당량 회계로 사용하지 않는다. 운영 외부 호출 엔드포인트에는 Cloudflare 속도 제한 바인딩도 필요하다. 매일 바뀌는 해시 네트워크 키로 원본 IP 저장을 피한다.
 
-Telemetry: strict column allowlist, max four public recommendation IDs, idempotent request ID, database status/count/nonnegative constraints, exact expiry boundary, background write failure isolation and fixed-code diagnostics. Logs never include raw error objects or user inputs.
+사용 통계: 엄격한 열 허용 목록, 공개 추천 ID 최대 네 개, 멱등 요청 ID, DB 상태·개수·음수 금지 제약, 정확한 만료 경계, 백그라운드 쓰기 실패 격리, 고정 코드 진단을 적용한다. 로그에는 원본 오류 객체나 사용자 입력을 넣지 않는다.
 
-Verification at task handoff:
+작업 인계 시 검증:
 
-- `node --test tests/server-api.test.ts tests/server-db.test.ts`: 14 passing.
-- `tsc --noEmit`: passing with task 2 source copied only for local integration verification, excluded from this commit.
-- Local Wrangler D1 migrations 0001/0002/0003: applied successfully; migration0003 preserves bookmark arrays beyond four.
-- Full worktree `npm test`: 33 passing. `npm run typecheck`: passing.
-- Worktree `npm run build` blocked because task 4 owns `index.html` and it is not present in this isolated branch; consequently `worker:check` cannot find `dist`. Coordinator integration must run both checks after combining frontend and server.
+- `node --test tests/server-api.test.ts tests/server-db.test.ts`: 14개 통과.
+- `tsc --noEmit`: 로컬 통합 검증에만 작업 2 소스를 복사하여 통과. 해당 소스는 이 커밋에서 제외했다.
+- 로컬 Wrangler D1 마이그레이션 0001/0002/0003: 적용 성공. migration0003은 네 개를 초과하는 즐겨찾기 배열을 보존한다.
+- 전체 작업 트리 `npm test`: 33개 통과. `npm run typecheck`: 통과.
+- 작업 트리의 `npm run build`는 작업 4 담당인 `index.html`이 이 격리 브랜치에 없어 차단되었다. 따라서 `worker:check`도 `dist`를 찾지 못한다. 조정 담당자는 프런트엔드·서버 통합 후 두 검사를 실행해야 한다.
 
-External blockers: reviewed production catalog is deliberately empty; actual supplier credentials/contracts/routing approval and live behavior, production DB/ratelimiter account binding, real HTTPS deployment and operational recovery remain unverified. This task does not authorize a public launch.
+외부 차단 요인: 검토된 운영 카탈로그는 의도적으로 비어 있다. 실제 공급자 인증 정보·계약·경로 승인과 실제 동작, 운영 DB·속도 제한 계정 바인딩, 실제 HTTPS 배포, 운영 복구는 검증되지 않았다. 이 작업은 공개 출시를 승인하지 않는다.
 
-Operations and query examples: [운영준비.md](./운영준비.md).
+운영 및 쿼리 예시: [운영준비.md](./운영준비.md).
 
-## Review fixes
+## 검토 수정 사항
 
-Forced-interleaving regressions reproduced late writes after cancellation and stale expiry deletion, then verified the fixes. Migration0004 adds a search write revision. Refresh writes use a bounded compare-and-swap loop; cancellation or ambiguous write errors compensate only the exact owned revision. Existing search fields are restored without reverting concurrent bookmarks or a newer successful search. The API tracks late persistence/compensation with `waitUntil` and delays lease release until it settles. Compensation database failure has its own fixed `HISTORY_ROLLBACK_FAILED` diagnostic; an unavailable database or terminated runtime cannot offer a transactional rollback guarantee and requires operational recovery.
+실행 순서를 강제로 교차시킨 회귀 테스트로 취소 후 늦은 쓰기와 오래된 만료 상태에 따른 삭제를 재현하고 수정 결과를 검증했다. Migration0004는 검색 쓰기 리비전을 추가한다. 갱신 쓰기는 횟수가 제한된 비교 후 교체 루프를 사용한다. 취소 또는 결과가 불명확한 쓰기 오류는 정확히 소유한 리비전만 보상 복구한다. 동시에 바뀐 즐겨찾기나 더 새로운 성공 검색을 되돌리지 않고 기존 검색 필드를 복원한다. API는 늦은 저장·보상 복구를 `waitUntil`로 추적하고, 끝날 때까지 임대 해제를 늦춘다. 보상 복구 DB 실패는 전용 고정 진단 `HISTORY_ROLLBACK_FAILED`를 사용한다. DB가 사용 불가하거나 실행 환경이 종료되면 트랜잭션 롤백을 보장할 수 없으며 운영 복구가 필요하다.
 
-Last-unpin deletion now evaluates current expiry and empty bookmarks atomically at deletion time. Existing anonymous cookies renew their one-year expiry on use without changing the token or security attributes.
+마지막 즐겨찾기 해제에 따른 삭제는 삭제 시점의 현재 만료 상태와 빈 즐겨찾기를 원자적으로 평가한다. 기존 익명 쿠키는 사용 시 토큰이나 보안 속성을 바꾸지 않고 1년 만료 기한을 갱신한다.

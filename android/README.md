@@ -1,22 +1,22 @@
-# Android TWA setup — blocked until real identity and tools are supplied
+# Android TWA 설정 — 실제 식별 정보와 도구 준비 전까지 차단
 
-No Android application, signing key, APK or AAB has been generated. This folder is executable setup, not a claim of an installable app. The owner must supply an owned HTTPS origin, a permanent package ID, the **Play App Signing certificate** SHA-256, Play account access, upload-key custody/backup, an installed JDK/Android SDK/Bubblewrap, adequate disk space and a physical test device. Do not invent these values. Do not put key passwords or private keys in Git.
+Android 앱, 서명 키, APK, AAB는 아직 생성하지 않았다. 이 폴더는 실행 가능한 설정 절차이며, 설치 가능한 앱이 있다는 의미가 아니다. 소유자는 본인 소유의 HTTPS 원본 주소, 영구 패키지 ID, **Play App Signing 인증서** SHA-256, Play 계정 접근 권한, 업로드 키 관리·백업, 설치된 JDK/Android SDK/Bubblewrap, 충분한 디스크 공간, 실제 테스트 기기를 준비해야 한다. 이 값을 임의로 만들지 않는다. 키 암호나 개인 키를 Git에 넣지 않는다.
 
-Set the following environment variables in a local PowerShell session (or a private environment file for the Node commands). Values are intentionally omitted:
+로컬 PowerShell 세션 또는 Node 명령용 비공개 환경 파일에 다음 환경 변수를 설정한다. 실제 값은 의도적으로 생략했다.
 
-| Variable | Source |
+| 변수 | 출처 |
 | --- | --- |
-| `APP_ORIGIN` | Owned public HTTPS origin; no path, query, credentials, custom port or IP |
-| `ANDROID_PACKAGE_ID` | Owner's permanent reverse-domain Android identifier |
-| `PLAY_APP_SIGNING_SHA256` | Play Console app integrity → App signing key certificate SHA-256; colon-separated 32 bytes |
-| `ANDROID_HOME` | Existing Android SDK location |
-| `ANDROID_KEYSTORE_PATH` | Absolute path to the owned upload keystore, outside the repository |
-| `ANDROID_KEY_ALIAS` | Upload-key alias |
-| `VITE_OPERATOR_NAME`, `VITE_OPERATOR_CONTACT` | Actual operator and public support email, built into privacy UI |
+| `APP_ORIGIN` | 소유한 공개 HTTPS 원본 주소. 경로·쿼리·인증 정보·사용자 지정 포트·IP는 허용하지 않음 |
+| `ANDROID_PACKAGE_ID` | 소유자가 정한 영구 역도메인 형식 Android 식별자 |
+| `PLAY_APP_SIGNING_SHA256` | Play Console 앱 무결성 → 앱 서명 키 인증서 SHA-256. 콜론으로 구분한 32바이트 |
+| `ANDROID_HOME` | 기존 Android SDK 위치 |
+| `ANDROID_KEYSTORE_PATH` | 저장소 밖에 둔 소유자 업로드 키 저장소의 절대 경로 |
+| `ANDROID_KEY_ALIAS` | 업로드 키 별칭 |
+| `VITE_OPERATOR_NAME`, `VITE_OPERATOR_CONTACT` | 개인정보 안내 UI에 빌드 시 포함할 실제 운영자와 공개 지원 이메일 |
 
-The upload key normally differs from the certificate of the app distributed by Play. The site's Digital Asset Links must contain the Play certificate. A locally signed APK needs its **actual** local certificate in the test site's association file to verify locally. Do not replace production Play association with a debug/upload certificate. Document certificate rotation and every intended additional certificate explicitly. [Android TWA guide](https://developer.android.com/develop/ui/views/layout/webapps/guide-trusted-web-activities-version2)
+업로드 키는 일반적으로 Play가 배포하는 앱의 인증서와 다르다. 사이트의 Digital Asset Links에는 Play 인증서가 있어야 한다. 로컬 서명 APK를 로컬에서 검증하려면 테스트 사이트 연결 파일에 해당 APK의 **실제** 로컬 인증서를 넣어야 한다. 운영용 Play 연결을 디버그·업로드 인증서로 대체하지 않는다. 인증서 교체와 추가하려는 모든 인증서를 명시적으로 기록한다. [Android TWA 안내](https://developer.android.com/develop/ui/views/layout/webapps/guide-trusted-web-activities-version2)
 
-Run from the repository root with Node 24 on `PATH`:
+Node 24가 `PATH`에 등록된 상태에서 저장소 루트에서 실행한다.
 
 ```powershell
 node scripts/android-config.mjs
@@ -24,19 +24,19 @@ npm run build
 powershell -NoProfile -File scripts/android.ps1 preflight
 ```
 
-Configuration generation validates all three identity values before writing `public/.well-known/assetlinks.json` and ignored `android/identity.json`. Review the public association file and commit it only after identity approval. `preflight` checks installed `java`, `bubblewrap`, `adb`, `ANDROID_HOME`, and `bubblewrap doctor`; it does not install anything. Bubblewrap may offer downloads during its own commands; decline them on this constrained machine. Installation of tools, SDK licenses, accounts and costs requires separate preparation.
+설정 생성기는 세 가지 식별 값을 모두 검증한 뒤 `public/.well-known/assetlinks.json`과 Git 추적에서 제외된 `android/identity.json`을 쓴다. 공개 연결 파일을 검토하고 식별 정보 승인 후에만 커밋한다. `preflight`는 설치된 `java`, `bubblewrap`, `adb`, `ANDROID_HOME`, `bubblewrap doctor`를 확인하며 아무것도 설치하지 않는다. Bubblewrap 자체 명령에서 다운로드를 제안할 수 있지만, 자원이 제한된 이 컴퓨터에서는 거절한다. 도구 설치, SDK 라이선스, 계정과 비용은 별도로 준비해야 한다.
 
-After the authorized web deployment has made the actual HTTPS manifest reachable:
+승인된 웹 배포로 실제 HTTPS 매니페스트에 접근할 수 있게 된 뒤 실행한다.
 
 ```powershell
 powershell -NoProfile -File scripts/android.ps1 init
 powershell -NoProfile -File scripts/android.ps1 build
 ```
 
-`init` runs `bubblewrap init --manifest <actual origin>/manifest.webmanifest --directory android/app`. At interactive prompts, use the exact approved package ID, launch path `/`, application name `어디서 만나`, intended orientation and the owner-managed upload key. The script verifies the resulting host and package ID. Review `android/app/twa-manifest.json`, version code, signing setup and generated Android project before building. `build` runs Bubblewrap without skip-validation or skip-signing flags and expects `android/app/app-release-signed.apk` and `android/app/app-release-bundle.aab`. This is not an upload command. Bubblewrap's generated directory is ignored so keys, builds and local SDK paths cannot be committed accidentally. [Bubblewrap commands and configuration](https://github.com/GoogleChromeLabs/bubblewrap/blob/main/packages/cli/README.md)
+`init`은 `bubblewrap init --manifest <actual origin>/manifest.webmanifest --directory android/app`을 실행한다. 대화형 입력에는 승인된 패키지 ID, 시작 경로 `/`, 앱 이름 `어디서 만나`, 원하는 화면 방향, 소유자가 관리하는 업로드 키를 정확히 사용한다. 스크립트는 생성된 호스트와 패키지 ID를 검증한다. 빌드 전에 `android/app/twa-manifest.json`, 버전 코드, 서명 설정, 생성된 Android 프로젝트를 검토한다. `build`는 검증·서명 생략 옵션 없이 Bubblewrap을 실행하며 `android/app/app-release-signed.apk`와 `android/app/app-release-bundle.aab`를 결과물로 요구한다. 이 명령은 업로드를 수행하지 않는다. 키·빌드 결과·로컬 SDK 경로가 실수로 커밋되지 않도록 Bubblewrap 생성 디렉터리는 Git 추적에서 제외한다. [Bubblewrap 명령과 설정](https://github.com/GoogleChromeLabs/bubblewrap/blob/main/packages/cli/README.md)
 
-After explicit authorization to use the owner's internal Play track, distribute through that track to validate the **Play-signed** application. Record package/version, device/OS/browser version, certificate SHA-256, installed source, deployed revision, test date and observed outcome in the Android evidence report. Never record participant addresses, coordinates, session tokens or keys.
+소유자의 Play 내부 테스트 트랙 사용에 대한 명시적 승인 후, 해당 트랙으로 배포하여 **Play가 서명한** 앱을 검증한다. Android 증빙 보고서에 패키지·버전, 기기·OS·브라우저 버전, 인증서 SHA-256, 설치 출처, 배포 리비전, 테스트 날짜, 관찰 결과를 기록한다. 참가자 주소·좌표·세션 토큰·키는 기록하지 않는다.
 
-Required physical-device cases: first launch; Android back from details/results/input; background/resume; process kill/relaunch; app update; offline start and recovery; external Kakao map → return; share → cancel/return; system font size and 360px equivalent viewport; installed/uninstalled direct public hub links; Chrome and Samsung Internet fallback; deliberately failed DAL verification (visible browser toolbar, usable web app). Separately test mobile Safari as web only. Verify no new location permission is requested. A desktop browser test does not pass these cases.
+필수 실기기 사례: 최초 실행, 상세·결과·입력 화면에서 Android 뒤로 가기, 백그라운드 전환·복귀, 프로세스 종료·재실행, 앱 업데이트, 오프라인 시작·복구, 외부 Kakao 지도 이동·복귀, 공유·취소·복귀, 시스템 글자 크기와 360px에 해당하는 화면 너비, 앱 설치·미설치 상태의 공개 허브 직접 링크, Chrome·Samsung Internet 대체 동작, 의도적인 DAL 검증 실패 시 브라우저 도구 모음 표시와 웹 앱 사용 가능 여부. 모바일 Safari는 웹 환경으로 별도 테스트한다. 새로운 위치 권한을 요청하지 않는지 확인한다. 데스크톱 브라우저 테스트로 이 사례를 통과 처리하지 않는다.
 
-Signing custody record (owner fills before internal distribution): key owner, encrypted backup location, recovery custodian, upload-key reset procedure, Play App Signing enrollment, SHA-256 and certificate rotation plan. Store the actual secrets outside this record. For rollback, stop the staged rollout and rebuild the last stable web-compatible revision with a **higher Android version code**; Android does not accept an ordinary lower-version replacement. Keep the existing package ID and signing lineage. See [deployment and rollback](../docs/DEPLOYMENT.md).
+서명 관리 기록은 내부 배포 전에 소유자가 작성한다. 키 소유자, 암호화된 백업 위치, 복구 담당자, 업로드 키 초기화 절차, Play App Signing 등록, SHA-256, 인증서 교체 계획을 포함한다. 실제 비밀 값은 이 기록 밖에 보관한다. 롤백할 때는 단계적 출시를 중단하고 웹과 호환되는 마지막 안정 리비전을 **더 높은 Android 버전 코드**로 다시 빌드한다. Android는 일반적인 낮은 버전으로의 교체를 허용하지 않는다. 기존 패키지 ID와 서명 계보는 유지한다. [배포와 롤백](../docs/DEPLOYMENT.md)을 참고한다.

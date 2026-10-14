@@ -1,27 +1,27 @@
-# Hub catalog and source attribution
+# 허브 카탈로그와 출처 표시
 
-The release catalog `hubs.json` is deliberately empty: **no meeting point has completed administrative-region and pedestrian-access review**. Do not silently substitute a preview in production.
+출시용 카탈로그 `hubs.json`은 의도적으로 비어 있다. **행정구역과 보행 접근성 검토를 완료한 만남 지점이 아직 없다.** 운영 환경에서 미리보기 데이터로 몰래 대체하지 않는다.
 
-The two public sources are Seoul Metropolitan Government's [station master](https://data.seoul.go.kr/dataList/OA-21232/S/1/datasetView.do) and [bus stop positions](https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do), both marked **공공누리 제1유형 / KOGL Type 1**, allowing reuse and modification with attribution. Preserve this attribution when displaying/distributing derived data: **서울특별시 서울열린데이터광장, 서울시 역사마스터 정보·서울시 버스정류소 위치정보; 후보 추출 및 정규화**. Exact retrieval forms, source dates, original filenames and SHA-256 values are in `sources.json`. Originals stay in `raw/`; bus JSON is a reproducible extraction, not a different data supplier.
+두 공개 출처는 서울특별시의 [역사마스터 정보](https://data.seoul.go.kr/dataList/OA-21232/S/1/datasetView.do)와 [버스정류소 위치정보](https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do)다. 둘 다 **공공누리 제1유형 / KOGL Type 1**으로 표시되어 출처를 명시하면 재사용·변경할 수 있다. 파생 데이터를 표시하거나 배포할 때 다음 출처 표기를 유지한다. **서울특별시 서울열린데이터광장, 서울시 역사마스터 정보·서울시 버스정류소 위치정보; 후보 추출 및 정규화**. 정확한 수집 형식, 출처 날짜, 원본 파일명, SHA-256은 `sources.json`에 기록되어 있다. 원본은 `raw/`에 보관한다. 버스 JSON은 재현 가능한 추출 결과이며 별도 공급자의 데이터가 아니다.
 
-| Artifact | Count | Meaning |
+| 자료 | 개수 | 의미 |
 | --- | ---: | --- |
-| Source railway records | 784 | Source station/line records, not unique verified meeting points |
-| Source bus records | 11,236 | Includes ordinary/local bus stops and ferry piers |
-| `hubs.preview.json` | 600 | 539 rail and 61 bus candidates; **all unreviewed** |
-| `hubs.sample.json` | 100 | 50 rail and 50 bus; geographic sampling within each mode, unreviewed |
-| `hubs.json` | 0 | Release eligibility blocked |
+| 철도 원본 레코드 | 784 | 출처의 역·노선 레코드 수. 중복 없는 검증 완료 만남 지점 수가 아님 |
+| 버스 원본 레코드 | 11,236 | 일반·마을버스 정류장과 선착장 포함 |
+| `hubs.preview.json` | 600 | 철도 539개, 버스 61개 후보. **모두 미검토** |
+| `hubs.sample.json` | 100 | 철도 50개, 버스 50개. 교통수단별 지리 표본이며 미검토 |
+| `hubs.json` | 0 | 출시 적격성 확보가 차단된 상태 |
 
-`regionCode: "unreviewed"` means unknown, not Seoul. Seoul's datasets include metropolitan network records beyond the city. The broad 36.8–38.3°N, 124.5–127.9°E envelope is an error screen, **not an administrative boundary**. It cannot prove that a point belongs to Seoul, Gyeonggi, or Incheon.
+`regionCode: "unreviewed"`는 서울이 아니라 미확인을 뜻한다. 서울 데이터셋에는 시 경계를 벗어난 수도권 교통망 레코드도 있다. 북위 36.8–38.3°, 동경 124.5–127.9°의 넓은 범위는 오류를 거르는 기준이며 **행정구역 경계가 아니다**. 이 범위만으로 서울·경기·인천 소속을 증명할 수 없다.
 
-## Rebuild and review
+## 재생성과 검토
 
-1. Use Node 24. `python scripts/extract-hub-sources.py` deterministically extracts the bundled bus XLSX using Python's standard library. No Excel installation is needed.
-2. `npm run catalog:preview` writes the preview, sample and `quality-report.json`. It never writes `hubs.json`.
-3. Review each adopted representative point against authoritative boundaries, station/stop plans and safe public pedestrian access. Add actual evidence to `data/reviews.json`, keyed by stable hub ID. The evidence must support the asserted checks; setting booleans is not review.
-4. `npm run catalog:build` writes the release catalog only when every candidate passes review and structural validation. Its present failure is intentional. A failed build leaves the previous release artifact untouched.
+1. Node 24를 사용한다. `python scripts/extract-hub-sources.py`는 Python 표준 라이브러리로 포함된 버스 XLSX를 결정적으로 추출한다. Excel 설치는 필요 없다.
+2. `npm run catalog:preview`는 미리보기, 표본, `quality-report.json`을 생성하며 `hubs.json`은 쓰지 않는다.
+3. 채택할 대표 지점마다 공신력 있는 행정구역 경계, 역·정류장 도면, 안전한 공공 보행 접근성을 대조한다. 안정적인 허브 ID를 키로 하여 실제 증빙을 `data/reviews.json`에 추가한다. 증빙은 주장하는 점검 사항을 뒷받침해야 하며, 불리언 값만 설정하는 것은 검토가 아니다.
+4. `npm run catalog:build`는 모든 후보가 검토와 구조 검증을 통과할 때만 출시용 카탈로그를 쓴다. 현재 실패는 의도된 동작이다. 빌드 실패 시 이전 출시 결과물은 그대로 유지한다.
 
-Example review structure (illustration only; **not evidence**):
+검토 구조 예시이며 **증빙이 아니다**.
 
 ```json
 {
@@ -37,16 +37,16 @@ Example review structure (illustration only; **not evidence**):
 }
 ```
 
-Allowed reviewed region codes are 11 (Seoul), 28 (Incheon), and 41 (Gyeonggi). `reviewFingerprint` is exported from `scripts/build-hubs.mjs`; it binds review to the source ID, normalized name, coordinates and source date. Changed points invalidate prior approval. Empty `reviews.json` is the current honest state.
+검토 완료로 허용되는 행정구역 코드는 11(서울), 28(인천), 41(경기)이다. `reviewFingerprint`는 `scripts/build-hubs.mjs`에서 내보내며, 출처 ID·정규화한 이름·좌표·출처 날짜에 검토를 연결한다. 지점이 바뀌면 이전 승인은 무효다. 비어 있는 `reviews.json`이 현재의 실제 상태다.
 
-## Selection and quality limits
+## 선정 기준과 품질 한계
 
-- Stable IDs are `seoul-rail-{BLDN_ID}` and `seoul-bus-{NODE_ID}`; they do not depend on names or array positions. Coordinates are unchanged numeric source values, with no invented geocoding or centroids.
-- Candidate bus selection uses the source `중앙차로` (central bus lane) classification as a reproducible trunk-bus proxy. It is **not** a route-degree ranking or proof of a good meeting point. Other buses and the eight ferry piers are excluded; major bus hubs outside this proxy may be missing.
-- Repeated normalized names within a mode and identical coordinates are **quarantined**, not automatically merged. This deliberately omits many useful transfer stations and opposite-direction bus stops until representative-point curation. Names alone do not prove transfer connectivity or a shared pedestrian meeting place.
-- Six source rows are outside the broad envelope or have invalid coordinates. 10,831 are outside the bus candidate class, and 583 have repeated names/coordinates. `quality-report.json` lists each exclusion by source ID and reason.
-- The 100-point sample evenly selects latitude/longitude-sorted entries within each mode. It is a reproducible test set, not a statistically representative travel-demand sample or a manually verified acceptance set.
-- The 600-candidate count is below the 1,000–3,000 target. Coverage is not metropolitan completeness; Incheon/Gyeonggi bus sources, route connectivity, authoritative region classification, transfer-point curation and pedestrian access remain unfinished. None of these are bypassed to meet a numeric target.
-- KRIC's 2026-06-30 national source was inspected as requested. Its page did not provide clear file-specific reuse terms, while its general portal terms contain restrictions. It is not included in these distributable artifacts; clarify its applicable license before adding it.
+- 안정적인 ID는 `seoul-rail-{BLDN_ID}`, `seoul-bus-{NODE_ID}`이며 이름이나 배열 순서에 의존하지 않는다. 좌표는 원본 숫자 값을 유지하며 임의 지오코딩이나 중심점을 만들지 않는다.
+- 버스 후보는 원본의 `중앙차로` 분류를 간선버스의 재현 가능한 대리 기준으로 사용한다. **노선 연결 수에 따른 순위도, 좋은 만남 지점이라는 증거도 아니다.** 다른 버스와 선착장 8개는 제외하므로 이 기준 밖의 주요 버스 허브가 누락될 수 있다.
+- 같은 교통수단 내 정규화된 이름의 중복과 동일 좌표는 자동 병합하지 않고 **격리**한다. 대표 지점 선별 전까지 유용한 환승역과 반대 방향 정류장도 상당수 의도적으로 제외된다. 이름만으로 환승 연결이나 공통 보행 만남 지점을 증명할 수 없다.
+- 원본 6행은 넓은 좌표 범위를 벗어나거나 좌표가 유효하지 않다. 10,831행은 버스 후보 분류 밖이고, 583행은 이름·좌표가 중복된다. `quality-report.json`에 출처 ID와 사유별 제외 목록이 있다.
+- 100개 표본은 각 교통수단 안에서 위도·경도로 정렬한 항목을 균등하게 뽑는다. 재현 가능한 테스트 집합이며, 이동 수요를 통계적으로 대표하는 표본이나 사람이 검증한 인수 테스트 집합은 아니다.
+- 후보 600개는 목표인 1,000–3,000개보다 적다. 수도권 전체를 포괄하지 못하며 인천·경기 버스 출처, 노선 연결성, 공신력 있는 행정구역 분류, 환승 대표 지점 선별, 보행 접근성은 미완료다. 숫자 목표를 맞추기 위해 이 절차를 우회하지 않는다.
+- 요청에 따라 KRIC의 2026-06-30 전국 자료를 조사했다. 해당 페이지에는 파일별 재사용 조건이 명확하지 않았고, 포털 일반 약관에는 제한이 있었다. 배포 가능한 결과물에 포함하지 않았으며 추가 전에 적용 라이선스를 확인해야 한다.
 
-Refresh monthly by downloading new dated snapshots, recording their license/provenance/hashes, adapting field extraction if necessary, and repeating review. Do not overwrite source dates or retain approvals for changed coordinates. `generatedAt` is fixed to the checked-in snapshot batch date and the version is content-hashed, so unchanged rebuilds are byte-for-byte deterministic.
+매월 날짜가 명시된 새 스냅샷을 내려받아 라이선스·출처·해시를 기록하고, 필요하면 필드 추출을 조정한 뒤 검토를 반복한다. 출처 날짜를 덮어쓰거나 좌표가 바뀐 지점의 승인을 유지하지 않는다. `generatedAt`은 저장소에 등록된 스냅샷 묶음 날짜로 고정하고 버전은 콘텐츠 해시로 정하므로, 입력이 같으면 재생성 결과도 바이트 단위로 동일하다.

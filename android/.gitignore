@@ -1,3 +1,3 @@
-# Generated only after the owner supplies real production identity and toolchain.
+# 소유자가 실제 운영 식별 정보와 도구 환경을 제공한 뒤에만 생성한다.
 identity.json
 app/

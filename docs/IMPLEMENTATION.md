@@ -1,32 +1,32 @@
-# Approved implementation — 2026-10-05
+# 승인된 구현 계획 — 2026-10-05
 
-Goal: implement WhereToMeet mobile web and Android TWA, verify all scenarios before claiming deployment readiness.
-Spec: 20260923_실행계획.md and DESIGN-airbnb.md; decisions below override conflicting original requirements.
+목표: WhereToMeet 모바일 웹과 Android TWA를 구현하고, 배포 준비 완료를 선언하기 전에 모든 시나리오를 검증한다.
+기준 문서: 20260923_실행계획.md와 DESIGN-airbnb.md. 기존 요구사항과 충돌하면 아래 결정을 우선한다.
 
-## Binding decisions
-- React/TypeScript/Vite, Workers/D1 direct SQL, Kakao, TravelTime. Korean UI, Asia/Seoul time, 2–4 participants in Seoul/Gyeonggi/Incheon; future meeting within seven days.
-- Rank by max burden seconds, sum burden seconds, stable hub ID. Return at most FOUR valid candidates, fewer if unavailable. Never fabricate routes.
-- Server anonymous history via secure HttpOnly SameSite cookie. Hash token in DB; no accounts or cross-device sync. Separate history from anonymous search_events telemetry.
-- History restores origins and always recalculates. Past meeting requires new time. No route-response persistence/caching. Normal history expires 90 days from last successful search; records with bookmarks persist until deleted. Last bookmark removal after expiry deletes record.
-- Successful/no_routes searches save history; errors/cancellation do not. Recompute updates existing owned record only on success/no_routes. History write failure must be visible without destroying recommendation.
-- Bookmark candidate hub IDs; records with bookmarks sort first, each group newest first. Individual/all deletion. Never expose other browser's records.
-- Nearby radius 800m, max 15; categories restaurant/cafe/culture. Share public hub or external place only.
-- Invalid 400, no_routes 200, quota 429, provider 502/503/504. 30s search budget. Retry transient provider failure once only within budget.
-- API keys server only except public restricted Kakao JS key. No input coordinates/address/token in logs or shared URLs. API no-store. SW caches static shell only.
-- Real API/device/user travel verification cannot be replaced by fixtures. Missing credentials/contracts/devices remain BLOCKED, not PASS. No paid subscriptions or public launch without user decision.
+## 반드시 지킬 결정 사항
+- React/TypeScript/Vite, Workers/D1 직접 SQL, Kakao, TravelTime을 사용한다. 한국어 UI, Asia/Seoul 시간대, 서울·경기·인천의 참가자 2–4명, 7일 이내의 미래 약속을 지원한다.
+- 최대 부담 시간(초), 부담 시간 합계(초), 안정적인 허브 ID 순으로 정렬한다. 유효한 후보는 최대 네 곳이며, 부족하면 더 적게 반환한다. 경로를 만들어 내지 않는다.
+- Secure·HttpOnly·SameSite 쿠키로 익명 서버 기록을 제공한다. 토큰은 해시로 DB에 저장하며 계정이나 기기 간 동기화는 제공하지 않는다. 기록은 익명 search_events 사용 통계와 분리한다.
+- 기록을 복원하면 출발지를 불러오고 항상 다시 계산한다. 과거 약속은 새 시간을 요구한다. 경로 응답은 저장하거나 캐시하지 않는다. 일반 기록은 마지막 성공 검색 후 90일에 만료되며, 즐겨찾기가 있으면 삭제할 때까지 보관한다. 만료 후 마지막 즐겨찾기를 해제하면 기록을 삭제한다.
+- 성공 및 no_routes 검색은 기록하고, 오류·취소는 기록하지 않는다. 재계산은 성공 또는 no_routes일 때만 본인 소유의 기존 기록을 갱신한다. 기록 저장 실패는 추천 결과를 없애지 않고 사용자에게 표시한다.
+- 후보 허브 ID를 즐겨찾기로 저장한다. 즐겨찾기가 있는 기록을 먼저 표시하고 각 그룹은 최신순으로 정렬한다. 개별·전체 삭제를 지원하며 다른 브라우저의 기록을 노출하지 않는다.
+- 주변 검색은 반경 800m, 최대 15개이며 음식점·카페·문화 카테고리를 지원한다. 공개 허브나 외부 장소만 공유한다.
+- 잘못된 입력은 400, no_routes는 200, 할당량 초과는 429, 공급자 오류는 502/503/504로 응답한다. 검색 전체 제한은 30초다. 일시적인 공급자 오류는 남은 시간 안에서 한 번만 재시도한다.
+- 공개 범위가 제한된 Kakao JS 키를 제외한 API 키는 서버에만 둔다. 입력 좌표·주소·토큰을 로그나 공유 URL에 넣지 않는다. API에는 no-store를 적용하고 SW는 정적 앱 셸만 캐시한다.
+- 실제 API·기기·사용자 이동 검증을 고정 테스트 데이터로 대체하지 않는다. 인증 정보·계약·기기가 없으면 통과가 아닌 차단(BLOCKED) 상태로 남긴다. 사용자 결정 없이 유료 구독이나 공개 출시를 진행하지 않는다.
 
-## Ownership / tasks
-Task 0: scripts/validate-routing.ts, routing verification fixtures/tests and docs/ROUTING-VALIDATION.md. Actual supplier semantics and 20 x 100 comparison. Report external blockers.
-Task 1: package/config/toolchain, data/**, scripts/build-hubs.mjs, catalog tests. Real sources; unreviewed data cannot be marked verified. Foundation owns shared types, with coordinator approval for changes.
-Task 2: server/travel-time.ts, server/recommend.ts, recommendation/provider tests. Forward isochrones, binary search, holes/boundaries, all-candidate arrival validation.
-Task 3: server/index.ts and server support modules excluding task2; migrations/**; API/D1/history tests. Quota, privacy, ownership, retention and failure isolation.
-Task 4: src/** except shared.ts, index.html, frontend/E2E tests. Complete polished UI with map failure fallback, history, share, responsive accessibility.
-Task 5: public/**, android/**, Android/PWA scripts/tests, docs/DEPLOYMENT.md. No invented domain/signing certificate.
-Coordinator: shared contracts, integration, scenario matrix, release report and final browser/review validation.
+## 담당 범위와 작업
+작업 0: scripts/validate-routing.ts, 경로 검증용 고정 데이터·테스트, docs/ROUTING-VALIDATION.md. 실제 공급자 의미와 20 × 100 비교를 검증하고 외부 차단 요인을 보고한다.
+작업 1: 패키지·설정·도구 체계, data/**, scripts/build-hubs.mjs, 카탈로그 테스트. 실제 출처를 사용하며 미검토 데이터를 검증 완료로 표시하지 않는다. 기반 작업 담당자가 공통 타입을 관리하고, 변경 시 조정 담당자의 승인을 받는다.
+작업 2: server/travel-time.ts, server/recommend.ts, 추천·공급자 테스트. 정방향 등시간권, 이진 탐색, 내부 구멍·경계, 모든 후보의 도착 검증을 담당한다.
+작업 3: server/index.ts 및 작업 2를 제외한 서버 지원 모듈, migrations/**, API/D1/기록 테스트. 할당량·개인정보·소유권·보존 기간·실패 격리를 담당한다.
+작업 4: shared.ts를 제외한 src/**, index.html, 프런트엔드/E2E 테스트. 지도 실패 시 대체 수단, 기록, 공유, 반응형 접근성을 포함한 완성도 높은 UI를 구현한다.
+작업 5: public/**, android/**, Android/PWA 스크립트·테스트, docs/DEPLOYMENT.md. 도메인이나 서명 인증서를 임의로 만들지 않는다.
+조정 담당자: 공통 인터페이스, 통합, 시나리오 표, 출시 보고서, 최종 브라우저·검토 검증을 담당한다.
 
-## Execution
-Max three child agents concurrently. Start 0/1/4; schedule 2/3/5 as slots free. Use isolated worktrees and commits, cherry-pick to integration branch. Share interface changes immediately. External preparations remain questions while independent work proceeds.
+## 실행 방식
+하위 에이전트는 동시에 최대 세 개까지 실행한다. 0/1/4부터 시작하고, 자리가 나면 2/3/5를 배정한다. 격리된 작업 트리와 커밋을 사용하고 통합 브랜치로 cherry-pick한다. 인터페이스 변경은 즉시 공유한다. 외부 준비에 필요한 질문을 유지하면서 독립적으로 가능한 작업을 진행한다.
 
-## Acceptance
-Unit/integration node:test, typecheck, production build, local D1 migration and Playwright E2E. 360px/tablet/desktop, keyboard/zoom, invalid input, stale time, cancel/double-click, provider/map/storage errors, history expiry/ownership, share/direct-link, offline and Android lifecycle.
-Real validation: 20 scenarios x 100 hubs, >=95% within 180 seconds of full Arrival Matrix; zero unreachable participant recommendations. Validate full actual catalog scale; report p50 <=5s/p95 <=10s and 30s timeout separately from free quota waits. At least 10 bus/rail/mixed cases each and 10 real user journeys per original plan. Actual Android signing/domain/AAB validation required.
+## 완료 기준
+node:test 단위·통합 테스트, 타입 검사, 운영 빌드, 로컬 D1 마이그레이션, Playwright E2E를 수행한다. 360px·태블릿·데스크톱, 키보드·확대, 잘못된 입력, 오래된 시간, 취소·중복 클릭, 공급자·지도·저장 오류, 기록 만료·소유권, 공유·직접 링크, 오프라인, Android 수명주기를 검증한다.
+실제 검증: 20개 시나리오 × 100개 허브를 비교하여 전체 Arrival Matrix 대비 95% 이상이 180초 이내이고, 도달 불가능한 참가자가 포함된 추천은 0건이어야 한다. 실제 전체 카탈로그 규모를 검증하며, 무료 할당량 대기와 분리하여 p50 ≤5초/p95 ≤10초 및 30초 제한을 보고한다. 원안에 따라 버스·철도·혼합 사례를 각각 최소 10건, 실제 사용자 이동을 10건 검증한다. 실제 Android 서명·도메인·AAB 검증이 필요하다.
