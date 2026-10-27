@@ -10,6 +10,8 @@
 
 Node.js 24를 사용합니다. 의존성 설치 후 `.env.example`을 참고하여 서버 키는 `.dev.vars`, 공개 지도 키는 `.env.local`에 설정합니다. 비밀키를 커밋하지 마세요.
 
+`.dev.vars`에는 Kakao REST·TravelTime·ODSAY 키와 서버 한도·승인 설정을 넣습니다. 경로 검증 CLI도 `node --env-file=.dev.vars scripts/validate-routing.ts ...`로 같은 파일을 읽습니다. 별도 `.env`에 키를 복제할 필요는 없습니다. `.env.local`에는 `VITE_` 공개 설정을 두며, 기존 출시 식별 설정은 비밀키와 별도로 관리합니다. 실행 중인 개발 서버는 설정 변경 후 재시작합니다.
+
 ```sh
 npm ci
 npm run db:migrate

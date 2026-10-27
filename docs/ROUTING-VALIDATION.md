@@ -80,8 +80,8 @@ Node 24를 사용하고 저장소 루트에서 실행한다.
 ```powershell
 node --test tests/routing-validation.test.ts
 node scripts/validate-routing.ts --preflight-only --catalog data/hubs.sample.json
-node --env-file=.env scripts/validate-routing.ts --mode compare --catalog data/hubs.sample.json --out artifacts/routing-validation.json
-node --env-file=.env scripts/validate-routing.ts --mode compare --catalog data/hubs.preview.json --catalog-size all --out artifacts/routing-full-catalog.json
+node --env-file=.dev.vars scripts/validate-routing.ts --mode compare --catalog data/hubs.sample.json --out artifacts/routing-validation.json
+node --env-file=.dev.vars scripts/validate-routing.ts --mode compare --catalog data/hubs.preview.json --catalog-size all --out artifacts/routing-full-catalog.json
 ```
 
 실제 호출 명령에는 로컬 환경 파일의 `TRAVELTIME_APP_ID`, `TRAVELTIME_API_KEY`, `TRAVELTIME_HITS_PER_MINUTE`가 필요하다. 사용량 한도는 계정의 확인된 사용 권한에 맞춰 설정한다. 검증 도구가 추정하지 않는다. `--hits-per-minute`는 이 한도를 덮어쓴다. 인증 정보는 운영 어댑터가 헤더로 전달하며 URL이나 보고서에는 넣지 않는다. 환경 파일은 커밋하지 않는다.
