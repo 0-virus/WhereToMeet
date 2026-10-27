@@ -1,0 +1,1245 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "06aeab696ab37d430620b18371e02bb5627e9c4a",
+  "assumedHitsPerMinute": 120,
+  "accountLimitConfirmed": false,
+  "stopReason": "PROVIDER_REFUSAL",
+  "refusal": {
+    "at": "2026-10-27T05:27:39.649Z",
+    "status": 422,
+    "endpoint": "/v4/time-map"
+  },
+  "totalUsageThisRun": {
+    "requests": 261,
+    "hits": 1333
+  },
+  "focused": {
+    "startedAt": "2026-10-27T05:13:58.080Z",
+    "assumedHpm": 120,
+    "accountLimitConfirmed": false,
+    "refusal": null,
+    "results": [
+      {
+        "scenarioId": "weekday-east-west",
+        "meetingAt": "2026-10-27T10:00:00.000Z",
+        "intent": "rail",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2933
+      },
+      {
+        "scenarioId": "weekday-north-south",
+        "meetingAt": "2026-10-27T10:30:00.000Z",
+        "intent": "rail",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 1,
+          "busOnly": 0,
+          "railOnly": 1,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2488
+      },
+      {
+        "scenarioId": "weekday-suwon-three",
+        "meetingAt": "2026-10-27T09:30:00.000Z",
+        "intent": "cross-region",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 2,
+          "railOnly": 1,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "bus",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2734
+      },
+      {
+        "scenarioId": "weekday-incheon-four",
+        "meetingAt": "2026-10-27T11:00:00.000Z",
+        "intent": "cross-region",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2745
+      },
+      {
+        "scenarioId": "weekend-east-west",
+        "meetingAt": "2026-10-31T06:00:00.000Z",
+        "intent": "rail",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2088
+      },
+      {
+        "scenarioId": "weekend-north-south",
+        "meetingAt": "2026-10-31T05:00:00.000Z",
+        "intent": "mixed",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 1,
+          "busOnly": 0,
+          "railOnly": 1,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2539
+      },
+      {
+        "scenarioId": "weekend-cross-region-four",
+        "meetingAt": "2026-10-31T07:00:00.000Z",
+        "intent": "cross-region",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 4,
+          "busOnly": 0,
+          "railOnly": 3,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 1
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus",
+          "train"
+        ],
+        "validHubs": 0,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2476
+      },
+      {
+        "scenarioId": "weekday-bus-morning",
+        "meetingAt": "2026-10-27T23:30:00.000Z",
+        "intent": "bus",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 1,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "bus",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 1483
+      },
+      {
+        "scenarioId": "weekday-suwon-bus",
+        "meetingAt": "2026-10-28T03:30:00.000Z",
+        "intent": "bus",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 1,
+          "railOnly": 1,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2665
+      },
+      {
+        "scenarioId": "weekday-late",
+        "meetingAt": "2026-10-27T14:30:00.000Z",
+        "intent": "last-service",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2470
+      },
+      {
+        "scenarioId": "weekday-midnight",
+        "meetingAt": "2026-10-27T15:20:00.000Z",
+        "intent": "midnight",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 1,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2266
+      },
+      {
+        "scenarioId": "weekend-midnight",
+        "meetingAt": "2026-10-30T15:30:00.000Z",
+        "intent": "midnight",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2127
+      },
+      {
+        "scenarioId": "weekend-early",
+        "meetingAt": "2026-10-30T20:30:00.000Z",
+        "intent": "first-service",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 2,
+          "railOnly": 0,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 670
+      },
+      {
+        "scenarioId": "same-origin-two",
+        "meetingAt": "2026-10-28T06:00:00.000Z",
+        "intent": "same-origin",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 2,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2090
+      },
+      {
+        "scenarioId": "same-origin-four",
+        "meetingAt": "2026-10-28T09:00:00.000Z",
+        "intent": "same-origin",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 4,
+          "busOnly": 0,
+          "railOnly": 4,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2498
+      },
+      {
+        "scenarioId": "duplicate-plus-distant",
+        "meetingAt": "2026-10-28T08:30:00.000Z",
+        "intent": "same-origin",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 0,
+          "railOnly": 3,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2612
+      },
+      {
+        "scenarioId": "transfer-north",
+        "meetingAt": "2026-10-28T07:30:00.000Z",
+        "intent": "transfer",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 1,
+          "railOnly": 1,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "bus",
+          "rail_underground"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2533
+      },
+      {
+        "scenarioId": "bus-rail-transfer",
+        "meetingAt": "2026-10-28T08:00:00.000Z",
+        "intent": "mixed",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 0,
+          "railOnly": 2,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2517
+      },
+      {
+        "scenarioId": "late-four",
+        "meetingAt": "2026-10-27T14:50:00.000Z",
+        "intent": "last-service",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 4,
+          "busOnly": 0,
+          "railOnly": 3,
+          "mixed": 1,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "rail_underground",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 2441
+      },
+      {
+        "scenarioId": "early-four",
+        "meetingAt": "2026-10-27T21:00:00.000Z",
+        "intent": "first-service",
+        "httpStatus": 200,
+        "routeCounts": {
+          "total": 3,
+          "busOnly": 3,
+          "railOnly": 0,
+          "mixed": 0,
+          "walkingOnly": 0,
+          "late": 0,
+          "pastDeparture": 0,
+          "unknown": 0
+        },
+        "modes": [
+          "walk",
+          "bus"
+        ],
+        "validHubs": 1,
+        "unsafeRecommendations": 0,
+        "status": "MEASURED",
+        "elapsedMs": 777
+      }
+    ],
+    "totalUsage": {
+      "requests": 20,
+      "hits": 20,
+      "quotaWaitMs": 0,
+      "networkMs": 45121,
+      "routeSamples": 50,
+      "earlyArrivalSamples": 50,
+      "travelTimeEqualsJourney": 0,
+      "travelTimeEqualsBurden": 50,
+      "lateArrivalSamples": 0,
+      "unknownModeParts": 1,
+      "busParts": 35,
+      "railParts": 52,
+      "mixedRoutes": 7
+    },
+    "finishedAt": "2026-10-27T05:14:43.290Z",
+    "stopReason": "FOCUSED_CASES_COMPLETED"
+  },
+  "compare": {
+    "schemaVersion": 1,
+    "generatedAt": "2026-10-27T05:27:39.664Z",
+    "scheduleReferenceAt": "2026-10-27T05:16:07.572Z",
+    "evidence": "LIVE_API_ATTEMPT",
+    "mode": "compare",
+    "catalog": {
+      "version": "seoul-20261005-dd5d00977b62",
+      "totalHubs": 100,
+      "testedHubs": 100,
+      "verifiedHubs": 0
+    },
+    "plannedScenarios": 20,
+    "blockers": [
+      "CATALOG_FIELD_REVIEW_REQUIRED",
+      "BUS_RAIL_MIXED_TEN_CASES_EACH_REQUIRE_REVIEW",
+      "TEN_REAL_USER_JOURNEYS_REQUIRED",
+      "TRANSPORT_SCOPE_AND_SUPPLIER_SEMANTICS_REQUIRE_REVIEW",
+      "PROVIDER_ACCESS_OR_QUOTA_BLOCKED"
+    ],
+    "totalUsage": {
+      "requests": 241,
+      "hits": 1313,
+      "quotaWaitMs": 275056,
+      "networkMs": 389911,
+      "routeSamples": 2310,
+      "earlyArrivalSamples": 2288,
+      "travelTimeEqualsJourney": 22,
+      "travelTimeEqualsBurden": 2310,
+      "lateArrivalSamples": 0,
+      "unknownModeParts": 334,
+      "busParts": 3109,
+      "railParts": 2531,
+      "mixedRoutes": 890
+    },
+    "summary": {
+      "status": "FAIL",
+      "completedScenarios": 6,
+      "comparedScenarios": 9,
+      "baselineRoutableScenarios": 9,
+      "emptyAgreements": 0,
+      "within180SecondsRate": 0.6666666666666666,
+      "unsafeRecommendations": 0,
+      "monotonicityLosses": 0,
+      "p50ServiceMs": 4771,
+      "p95ServiceMs": 22133,
+      "over30Seconds": 0,
+      "latencyExcludesQuotaWaiting": true,
+      "isochrone": {
+        "samples": 9,
+        "averageHits": 24.88888888888889,
+        "maxHits": 73,
+        "totalRequests": 71,
+        "totalQuotaWaitMs": 8945,
+        "p50ServiceMs": 4771,
+        "p95ServiceMs": 22133
+      },
+      "matrix": {
+        "samples": 9,
+        "averageHits": 100,
+        "maxHits": 100,
+        "totalRequests": 90,
+        "totalQuotaWaitMs": 213359,
+        "p50ServiceMs": 27684,
+        "p95ServiceMs": 32542
+      }
+    },
+    "results": [
+      {
+        "scenarioId": "weekday-east-west",
+        "meetingAt": "2026-10-27T10:00:00.000Z",
+        "intent": "rail",
+        "status": "ERROR",
+        "isochrone": {
+          "elapsedMs": 4813,
+          "serviceMs": 4813,
+          "metrics": {
+            "requests": 6,
+            "hits": 13,
+            "quotaWaitMs": 0,
+            "networkMs": 4545,
+            "routeSamples": 6,
+            "earlyArrivalSamples": 6,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 6,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 6,
+            "railParts": 7,
+            "mixedRoutes": 3
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 30305,
+          "serviceMs": 30305,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 0,
+            "networkMs": 30023,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 198,
+            "travelTimeEqualsJourney": 2,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 5,
+            "busParts": 239,
+            "railParts": 288,
+            "mixedRoutes": 86
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": false,
+          "topFourOverlap": 2
+        },
+        "errorCode": "routing_response_too_large"
+      },
+      {
+        "scenarioId": "weekday-north-south",
+        "meetingAt": "2026-10-27T10:30:00.000Z",
+        "intent": "rail",
+        "status": "ERROR",
+        "errorCode": "non_monotonic_reachability"
+      },
+      {
+        "scenarioId": "weekday-suwon-three",
+        "meetingAt": "2026-10-27T09:30:00.000Z",
+        "intent": "cross-region",
+        "status": "ERROR",
+        "isochrone": {
+          "elapsedMs": 22133,
+          "serviceMs": 22133,
+          "metrics": {
+            "requests": 13,
+            "hits": 73,
+            "quotaWaitMs": 0,
+            "networkMs": 21197,
+            "routeSamples": 156,
+            "earlyArrivalSamples": 152,
+            "travelTimeEqualsJourney": 4,
+            "travelTimeEqualsBurden": 156,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 54,
+            "busParts": 124,
+            "railParts": 157,
+            "mixedRoutes": 52
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 59212,
+          "serviceMs": 32542,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 26670,
+            "networkMs": 31707,
+            "routeSamples": 300,
+            "earlyArrivalSamples": 294,
+            "travelTimeEqualsJourney": 6,
+            "travelTimeEqualsBurden": 300,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 99,
+            "busParts": 241,
+            "railParts": 396,
+            "mixedRoutes": 102
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": null,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": false,
+          "bestHubMatches": false,
+          "topFourOverlap": 0
+        },
+        "errorCode": "routing_response_too_large"
+      },
+      {
+        "scenarioId": "weekday-incheon-four",
+        "meetingAt": "2026-10-27T11:00:00.000Z",
+        "intent": "cross-region",
+        "status": "ERROR",
+        "errorCode": "non_monotonic_reachability"
+      },
+      {
+        "scenarioId": "weekend-east-west",
+        "meetingAt": "2026-10-31T06:00:00.000Z",
+        "intent": "rail",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 12891,
+          "serviceMs": 3946,
+          "metrics": {
+            "requests": 6,
+            "hits": 13,
+            "quotaWaitMs": 8945,
+            "networkMs": 3896,
+            "routeSamples": 6,
+            "earlyArrivalSamples": 6,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 6,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 11,
+            "railParts": 1,
+            "mixedRoutes": 0
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 47355,
+          "serviceMs": 26900,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 20455,
+            "networkMs": 26652,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 197,
+            "travelTimeEqualsJourney": 3,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 4,
+            "busParts": 313,
+            "railParts": 176,
+            "mixedRoutes": 73
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": false,
+          "topFourOverlap": 2
+        },
+        "probes": {
+          "elapsedMs": 15043,
+          "serviceMs": 11371,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 3672,
+            "networkMs": 9512,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "weekend-north-south",
+        "meetingAt": "2026-10-31T05:00:00.000Z",
+        "intent": "mixed",
+        "status": "ERROR",
+        "errorCode": "non_monotonic_reachability"
+      },
+      {
+        "scenarioId": "weekend-cross-region-four",
+        "meetingAt": "2026-10-31T07:00:00.000Z",
+        "intent": "cross-region",
+        "status": "ERROR",
+        "isochrone": {
+          "elapsedMs": 17258,
+          "serviceMs": 17258,
+          "metrics": {
+            "requests": 11,
+            "hits": 46,
+            "quotaWaitMs": 0,
+            "networkMs": 14464,
+            "routeSamples": 40,
+            "earlyArrivalSamples": 40,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 40,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 10,
+            "busParts": 20,
+            "railParts": 57,
+            "mixedRoutes": 17
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 54326,
+          "serviceMs": 31205,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 23121,
+            "networkMs": 30147,
+            "routeSamples": 400,
+            "earlyArrivalSamples": 400,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 400,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 84,
+            "busParts": 455,
+            "railParts": 524,
+            "mixedRoutes": 184
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": null,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": false,
+          "bestHubMatches": false,
+          "topFourOverlap": 0
+        },
+        "errorCode": "routing_response_too_large"
+      },
+      {
+        "scenarioId": "weekday-bus-morning",
+        "meetingAt": "2026-10-27T23:30:00.000Z",
+        "intent": "bus",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 4750,
+          "serviceMs": 4750,
+          "metrics": {
+            "requests": 7,
+            "hits": 13,
+            "quotaWaitMs": 0,
+            "networkMs": 4352,
+            "routeSamples": 2,
+            "earlyArrivalSamples": 2,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 2,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 3,
+            "mixedRoutes": 0
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 47431,
+          "serviceMs": 17845,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 29586,
+            "networkMs": 17125,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 198,
+            "travelTimeEqualsJourney": 2,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 352,
+            "railParts": 323,
+            "mixedRoutes": 125
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 237,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": false,
+          "bestHubMatches": false,
+          "topFourOverlap": 1
+        },
+        "probes": {
+          "elapsedMs": 17216,
+          "serviceMs": 10483,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 6733,
+            "networkMs": 9060,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "weekday-suwon-bus",
+        "meetingAt": "2026-10-28T03:30:00.000Z",
+        "intent": "bus",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 13626,
+          "serviceMs": 13626,
+          "metrics": {
+            "requests": 9,
+            "hits": 20,
+            "quotaWaitMs": 0,
+            "networkMs": 12005,
+            "routeSamples": 8,
+            "earlyArrivalSamples": 8,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 8,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 2,
+            "busParts": 14,
+            "railParts": 8,
+            "mixedRoutes": 7
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 43950,
+          "serviceMs": 31840,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 12110,
+            "networkMs": 31250,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 200,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 72,
+            "busParts": 453,
+            "railParts": 167,
+            "mixedRoutes": 84
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": true,
+          "topFourOverlap": 2
+        },
+        "probes": {
+          "elapsedMs": 18240,
+          "serviceMs": 11938,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 6302,
+            "networkMs": 10262,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "weekday-late",
+        "meetingAt": "2026-10-27T14:30:00.000Z",
+        "intent": "last-service",
+        "status": "ERROR",
+        "errorCode": "non_monotonic_reachability"
+      },
+      {
+        "scenarioId": "weekday-midnight",
+        "meetingAt": "2026-10-27T15:20:00.000Z",
+        "intent": "midnight",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 3367,
+          "serviceMs": 3367,
+          "metrics": {
+            "requests": 6,
+            "hits": 13,
+            "quotaWaitMs": 0,
+            "networkMs": 3332,
+            "routeSamples": 6,
+            "earlyArrivalSamples": 6,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 6,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 3,
+            "railParts": 3,
+            "mixedRoutes": 0
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 58259,
+          "serviceMs": 27684,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 30575,
+            "networkMs": 27212,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 199,
+            "travelTimeEqualsJourney": 1,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 2,
+            "busParts": 236,
+            "railParts": 206,
+            "mixedRoutes": 81
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": true,
+          "topFourOverlap": 3
+        },
+        "probes": {
+          "elapsedMs": 7807,
+          "serviceMs": 7807,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 0,
+            "networkMs": 6446,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "weekend-midnight",
+        "meetingAt": "2026-10-30T15:30:00.000Z",
+        "intent": "midnight",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 4771,
+          "serviceMs": 4771,
+          "metrics": {
+            "requests": 7,
+            "hits": 15,
+            "quotaWaitMs": 0,
+            "networkMs": 4592,
+            "routeSamples": 6,
+            "earlyArrivalSamples": 6,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 6,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 6,
+            "railParts": 3,
+            "mixedRoutes": 0
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 50961,
+          "serviceMs": 26269,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 24692,
+            "networkMs": 26027,
+            "routeSamples": 200,
+            "earlyArrivalSamples": 200,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 200,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 2,
+            "busParts": 263,
+            "railParts": 197,
+            "mixedRoutes": 65
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": true,
+          "topFourOverlap": 1
+        },
+        "probes": {
+          "elapsedMs": 11124,
+          "serviceMs": 7433,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 3691,
+            "networkMs": 6271,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "weekend-early",
+        "meetingAt": "2026-10-30T20:30:00.000Z",
+        "intent": "first-service",
+        "status": "MEASURED",
+        "isochrone": {
+          "elapsedMs": 2088,
+          "serviceMs": 2088,
+          "metrics": {
+            "requests": 6,
+            "hits": 18,
+            "quotaWaitMs": 0,
+            "networkMs": 2020,
+            "routeSamples": 16,
+            "earlyArrivalSamples": 15,
+            "travelTimeEqualsJourney": 1,
+            "travelTimeEqualsBurden": 16,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 25,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "unsafeRecommendations": 0,
+        "matrix": {
+          "elapsedMs": 53326,
+          "serviceMs": 7176,
+          "metrics": {
+            "requests": 10,
+            "hits": 100,
+            "quotaWaitMs": 46150,
+            "networkMs": 7036,
+            "routeSamples": 164,
+            "earlyArrivalSamples": 161,
+            "travelTimeEqualsJourney": 3,
+            "travelTimeEqualsBurden": 164,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 348,
+            "railParts": 15,
+            "mixedRoutes": 11
+          }
+        },
+        "comparison": {
+          "baselineRoutable": true,
+          "emptyAgreement": false,
+          "differenceSeconds": 0,
+          "unvalidatedRecommendations": 0,
+          "within180Seconds": true,
+          "bestHubMatches": true,
+          "topFourOverlap": 3
+        },
+        "probes": {
+          "elapsedMs": 7640,
+          "serviceMs": 3365,
+          "metrics": {
+            "requests": 6,
+            "hits": 12,
+            "quotaWaitMs": 4275,
+            "networkMs": 2671,
+            "routeSamples": 0,
+            "earlyArrivalSamples": 0,
+            "travelTimeEqualsJourney": 0,
+            "travelTimeEqualsBurden": 0,
+            "lateArrivalSamples": 0,
+            "unknownModeParts": 0,
+            "busParts": 0,
+            "railParts": 0,
+            "mixedRoutes": 0
+          }
+        },
+        "monotonicityLosses": 0
+      },
+      {
+        "scenarioId": "same-origin-two",
+        "meetingAt": "2026-10-28T06:00:00.000Z",
+        "intent": "same-origin",
+        "status": "ERROR",
+        "errorCode": "provider_rejected"
+      }
+    ]
+  }
+}
