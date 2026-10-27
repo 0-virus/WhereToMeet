@@ -1,0 +1,14 @@
+{
+  "description": "작업 종료 시 커밋·푸시 누락을 확인합니다.",
+  "hooks": {
+    "Stop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "node \"$(git rev-parse --show-toplevel)/scripts/finish-work-hook.mjs\"",
+        "commandWindows": "powershell.exe -NoProfile -Command \"& node (Join-Path (git rev-parse --show-toplevel) 'scripts/finish-work-hook.mjs')\"",
+        "timeout": 15,
+        "statusMessage": "작업 완료 커밋·푸시 상태 확인"
+      }]
+    }]
+  }
+}
