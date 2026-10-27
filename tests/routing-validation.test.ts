@@ -10,6 +10,48 @@ const now = Date.parse('2026-10-05T03:00:00Z');
 const hub = (id: string, name = id): Hub => ({ id, name, lat: 37.5, lng: 127, regionCode: '11', kind: 'rail', sourceId: id, sourceUrl: 'https://example.org', sourceDate: '2026-10-01', verified: true });
 const catalog = [...new Set(scenarioDefinitions.flatMap(s => s.origins))].map(name => hub(name, name));
 const at = '2026-10-06T06:00:00Z';
+
+test('diagnostic run captures a bounded redacted 422 and blocks later network calls', async () => {
+  let calls = 0;
+  const measured = createMeasuredFetch({ appId: 'secret-id', apiKey: 'secret-key', hitsPerMinute: 120, stopOnHttpError: true, fetchImpl: async () => {
+    calls++;
+    return Response.json({ error_code: 2, description: 'Invalid request secret-key at 37.5, 127', additional_info: { departure_searches: ['travel_time must be positive'], coords: { lat: 37.5, lng: 127 } } }, { status: 422 });
+  } });
+  const init = { method: 'POST', body: JSON.stringify({ departure_searches: [{ id: 'o0', coords: { lat: 37.5, lng: 127 }, travel_time: 1800, departure_time: at }] }) };
+  const response = await measured.fetch('https://api.traveltimeapp.com/v4/time-map', init);
+  assert.equal(response.status, 422);
+  assert.equal(measured.diagnostics.providerErrors[0].providerErrorCode, 2);
+  assert.match(JSON.stringify(measured.diagnostics), /travel_time must be positive/);
+  assert.doesNotMatch(JSON.stringify(measured.diagnostics), /secret-key|37\.5|\b127\b/);
+  assert.equal(measured.diagnostics.requests[0].rollingHits, 1);
+  await assert.rejects(measured.fetch('https://api.traveltimeapp.com/v4/time-map', init), /PROVIDER_HTTP_422/);
+  assert.equal(calls, 1);
+});
+
+test('oversized diagnostic error bodies are cancelled without retaining raw content', async () => {
+  let cancelled = false;
+  const measured = createMeasuredFetch({ appId: 'secret-id', apiKey: 'secret-key', hitsPerMinute: 120, stopOnHttpError: true, fetchImpl: async () => new Response(new ReadableStream({
+    start(c) { c.enqueue(new Uint8Array(65537)); }, cancel() { cancelled = true; }
+  }), { status: 422 }) });
+  await measured.fetch('https://api.traveltimeapp.com/v4/time-map', { body: JSON.stringify({ departure_searches: [{ id: 'o0' }] }) });
+  assert.equal(cancelled, true);
+  assert.equal(measured.diagnostics.providerErrors[0].bodyStatus, 'TOO_LARGE');
+});
+
+test('diagnostic refusal prevents production retries, including Retry-After', async () => {
+  for (const status of [429, 503]) {
+    let calls = 0;
+    const measured = createMeasuredFetch({ appId: 'secret-id', apiKey: 'secret-key', hitsPerMinute: 120, stopOnHttpError: true, fetchImpl: async () => {
+      calls++; return new Response('not JSON secret-key', { status, headers: { 'Retry-After': '3600' } });
+    } });
+    const provider = createTravelTimeProvider({ appId: 'secret-id', apiKey: 'secret-key', now: () => now, fetchImpl: measured.fetch });
+    await assert.rejects(provider.reachable({ origins: [{ id: 'p1', label: 'private', lat: 37.5, lng: 127 }], meetingAt: at }, [hub('a')], 1800));
+    assert.equal(calls, 1);
+    assert.equal(measured.metrics.requests, 1);
+    assert.equal(measured.diagnostics.providerErrors[0].bodyStatus, 'UNREADABLE');
+    assert.doesNotMatch(JSON.stringify(measured.diagnostics), /secret-key|private/);
+  }
+});
 const recommendation = (id: string, seconds: number): Recommendation => ({ hubId: id, maxBurdenSeconds: seconds, sumBurdenSeconds: seconds * 2, participantRoutes: ['p1', 'p2'].map(originId => ({ originId, departureAt: new Date(Date.parse(at) - seconds * 1000).toISOString(), arrivalAt: at, travelSeconds: seconds, earlyWaitSeconds: 0, burdenSeconds: seconds, transfers: 0 })) });
 
 test('20 public-origin scenarios use the next suitable KST date within seven days', () => {

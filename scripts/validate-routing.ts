@@ -172,12 +172,52 @@ function quotaWait(ms: number, signal: AbortSignal | undefined, sleep?: (ms: num
   });
 }
 
-export function createMeasuredFetch(options: { appId: string; apiKey: string; hitsPerMinute: number; fetchImpl?: typeof fetch; now?: () => number; sleep?: (ms: number) => Promise<void> }) {
+type RequestDiagnostic = { at: string; endpoint: string; hits: number; rollingHits: number; status?: number; scenarioId?: string; searches: { seconds?: number; time?: string; transportation?: string; walkingSeconds?: number }[] };
+type ErrorDiagnostic = { requestIndex: number; status: number; bodyStatus: string; providerErrorCode?: number; description?: unknown; additionalInfo?: unknown };
+
+async function diagnoseError(response: Response, request: unknown, secrets: string[]): Promise<Omit<ErrorDiagnostic, 'requestIndex' | 'status'>> {
+  const reader = response.body?.getReader();
+  if (!reader) return { bodyStatus: 'EMPTY' };
+  let size = 0;
+  const chunks: Uint8Array[] = [];
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.length;
+      if (size > 65536) { await reader.cancel(); return { bodyStatus: 'TOO_LARGE' }; }
+      chunks.push(value);
+    }
+    const error = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    // Provider messages may echo input. Remove all request strings and coordinates, including echoes in prose.
+    const sensitive = new Set(secrets.filter(Boolean));
+    const collect = (value: unknown, coordinate = false): void => {
+      if (typeof value === 'string' || (coordinate && typeof value === 'number')) sensitive.add(String(value));
+      else if (value && typeof value === 'object') for (const [key, child] of Object.entries(value)) collect(child, coordinate || ['coords', 'lat', 'lng'].includes(key));
+    };
+    collect(request);
+    const scrub = (value: unknown, depth = 0): unknown => {
+      if (depth > 5) return '[TRUNCATED]';
+      if (typeof value === 'string') {
+        for (const secret of [...sensitive].sort((a,b) => b.length-a.length)) value = (value as string).split(secret).join('[REDACTED]');
+        return (value as string).replace(/https?:\/\/\S+|[\w.+-]+@[\w.-]+|[-+]?\d+\.\d+/g, '[REDACTED]').slice(0, 1000);
+      }
+      if (Array.isArray(value)) return value.slice(0, 30).map(v => scrub(v, depth + 1));
+      if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).slice(0, 30).map(([key, child]) => [String(scrub(key)), /coords|latitude|longitude|lat$|lng$|key|token|authorization|header|address|label/i.test(key) ? '[REDACTED]' : scrub(child, depth + 1)]));
+      return typeof value === 'number' ? '[NUMBER]' : value;
+    };
+    return { bodyStatus: 'JSON', ...(Number.isInteger(error?.error_code) ? { providerErrorCode: error.error_code } : {}), description: scrub(error?.description), additionalInfo: scrub(error?.additional_info) };
+  } catch { void reader.cancel().catch(() => {}); return { bodyStatus: 'UNREADABLE' }; }
+}
+
+export function createMeasuredFetch(options: { appId: string; apiKey: string; hitsPerMinute: number; stopOnHttpError?: boolean; fetchImpl?: typeof fetch; now?: () => number; sleep?: (ms: number) => Promise<void> }) {
   const metrics = emptyMetrics();
+  const diagnostics: { requests: RequestDiagnostic[]; providerErrors: ErrorDiagnostic[] } = { requests: [], providerErrors: [] };
   const now = options.now ?? Date.now;
   const implementation = options.fetchImpl ?? fetch;
   let recent: { at: number; hits: number }[] = [];
   const measured: typeof fetch = async (input, init) => {
+    if (options.stopOnHttpError && diagnostics.providerErrors.length) fail(`PROVIDER_HTTP_${diagnostics.providerErrors[0].status}`);
     const signal = init?.signal ?? (input instanceof Request ? input.signal : undefined);
     signal?.throwIfAborted();
     const url = new URL(input instanceof Request ? input.url : String(input));
@@ -198,12 +238,21 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
     }
     signal?.throwIfAborted();
     recent.push({ at: now(), hits });
+    const diagnostic: RequestDiagnostic = { at: new Date(now()).toISOString(), endpoint: url.pathname, hits, rollingHits: recent.reduce((sum, entry) => sum + entry.hits, 0), searches: searches.map(s => ({ seconds: s.travel_time, time: s.departure_time ?? s.arrival_time, transportation: s.transportation?.type, walkingSeconds: s.transportation?.walking_time })) };
+    if (options.stopOnHttpError) diagnostics.requests.push(diagnostic);
     metrics.requests++; metrics.hits += hits;
     const start = now();
     try {
       const response = await implementation(input, { ...init, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
-      // Let the production adapter classify status and honor Retry-After.
-      // Never decode or include provider error bodies in validation reports.
+      diagnostic.status = response.status;
+      if (!response.ok && options.stopOnHttpError) {
+        const failure: ErrorDiagnostic = { requestIndex: diagnostics.requests.length - 1, status: response.status, bodyStatus: 'PENDING' };
+        diagnostics.providerErrors.push(failure);
+        Object.assign(failure, await diagnoseError(response, body, [options.appId, options.apiKey]));
+        // This diagnostic run stops on refusal; do not wait for Retry-After or permit another network call.
+        return new Response(null, { status: response.status });
+      }
+      // Preserve the production adapter's normal retry policy outside diagnostic runs.
       if (!response.ok) return response;
       const requested = Object.fromEntries((body.arrival_searches ?? []).map((s: { id: string; arrival_time: string }) => [s.id, Date.parse(s.arrival_time)]));
       return observeResponse(response, requested, metrics);
@@ -212,7 +261,7 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
       fail(error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name) ? 'PROVIDER_TIMEOUT' : 'PROVIDER_NETWORK_ERROR');
     } finally { metrics.networkMs += now() - start; }
   };
-  return { fetch: measured, metrics };
+  return { fetch: measured, metrics, diagnostics };
 }
 
 export function safeError(error: unknown): string {
@@ -230,6 +279,7 @@ async function main() {
   const blockers: string[] = [];
   const results: ScenarioResult[] = [];
   let totalUsage = emptyMetrics();
+  let diagnostics: ReturnType<typeof createMeasuredFetch>['diagnostics'] = { requests: [], providerErrors: [] };
   const scheduleReferenceAt = new Date().toISOString();
   let catalog: Catalog | undefined, hubs: Hub[] = [], scenarios: Scenario[] = [];
   try { catalog = JSON.parse(await readFile(resolve(values.catalog!), 'utf8')); hubs = selectHubs(catalog!.hubs, values['catalog-size'] === 'all' ? catalog!.hubs.length : Number(values['catalog-size'])); if (hubs.length < 100) fail('CATALOG_TOO_SMALL'); }
@@ -251,7 +301,8 @@ async function main() {
     catch { blockers.push('ENGINE_ADAPTER_UNAVAILABLE'); }
   }
   if (factory) {
-    const measured = createMeasuredFetch({ appId: appId!, apiKey: apiKey!, hitsPerMinute });
+    const measured = createMeasuredFetch({ appId: appId!, apiKey: apiKey!, hitsPerMinute, stopOnHttpError: true });
+    diagnostics = measured.diagnostics;
     totalUsage = measured.metrics;
     const adapter = factory({ appId: appId!, apiKey: apiKey!, fetchImpl: measured.fetch, now: Date.now, validationDeadlineMs: 24 * 3600000 });
     const measure = async <T>(operation: () => Promise<T>): Promise<{ value: T; measurement: Measurement }> => {
@@ -262,6 +313,7 @@ async function main() {
       return { value, measurement: { elapsedMs, serviceMs: elapsedMs - delta.quotaWaitMs, metrics: delta } };
     };
     for (const scenario of scenarios) {
+      const firstRequest = diagnostics.requests.length;
       const result: ScenarioResult = { scenarioId: scenario.id, meetingAt: scenario.request.meetingAt, intent: scenario.intent, status: 'MEASURED' };
       try {
         if (Date.parse(scenario.request.meetingAt) <= Date.now()) fail('SCENARIO_EXPIRED');
@@ -284,15 +336,17 @@ async function main() {
           result.probes = run.measurement; result.monotonicityLosses = run.value;
         }
       } catch (error) { result.status = 'ERROR'; result.errorCode = safeError(error); }
+      for (const request of diagnostics.requests.slice(firstRequest)) request.scenarioId = scenario.id;
       results.push(result);
       // Progress contains only fixed scenario IDs, never provider bodies or coordinates.
-      process.stderr.write(`${scenario.id}: ${result.status}\n`);
+      process.stderr.write(`${scenario.id}: ${result.status}${result.errorCode ? ` (${result.errorCode})` : ''}\n`);
+      if (diagnostics.providerErrors.length) { blockers.push('PROVIDER_HTTP_REFUSAL'); break; }
       if (result.errorCode && (/PROVIDER_HTTP_(401|403|429)/.test(result.errorCode) || ['provider_rejected', 'provider_rate_limited', 'provider_not_configured', 'quota_unavailable'].includes(result.errorCode))) { blockers.push('PROVIDER_ACCESS_OR_QUOTA_BLOCKED'); break; }
     }
   }
   if (results.length && !totalUsage.requests) blockers.push('NO_PROVIDER_REQUESTS_OBSERVED');
   if (results.length && !totalUsage.routeSamples) blockers.push('ROUTE_TIMESTAMP_EVIDENCE_MISSING');
-  const report = { schemaVersion: 1, generatedAt: new Date().toISOString(), scheduleReferenceAt, evidence: totalUsage.requests ? 'LIVE_API_ATTEMPT' : 'NO_LIVE_API_EVIDENCE', mode: values.mode, catalog: { version: catalog?.version ?? null, totalHubs: catalog?.hubs.length ?? 0, testedHubs: hubs.length, verifiedHubs: hubs.filter(h => h.verified).length }, plannedScenarios: 20, blockers, totalUsage, summary: summarize(results, blockers, catalogVerified), results };
+  const report = { schemaVersion: 1, generatedAt: new Date().toISOString(), scheduleReferenceAt, evidence: totalUsage.requests ? 'LIVE_API_ATTEMPT' : 'NO_LIVE_API_EVIDENCE', mode: values.mode, configuredHitsPerMinute: hitsPerMinute, catalog: { version: catalog?.version ?? null, totalHubs: catalog?.hubs.length ?? 0, testedHubs: hubs.length, verifiedHubs: hubs.filter(h => h.verified).length }, plannedScenarios: 20, blockers, totalUsage, diagnostics, summary: summarize(results, blockers, catalogVerified), results };
   const output = `${JSON.stringify(report, null, 2)}\n`;
   if (values.out) { const filename = resolve(values.out); await mkdir(dirname(filename), { recursive: true }); await writeFile(filename, output); }
   process.stdout.write(output);
