@@ -1,0 +1,1268 @@
+{
+  "checkedAt": "2026-10-28",
+  "catalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "catalogSha256": "8d29255fbe4d4aef9b09433c6f1a35582e4cb49f7cefd69e683fb57c0956f1ec",
+  "scope": "현재 철도 표본50개. 이름의 괄호·공백·역 접미사를 제거한 대조 후보이며 기관 간 역코드 동일성이나 현재 위치·가동·보행 접근성을 승인하지 않음.",
+  "distanceMethod": "WGS84 Haversine, 구 반지름6371000m. 같은 정규화 역명 노드 중 최소 직선거리이며 보행거리·정확한 출구 대응·중복 판정이 아님.",
+  "groundFloorRule": "시작 또는 종료가 지상1층인 설치행만 분류. 지상2·3층도 존재하므로 지상이라는 값만으로 외부 출입구로 판정하지 않음.",
+  "sources": [
+    {
+      "id": "15044261",
+      "sourceUrl": "https://www.data.go.kr/data/15044261/fileData.do",
+      "sourceDate": "2026-09-01",
+      "retrievedAt": "2026-10-28",
+      "rows": 868,
+      "path": "data/raw/seoulmetro-elevators-20260901.csv",
+      "sha256": "87553e6baf464cb855d690ef259dee04df1ea6bae4e1d83638c1cb044e01d3c0",
+      "encoding": "cp949",
+      "license": "공공데이터포털 이용허락범위 제한 없음",
+      "downloadUrl": "https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007647020&fileDetailSn=1&insertDataPrcus=N"
+    },
+    {
+      "id": "OA-21212",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-21212/S/1/datasetView.do",
+      "surveyYear": 2020,
+      "retrievedAt": "2026-10-28",
+      "rows": 552,
+      "path": "data/raw/seoul-elevator-coordinates-20261028.json",
+      "sha256": "21e7b16aa633da2b622dea7fac434b27b06c0cc3fc2763cdd064a03aa9155658",
+      "license": "공공누리1유형·서울특별시 출처표시",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/sheet/json/download.do",
+      "downloadForm": {
+        "srvType": "S",
+        "infId": "OA-21212",
+        "serviceKind": "0",
+        "pageNo": "1",
+        "ssUserId": "SAMPLE_VIEW",
+        "strWhere": "",
+        "strOrderby": "SGG_CD ASC"
+      },
+      "countNote": "연결된 공공데이터포털의 과거 설명643행과 현재 다운로드552행이 다름. 이번 조회 원문552행만 사용."
+    },
+    {
+      "id": "OA-11984",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-11984/S/1/datasetView.do",
+      "fileListedDate": "2026-08-24",
+      "retrievedAt": "2026-10-28",
+      "filename": "역이용안내도.zip",
+      "bytes": 254865166,
+      "sha256": "9f3e27c068a046b352deafbc9e196dc94c80c8478bf03170c78d2936de80a6a7",
+      "entries": 270,
+      "license": "공공누리1유형·서울교통공사 출처표시",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?&useCache=false",
+      "downloadForm": {
+        "infId": "OA-11984",
+        "infSeq": "3",
+        "seq": "4",
+        "seqNo": ""
+      },
+      "dateNote": "목록 수정일은 도면별 조사일이 아님. ZIP 전체는 저장소에 넣지 않고 직접 본17장 중 핵심 사례4장만 원형 보존. 나머지는 ZIP 내부 경로·해시로 식별."
+    }
+  ],
+  "summary": {
+    "railSample": 50,
+    "withElevatorRecords": 18,
+    "withCoordinateNodes": 19,
+    "withMapCandidates": 17,
+    "visuallyInspectedMaps": 17,
+    "fullyReviewed": 0
+  },
+  "results": [
+    {
+      "hubId": "seoul-rail-0219",
+      "name": "삼성(무역센터)",
+      "sourceRoute": "2호선",
+      "elevatorRecordNumbers": [
+        "100",
+        "101",
+        "102",
+        "103"
+      ],
+      "groundFloor1RecordNumbers": [
+        "101",
+        "102",
+        "103"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 33969,
+          "sourceStationCode": "25",
+          "sourceStationName": "삼성(무역센터)"
+        },
+        {
+          "nodeId": 33966,
+          "sourceStationCode": "25",
+          "sourceStationName": "삼성(무역센터)"
+        },
+        {
+          "nodeId": 205305,
+          "sourceStationCode": "25",
+          "sourceStationName": "삼성(무역센터)"
+        },
+        {
+          "nodeId": 205301,
+          "sourceStationCode": "25",
+          "sourceStationName": "삼성(무역센터)"
+        }
+      ],
+      "nearestNodeId": 33969,
+      "nearestStraightLineMeters": 73.9,
+      "maps": [
+        {
+          "entry": "2호선/219 삼성역.jpg",
+          "sha256": "bc9f6a3777f2813eac2c1e5e843a49e5525f114721cbd30cdf39ee5e9d0c6fe0",
+          "bytes": 1582743,
+          "localFile": "data/review-evidence/maps/seoul-rail-0219.jpg"
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "도면은 B1 대합실·B2 승강장과 여러 외부 엘리베이터를 표시한다. CSV 외부 설치행은 1·6·4번 출구 측이다. 좌표 노드별 출구번호 연결과 현재 공공 대기 지점은 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-0225",
+      "name": "방배",
+      "sourceRoute": "2호선",
+      "elevatorRecordNumbers": [
+        "122",
+        "123",
+        "124"
+      ],
+      "groundFloor1RecordNumbers": [
+        "124"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 213045,
+          "sourceStationCode": "165",
+          "sourceStationName": "방배"
+        }
+      ],
+      "nearestNodeId": 213045,
+      "nearestStraightLineMeters": 34.5,
+      "maps": [
+        {
+          "entry": "2호선/225 방배.jpg",
+          "sha256": "0687eb440b5382e3ca789cfb24624af5e2a6f80ec2bfbc063a78524427e20f20",
+          "bytes": 1113098,
+          "localFile": "data/review-evidence/maps/seoul-rail-0225.jpg"
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "도면의 B1 대합실·B2 승강장, 3번 출구 쪽 외부 엘리베이터는 CSV 124행 안내와 일치한다. 원본 거점 좌표와 공공 대기 공간의 동일성·현재 접근성은 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-0232",
+      "name": "구로디지털단지",
+      "sourceRoute": "2호선",
+      "elevatorRecordNumbers": [
+        "142",
+        "143",
+        "144",
+        "145"
+      ],
+      "groundFloor1RecordNumbers": [
+        "142",
+        "145"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 211386,
+          "sourceStationCode": "89",
+          "sourceStationName": "구로디지털단지"
+        },
+        {
+          "nodeId": 211389,
+          "sourceStationCode": "89",
+          "sourceStationName": "구로디지털단지"
+        }
+      ],
+      "nearestNodeId": 211389,
+      "nearestStraightLineMeters": 60.4,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-0318",
+      "name": "안국",
+      "sourceRoute": "3호선",
+      "elevatorRecordNumbers": [
+        "214",
+        "215"
+      ],
+      "groundFloor1RecordNumbers": [
+        "215"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 211632,
+          "sourceStationCode": "269",
+          "sourceStationName": "안국"
+        }
+      ],
+      "nearestNodeId": 211632,
+      "nearestStraightLineMeters": 37.5,
+      "maps": [
+        {
+          "entry": "3호선/328 안국.jpg",
+          "sha256": "28e1869219c6acf2532279079c59fa9048f6d6e9b963bd0a0acad93009e3e933",
+          "bytes": 1511429
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "안국 도면은 B1·B2 대합실과 B3 승강장을 표시하며 6번 출구 쪽 외부 엘리베이터가 보인다. CSV 215행의 6번 출구 측·B2~지상1층과 대조했다. 공공 만남 지점의 좌표는 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-0337",
+      "name": "대청",
+      "sourceRoute": "3호선",
+      "elevatorRecordNumbers": [
+        "263",
+        "264",
+        "265"
+      ],
+      "groundFloor1RecordNumbers": [
+        "265"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 211969,
+          "sourceStationCode": "8",
+          "sourceStationName": "대청"
+        },
+        {
+          "nodeId": 202885,
+          "sourceStationCode": "8",
+          "sourceStationName": "대청"
+        }
+      ],
+      "nearestNodeId": 202885,
+      "nearestStraightLineMeters": 61.6,
+      "maps": [
+        {
+          "entry": "3호선/347 대청.jpg",
+          "sha256": "af726b8b991f604b8ededda8ddbdf5f8bf7837c6ef38101e432dbe80b667409c",
+          "bytes": 1193959
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "대청 도면은 B1·B2 대합실과 B3 승강장, 8번 출구 쪽 외부 엘리베이터를 표시한다. CSV 265행의 8번 출구 측과 대조했다. 도면의 연결통로 표시를 현재 공공 대기 공간으로 승인하지 않는다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-0408",
+      "name": "별내별가람",
+      "sourceRoute": "진접선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1215",
+      "name": "아신",
+      "sourceRoute": "중앙선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1279",
+      "name": "금릉",
+      "sourceRoute": "경의중앙선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1284",
+      "name": "문산",
+      "sourceRoute": "경의중앙선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1314",
+      "name": "퇴계원",
+      "sourceRoute": "경춘선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1316",
+      "name": "금곡",
+      "sourceRoute": "경춘선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1455",
+      "name": "인덕원",
+      "sourceRoute": "과천선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1701",
+      "name": "구로",
+      "sourceRoute": "경부선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [
+        {
+          "nodeId": 211407,
+          "sourceStationCode": "84",
+          "sourceStationName": "구로"
+        },
+        {
+          "nodeId": 211406,
+          "sourceStationCode": "84",
+          "sourceStationName": "구로"
+        }
+      ],
+      "nearestNodeId": 211407,
+      "nearestStraightLineMeters": 94.0,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1714",
+      "name": "독산",
+      "sourceRoute": "경부선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1716",
+      "name": "병점",
+      "sourceRoute": "경부선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1724",
+      "name": "평택",
+      "sourceRoute": "경부선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1751",
+      "name": "산본",
+      "sourceRoute": "안산선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1861",
+      "name": "보정",
+      "sourceRoute": "분당선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1872",
+      "name": "매교",
+      "sourceRoute": "분당선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1875",
+      "name": "어천",
+      "sourceRoute": "수인선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1885",
+      "name": "연수",
+      "sourceRoute": "수인선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1888",
+      "name": "인하대",
+      "sourceRoute": "수인선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1906",
+      "name": "의정부",
+      "sourceRoute": "경원선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-1951",
+      "name": "원당",
+      "sourceRoute": "일산선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2516",
+      "name": "발산",
+      "sourceRoute": "5호선",
+      "elevatorRecordNumbers": [
+        "385",
+        "386",
+        "387"
+      ],
+      "groundFloor1RecordNumbers": [
+        "387"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 104515,
+          "sourceStationCode": "57",
+          "sourceStationName": "발산"
+        },
+        {
+          "nodeId": 104536,
+          "sourceStationCode": "57",
+          "sourceStationName": "발산"
+        },
+        {
+          "nodeId": 215382,
+          "sourceStationCode": "57",
+          "sourceStationName": "발산"
+        }
+      ],
+      "nearestNodeId": 215382,
+      "nearestStraightLineMeters": 45.2,
+      "maps": [
+        {
+          "entry": "5호선/515 발산(4차수정).jpg",
+          "sha256": "27743fd4eb2a9295a08c72a8e0db0f83287b222c2d978a950989db62dd8a2c44",
+          "bytes": 1184434
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "발산 도면은 B1 대합실·B2 승강장과 7번 출구 쪽 외부 엘리베이터를 표시한다. CSV 387행의 7번 출구 측과 대조했다. 현재 좌표와 외부 대기 지점의 동일성은 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2521",
+      "name": "목동",
+      "sourceRoute": "5호선",
+      "elevatorRecordNumbers": [
+        "399",
+        "400",
+        "401"
+      ],
+      "groundFloor1RecordNumbers": [
+        "401"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 211974,
+          "sourceStationCode": "222",
+          "sourceStationName": "목동"
+        }
+      ],
+      "nearestNodeId": 211974,
+      "nearestStraightLineMeters": 22.5,
+      "maps": [
+        {
+          "entry": "5호선/520 목동(2차수정).jpg",
+          "sha256": "18846529901c0691e82622a08461f904e8a0732354044c7181b28a78dfe15761",
+          "bytes": 1113674
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "목동 도면은 B1 대합실·B2 승강장과 5번 출구 쪽 외부 엘리베이터를 표시한다. CSV 401행의 5번 출구 측과 대조했다. 최근접 노드 거리만으로 좌표를 옮기지 않는다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2546",
+      "name": "아차산(어린이대공원후문)",
+      "sourceRoute": "5호선",
+      "elevatorRecordNumbers": [
+        "469",
+        "470",
+        "471"
+      ],
+      "groundFloor1RecordNumbers": [
+        "471"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 212226,
+          "sourceStationCode": "73",
+          "sourceStationName": "아차산(어린이대공원후문)"
+        }
+      ],
+      "nearestNodeId": 212226,
+      "nearestStraightLineMeters": 30.4,
+      "maps": [
+        {
+          "entry": "5호선/545 아차산(1차수정).jpg",
+          "sha256": "ddf02aa0d569af86be526b2acd81d7404c6b29130901f54056edc26bc76217b4",
+          "bytes": 1183199,
+          "localFile": "data/review-evidence/maps/seoul-rail-2546.jpg"
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "CSV 471행의 근접 출입구는 4번, 상세위치는 3번 출구 측으로 서로 다르다. 도면은 B1·B2 대합실과 B3 승강장의 층별 연결을 보여주지만 어느 안내가 현재 정확한지 확정하지 못했다. 운영기관 또는 현장 확인이 필요하다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2559",
+      "name": "개롱",
+      "sourceRoute": "5호선",
+      "elevatorRecordNumbers": [
+        "543",
+        "544",
+        "545"
+      ],
+      "groundFloor1RecordNumbers": [
+        "545"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 211835,
+          "sourceStationCode": "217",
+          "sourceStationName": "개롱"
+        }
+      ],
+      "nearestNodeId": 211835,
+      "nearestStraightLineMeters": 33.6,
+      "maps": [
+        {
+          "entry": "5호선/p553 개롱(1차수정).jpg",
+          "sha256": "c2131755e0fb6f1198190bb890229366d658e2cad0a2b323dd765592889c2b9a",
+          "bytes": 1003946
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "개롱 도면은 B1 대합실·B2 승강장과 3·4번 출구 사이 외부 엘리베이터를 표시한다. CSV 545행과 대조했다. 지상 횡단·대기 공간은 도면에 충분히 나타나지 않는다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2612",
+      "name": "역촌",
+      "sourceRoute": "6호선",
+      "elevatorRecordNumbers": [
+        "554",
+        "555"
+      ],
+      "groundFloor1RecordNumbers": [
+        "555"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 213298,
+          "sourceStationCode": "260",
+          "sourceStationName": "역촌"
+        }
+      ],
+      "nearestNodeId": 213298,
+      "nearestStraightLineMeters": 30.8,
+      "maps": [
+        {
+          "entry": "6호선/2.-역촌.jpg",
+          "sha256": "54eaa5c472a6187575f268dc72d06e3777f8adf27138e47618818792a30ee9fe",
+          "bytes": 1341272
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "역촌 도면은 B1 대합실·B4 승강장과 4번 출구 쪽 외부 엘리베이터를 표시한다. CSV 555행과 대조했다. 원본 좌표의 층과 현재 공공 대기 공간은 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2620",
+      "name": "월드컵경기장(성산)",
+      "sourceRoute": "6호선",
+      "elevatorRecordNumbers": [
+        "574",
+        "575",
+        "576"
+      ],
+      "groundFloor1RecordNumbers": [
+        "576"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 52527,
+          "sourceStationCode": "142",
+          "sourceStationName": "월드컵경기장(성산)"
+        },
+        {
+          "nodeId": 212935,
+          "sourceStationCode": "142",
+          "sourceStationName": "월드컵경기장(성산)"
+        }
+      ],
+      "nearestNodeId": 52527,
+      "nearestStraightLineMeters": 52.8,
+      "maps": [
+        {
+          "entry": "6호선/10.-월드컵경기장.jpg",
+          "sha256": "369ea4df1c87a1299eab0951ce631609417b9590017eccb6120f4062699890cc",
+          "bytes": 1871569
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "월드컵경기장 도면은 B1 대합실·B2 승강장, 2번 출구 쪽 외부 엘리베이터와 경기장 측 동선을 표시한다. CSV 576행은 2번 출구 측 B2~지상1층이다. 실제 정차층·지상 보행 지점 연결은 별도 확인해야 한다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2622",
+      "name": "망원",
+      "sourceRoute": "6호선",
+      "elevatorRecordNumbers": [
+        "581",
+        "582"
+      ],
+      "groundFloor1RecordNumbers": [
+        "582"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 24317,
+          "sourceStationCode": "145",
+          "sourceStationName": "망원"
+        }
+      ],
+      "nearestNodeId": 24317,
+      "nearestStraightLineMeters": 26.3,
+      "maps": [
+        {
+          "entry": "6호선/12.-망원.jpg",
+          "sha256": "8ab6863e697edf1b692f74952794f7d857839c7029ced18a1580514e08104011",
+          "bytes": 1575999
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "망원 도면은 B1 대합실·B2 승강장과 2번 출구 쪽 외부 엘리베이터를 표시한다. CSV 582행은 2번 출구 측·합정 방면4-4 및 B2~지상1층을 안내한다. 노드와 설치 호기의 동일성은 미확인이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2624",
+      "name": "상수",
+      "sourceRoute": "6호선",
+      "elevatorRecordNumbers": [
+        "586",
+        "587",
+        "588"
+      ],
+      "groundFloor1RecordNumbers": [
+        "587"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 180871,
+          "sourceStationCode": "137",
+          "sourceStationName": "상수"
+        }
+      ],
+      "nearestNodeId": 180871,
+      "nearestStraightLineMeters": 35.9,
+      "maps": [
+        {
+          "entry": "6호선/14.-상수.jpg",
+          "sha256": "583c6c6278856f04ebd40c9830a707d34f40d2a7d9f8f4ba7c36f78212c416a0",
+          "bytes": 1642556
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "상수 도면은 B1·B2 대합실과 B3 승강장, 3번 출구 쪽 외부 엘리베이터 및 층간 장애인 리프트를 표시한다. CSV는 엘리베이터3행이 있어 도면의 현재성·층간 연결을 추가 확인해야 한다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2711",
+      "name": "장암",
+      "sourceRoute": "7호선",
+      "elevatorRecordNumbers": [
+        "670",
+        "671"
+      ],
+      "groundFloor1RecordNumbers": [
+        "670",
+        "671"
+      ],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [
+        {
+          "entry": "7호선/1.장암.jpg",
+          "sha256": "195b6973c2da781f978b6d1b1ea956d39d6dc66b1563718a3351f6cd983c67c3",
+          "bytes": 595777
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "장암 도면은 지상1층 대합실·승강장과 1번 출구의 높이 차이·엘리베이터2대를 표시한다. CSV 670·671행은 지상1~2층이다. 지상 표시만으로 같은 평면 보행 연결을 가정하지 않는다. 좌표 자료 대응은 없다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2731",
+      "name": "청담",
+      "sourceRoute": "7호선",
+      "elevatorRecordNumbers": [
+        "732",
+        "733",
+        "734",
+        "735"
+      ],
+      "groundFloor1RecordNumbers": [
+        "732",
+        "733"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 212716,
+          "sourceStationCode": "18",
+          "sourceStationName": "청담"
+        },
+        {
+          "nodeId": 212717,
+          "sourceStationCode": "18",
+          "sourceStationName": "청담"
+        }
+      ],
+      "nearestNodeId": 212717,
+      "nearestStraightLineMeters": 187.2,
+      "maps": [
+        {
+          "entry": "7호선/21.청담.jpg",
+          "sha256": "7eb41b79db12126ee80c54bb3df88789c07903d09f0b3b660defb836528e198d",
+          "bytes": 1510545,
+          "localFile": "data/review-evidence/maps/seoul-rail-2731.jpg"
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "도면은 B3 대합실·B4 승강장과 여러 출입구·외부 엘리베이터를 표시한다. CSV는 5·10번 출구 측을 안내한다. 같은 역명 좌표 노드의 최단 직선거리도 약187m이므로 원본 거점의 대표점 승인은 보류한다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2737",
+      "name": "내방",
+      "sourceRoute": "7호선",
+      "elevatorRecordNumbers": [
+        "751",
+        "752",
+        "753",
+        "754",
+        "755"
+      ],
+      "groundFloor1RecordNumbers": [
+        "754",
+        "755"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 119894,
+          "sourceStationCode": "158",
+          "sourceStationName": "내방"
+        },
+        {
+          "nodeId": 212984,
+          "sourceStationCode": "158",
+          "sourceStationName": "내방"
+        }
+      ],
+      "nearestNodeId": 119894,
+      "nearestStraightLineMeters": 26.7,
+      "maps": [
+        {
+          "entry": "7호선/27.내방.jpg",
+          "sha256": "682c4935bb31f65d6a0f0c9adf205b782166527ee8f9db164d924f485e92cd06",
+          "bytes": 805038
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "내방 도면은 B1·B2 대합실·B3 승강장과 3·5번 출구 쪽 외부 엘리베이터를 표시한다. CSV 754·755행과 대조했다. 서로 다른 방향 참가자의 지상 공공 만남 지점은 미지정이다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2806",
+      "name": "다산",
+      "sourceRoute": "별내선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2813",
+      "name": "강동구청",
+      "sourceRoute": "8호선",
+      "elevatorRecordNumbers": [
+        "816",
+        "817",
+        "818"
+      ],
+      "groundFloor1RecordNumbers": [
+        "818"
+      ],
+      "coordinateNodes": [
+        {
+          "nodeId": 213480,
+          "sourceStationCode": "33",
+          "sourceStationName": "강동구청"
+        }
+      ],
+      "nearestNodeId": 213480,
+      "nearestStraightLineMeters": 24.1,
+      "maps": [
+        {
+          "entry": "8호선/812 강동구청(3차수정).jpg",
+          "sha256": "4ad6e680f29c7bc3609eb8cbedca9fc097b567ec17a32af93ce526b4c4ab9975",
+          "bytes": 1157922
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "강동구청 도면은 B1·B2 대합실·B3 승강장과 외부 엘리베이터를 표시한다. CSV 818행은 4번 출구 측 B2~지상1층이다. 도면의 지상 엘리베이터 위치를 WGS84 노드와 정확히 연결하지 못했다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-2822",
+      "name": "산성",
+      "sourceRoute": "8호선",
+      "elevatorRecordNumbers": [
+        "852",
+        "853",
+        "854",
+        "855"
+      ],
+      "groundFloor1RecordNumbers": [
+        "855"
+      ],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [
+        {
+          "entry": "8호선/822 산성(2차수정).jpg",
+          "sha256": "6d151119ed030ce899715b36250a6afa57c20af7e59aecd012b50bb409b988b1",
+          "bytes": 1089807
+        }
+      ],
+      "mapVisuallyInspected": true,
+      "note": "산성 도면은 B1·B2 대합실·B3 승강장과 여러 층간 경사형 엘리베이터 및 3번 출구 쪽 외부 엘리베이터를 표시한다. CSV 855행은 3번 출구 측 B1~지상1층이다. 좌표 자료 대응은 없으며 경사 구간·공공 대기 지점 확인이 필요하다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3109",
+      "name": "아라(북부법원·검찰청)",
+      "sourceRoute": "인천1호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3115",
+      "name": "경인교대입구",
+      "sourceRoute": "인천1호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3136",
+      "name": "인천대입구",
+      "sourceRoute": "인천1호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3203",
+      "name": "검단사거리",
+      "sourceRoute": "인천2호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3206",
+      "name": "독정",
+      "sourceRoute": "인천2호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-3217",
+      "name": "주안국가산단",
+      "sourceRoute": "인천2호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4103",
+      "name": "공항시장",
+      "sourceRoute": "9호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [
+        {
+          "nodeId": 154168,
+          "sourceStationCode": "64",
+          "sourceStationName": "공항시장"
+        }
+      ],
+      "nearestNodeId": 154168,
+      "nearestStraightLineMeters": 28.2,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4111",
+      "name": "신목동",
+      "sourceRoute": "9호선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [
+        {
+          "nodeId": 211971,
+          "sourceStationCode": "220",
+          "sourceStationName": "신목동"
+        },
+        {
+          "nodeId": 211972,
+          "sourceStationCode": "220",
+          "sourceStationName": "신목동"
+        }
+      ],
+      "nearestNodeId": 211971,
+      "nearestStraightLineMeters": 27.9,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4318",
+      "name": "광교중앙(아주대)",
+      "sourceRoute": "신분당선(연장)",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4807",
+      "name": "신천",
+      "sourceRoute": "서해선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4812",
+      "name": "선부",
+      "sourceRoute": "서해선",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    },
+    {
+      "hubId": "seoul-rail-4927",
+      "name": "풍무",
+      "sourceRoute": "김포골드라인",
+      "elevatorRecordNumbers": [],
+      "groundFloor1RecordNumbers": [],
+      "coordinateNodes": [],
+      "nearestNodeId": null,
+      "nearestStraightLineMeters": null,
+      "maps": [],
+      "mapVisuallyInspected": false,
+      "note": "자료 대응 후보만 추출. 정확한 대표점·현재 보행 접근성은 미검증.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false
+    }
+  ]
+}

@@ -2,3 +2,9 @@
 data/raw/* -text
 # 결정적으로 생성되는 카탈로그는 모든 플랫폼에서 LF를 사용한다.
 data/*.json text eol=lf
+
+# 재현 스크립트가 만드는 검수 JSON도 동일한 LF 바이트를 유지한다.
+data/review-evidence/*.json text eol=lf
+
+# CP949·CRLF 원문은 UTF-8 텍스트 diff 대신 출처 해시로 검증한다.
+data/raw/seoulmetro-elevators-20260901.csv -diff
