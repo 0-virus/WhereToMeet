@@ -68,13 +68,25 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
   }
   async function validate(candidates:Hub[]){
     if(candidates.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
-    return finish(await provider.matrix(request,candidates));
+    return provider.matrix(request,candidates);
   }
-  const ranked=await validate(finalCandidates);
-  if(ranked.length) return ranked;
+  const routes=await validate(finalCandidates),ranked=finish(routes);
+  if(ranked.length){
+    if(ranked[0].maxBurdenSeconds>high){
+      // Approximate maps can exclude a better hub observed at an earlier, wider probe.
+      const wider=[...samples].filter(([seconds])=>seconds>=ranked[0].maxBurdenSeconds).sort(([a],[b])=>a-b)[0];
+      if(wider){
+        const checked=new Set(finalCandidates.map(h=>h.id));
+        const additional=hubs.filter(h=>!checked.has(h.id)&&originIds.every(id=>wider[1].get(id)!.has(h.id)));
+        if(finalCandidates.length+additional.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
+        if(additional.length) return finish([...routes,...await validate(additional)]);
+      }
+    }
+    return ranked;
+  }
   const enlarged=Math.min(high+180,currentCap());
   if(enlarged<=high) return [];
-  return validate((await candidatesAt(enlarged)).candidates);
+  return finish(await validate((await candidatesAt(enlarged)).candidates));
 }
 export function rankCandidates(candidates:CandidateRoutes[],originIds:string[],meetingAt:string,now:string,options:{limit?:number|null}={}):Recommendation[] {
   const meeting = Date.parse(meetingAt), current = Date.parse(now);

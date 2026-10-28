@@ -1,0 +1,2792 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-28T14:35:57.501Z",
+  "evidence": "실제 TravelTime 공개 고정 시나리오 단일 비교; 출시 승인 아님",
+  "scenarioId": "weekday-bus-morning",
+  "meetingAt": "2026-10-28T23:30:00.000Z",
+  "catalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "catalogCount": 100,
+  "accountLimitConfirmed": false,
+  "configuredHitsPerMinute": 120,
+  "maxRequests": 30,
+  "maxHits": 120,
+  "snapshots": [
+    {
+      "seconds": 1800,
+      "reachable": {
+        "p1": [],
+        "p2": [
+          "seoul-rail-2822"
+        ]
+      }
+    },
+    {
+      "seconds": 3600,
+      "reachable": {
+        "p1": [
+          "seoul-bus-100000001",
+          "seoul-bus-100000002",
+          "seoul-bus-100000004",
+          "seoul-bus-100000005",
+          "seoul-bus-101000001",
+          "seoul-bus-101000002",
+          "seoul-bus-101000007",
+          "seoul-bus-103000002",
+          "seoul-bus-105000002",
+          "seoul-bus-105000007",
+          "seoul-bus-105000008",
+          "seoul-bus-105000014",
+          "seoul-bus-105000478",
+          "seoul-bus-105000480",
+          "seoul-bus-105000484",
+          "seoul-bus-107000009",
+          "seoul-bus-107000010",
+          "seoul-bus-108000003",
+          "seoul-bus-112000007",
+          "seoul-bus-112000404",
+          "seoul-bus-112000409",
+          "seoul-bus-112000416",
+          "seoul-bus-118000009",
+          "seoul-bus-118000010",
+          "seoul-bus-118000011",
+          "seoul-bus-118000015",
+          "seoul-bus-119000001",
+          "seoul-bus-119000002",
+          "seoul-bus-119000003",
+          "seoul-bus-119000006",
+          "seoul-bus-119000008",
+          "seoul-bus-119000284",
+          "seoul-bus-119000288",
+          "seoul-bus-119000289",
+          "seoul-bus-120000671",
+          "seoul-bus-120000672",
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-bus-121000530",
+          "seoul-bus-121000531",
+          "seoul-bus-121000533",
+          "seoul-bus-123000579",
+          "seoul-bus-123000611",
+          "seoul-bus-124000360",
+          "seoul-bus-124000363",
+          "seoul-rail-0219",
+          "seoul-rail-0225",
+          "seoul-rail-0232",
+          "seoul-rail-0318",
+          "seoul-rail-0337",
+          "seoul-rail-1455",
+          "seoul-rail-1751",
+          "seoul-rail-1861",
+          "seoul-rail-1872",
+          "seoul-rail-2546",
+          "seoul-rail-2559",
+          "seoul-rail-2612",
+          "seoul-rail-2622",
+          "seoul-rail-2624",
+          "seoul-rail-2731",
+          "seoul-rail-2737",
+          "seoul-rail-2813",
+          "seoul-rail-2822",
+          "seoul-rail-4318"
+        ],
+        "p2": [
+          "seoul-bus-103000002",
+          "seoul-bus-105000002",
+          "seoul-bus-105000007",
+          "seoul-bus-105000008",
+          "seoul-bus-119000284",
+          "seoul-bus-119000288",
+          "seoul-bus-119000289",
+          "seoul-bus-120000672",
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-bus-121000531",
+          "seoul-bus-121000533",
+          "seoul-bus-123000579",
+          "seoul-bus-123000611",
+          "seoul-bus-124000360",
+          "seoul-bus-124000363",
+          "seoul-rail-0219",
+          "seoul-rail-0225",
+          "seoul-rail-0337",
+          "seoul-rail-1861",
+          "seoul-rail-2546",
+          "seoul-rail-2559",
+          "seoul-rail-2731",
+          "seoul-rail-2737",
+          "seoul-rail-2813",
+          "seoul-rail-2822",
+          "seoul-rail-4318"
+        ]
+      }
+    },
+    {
+      "seconds": 2700,
+      "reachable": {
+        "p1": [
+          "seoul-bus-101000001",
+          "seoul-bus-101000002",
+          "seoul-bus-119000284",
+          "seoul-bus-119000288",
+          "seoul-bus-119000289",
+          "seoul-bus-120000672",
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-bus-121000530",
+          "seoul-bus-121000531",
+          "seoul-bus-121000533",
+          "seoul-bus-123000579",
+          "seoul-bus-123000611",
+          "seoul-rail-0219",
+          "seoul-rail-0225",
+          "seoul-rail-0337",
+          "seoul-rail-1861",
+          "seoul-rail-2731",
+          "seoul-rail-2737",
+          "seoul-rail-4318"
+        ],
+        "p2": [
+          "seoul-bus-123000579",
+          "seoul-bus-123000611",
+          "seoul-rail-0219",
+          "seoul-rail-0337",
+          "seoul-rail-2559",
+          "seoul-rail-2731",
+          "seoul-rail-2813",
+          "seoul-rail-2822"
+        ]
+      }
+    },
+    {
+      "seconds": 2250,
+      "reachable": {
+        "p1": [
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-rail-0219",
+          "seoul-rail-0225",
+          "seoul-rail-0337",
+          "seoul-rail-1861",
+          "seoul-rail-2731",
+          "seoul-rail-2737",
+          "seoul-rail-4318"
+        ],
+        "p2": [
+          "seoul-rail-0337",
+          "seoul-rail-2559",
+          "seoul-rail-2822"
+        ]
+      }
+    },
+    {
+      "seconds": 2025,
+      "reachable": {
+        "p1": [
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-rail-1861",
+          "seoul-rail-4318"
+        ],
+        "p2": [
+          "seoul-rail-2822"
+        ]
+      }
+    },
+    {
+      "seconds": 2137,
+      "reachable": {
+        "p1": [
+          "seoul-bus-121000015",
+          "seoul-bus-121000016",
+          "seoul-rail-0219",
+          "seoul-rail-0225",
+          "seoul-rail-0337",
+          "seoul-rail-1861",
+          "seoul-rail-2731",
+          "seoul-rail-2737",
+          "seoul-rail-4318"
+        ],
+        "p2": [
+          "seoul-rail-0337",
+          "seoul-rail-2822"
+        ]
+      }
+    }
+  ],
+  "arrivalValidations": [
+    {
+      "candidateIds": [
+        "seoul-rail-0337"
+      ],
+      "valid": [
+        {
+          "hubId": "seoul-rail-0337",
+          "maxBurdenSeconds": 2485,
+          "sumBurdenSeconds": 4298,
+          "participantBurdens": [
+            {
+              "originId": "p1",
+              "burdenSeconds": 1813
+            },
+            {
+              "originId": "p2",
+              "burdenSeconds": 2485
+            }
+          ]
+        }
+      ],
+      "participantCounts": [
+        {
+          "hubId": "seoul-rail-0337",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "candidateIds": [
+        "seoul-bus-123000579",
+        "seoul-bus-123000611",
+        "seoul-rail-0219",
+        "seoul-rail-2731"
+      ],
+      "valid": [
+        {
+          "hubId": "seoul-bus-123000579",
+          "maxBurdenSeconds": 2113,
+          "sumBurdenSeconds": 4164,
+          "participantBurdens": [
+            {
+              "originId": "p1",
+              "burdenSeconds": 2113
+            },
+            {
+              "originId": "p2",
+              "burdenSeconds": 2051
+            }
+          ]
+        },
+        {
+          "hubId": "seoul-bus-123000611",
+          "maxBurdenSeconds": 2413,
+          "sumBurdenSeconds": 4464,
+          "participantBurdens": [
+            {
+              "originId": "p1",
+              "burdenSeconds": 2413
+            },
+            {
+              "originId": "p2",
+              "burdenSeconds": 2051
+            }
+          ]
+        },
+        {
+          "hubId": "seoul-rail-0219",
+          "maxBurdenSeconds": 2633,
+          "sumBurdenSeconds": 4446,
+          "participantBurdens": [
+            {
+              "originId": "p1",
+              "burdenSeconds": 1813
+            },
+            {
+              "originId": "p2",
+              "burdenSeconds": 2633
+            }
+          ]
+        },
+        {
+          "hubId": "seoul-rail-2731",
+          "maxBurdenSeconds": 2879,
+          "sumBurdenSeconds": 4692,
+          "participantBurdens": [
+            {
+              "originId": "p1",
+              "burdenSeconds": 1813
+            },
+            {
+              "originId": "p2",
+              "burdenSeconds": 2879
+            }
+          ]
+        }
+      ],
+      "participantCounts": [
+        {
+          "hubId": "seoul-bus-123000579",
+          "count": 2
+        },
+        {
+          "hubId": "seoul-bus-123000611",
+          "count": 2
+        },
+        {
+          "hubId": "seoul-rail-0219",
+          "count": 2
+        },
+        {
+          "hubId": "seoul-rail-2731",
+          "count": 2
+        }
+      ]
+    }
+  ],
+  "baseCommit": "e8f9d94dca493fd384599540d2c14f0973358833",
+  "recommendSourceSha256": "33627d69b3b912d568548de46829bccc0c36f1daa8e06b839fc801d240663011",
+  "recommendSourceLfSha256": "bd292f708c12630b57f34cc2608a67d0452790ad4a6137429e6884f4e3d3a2ac",
+  "sourceHashNote": "실행 당시 코드 바이트와 CRLF를 LF로 정규화한 코드 해시를 함께 기록한다. baseCommit 이후 이번 수정이 적용된 코드다.",
+  "recommendationDeadlineMs": 30000,
+  "baselineDeadlineMs": 180000,
+  "recommendation": {
+    "elapsedMs": 6575,
+    "quotaWaitMs": 0,
+    "results": [
+      {
+        "hubId": "seoul-bus-123000579",
+        "maxBurdenSeconds": 2113,
+        "sumBurdenSeconds": 4164,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2113
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-123000611",
+        "maxBurdenSeconds": 2413,
+        "sumBurdenSeconds": 4464,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0337",
+        "maxBurdenSeconds": 2485,
+        "sumBurdenSeconds": 4298,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2485
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0219",
+        "maxBurdenSeconds": 2633,
+        "sumBurdenSeconds": 4446,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2633
+          }
+        ]
+      }
+    ]
+  },
+  "matrix": {
+    "elapsedMs": 18029,
+    "quotaWaitMs": 0,
+    "results": [
+      {
+        "hubId": "seoul-bus-123000579",
+        "maxBurdenSeconds": 2113,
+        "sumBurdenSeconds": 4164,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2113
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2822",
+        "maxBurdenSeconds": 2234,
+        "sumBurdenSeconds": 3519,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2234
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1285
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-123000611",
+        "maxBurdenSeconds": 2413,
+        "sumBurdenSeconds": 4464,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0337",
+        "maxBurdenSeconds": 2485,
+        "sumBurdenSeconds": 4298,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2485
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1861",
+        "maxBurdenSeconds": 2609,
+        "sumBurdenSeconds": 3975,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1366
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2609
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0219",
+        "maxBurdenSeconds": 2633,
+        "sumBurdenSeconds": 4446,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2633
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2731",
+        "maxBurdenSeconds": 2879,
+        "sumBurdenSeconds": 4692,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2879
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2559",
+        "maxBurdenSeconds": 2926,
+        "sumBurdenSeconds": 5151,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2926
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2225
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2813",
+        "maxBurdenSeconds": 3013,
+        "sumBurdenSeconds": 5415,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2402
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2546",
+        "maxBurdenSeconds": 3013,
+        "sumBurdenSeconds": 5819,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2806
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4318",
+        "maxBurdenSeconds": 3023,
+        "sumBurdenSeconds": 4689,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1666
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3023
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0225",
+        "maxBurdenSeconds": 3023,
+        "sumBurdenSeconds": 4836,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3023
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-103000002",
+        "maxBurdenSeconds": 3047,
+        "sumBurdenSeconds": 6060,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3047
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000002",
+        "maxBurdenSeconds": 3047,
+        "sumBurdenSeconds": 6060,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3047
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-121000016",
+        "maxBurdenSeconds": 3213,
+        "sumBurdenSeconds": 5026,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2737",
+        "maxBurdenSeconds": 3213,
+        "sumBurdenSeconds": 5326,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2113
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000007",
+        "maxBurdenSeconds": 3213,
+        "sumBurdenSeconds": 6128,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2915
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000008",
+        "maxBurdenSeconds": 3213,
+        "sumBurdenSeconds": 6128,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2915
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-124000360",
+        "maxBurdenSeconds": 3313,
+        "sumBurdenSeconds": 6315,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3313
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3002
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-124000363",
+        "maxBurdenSeconds": 3313,
+        "sumBurdenSeconds": 6315,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3313
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3002
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 3423,
+        "sumBurdenSeconds": 5236,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1813
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3423
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000289",
+        "maxBurdenSeconds": 3423,
+        "sumBurdenSeconds": 5836,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3423
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-121000531",
+        "maxBurdenSeconds": 3423,
+        "sumBurdenSeconds": 5836,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3423
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000284",
+        "maxBurdenSeconds": 3569,
+        "sumBurdenSeconds": 5982,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3569
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-120000672",
+        "maxBurdenSeconds": 3569,
+        "sumBurdenSeconds": 5982,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3569
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-121000533",
+        "maxBurdenSeconds": 3569,
+        "sumBurdenSeconds": 5982,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3569
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000484",
+        "maxBurdenSeconds": 3767,
+        "sumBurdenSeconds": 6682,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2915
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3767
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-100000002",
+        "maxBurdenSeconds": 3767,
+        "sumBurdenSeconds": 6780,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3767
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-100000005",
+        "maxBurdenSeconds": 3767,
+        "sumBurdenSeconds": 6780,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3767
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-107000010",
+        "maxBurdenSeconds": 3767,
+        "sumBurdenSeconds": 6780,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3767
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-101000007",
+        "maxBurdenSeconds": 3809,
+        "sumBurdenSeconds": 6522,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2713
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3809
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1455",
+        "maxBurdenSeconds": 3888,
+        "sumBurdenSeconds": 6534,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2646
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3888
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1751",
+        "maxBurdenSeconds": 3888,
+        "sumBurdenSeconds": 6591,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2703
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3888
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-100000001",
+        "maxBurdenSeconds": 3964,
+        "sumBurdenSeconds": 6879,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2915
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3964
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000014",
+        "maxBurdenSeconds": 3964,
+        "sumBurdenSeconds": 7037,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3073
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3964
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000478",
+        "maxBurdenSeconds": 3964,
+        "sumBurdenSeconds": 7037,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3073
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3964
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-105000480",
+        "maxBurdenSeconds": 3964,
+        "sumBurdenSeconds": 7037,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3073
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3964
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-101000002",
+        "maxBurdenSeconds": 4049,
+        "sumBurdenSeconds": 6364,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2315
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-101000001",
+        "maxBurdenSeconds": 4049,
+        "sumBurdenSeconds": 6664,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2615
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000008",
+        "maxBurdenSeconds": 4049,
+        "sumBurdenSeconds": 6762,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2713
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0232",
+        "maxBurdenSeconds": 4049,
+        "sumBurdenSeconds": 6762,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2713
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-100000004",
+        "maxBurdenSeconds": 4049,
+        "sumBurdenSeconds": 6964,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2915
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 4060,
+        "sumBurdenSeconds": 6773,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2713
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4060
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000288",
+        "maxBurdenSeconds": 4078,
+        "sumBurdenSeconds": 6491,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4078
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-120000671",
+        "maxBurdenSeconds": 4078,
+        "sumBurdenSeconds": 6491,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4078
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-121000530",
+        "maxBurdenSeconds": 4122,
+        "sumBurdenSeconds": 6535,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2413
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4122
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-118000015",
+        "maxBurdenSeconds": 4122,
+        "sumBurdenSeconds": 7135,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4122
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1314",
+        "maxBurdenSeconds": 4213,
+        "sumBurdenSeconds": 8262,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4213
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4049
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000001",
+        "maxBurdenSeconds": 4253,
+        "sumBurdenSeconds": 7266,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4253
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1872",
+        "maxBurdenSeconds": 4253,
+        "sumBurdenSeconds": 7539,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3286
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4253
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-118000009",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-118000010",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-118000011",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000002",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000003",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-119000006",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4111",
+        "maxBurdenSeconds": 4407,
+        "sumBurdenSeconds": 7420,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4407
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-107000009",
+        "maxBurdenSeconds": 4439,
+        "sumBurdenSeconds": 7512,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3073
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4439
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-112000404",
+        "maxBurdenSeconds": 4529,
+        "sumBurdenSeconds": 7744,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3215
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4529
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-112000409",
+        "maxBurdenSeconds": 4529,
+        "sumBurdenSeconds": 7744,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3215
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4529
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-112000416",
+        "maxBurdenSeconds": 4529,
+        "sumBurdenSeconds": 7744,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3215
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4529
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2624",
+        "maxBurdenSeconds": 4532,
+        "sumBurdenSeconds": 7605,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3073
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4532
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-108000003",
+        "maxBurdenSeconds": 4532,
+        "sumBurdenSeconds": 8047,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3515
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4532
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-117000310",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 7726,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3013
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2622",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8026,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3313
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-112000007",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8228,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3515
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-116000009",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8326,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1714",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8326,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1716",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8569,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3856
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4807",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8569,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3856
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-109000012",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8572,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3859
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1875",
+        "maxBurdenSeconds": 4713,
+        "sumBurdenSeconds": 8647,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3934
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2711",
+        "maxBurdenSeconds": 4784,
+        "sumBurdenSeconds": 9497,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4784
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-116000005",
+        "maxBurdenSeconds": 4885,
+        "sumBurdenSeconds": 8498,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4885
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1701",
+        "maxBurdenSeconds": 4885,
+        "sumBurdenSeconds": 8498,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4885
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1316",
+        "maxBurdenSeconds": 5173,
+        "sumBurdenSeconds": 9886,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5173
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2806",
+        "maxBurdenSeconds": 5173,
+        "sumBurdenSeconds": 9886,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5173
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4713
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2612",
+        "maxBurdenSeconds": 5287,
+        "sumBurdenSeconds": 8802,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3515
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5287
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-0408",
+        "maxBurdenSeconds": 5287,
+        "sumBurdenSeconds": 9775,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4488
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5287
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3136",
+        "maxBurdenSeconds": 5406,
+        "sumBurdenSeconds": 9838,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4432
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5406
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2620",
+        "maxBurdenSeconds": 5523,
+        "sumBurdenSeconds": 9038,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3515
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5523
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2516",
+        "maxBurdenSeconds": 5523,
+        "sumBurdenSeconds": 9136,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5523
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-2521",
+        "maxBurdenSeconds": 5523,
+        "sumBurdenSeconds": 9136,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3613
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5523
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1906",
+        "maxBurdenSeconds": 5661,
+        "sumBurdenSeconds": 10815,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5154
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5661
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4103",
+        "maxBurdenSeconds": 5723,
+        "sumBurdenSeconds": 9936,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4213
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5723
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4812",
+        "maxBurdenSeconds": 5729,
+        "sumBurdenSeconds": 10299,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4570
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5729
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-bus-116000006",
+        "maxBurdenSeconds": 5788,
+        "sumBurdenSeconds": 10001,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4213
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5788
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-4927",
+        "maxBurdenSeconds": 5788,
+        "sumBurdenSeconds": 10001,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4213
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5788
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1215",
+        "maxBurdenSeconds": 5803,
+        "sumBurdenSeconds": 11526,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5803
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 5723
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1951",
+        "maxBurdenSeconds": 6085,
+        "sumBurdenSeconds": 10573,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4488
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 6085
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1885",
+        "maxBurdenSeconds": 6207,
+        "sumBurdenSeconds": 11368,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5161
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 6207
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3115",
+        "maxBurdenSeconds": 6209,
+        "sumBurdenSeconds": 11082,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 4873
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 6209
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1888",
+        "maxBurdenSeconds": 6213,
+        "sumBurdenSeconds": 11374,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5161
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 6213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3217",
+        "maxBurdenSeconds": 6213,
+        "sumBurdenSeconds": 11468,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5255
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 6213
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3203",
+        "maxBurdenSeconds": 7055,
+        "sumBurdenSeconds": 12835,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5780
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 7055
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3206",
+        "maxBurdenSeconds": 7055,
+        "sumBurdenSeconds": 12835,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5780
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 7055
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-3109",
+        "maxBurdenSeconds": 7143,
+        "sumBurdenSeconds": 12946,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 5803
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 7143
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1284",
+        "maxBurdenSeconds": 7468,
+        "sumBurdenSeconds": 14148,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 6680
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 7468
+          }
+        ]
+      },
+      {
+        "hubId": "seoul-rail-1279",
+        "maxBurdenSeconds": 7580,
+        "sumBurdenSeconds": 13960,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 6380
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 7580
+          }
+        ]
+      }
+    ]
+  },
+  "comparison": {
+    "baselineRoutable": true,
+    "emptyAgreement": false,
+    "differenceSeconds": 0,
+    "unvalidatedRecommendations": 0,
+    "within180Seconds": true,
+    "bestHubMatches": true,
+    "topFourOverlap": 3
+  },
+  "unsafeRecommendations": 0,
+  "status": "MEASURED",
+  "metrics": {
+    "requests": 18,
+    "hits": 117,
+    "quotaWaitMs": 0,
+    "networkMs": 23650,
+    "routeSamples": 210,
+    "earlyArrivalSamples": 208,
+    "travelTimeEqualsJourney": 2,
+    "travelTimeEqualsBurden": 210,
+    "lateArrivalSamples": 0,
+    "unknownModeParts": 2,
+    "busParts": 370,
+    "railParts": 334,
+    "mixedRoutes": 136
+  },
+  "diagnostics": {
+    "requests": [
+      {
+        "at": "2026-10-28T14:35:57.520Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 2,
+        "searches": [
+          {
+            "seconds": 1800,
+            "time": "2026-10-28T23:00:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 1800,
+            "time": "2026-10-28T23:00:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:35:58.201Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 4,
+        "searches": [
+          {
+            "seconds": 3600,
+            "time": "2026-10-28T22:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 3600,
+            "time": "2026-10-28T22:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:35:59.470Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 6,
+        "searches": [
+          {
+            "seconds": 2700,
+            "time": "2026-10-28T22:45:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 2700,
+            "time": "2026-10-28T22:45:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:35:59.911Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 8,
+        "searches": [
+          {
+            "seconds": 2250,
+            "time": "2026-10-28T22:52:30.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 2250,
+            "time": "2026-10-28T22:52:30.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:00.383Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 10,
+        "searches": [
+          {
+            "seconds": 2025,
+            "time": "2026-10-28T22:56:15.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 2025,
+            "time": "2026-10-28T22:56:15.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:00.700Z",
+        "endpoint": "/v4/time-map",
+        "hits": 2,
+        "rollingHits": 12,
+        "searches": [
+          {
+            "seconds": 2137,
+            "time": "2026-10-28T22:54:23.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 2137,
+            "time": "2026-10-28T22:54:23.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:01.155Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 1,
+        "rollingHits": 13,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:02.507Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 4,
+        "rollingHits": 17,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:04.079Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 27,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:05.871Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 37,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:07.603Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 47,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:09.377Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 57,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:11.093Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 67,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:12.860Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 77,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:14.638Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 87,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:16.727Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 97,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:18.493Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 107,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T14:36:20.298Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 10,
+        "rollingHits": 117,
+        "searches": [
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          },
+          {
+            "seconds": 14400,
+            "time": "2026-10-28T23:30:00.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 900
+          }
+        ],
+        "status": 200
+      }
+    ],
+    "providerErrors": []
+  }
+}

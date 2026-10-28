@@ -81,6 +81,64 @@ test('candidate budget fails before matrix rather than returning a biased subset
   assert.equal(calls,0);
 });
 
+const overshootReachable:TravelTimeProvider['reachable']=async(_r,_h,seconds)=>{
+  const ids=seconds>=3600?hubs.slice(0,6).map(h=>h.id):seconds>=2700?hubs.slice(0,5).map(h=>h.id):seconds>=2100?['h0']:[];
+  return {a:ids,b:ids};
+};
+const burdenRoute=(request:RecommendRequest,hubId:string,seconds:number)=>({hubId,routes:request.origins.map(o=>({
+  originId:o.id,departureAt:new Date(Date.parse(request.meetingAt)-seconds*1000).toISOString(),arrivalAt:request.meetingAt,transfers:0,
+}))});
+
+test('arrival beyond the final map reuses the smallest covering snapshot and validates only new hubs',async()=>{
+  const probes:number[]=[], batches:string[][]=[];
+  const burdens=[2485,2113,2413,2633,2879,2234];
+  const p=fake({async reachable(r,hs,seconds){probes.push(seconds);return overshootReachable(r,hs,seconds);},async matrix(r,hs){
+    batches.push(hs.map(h=>h.id));return hs.map(h=>burdenRoute(r,h.id,burdens[Number(h.sourceId)]));
+  }});
+  const result=await recommend(req,hubs,p,{maxCandidates:5});
+  assert.deepEqual(probes,[1800,3600,2700,2250,2025,2137]);
+  assert.deepEqual(batches,[['h0'],['h1','h2','h3','h4']]);
+  assert.deepEqual(result.map(r=>r.hubId),['h1','h2','h0','h3']);
+  assert.equal(result[0].maxBurdenSeconds,2113);
+});
+
+test('arrival fallback keeps the combined candidate budget and propagates provider failure',async()=>{
+  for(const maxCandidates of [4,5]){
+    let calls=0;
+    const p=fake({reachable:overshootReachable,async matrix(r,hs){
+      calls++;
+      if(calls>1) throw new RoutingError('routing_timeout',504);
+      return hs.map(h=>burdenRoute(r,h.id,2485));
+    }});
+    await assert.rejects(recommend(req,hubs,p,{maxCandidates}),e=>e instanceof RoutingError&&e.code===(maxCandidates===4?'routing_candidate_budget_exceeded':'routing_timeout'));
+    assert.equal(calls,maxCandidates===4?1:2);
+  }
+});
+
+test('arrival fallback skips absent or unchanged covering snapshots',async()=>{
+  for(const seconds of [2000,2485,4000]){
+    let calls=0;
+    const p=fake({async reachable(_r,_h,limit){const ids=limit>=2100?['h0']:[];return {a:ids,b:ids};},async matrix(r,hs){
+      calls++;return hs.map(h=>burdenRoute(r,h.id,seconds));
+    }});
+    assert.equal((await recommend(req,hubs,p)).length,1);
+    assert.equal(calls,1);
+  }
+});
+
+test('arrival fallback rechecks cached departures and rejects incomplete added routes',async()=>{
+  let current=now,calls=0;
+  const p=fake({now:()=>current,reachable:overshootReachable,async matrix(r,hs){
+    calls++;
+    if(calls===1) return hs.map(h=>burdenRoute(r,h.id,2485));
+    current=Date.parse(r.meetingAt)-2400*1000;
+    return [burdenRoute(r,'h1',2113),{hubId:'h2',routes:[]},burdenRoute(r,'h3',2633),
+      {hubId:'h4',routes:burdenRoute(r,'h4',2000).routes.map(p=>({...p,arrivalAt:new Date(Date.parse(r.meetingAt)+1000).toISOString()}))}];
+  }});
+  assert.deepEqual((await recommend(req,hubs,p)).map(r=>r.hubId),['h1']);
+  assert.equal(calls,2);
+});
+
 test('all invalid arrival routes trigger only one 180-second enlargement',async()=>{
   const probes:number[]=[];let calls=0;
   const p=fake({async reachable(_r,_h,seconds){probes.push(seconds);return {a:['h0'],b:['h0']};},async matrix(){calls++;return [];}});
