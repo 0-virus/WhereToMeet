@@ -206,6 +206,7 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
             const route=parseRoute(location.properties,origin);
             if(route) candidates[i].routes.push(route);
           }
+          if(seen.size!==search.departure_location_ids.length) invalid();
           candidates[i].routes.sort((a,b)=>request.origins.findIndex(o=>o.id===a.originId)-request.origins.findIndex(o=>o.id===b.originId));
         }
       }

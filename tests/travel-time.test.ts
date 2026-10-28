@@ -195,3 +195,24 @@ for(const seconds of [1,450,899,900,901,1800]){
     }
   });
 }
+
+test('matrix rejects participants omitted from both reachable and unreachable results',async()=>{
+  for(const result of [
+    {locations:[{id:'o0',properties:[property()]}],unreachable:[]},
+    {locations:[],unreachable:['o0']},
+    {locations:[],unreachable:[]},
+  ]){
+    await assert.rejects(provider(async()=>json({results:[{search_id:'h0',...result}]})).matrix(request,[hub('h')]),
+      error=>error instanceof RoutingError&&error.code==='provider_invalid_response'&&error.status===502);
+  }
+});
+
+test('matrix accounts for only requested origins when a participant is already at the hub',async()=>{
+  const p=provider(async()=>json({results:[
+    {search_id:'h0',locations:[{id:'o1',properties:[property()]}],unreachable:[]},
+    {search_id:'h1',locations:[],unreachable:['o1','o0']},
+  ]}));
+  const candidates=await p.matrix(request,[hub('same',37,127),hub('unreachable')]);
+  assert.deepEqual(candidates[0].routes.map(r=>[r.originId,r.departureAt]),[['a',request.meetingAt],['b','2026-10-06T05:40:00Z']]);
+  assert.deepEqual(candidates[1].routes,[]);
+});

@@ -79,3 +79,20 @@ test('production external calls require limiter and never disclose raw IP to its
  assert.equal((await worker.fetch(request,{...f.env,ENVIRONMENT:'production'},{waitUntil:()=>{}})).status,503);
  const response=await worker.fetch(request,{...f.env,ENVIRONMENT:'production',RATE_LIMITER:{limit:async({key})=>{assert.match(key,/^[a-f0-9]{64}$/);assert.doesNotMatch(key,/192\.0/);return {success:true};}}},{waitUntil:()=>{}});assert.equal(response.status,200);
 });
+
+test('omitted provider participant returns 502 without saving no_routes history',async()=>{
+ const f=fixture({recommendImpl:undefined,fetchImpl:async(url:RequestInfo|URL,init?:RequestInit)=>{
+  const address=String(url);
+  if(address.startsWith('https://dapi.kakao.com/'))return Response.json({documents:[{region_type:'B',code:'1168000000'}]});
+  const body=JSON.parse(String(init?.body));
+  if(address==='https://api.traveltimeapp.com/v4/time-map')return Response.json({results:body.departure_searches.map((s:{id:string})=>({search_id:s.id,shapes:[{shell:[{lat:37,lng:126},{lat:38,lng:126},{lat:38,lng:128},{lat:37,lng:128}],holes:[]}]}))});
+  assert.equal(address,'https://api.traveltimeapp.com/v4/time-filter');
+  return Response.json({results:body.arrival_searches.map((s:{id:string})=>({search_id:s.id,locations:[],unreachable:[]}))});
+ }});
+ const response=await f.send('/api/recommendations','POST',input);
+ assert.equal(response.status,502);assert.equal((await response.json() as any).error.code,'PROVIDER_ERROR');
+ await Promise.all(f.background);
+ assert.equal(f.sqlite.prepare('SELECT count(*) n FROM history').get()?.n,0);
+ const event=f.sqlite.prepare('SELECT status,error_code FROM search_events').get();
+ assert.equal(event?.status,'error');assert.equal(event?.error_code,'PROVIDER_ERROR');
+});
