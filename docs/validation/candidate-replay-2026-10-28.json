@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "analyzedAt": "2026-10-28",
+  "evidence": "저장된 실측 응답의 후보 집합과4시간 Arrival 집계를 재결합한 오프라인 비교",
+  "source": {
+    "path": "docs/validation/traveltime-diagnostic-2026-10-28.json",
+    "sha256": "ce6c7b07a170b36d0c302fbd9c23a468ed5b2ad9e070cb6722d65d487990a1d0",
+    "scenarioId": "weekday-bus-morning",
+    "meetingAt": "2026-10-28T23:30:00.000Z",
+    "catalogVersion": "seoul-20261005-2b17e7c9e6f7"
+  },
+  "sourceMatrixValidHubs": 99,
+  "originalFinalMapSeconds": 2137,
+  "originalValidatedBurdenSeconds": 2485,
+  "exactValidatedBurdenMapStored": false,
+  "assumptions": [
+    "후보별 저장된4시간 Arrival 응답을 고정하며 새 경로를 생성하지 않는다.",
+    "추가 Matrix는 이미 검증한 후보를 재조회하지 않고 기존10후보 배치·재시도 없음으로 계산한다. 실제 API 호출은0건이다."
+  ],
+  "strategies": [
+    {
+      "strategy": "최종 범위",
+      "storedMapSeconds": 2137,
+      "candidateIds": [
+        "seoul-rail-0337"
+      ],
+      "newMatrixHubIds": [],
+      "additionalMatrixHits": 0,
+      "additionalMatrixRequests": 0,
+      "rankedTopFour": [
+        {
+          "hubId": "seoul-rail-0337",
+          "maxBurdenSeconds": 2485,
+          "sumBurdenSeconds": 4298
+        }
+      ],
+      "differenceFromStoredFourHourBaselineSeconds": 372,
+      "missingStoredBaselineTopFour": [
+        "seoul-bus-123000579",
+        "seoul-rail-2822",
+        "seoul-bus-123000611"
+      ]
+    },
+    {
+      "strategy": "검증 부담 이상 최소 저장 범위",
+      "storedMapSeconds": 2700,
+      "candidateIds": [
+        "seoul-bus-123000579",
+        "seoul-bus-123000611",
+        "seoul-rail-0219",
+        "seoul-rail-0337",
+        "seoul-rail-2731"
+      ],
+      "newMatrixHubIds": [
+        "seoul-bus-123000579",
+        "seoul-bus-123000611",
+        "seoul-rail-0219",
+        "seoul-rail-2731"
+      ],
+      "additionalMatrixHits": 4,
+      "additionalMatrixRequests": 1,
+      "rankedTopFour": [
+        {
+          "hubId": "seoul-bus-123000579",
+          "maxBurdenSeconds": 2113,
+          "sumBurdenSeconds": 4164
+        },
+        {
+          "hubId": "seoul-bus-123000611",
+          "maxBurdenSeconds": 2413,
+          "sumBurdenSeconds": 4464
+        },
+        {
+          "hubId": "seoul-rail-0337",
+          "maxBurdenSeconds": 2485,
+          "sumBurdenSeconds": 4298
+        },
+        {
+          "hubId": "seoul-rail-0219",
+          "maxBurdenSeconds": 2633,
+          "sumBurdenSeconds": 4446
+        }
+      ],
+      "differenceFromStoredFourHourBaselineSeconds": 0,
+      "missingStoredBaselineTopFour": [
+        "seoul-rail-2822"
+      ]
+    },
+    {
+      "strategy": "조회한 모든 공통 후보 합집합",
+      "storedMapSeconds": null,
+      "candidateIds": [
+        "seoul-bus-103000002",
+        "seoul-bus-105000002",
+        "seoul-bus-105000007",
+        "seoul-bus-105000008",
+        "seoul-bus-119000284",
+        "seoul-bus-119000288",
+        "seoul-bus-119000289",
+        "seoul-bus-120000672",
+        "seoul-bus-121000015",
+        "seoul-bus-121000016",
+        "seoul-bus-121000531",
+        "seoul-bus-121000533",
+        "seoul-bus-123000579",
+        "seoul-bus-123000611",
+        "seoul-bus-124000360",
+        "seoul-bus-124000363",
+        "seoul-rail-0219",
+        "seoul-rail-0225",
+        "seoul-rail-0337",
+        "seoul-rail-1861",
+        "seoul-rail-2546",
+        "seoul-rail-2559",
+        "seoul-rail-2731",
+        "seoul-rail-2737",
+        "seoul-rail-2813",
+        "seoul-rail-2822",
+        "seoul-rail-4318"
+      ],
+      "newMatrixHubIds": [
+        "seoul-bus-103000002",
+        "seoul-bus-105000002",
+        "seoul-bus-105000007",
+        "seoul-bus-105000008",
+        "seoul-bus-119000284",
+        "seoul-bus-119000288",
+        "seoul-bus-119000289",
+        "seoul-bus-120000672",
+        "seoul-bus-121000015",
+        "seoul-bus-121000016",
+        "seoul-bus-121000531",
+        "seoul-bus-121000533",
+        "seoul-bus-123000579",
+        "seoul-bus-123000611",
+        "seoul-bus-124000360",
+        "seoul-bus-124000363",
+        "seoul-rail-0219",
+        "seoul-rail-0225",
+        "seoul-rail-1861",
+        "seoul-rail-2546",
+        "seoul-rail-2559",
+        "seoul-rail-2731",
+        "seoul-rail-2737",
+        "seoul-rail-2813",
+        "seoul-rail-2822",
+        "seoul-rail-4318"
+      ],
+      "additionalMatrixHits": 26,
+      "additionalMatrixRequests": 3,
+      "rankedTopFour": [
+        {
+          "hubId": "seoul-bus-123000579",
+          "maxBurdenSeconds": 2113,
+          "sumBurdenSeconds": 4164
+        },
+        {
+          "hubId": "seoul-rail-2822",
+          "maxBurdenSeconds": 2234,
+          "sumBurdenSeconds": 3519
+        },
+        {
+          "hubId": "seoul-bus-123000611",
+          "maxBurdenSeconds": 2413,
+          "sumBurdenSeconds": 4464
+        },
+        {
+          "hubId": "seoul-rail-0337",
+          "maxBurdenSeconds": 2485,
+          "sumBurdenSeconds": 4298
+        }
+      ],
+      "differenceFromStoredFourHourBaselineSeconds": 0,
+      "missingStoredBaselineTopFour": []
+    }
+  ],
+  "limitations": [
+    "후보 집합 재결합이며 대안 엔진 실행·성능·비용의 실측이 아니다.",
+    "2,485초 도형은 저장되지 않아 해당 후보 집합을 보간하지 않는다.",
+    "2,700초 재사용도4시간 비교선2위 산성역을 놓친다.",
+    "4시간 Arrival 자체의 최적성 불일치와 다른 시나리오 비단조성은 미해결이다.",
+    "원본·제품 코드·출시 승인은 변경하지 않는다."
+  ]
+}
