@@ -1,0 +1,6300 @@
+{
+  "checkedAt": "2026-10-28",
+  "sources": [
+    {
+      "path": "data/raw/seoul-rail-20261002.json",
+      "sha256": "96324048e8d6926c821043205af8348f14f499abb625e62b973b32294bbf7487",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-21232/S/1/datasetView.do",
+      "sourceDate": "2026-10-02"
+    },
+    {
+      "path": "data/raw/seoul-bus-20260902.json",
+      "sha256": "41193c19046771dc2ce22b0b55c9eb984ddfea1c30f64e4b5a3ef24bf1e553be",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do",
+      "sourceDate": "2026-09-02"
+    }
+  ],
+  "method": "기존 normalizeSources의 격리 ID를 원본과 대조하고, 같은 교통수단·정규화 이름별로 묶었다. WGS84 좌표의 구면 Haversine 거리(반지름6371000m) 중 그룹 내 최대값을 계산했다. 내림차순은 공간 분산 확인 순서이며 이용 수요·출시 채택 우선순위가 아니다.",
+  "limitations": [
+    "직선거리는 보행거리·환승 연결·동일 역·공통 만남 공간을 증명하지 않는다.",
+    "원본 레코드 수와 실제 독립 만남 지점 수를 구분한다. 같은 좌표도 자동 병합하지 않는다.",
+    "지역 법정동·대표점·보행 접근성·운영 상태는 이번 격리 그룹에서 검증하지 않았다."
+  ],
+  "summary": {
+    "excludedRecords": 583,
+    "railRecords": 239,
+    "busRecords": 344,
+    "nameGroups": 278,
+    "railNameGroups": 110,
+    "busNameGroups": 168,
+    "coordinateGroups": 3,
+    "releaseApprovalsAdded": 0
+  },
+  "coordinateGroups": [
+    [
+      "seoul-rail-0327",
+      "seoul-rail-4304"
+    ],
+    [
+      "seoul-rail-2734",
+      "seoul-rail-4305"
+    ],
+    [
+      "seoul-rail-4125",
+      "seoul-rail-4306"
+    ]
+  ],
+  "groups": [
+    {
+      "key": "rail:양평",
+      "kind": "rail",
+      "name": "양평",
+      "maxStraightLineMeters": 53551.3,
+      "farthestPair": [
+        "seoul-rail-1217",
+        "seoul-rail-2523"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1217",
+          "fingerprint": "1a3efb1337fd19c79da9f10e42549953de5bf9a8bc8ff16fbad87b33684020a3",
+          "route": "중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2523",
+          "fingerprint": "25c426d2de2db450705507277b8cdda75a3e48aea2b199f4d8572c94fd1f12e6",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:운정",
+      "kind": "rail",
+      "name": "운정",
+      "maxStraightLineMeters": 3582.5,
+      "farthestPair": [
+        "seoul-rail-1278",
+        "seoul-rail-9000"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1278",
+          "fingerprint": "44ba0acbb72dcb72121311699825d90319e644b49d4d2241ff0c5c8a3efd5a7b",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-9000",
+          "fingerprint": "7982c4aa89a84dca4a33edfb0883c84fea4925ae4873fbbfe62654e6185ff6d8",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "rail:신촌",
+      "kind": "rail",
+      "name": "신촌",
+      "maxStraightLineMeters": 715.4,
+      "farthestPair": [
+        "seoul-rail-0240",
+        "seoul-rail-1252"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0240",
+          "fingerprint": "e25ad8a3152b7d9a939d591c88a835c0ee8b26c0d8c3173ac69678906e3cb2b1",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-1252",
+          "fingerprint": "2ef7446d794fc1997e4530d8c6a403f0966a01655024e9e83b97a5c525819a63",
+          "route": "경의중앙선"
+        }
+      ]
+    },
+    {
+      "key": "rail:서울역",
+      "kind": "rail",
+      "name": "서울역",
+      "maxStraightLineMeters": 509.7,
+      "farthestPair": [
+        "seoul-rail-0426",
+        "seoul-rail-1251"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0150",
+          "fingerprint": "a97fd6872ee192ff77e2515de8e8278d9d8855a34a41f1e0af9102f67154204c",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-0426",
+          "fingerprint": "08c7158c7a31f63bc2efab73d9ced631d970d8761e0a509da62dc3ce6e3c7887",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-1001",
+          "fingerprint": "3302bf2449b4fe12d7c3abee971f519158c575fc28cf99a1da8a2f12c086b137",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-1251",
+          "fingerprint": "152504a87178aefd4e4ebc1b501bfcc963ea3a705100e562fe2ba392c6f21019",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-4201",
+          "fingerprint": "de7c462be5915cd5bcb4462d34f4b6bce3b30775ab896722a5d849f212d55714",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:잠실(송파구청)",
+      "kind": "rail",
+      "name": "잠실(송파구청)",
+      "maxStraightLineMeters": 401.4,
+      "farthestPair": [
+        "seoul-rail-0216",
+        "seoul-rail-2815"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0216",
+          "fingerprint": "460dddcbf927ffe6cb63a5e5241f13cefe5bb366e73604e2133beeb5bbc73f91",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2815",
+          "fingerprint": "7b6e8db563985d23e2f3e145e888e0637adac08575d7a295670fd8c07af50bd1",
+          "route": "8호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:동대문역사문화공원",
+      "kind": "rail",
+      "name": "동대문역사문화공원",
+      "maxStraightLineMeters": 342.8,
+      "farthestPair": [
+        "seoul-rail-0205",
+        "seoul-rail-2537"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0205",
+          "fingerprint": "12e089ea0b25a9a9ec695e478e3702f6b9524231f137941c67693c4be193c870",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-0422",
+          "fingerprint": "bf9ad204077a7483d7db51c84e6d0d2362d20b5c8f2b3ab8331790b060b2723d",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-2537",
+          "fingerprint": "d7921819ed4f570f671bb2fdbc8bdfd4c538f5d75c6792d432e339efc91f2935",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:청량리(서울시립대입구)",
+      "kind": "rail",
+      "name": "청량리(서울시립대입구)",
+      "maxStraightLineMeters": 339.3,
+      "farthestPair": [
+        "seoul-rail-0158",
+        "seoul-rail-1014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0158",
+          "fingerprint": "7c6980646a67bf65f1b5ea3f117d519ab6840a9d789968c2c02852c5a14b5578",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-1014",
+          "fingerprint": "1fd110a35a55fc5f46fbf7813c0da7fb80cae3e2f8d0ed22ff1235f19326b73c",
+          "route": "경원선"
+        }
+      ]
+    },
+    {
+      "key": "rail:신당",
+      "kind": "rail",
+      "name": "신당",
+      "maxStraightLineMeters": 311,
+      "farthestPair": [
+        "seoul-rail-0206",
+        "seoul-rail-2636"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0206",
+          "fingerprint": "3bd5a21904b5624b6d03c5dbb9f11170a17c091cde4c0201ea56a453ebcf9b0e",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2636",
+          "fingerprint": "a822d9f2f004da32056963f7a6865c385a5eb7cc19b7865936956e664555575b",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:고속터미널",
+      "kind": "rail",
+      "name": "고속터미널",
+      "maxStraightLineMeters": 296.4,
+      "farthestPair": [
+        "seoul-rail-2736",
+        "seoul-rail-4123"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0329",
+          "fingerprint": "78312b33eb95c9db9aa7108ea010a21a9d8c7d1d2fae931f64bed57280109b8d",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2736",
+          "fingerprint": "4f50b7fe463807a003b4083fb0e09b53f637c1b97a45d24feda6756b855396cd",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-4123",
+          "fingerprint": "e254c1dec49a66bba0f87f1156924502b6f82f836b17b5c72e859298ddc6498f",
+          "route": "9호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:노원",
+      "kind": "rail",
+      "name": "노원",
+      "maxStraightLineMeters": 294.6,
+      "farthestPair": [
+        "seoul-rail-0411",
+        "seoul-rail-2715"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0411",
+          "fingerprint": "452ca073a1dc76e1cca2c8bacd893ce1d74e4b85cc80f275af4a849bfc6ed14e",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-2715",
+          "fingerprint": "f0a9ba047f0bd0ce57824370ce35f24314c4635d9eaa7af25b88f875239376de",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:구리",
+      "kind": "rail",
+      "name": "구리",
+      "maxStraightLineMeters": 292.1,
+      "farthestPair": [
+        "seoul-rail-1205",
+        "seoul-rail-2808"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1205",
+          "fingerprint": "67a7b9a10e27cb424ef40c1caea962e61ec713d542194a4b3007ed046ac25ee2",
+          "route": "중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2808",
+          "fingerprint": "b412ec2f6b2938b169f2e3c12faf0e4869180f4ea17de95ecacaf2c361073c14",
+          "route": "별내선"
+        }
+      ]
+    },
+    {
+      "key": "rail:신길",
+      "kind": "rail",
+      "name": "신길",
+      "maxStraightLineMeters": 280,
+      "farthestPair": [
+        "seoul-rail-1032",
+        "seoul-rail-2526"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1032",
+          "fingerprint": "577e8035c49ba16c80b9d86833a6db055d25379e080367fb2bc02b079b5e1b37",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-2526",
+          "fingerprint": "a5445d2536aa1aed4b68a2e16f30e321a39cbfc4f8d00b731f5d8e39b9554cb2",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:시청",
+      "kind": "rail",
+      "name": "시청",
+      "maxStraightLineMeters": 278.9,
+      "farthestPair": [
+        "seoul-rail-0151",
+        "seoul-rail-0201"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0151",
+          "fingerprint": "4a0baddae0ecb2fe2cffdaf40740f90e10e31b3c9f7323e032f4645084422785",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-0201",
+          "fingerprint": "d52c5a07823b7710a029e6512c81fa04f9f35c210b04e62be5289ced7542ac8a",
+          "route": "2호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:홍대입구",
+      "kind": "rail",
+      "name": "홍대입구",
+      "maxStraightLineMeters": 278.8,
+      "farthestPair": [
+        "seoul-rail-0239",
+        "seoul-rail-1264"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0239",
+          "fingerprint": "0a306bdc0a940be2bb5cf95beb73c604447ca7ce2ea2a93d8ca2efe9f2092e27",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-1264",
+          "fingerprint": "57ddaf67f4409bca1b58b36c7a021bd698dd574c1e9657d48328d0b1db65f5d5",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-4203",
+          "fingerprint": "2c78e4918f5e65dce7db894ec2dd17b36c8a1f52ff0e1797169e95c6d75154cb",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:종로3가",
+      "kind": "rail",
+      "name": "종로3가",
+      "maxStraightLineMeters": 273.5,
+      "farthestPair": [
+        "seoul-rail-0153",
+        "seoul-rail-2535"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0153",
+          "fingerprint": "6f62e62e64cda53e44d5c273dd93d1e08ceb82f386a7fdb180aa2810a56d74da",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-0319",
+          "fingerprint": "07c58a29e81dfaa96b3236c88f6ebb880ccc2b5f4eb806302bdb9323f2828119",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2535",
+          "fingerprint": "135f03cb283dca24d345a848ef985d232deea6dd0d8dbac2b8dd69e4ce505c30",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:디지털미디어시티",
+      "kind": "rail",
+      "name": "디지털미디어시티",
+      "maxStraightLineMeters": 262.8,
+      "farthestPair": [
+        "seoul-rail-2619",
+        "seoul-rail-4204"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1266",
+          "fingerprint": "d157e43d93694a91b48ccb2bfee2e825a3eaf4ee143ba3fbd8ba13dc21f53f19",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2619",
+          "fingerprint": "5325493fa59b7f38f97020af3d831118bd775f617d51d6eb0751758e90a3e369",
+          "route": "6호선"
+        },
+        {
+          "hubId": "seoul-rail-4204",
+          "fingerprint": "f77a5748447468aa6b4b45bf703642420584990cc62a7b7ae5bf6c96a26ea91a",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:김포공항",
+      "kind": "rail",
+      "name": "김포공항",
+      "maxStraightLineMeters": 258.9,
+      "farthestPair": [
+        "seoul-rail-1980",
+        "seoul-rail-2513"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1980",
+          "fingerprint": "05a6f563f8bd483bd0871760a06d70134be8b582b4a62e24c6c0298556f7e123",
+          "route": "서해선"
+        },
+        {
+          "hubId": "seoul-rail-2513",
+          "fingerprint": "621639fff727fc245d707a4395c2e59ad0ad08e72056f08aca108ae4af69e603",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-4102",
+          "fingerprint": "5d8996d0640c1ba90483f851b64869c32866d40c80e13e21c5701e7fc91c42a4",
+          "route": "9호선"
+        },
+        {
+          "hubId": "seoul-rail-4207",
+          "fingerprint": "773e7f1271cd573170c6ac161605eeb75d2b6c080a067058a717a1d4ded8d262",
+          "route": "공항철도1호선"
+        },
+        {
+          "hubId": "seoul-rail-4929",
+          "fingerprint": "09a6922fbd81dbef0a14cf2d4fdaa0c0c8c2b0ed3b758d2494316081ee1b15de",
+          "route": "김포골드라인"
+        }
+      ]
+    },
+    {
+      "key": "bus:이대역",
+      "kind": "bus",
+      "name": "이대역",
+      "maxStraightLineMeters": 245.8,
+      "farthestPair": [
+        "seoul-bus-113000411",
+        "seoul-bus-113000418"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000411",
+          "fingerprint": "2f81fffa08c6c2a95f4f8bb5ceb95a0cbe31172514ba2ff78a03b5d15e955ec6",
+          "arsId": "13025"
+        },
+        {
+          "hubId": "seoul-bus-113000418",
+          "fingerprint": "7a4b3dcd2114777801bf72b06397685d593330e4060c6764cb3b95dc398f0b80",
+          "arsId": "14064"
+        }
+      ]
+    },
+    {
+      "key": "rail:종합운동장",
+      "kind": "rail",
+      "name": "종합운동장",
+      "maxStraightLineMeters": 231.2,
+      "farthestPair": [
+        "seoul-rail-0218",
+        "seoul-rail-4130"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0218",
+          "fingerprint": "06a56a860d91eee36ea7c3f185ee8cd7003f052079dca72d7e539190bbe4d7a1",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-4130",
+          "fingerprint": "f88fabdd1d87c968a218f089a506b82cb3780e20b739fca048b5e395fbcbecbe",
+          "route": "9호선(연장)"
+        }
+      ]
+    },
+    {
+      "key": "bus:경찰청.동북아역사재단",
+      "kind": "bus",
+      "name": "경찰청.동북아역사재단",
+      "maxStraightLineMeters": 229,
+      "farthestPair": [
+        "seoul-bus-101000332",
+        "seoul-bus-112000399"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-101000332",
+          "fingerprint": "deb4deef127597c827bbf564747a630028a60f2eb02376121fe3d0868ef28a28",
+          "arsId": "13041"
+        },
+        {
+          "hubId": "seoul-bus-112000399",
+          "fingerprint": "ef60848cc8041fc41e39338308cda37ce47e8cb9ec10eda4802f6884d9e7db0a",
+          "arsId": "13039"
+        }
+      ]
+    },
+    {
+      "key": "rail:초지",
+      "kind": "rail",
+      "name": "초지",
+      "maxStraightLineMeters": 228.2,
+      "farthestPair": [
+        "seoul-rail-1758",
+        "seoul-rail-4813"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1758",
+          "fingerprint": "4ecf6a186c708aca44f461eb8b977f20b4a134959cad3a5e7b3f424e2d481b0c",
+          "route": "안산선"
+        },
+        {
+          "hubId": "seoul-rail-4813",
+          "fingerprint": "57221f5a210a0f31ce72a3257fcc7844badc6f55f0dbb89b567f91739c5dfad0",
+          "route": "서해선"
+        }
+      ]
+    },
+    {
+      "key": "rail:공덕",
+      "kind": "rail",
+      "name": "공덕",
+      "maxStraightLineMeters": 219.1,
+      "farthestPair": [
+        "seoul-rail-2530",
+        "seoul-rail-4202"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1262",
+          "fingerprint": "1c8e0ab3f25ca1d48c05333b5d27ad42d6712ddcf9446443efa507e201486e08",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2530",
+          "fingerprint": "379fc8c37391b547bce0ab57d320f17e2f2a96363a9a5ce825b1c1552982b7a0",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-2627",
+          "fingerprint": "e0033a127725d81238c23f71931e86288a75d5d8d0ee9cfa943d533b0435a355",
+          "route": "6호선"
+        },
+        {
+          "hubId": "seoul-rail-4202",
+          "fingerprint": "014660dae5df548aee53b3c958f311698d0a86eb6926dce2f179706fcff30e50",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:영등포구청",
+      "kind": "rail",
+      "name": "영등포구청",
+      "maxStraightLineMeters": 217.8,
+      "farthestPair": [
+        "seoul-rail-0236",
+        "seoul-rail-2524"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0236",
+          "fingerprint": "d771f380fbecbaef656a2779f712b32e0279e4f2edeadf10afe0f2518ada67bb",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2524",
+          "fingerprint": "048bcf9779d0e49ea5fe7e7d73a4444594b08ac221de79f6908a9871e4f90c8f",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:잠실역.잠실대교남단",
+      "kind": "bus",
+      "name": "잠실역.잠실대교남단",
+      "maxStraightLineMeters": 216.8,
+      "farthestPair": [
+        "seoul-bus-123000001",
+        "seoul-bus-123000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000001",
+          "fingerprint": "e7f135d6b3d43d7e0d5a22fd98fa99ab15a952e123b3f2d7ee774f32455c7ea5",
+          "arsId": "24001"
+        },
+        {
+          "hubId": "seoul-bus-123000002",
+          "fingerprint": "19fdd4fc736a41cea605397492cbe18b7033bde6ddbd3fed4d48e17de6d96a6a",
+          "arsId": "24002"
+        }
+      ]
+    },
+    {
+      "key": "bus:제기동역.서울약령시",
+      "kind": "bus",
+      "name": "제기동역.서울약령시",
+      "maxStraightLineMeters": 216.7,
+      "farthestPair": [
+        "seoul-bus-105000481",
+        "seoul-bus-105000482"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000481",
+          "fingerprint": "2c8db89588b28b255a4947e0be0f086aa28756b8aa0012a2850f4963ee1832a4",
+          "arsId": "06024"
+        },
+        {
+          "hubId": "seoul-bus-105000482",
+          "fingerprint": "4f3b3fcf0aeb47704c98199cc638fee5b5f9b7a046c274475ddb9231427de2db",
+          "arsId": "06023"
+        }
+      ]
+    },
+    {
+      "key": "rail:신설동",
+      "kind": "rail",
+      "name": "신설동",
+      "maxStraightLineMeters": 211.3,
+      "farthestPair": [
+        "seoul-rail-0246",
+        "seoul-rail-4713"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0156",
+          "fingerprint": "c84e5ec33e2dd8e6d26cd3a6937bd7b0bf602f18cb116f14c62ae1fd0fc266ec",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-0246",
+          "fingerprint": "c675da22941bcc56f6a9cfd8ba8b0e4b0b9a8b5b6965c6b583d633cd178eb579",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-4713",
+          "fingerprint": "ca7f8627a56395e86a5798d8facc5e9b71abd823776df9b29c0919aa7bab1d18",
+          "route": "우이신설선"
+        }
+      ]
+    },
+    {
+      "key": "rail:모란",
+      "kind": "rail",
+      "name": "모란",
+      "maxStraightLineMeters": 207.4,
+      "farthestPair": [
+        "seoul-rail-1853",
+        "seoul-rail-2827"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1853",
+          "fingerprint": "3e8bf10f60c9bfcb6a108a1957de76cd4951ac579a6a394dd1e58665793f0564",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-2827",
+          "fingerprint": "eca7549cb88dc921c3b23235b43c9c9cd1e1030602107e912c3d1fd94d5247cc",
+          "route": "8호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:삼각지",
+      "kind": "rail",
+      "name": "삼각지",
+      "maxStraightLineMeters": 205.6,
+      "farthestPair": [
+        "seoul-rail-0428",
+        "seoul-rail-2629"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0428",
+          "fingerprint": "742fbe15171762fb4ac22f4f97247995a975514e93077c5f46a54e292838ca52",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-2629",
+          "fingerprint": "2e6b39980973c3477691ced32c634867e5ab577d192cb546167099bd7183d31a",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:동작(현충원)",
+      "kind": "rail",
+      "name": "동작(현충원)",
+      "maxStraightLineMeters": 193.6,
+      "farthestPair": [
+        "seoul-rail-0431",
+        "seoul-rail-4120"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0431",
+          "fingerprint": "141aa3cb66bccf131278fbba4e49e3a21372e1974fbb0fd4bd822accc7c3da73",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-4120",
+          "fingerprint": "0b9f8b6af53f3c438ee44d2e04fa10227f8f7b714f13edb9d63f534d112b4490",
+          "route": "9호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:대림(구로구청)",
+      "kind": "rail",
+      "name": "대림(구로구청)",
+      "maxStraightLineMeters": 190.8,
+      "farthestPair": [
+        "seoul-rail-0233",
+        "seoul-rail-2746"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0233",
+          "fingerprint": "6960b0941dcb293c838e8f42277e0ae8c554f8e8654fc48e5e32bbf1ad68774e",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2746",
+          "fingerprint": "8ef4f3b96bd07d98bdb6472cb85b8f1bb4812988bf68581f36218ac2cf90a5de",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:어린이대공원후문.아차산역",
+      "kind": "bus",
+      "name": "어린이대공원후문.아차산역",
+      "maxStraightLineMeters": 190.7,
+      "farthestPair": [
+        "seoul-bus-104000006",
+        "seoul-bus-104000007"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000006",
+          "fingerprint": "787212466044ca65591dac77a45cace47c8b3b50e81cabe04538914e724bfe19",
+          "arsId": "05006"
+        },
+        {
+          "hubId": "seoul-bus-104000007",
+          "fingerprint": "7e960b9058fa6a3f548bebefe9264cce10bafbdba87b4f1e826cdaa5c9d44900",
+          "arsId": "05007"
+        }
+      ]
+    },
+    {
+      "key": "bus:영등포역",
+      "kind": "bus",
+      "name": "영등포역",
+      "maxStraightLineMeters": 188.9,
+      "farthestPair": [
+        "seoul-bus-118000005",
+        "seoul-bus-118000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000005",
+          "fingerprint": "2530a4f08e95ac52465991470d4da5228ab4376a9198085c80abe379d25ff6b3",
+          "arsId": "19005"
+        },
+        {
+          "hubId": "seoul-bus-118000006",
+          "fingerprint": "ee745f8b7c4be5c84dae7ad574a35d51857e029d54e3667aa8dadeae24aebe01",
+          "arsId": "19006"
+        }
+      ]
+    },
+    {
+      "key": "rail:옥수",
+      "kind": "rail",
+      "name": "옥수",
+      "maxStraightLineMeters": 185.1,
+      "farthestPair": [
+        "seoul-rail-0325",
+        "seoul-rail-1011"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0325",
+          "fingerprint": "b962af315794709cbf1ff115c331b810b4af8aec8b8faa59b6c7988b5e048d0a",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-1011",
+          "fingerprint": "18f1b3579bf2a6d7ab5524690d7cf1e4365853f7df4492f1cc8d39c0660c7905",
+          "route": "경원선"
+        }
+      ]
+    },
+    {
+      "key": "bus:수색교",
+      "kind": "bus",
+      "name": "수색교",
+      "maxStraightLineMeters": 177.8,
+      "farthestPair": [
+        "seoul-bus-111000003",
+        "seoul-bus-111000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000003",
+          "fingerprint": "fbd39a4e48a55f9d63751ce9afba86e9586b112197681467073f92d036025dac",
+          "arsId": "12003"
+        },
+        {
+          "hubId": "seoul-bus-111000004",
+          "fingerprint": "313420d6eb6fc7883c5ee0a7c6d32850201e2024ca929862fa972d7e32f73f56",
+          "arsId": "12004"
+        }
+      ]
+    },
+    {
+      "key": "bus:아현역",
+      "kind": "bus",
+      "name": "아현역",
+      "maxStraightLineMeters": 171.7,
+      "farthestPair": [
+        "seoul-bus-113000477",
+        "seoul-bus-113000478"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000477",
+          "fingerprint": "7f3f5a2dc5d5663d11141bbcc184c6e0f50ad6d05fe489e3869f71a6d1f65dae",
+          "arsId": "14068"
+        },
+        {
+          "hubId": "seoul-bus-113000478",
+          "fingerprint": "78f98c8d011b59379356c3a4a6377086bdbbd63b8165caa7202403f860aca55d",
+          "arsId": "13044"
+        }
+      ]
+    },
+    {
+      "key": "rail:당산",
+      "kind": "rail",
+      "name": "당산",
+      "maxStraightLineMeters": 171.3,
+      "farthestPair": [
+        "seoul-rail-0237",
+        "seoul-rail-4113"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0237",
+          "fingerprint": "f9385e70b99446dac25aa7b699b3b87402d46fc0c5e13ec1f1e90f7ed2f7c926",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-4113",
+          "fingerprint": "4b3fd9d10ffe84151b4e7edd52542c299816140e7fb8199e32cf6030d7c1e779",
+          "route": "9호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:동대문",
+      "kind": "rail",
+      "name": "동대문",
+      "maxStraightLineMeters": 167.5,
+      "farthestPair": [
+        "seoul-rail-0155",
+        "seoul-rail-0421"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0155",
+          "fingerprint": "03cbcce35049242704789e58a9fde74b98a543e565550039d7ffa2a81f2a6d29",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-0421",
+          "fingerprint": "0a50af199a0cecddd4106259a0a10cc2fe70359e25e28a5a3f82b4732636b098",
+          "route": "4호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:한국가스기술공사",
+      "kind": "bus",
+      "name": "한국가스기술공사",
+      "maxStraightLineMeters": 167.3,
+      "farthestPair": [
+        "seoul-bus-115000592",
+        "seoul-bus-115000593"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000592",
+          "fingerprint": "8395182dbb68aeed65872145a7f078993063cfa46a7744b35da4453c23ce2a0e",
+          "arsId": "16011"
+        },
+        {
+          "hubId": "seoul-bus-115000593",
+          "fingerprint": "50f39a066e92b0485df864eaeb74324415e38a7937f9ce8f50bcbdc38bfe45e2",
+          "arsId": "16012"
+        }
+      ]
+    },
+    {
+      "key": "bus:갈월동",
+      "kind": "bus",
+      "name": "갈월동",
+      "maxStraightLineMeters": 167,
+      "farthestPair": [
+        "seoul-bus-102000011",
+        "seoul-bus-102000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000011",
+          "fingerprint": "6116992243c71dd03b838bed9be65236c58f72f9b5d88f5effcd9daabc140972",
+          "arsId": "03011"
+        },
+        {
+          "hubId": "seoul-bus-102000012",
+          "fingerprint": "3a75e3ea21688fef25ec92c51756cf79cbdb8350724812553d44aab2e0e08a62",
+          "arsId": "03012"
+        }
+      ]
+    },
+    {
+      "key": "rail:건대입구",
+      "kind": "rail",
+      "name": "건대입구",
+      "maxStraightLineMeters": 166.9,
+      "farthestPair": [
+        "seoul-rail-0212",
+        "seoul-rail-2729"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0212",
+          "fingerprint": "02c4420164e52da6d8fa99160c97a58f9b6db1a689116628be8e6ae7c933ab21",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2729",
+          "fingerprint": "6ea97f8401d9cec2ea2b4acddcbae6f905f72826e82fded0f0da7f108bcfccf7",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:노량진",
+      "kind": "rail",
+      "name": "노량진",
+      "maxStraightLineMeters": 165.2,
+      "farthestPair": [
+        "seoul-rail-1004",
+        "seoul-rail-4117"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1004",
+          "fingerprint": "3aa4e94444af3bdaa5a47003f1f2fe43156866b5087e4f22dcfa2cd71e821b08",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-4117",
+          "fingerprint": "aecdd8a47aa190ab4cfa802c6ad3aa09f6b2a2d2700f9c20f07ac6e80630380b",
+          "route": "9호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:동대문구청",
+      "kind": "bus",
+      "name": "동대문구청",
+      "maxStraightLineMeters": 162.7,
+      "farthestPair": [
+        "seoul-bus-105000006",
+        "seoul-bus-105000017"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000006",
+          "fingerprint": "a36c8686c0957137d6d45553721eb19bea025a452b7474b69bc3b368f3d47a93",
+          "arsId": "06006"
+        },
+        {
+          "hubId": "seoul-bus-105000017",
+          "fingerprint": "8907889beb9edb247c706d6c700494652c3d15f11650dbbdbe74bec6a4b0e779",
+          "arsId": "06017"
+        }
+      ]
+    },
+    {
+      "key": "bus:무악재역",
+      "kind": "bus",
+      "name": "무악재역",
+      "maxStraightLineMeters": 161.5,
+      "farthestPair": [
+        "seoul-bus-112000398",
+        "seoul-bus-112000400"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000398",
+          "fingerprint": "4838d5a16dea6527ebbd2efabe2eec3cfed871fabd8f250112925748cf16afa7",
+          "arsId": "13031"
+        },
+        {
+          "hubId": "seoul-bus-112000400",
+          "fingerprint": "58e4b4e0533decf6b75cb3d85877b3ac61aa96d5af1826a95b33931c241dd920",
+          "arsId": "13032"
+        }
+      ]
+    },
+    {
+      "key": "rail:구성",
+      "kind": "rail",
+      "name": "구성",
+      "maxStraightLineMeters": 157.9,
+      "farthestPair": [
+        "seoul-rail-1863",
+        "seoul-rail-9009"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1863",
+          "fingerprint": "c5e4700df8639b3e4bd7997b3c9fb7ac2fc2709451a97d36b72ff95ffec73a17",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-9009",
+          "fingerprint": "6c74ff4684355fc756abee81125737da1654766a9fc456c07773ef62df53d5b7",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "bus:금천구청.금천경찰서",
+      "kind": "bus",
+      "name": "금천구청.금천경찰서",
+      "maxStraightLineMeters": 156.8,
+      "farthestPair": [
+        "seoul-bus-117000007",
+        "seoul-bus-117000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000007",
+          "fingerprint": "d26c4b7c74fea6865b58afe3ef5fb8f0eab918e1d6ac6a94d52f534c7c58fa9b",
+          "arsId": "18007"
+        },
+        {
+          "hubId": "seoul-bus-117000008",
+          "fingerprint": "2a3e5402568cb3eba1eb3bef0e351083cc79e54d6ef72373641144db61a9fd2c",
+          "arsId": "18008"
+        }
+      ]
+    },
+    {
+      "key": "rail:검암",
+      "kind": "rail",
+      "name": "검암",
+      "maxStraightLineMeters": 155.9,
+      "farthestPair": [
+        "seoul-rail-3207",
+        "seoul-rail-4209"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-3207",
+          "fingerprint": "fd4874a5f8324fae5e6e73a4d43520cf6e140955a88351d9c73ee74f1d1a2a15",
+          "route": "인천2호선"
+        },
+        {
+          "hubId": "seoul-rail-4209",
+          "fingerprint": "e4ec10d47a0c6f09f0ad913b25e461a8d304c9f8805f1020942f9dd87f3816fa",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:문정법조단지.건영아파트",
+      "kind": "bus",
+      "name": "문정법조단지.건영아파트",
+      "maxStraightLineMeters": 155.8,
+      "farthestPair": [
+        "seoul-bus-123000013",
+        "seoul-bus-123000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000013",
+          "fingerprint": "6b23063daf3133cdf34d0cd2f189848e4fde0bd849c62abbb48018fdbec5c4c9",
+          "arsId": "24013"
+        },
+        {
+          "hubId": "seoul-bus-123000014",
+          "fingerprint": "d65c77aa3eda763a01545cfd900c04b49b1f83852e3c290ff42137af2e9809cc",
+          "arsId": "24014"
+        }
+      ]
+    },
+    {
+      "key": "rail:부평",
+      "kind": "rail",
+      "name": "부평",
+      "maxStraightLineMeters": 152.7,
+      "farthestPair": [
+        "seoul-rail-1806",
+        "seoul-rail-3120"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1806",
+          "fingerprint": "36e4015551cae4d2b36908f0747f1f40fe2bb1b0bc317b9d8295ca52429ffc0a",
+          "route": "경인선"
+        },
+        {
+          "hubId": "seoul-rail-3120",
+          "fingerprint": "394922dc631a754b4b942c3daeb51a64d869e61e54bb3862e86fcbd12d798211",
+          "route": "인천1호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:노들역",
+      "kind": "bus",
+      "name": "노들역",
+      "maxStraightLineMeters": 150.8,
+      "farthestPair": [
+        "seoul-bus-119000013",
+        "seoul-bus-119000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-119000013",
+          "fingerprint": "07d6c6537c629c978b612586c4fe0e874225b00e4db127a1b3cbcae235e92b2a",
+          "arsId": "20013"
+        },
+        {
+          "hubId": "seoul-bus-119000014",
+          "fingerprint": "658400a2cff8b2e4ceb617143d7d9cc7e361631723031713a581d6fa0e627669",
+          "arsId": "20014"
+        }
+      ]
+    },
+    {
+      "key": "bus:문성초등학교.금천가족문화센터",
+      "kind": "bus",
+      "name": "문성초등학교.금천가족문화센터",
+      "maxStraightLineMeters": 150.8,
+      "farthestPair": [
+        "seoul-bus-117000001",
+        "seoul-bus-117000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000001",
+          "fingerprint": "6b9058bb0db630354ea3fc86f38b3eaf0dc3f2f92e92b667be746378a7ac39f8",
+          "arsId": "18001"
+        },
+        {
+          "hubId": "seoul-bus-117000002",
+          "fingerprint": "0b7aa7d8c155cda2abaaa4033be9fd0a27bfb08890fdf9b0019f22c3b8f2df3b",
+          "arsId": "18002"
+        }
+      ]
+    },
+    {
+      "key": "bus:장지역.가든파이브",
+      "kind": "bus",
+      "name": "장지역.가든파이브",
+      "maxStraightLineMeters": 148.9,
+      "farthestPair": [
+        "seoul-bus-123000015",
+        "seoul-bus-123000016"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000015",
+          "fingerprint": "b69353695956b093237ddc520320bb2bbcb6aa90564934cdf837a326a7894988",
+          "arsId": "24015"
+        },
+        {
+          "hubId": "seoul-bus-123000016",
+          "fingerprint": "64cd8eb5504a9d6122a528c33997c6a5bf9f413001585fa94fe6ad2243498daa",
+          "arsId": "24016"
+        }
+      ]
+    },
+    {
+      "key": "bus:박미삼거리.국립전통예술중고",
+      "kind": "bus",
+      "name": "박미삼거리.국립전통예술중고",
+      "maxStraightLineMeters": 146.3,
+      "farthestPair": [
+        "seoul-bus-117000011",
+        "seoul-bus-117000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000011",
+          "fingerprint": "5ae01bb949842e65c1159fdae48f3587513bc40d29b712b006ad0b96ba43d918",
+          "arsId": "18011"
+        },
+        {
+          "hubId": "seoul-bus-117000012",
+          "fingerprint": "b3d3628ec37efb808ec7a72edad31f36dbd3c01a17d798d9650933fc4ab85c4b",
+          "arsId": "18012"
+        }
+      ]
+    },
+    {
+      "key": "rail:부평구청",
+      "kind": "rail",
+      "name": "부평구청",
+      "maxStraightLineMeters": 145.5,
+      "farthestPair": [
+        "seoul-rail-2761",
+        "seoul-rail-3118"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2761",
+          "fingerprint": "6527a5eefd0d564a542023f5d84406d5e6148bd0413db9b9a0e74930f2b95934",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3118",
+          "fingerprint": "c0d719c61e8e03e928ef1ed39d36e63777f0221099586c7e9138385e3b6742ae",
+          "route": "인천1호선"
+        },
+        {
+          "hubId": "seoul-rail-3761",
+          "fingerprint": "111af099fcc8d94779dda1362ebb96e9649d8eaf1346b6c7ee60648aa64e697d",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "rail:충정로(경기대입구)",
+      "kind": "rail",
+      "name": "충정로(경기대입구)",
+      "maxStraightLineMeters": 143.1,
+      "farthestPair": [
+        "seoul-rail-0243",
+        "seoul-rail-2532"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0243",
+          "fingerprint": "278eda49a461dfd4b4043731d6866ea1b72cd2a50ed32b612af89f515dd482f6",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2532",
+          "fingerprint": "43402613375814b65143e0ff85c61093bb79949388fb6ca257a8fa635a788005",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:KBS스포츠월드",
+      "kind": "bus",
+      "name": "KBS스포츠월드",
+      "maxStraightLineMeters": 142.8,
+      "farthestPair": [
+        "seoul-bus-115000590",
+        "seoul-bus-115000591"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000590",
+          "fingerprint": "7932e74938180e87caf4f574389582697184cb847b5525dd8944350be971b579",
+          "arsId": "16009"
+        },
+        {
+          "hubId": "seoul-bus-115000591",
+          "fingerprint": "2ef50b407ff957f3171ff61c5f6021d01c5e165e43a56c4ae35319ee0a9b4f73",
+          "arsId": "16010"
+        }
+      ]
+    },
+    {
+      "key": "bus:모래내시장.가좌역",
+      "kind": "bus",
+      "name": "모래내시장.가좌역",
+      "maxStraightLineMeters": 142.4,
+      "farthestPair": [
+        "seoul-bus-112000005",
+        "seoul-bus-112000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000005",
+          "fingerprint": "56e898952585ad2c45752a3ab414ace06460e98862add92f6c5172b4877c898b",
+          "arsId": "13005"
+        },
+        {
+          "hubId": "seoul-bus-112000006",
+          "fingerprint": "e3e269f4fe0ebc7f405f70d23b3a484114dfc1c9ae79d06b2a7d8e041f55a47d",
+          "arsId": "13006"
+        }
+      ]
+    },
+    {
+      "key": "bus:발산역",
+      "kind": "bus",
+      "name": "발산역",
+      "maxStraightLineMeters": 142.1,
+      "farthestPair": [
+        "seoul-bus-115000594",
+        "seoul-bus-115000893"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000594",
+          "fingerprint": "d1717dea1c69d8d01ba648c396b03647ae1b0a8ac4a954f591068bdb81b1f303",
+          "arsId": "16013"
+        },
+        {
+          "hubId": "seoul-bus-115000893",
+          "fingerprint": "61f79773f2c1b7379f5385527e96e6897aab9e1dc228da384922870488157d61",
+          "arsId": "16017"
+        }
+      ]
+    },
+    {
+      "key": "bus:공항중학교.마곡엠밸리9,10단지",
+      "kind": "bus",
+      "name": "공항중학교.마곡엠밸리9,10단지",
+      "maxStraightLineMeters": 141.6,
+      "farthestPair": [
+        "seoul-bus-115000635",
+        "seoul-bus-115000894"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000635",
+          "fingerprint": "136eefc376dd7f5f5132773701032e049fed6dad634dc235cb102c5dcd1c3c9a",
+          "arsId": "16016"
+        },
+        {
+          "hubId": "seoul-bus-115000894",
+          "fingerprint": "0df0323d671e4bdd3be34f6cbfda6aee6ba0bdb3cbe9dc3d0669b55af42e60f2",
+          "arsId": "16020"
+        }
+      ]
+    },
+    {
+      "key": "bus:문래동남성아파트",
+      "kind": "bus",
+      "name": "문래동남성아파트",
+      "maxStraightLineMeters": 141.2,
+      "farthestPair": [
+        "seoul-bus-118000001",
+        "seoul-bus-118000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000001",
+          "fingerprint": "d7ae272983d2e4cf37eb8edef71641f4b024f8cfba010d2fa2fbd050c069bcef",
+          "arsId": "19001"
+        },
+        {
+          "hubId": "seoul-bus-118000002",
+          "fingerprint": "86ab0aa45305512f8c0fc5b47bd11acab97408b979742b8e560b41bb573e0e68",
+          "arsId": "19002"
+        }
+      ]
+    },
+    {
+      "key": "rail:왕십리(성동구청)",
+      "kind": "rail",
+      "name": "왕십리(성동구청)",
+      "maxStraightLineMeters": 139.5,
+      "farthestPair": [
+        "seoul-rail-0208",
+        "seoul-rail-1013"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0208",
+          "fingerprint": "49034d98c9e5b042b5df0acedb2f7f7046bd513eab8865d7878b8b16b1d82095",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-1013",
+          "fingerprint": "2dde93027446a77a7d3911c3b96f9be400d195f9d5abe342a1826527af42a830",
+          "route": "경원선"
+        },
+        {
+          "hubId": "seoul-rail-2541",
+          "fingerprint": "5a58a47ebb97100e6ff5dffc46b417a97dc3fd438ed7df62e6308778a5df1099",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:도봉한신아파트",
+      "kind": "bus",
+      "name": "도봉한신아파트",
+      "maxStraightLineMeters": 139.3,
+      "farthestPair": [
+        "seoul-bus-109000003",
+        "seoul-bus-109000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000003",
+          "fingerprint": "f829cbdaf1b040f0168339d589612ac4718938e8659865bf75a44e09e32d72f1",
+          "arsId": "10003"
+        },
+        {
+          "hubId": "seoul-bus-109000004",
+          "fingerprint": "c90aff0a2fbcfe634033d07ee01abadb714579a9f71d510df607b8744fdd097b",
+          "arsId": "10004"
+        }
+      ]
+    },
+    {
+      "key": "bus:신촌오거리.현대백화점",
+      "kind": "bus",
+      "name": "신촌오거리.현대백화점",
+      "maxStraightLineMeters": 138.8,
+      "farthestPair": [
+        "seoul-bus-113000416",
+        "seoul-bus-113000420"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000416",
+          "fingerprint": "f9c1be6a2d02a2b19c84ec1a304581c3e3048585d023a81dce986c0bfa48dc72",
+          "arsId": "13021"
+        },
+        {
+          "hubId": "seoul-bus-113000420",
+          "fingerprint": "012aae30d7dcada90a643dde51af6408f19762bc7fbb6abc6513418b2a6f257c",
+          "arsId": "14062"
+        }
+      ]
+    },
+    {
+      "key": "bus:독립문역.한성과학고",
+      "kind": "bus",
+      "name": "독립문역.한성과학고",
+      "maxStraightLineMeters": 138.7,
+      "farthestPair": [
+        "seoul-bus-112000401",
+        "seoul-bus-112000402"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000401",
+          "fingerprint": "bbf5bb7e623c929251a866c6af95d6bcacd35a3570e93ce21b8893a43b1a1c5d",
+          "arsId": "13035"
+        },
+        {
+          "hubId": "seoul-bus-112000402",
+          "fingerprint": "40461ab65c2cc25feb96a1e978856184a21f5f444090d56fc55b3d79b0d18f9b",
+          "arsId": "13034"
+        }
+      ]
+    },
+    {
+      "key": "bus:매헌시민의숲",
+      "kind": "bus",
+      "name": "매헌시민의숲",
+      "maxStraightLineMeters": 138.4,
+      "farthestPair": [
+        "seoul-bus-121001343",
+        "seoul-bus-121001344"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001343",
+          "fingerprint": "4120bc1300874bd2d19a2ca0326b436beda873617ce761f89060ab5b4dd0dd57",
+          "arsId": "22045"
+        },
+        {
+          "hubId": "seoul-bus-121001344",
+          "fingerprint": "55c1861cceb00b6bbcd9b027c25efd238a0a92ba1615c5131ad911a0d2ea90b6",
+          "arsId": "22046"
+        }
+      ]
+    },
+    {
+      "key": "rail:가산디지털단지",
+      "kind": "rail",
+      "name": "가산디지털단지",
+      "maxStraightLineMeters": 138.4,
+      "farthestPair": [
+        "seoul-rail-1702",
+        "seoul-rail-2748"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1702",
+          "fingerprint": "946ed57c075e72d944458e6f5efbb0b3c25ad7de7f2e46ed0b08ca1ba672fa13",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-2748",
+          "fingerprint": "729326634b7acb50f42dccd15866039734f78a39b92077d42bc04b4a268442da",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:은평뉴타운10단지",
+      "kind": "bus",
+      "name": "은평뉴타운10단지",
+      "maxStraightLineMeters": 138,
+      "farthestPair": [
+        "seoul-bus-111000009",
+        "seoul-bus-111000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000009",
+          "fingerprint": "7e03076d82f29d16e65139b87ace2b0e1d0f91a423a3738709705983d1ae4d7b",
+          "arsId": "12009"
+        },
+        {
+          "hubId": "seoul-bus-111000010",
+          "fingerprint": "e366ec0d8113f7c1cabbc3666830cf8a023f078233bcbb9a8895c07735cc78c1",
+          "arsId": "12010"
+        }
+      ]
+    },
+    {
+      "key": "bus:충정로역",
+      "kind": "bus",
+      "name": "충정로역",
+      "maxStraightLineMeters": 138,
+      "farthestPair": [
+        "seoul-bus-112000429",
+        "seoul-bus-112000430"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000429",
+          "fingerprint": "cd3b8e3ac9d66b26e29e65842c7ed5cbacc44a560e5680c6fa725cbcbf64ed89",
+          "arsId": "13046"
+        },
+        {
+          "hubId": "seoul-bus-112000430",
+          "fingerprint": "ba2d59a463c94147da949202451708bec139b4331c116d249beafb4dfffc9c19",
+          "arsId": "13045"
+        }
+      ]
+    },
+    {
+      "key": "rail:마곡나루",
+      "kind": "rail",
+      "name": "마곡나루",
+      "maxStraightLineMeters": 137.5,
+      "farthestPair": [
+        "seoul-rail-4105",
+        "seoul-rail-4206"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-4105",
+          "fingerprint": "1d37f961e51fa7dece8ca0584dad1cab79999d03cc66568aa16d2a02c9b749e8",
+          "route": "9호선"
+        },
+        {
+          "hubId": "seoul-rail-4206",
+          "fingerprint": "d268e7b4deee95495ad4acfa2c864d6a577d72cdc2a5a3d2a1b93c3a20bf42d2",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:천호역",
+      "kind": "bus",
+      "name": "천호역",
+      "maxStraightLineMeters": 137.4,
+      "farthestPair": [
+        "seoul-bus-124000453",
+        "seoul-bus-124000454"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000453",
+          "fingerprint": "c37e562495e67ed571364130c4a190ec1d0c95026888b875ed37d1cddc76b618",
+          "arsId": "25013"
+        },
+        {
+          "hubId": "seoul-bus-124000454",
+          "fingerprint": "664ccf9af07ea45775bf86e14ff881cd0714353364487827f6c2f86ebb3c802c",
+          "arsId": "25014"
+        }
+      ]
+    },
+    {
+      "key": "bus:말미고개.금천소방서",
+      "kind": "bus",
+      "name": "말미고개.금천소방서",
+      "maxStraightLineMeters": 136.8,
+      "farthestPair": [
+        "seoul-bus-117000005",
+        "seoul-bus-117000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000005",
+          "fingerprint": "e3c65370548637fa4b6e140c206cd845ee5789e8f35b29a787708262288ba091",
+          "arsId": "18005"
+        },
+        {
+          "hubId": "seoul-bus-117000006",
+          "fingerprint": "b85b556cced7968571bac88b75e6121e96c625d7e4d11f56dd2c8554cdc1433b",
+          "arsId": "18006"
+        }
+      ]
+    },
+    {
+      "key": "bus:남부지방법원등기국.구로세무서(에이스하이테크시티)",
+      "kind": "bus",
+      "name": "남부지방법원등기국.구로세무서(에이스하이테크시티)",
+      "maxStraightLineMeters": 136.4,
+      "farthestPair": [
+        "seoul-bus-118000003",
+        "seoul-bus-118000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000003",
+          "fingerprint": "7da268e8590d566b99ea61b2e6451197a1e891076cc0ad225fa41b90d034e270",
+          "arsId": "19003"
+        },
+        {
+          "hubId": "seoul-bus-118000004",
+          "fingerprint": "b611237aba94720b2364bf1876d66ff9da19f1d44eb45a799c32269567d1af8a",
+          "arsId": "19004"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로2가",
+      "kind": "bus",
+      "name": "종로2가",
+      "maxStraightLineMeters": 136.4,
+      "farthestPair": [
+        "seoul-bus-100000388",
+        "seoul-bus-100000389"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000388",
+          "fingerprint": "61e1357f5d3e282a42f67d10c6f7c2a033fd4de9d95090ee1bb88dfce19ae202",
+          "arsId": "01013"
+        },
+        {
+          "hubId": "seoul-bus-100000389",
+          "fingerprint": "408d3fe8138b16bb3187b4c7ac51c111548e436537a24e345d1502c532cccc05",
+          "arsId": "01014"
+        }
+      ]
+    },
+    {
+      "key": "rail:상봉(시외버스터미널)",
+      "kind": "rail",
+      "name": "상봉(시외버스터미널)",
+      "maxStraightLineMeters": 136.1,
+      "farthestPair": [
+        "seoul-rail-1202",
+        "seoul-rail-2722"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1202",
+          "fingerprint": "f735d02c12058479a456f11d8311d3909c8efe3a054c8667814d5c572d843693",
+          "route": "중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2722",
+          "fingerprint": "4583fda2a1efb7f81983e6101093ea095786927266fec99adca8f021b6237dae",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:문정로데오거리입구",
+      "kind": "bus",
+      "name": "문정로데오거리입구",
+      "maxStraightLineMeters": 136,
+      "farthestPair": [
+        "seoul-bus-123000011",
+        "seoul-bus-123000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000011",
+          "fingerprint": "2d07195d26d838638c144a79e48f65434edf8e2bb9d5620883007348891deb19",
+          "arsId": "24011"
+        },
+        {
+          "hubId": "seoul-bus-123000012",
+          "fingerprint": "eb7a0c4c004ebbaf9a749ee99482ec8a1714b526af59b33ac1c7ceffe64d72da",
+          "arsId": "24012"
+        }
+      ]
+    },
+    {
+      "key": "bus:신촌오거리.2호선신촌역",
+      "kind": "bus",
+      "name": "신촌오거리.2호선신촌역",
+      "maxStraightLineMeters": 135.2,
+      "farthestPair": [
+        "seoul-bus-113000417",
+        "seoul-bus-113000419"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000417",
+          "fingerprint": "d9438d305e87c2c48c6ce41668322d1c0dedf1cf641f91b3742a09697a2bb04c",
+          "arsId": "13023"
+        },
+        {
+          "hubId": "seoul-bus-113000419",
+          "fingerprint": "6e3771dbe6f087167e0f18d016d9331947354cc377f8d8152f3faf238d1af6ca",
+          "arsId": "14063"
+        }
+      ]
+    },
+    {
+      "key": "bus:광화문역",
+      "kind": "bus",
+      "name": "광화문역",
+      "maxStraightLineMeters": 135,
+      "farthestPair": [
+        "seoul-bus-100000384",
+        "seoul-bus-100000385"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000384",
+          "fingerprint": "bc2bdeed21d5b2f2c17d9048704bb068305ba46209a2991dae148af069a5de3f",
+          "arsId": "01009"
+        },
+        {
+          "hubId": "seoul-bus-100000385",
+          "fingerprint": "8cd3a7fcddd164d5ff244f9af23464d4562980f5c3c8f0d95cce69c9a5f07df6",
+          "arsId": "01010"
+        }
+      ]
+    },
+    {
+      "key": "rail:원인재",
+      "kind": "rail",
+      "name": "원인재",
+      "maxStraightLineMeters": 134,
+      "farthestPair": [
+        "seoul-rail-1884",
+        "seoul-rail-3130"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1884",
+          "fingerprint": "af2603128df7b956963d6821c868919177cef220712afb5117b186ecb3438430",
+          "route": "수인선"
+        },
+        {
+          "hubId": "seoul-rail-3130",
+          "fingerprint": "558a7054d3157cc79b171c23b37c8373848cdd4161f196e87f351a3d8fade21b",
+          "route": "인천1호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:마곡동로사거리",
+      "kind": "bus",
+      "name": "마곡동로사거리",
+      "maxStraightLineMeters": 133.7,
+      "farthestPair": [
+        "seoul-bus-115000922",
+        "seoul-bus-115000923"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000922",
+          "fingerprint": "8b2ec91acd817f9206e9c2ed36c14923dd441d6c21bdefcad2f31202434df462",
+          "arsId": "16022"
+        },
+        {
+          "hubId": "seoul-bus-115000923",
+          "fingerprint": "2487e6a33053b66b1990cf619cc7d4dc2071410c445a4ac1b1f60972116f8726",
+          "arsId": "16021"
+        }
+      ]
+    },
+    {
+      "key": "bus:박석고개.신도고등학교",
+      "kind": "bus",
+      "name": "박석고개.신도고등학교",
+      "maxStraightLineMeters": 133.7,
+      "farthestPair": [
+        "seoul-bus-111000013",
+        "seoul-bus-111000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000013",
+          "fingerprint": "3bce566b6ff67defd556763d5ced51f430ba9a738885f15b63cc719f1ff8fdcc",
+          "arsId": "12013"
+        },
+        {
+          "hubId": "seoul-bus-111000014",
+          "fingerprint": "de4e3c908d108dad4175bc2f2109399a6be78574774ecf6180ec27bf9c52e098",
+          "arsId": "12014"
+        }
+      ]
+    },
+    {
+      "key": "bus:연신내역.연서시장",
+      "kind": "bus",
+      "name": "연신내역.연서시장",
+      "maxStraightLineMeters": 133.5,
+      "farthestPair": [
+        "seoul-bus-111000927",
+        "seoul-bus-111000928"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000927",
+          "fingerprint": "418a17bdabff7123e2612b989e53f7279870d0fd184e666e3952e9d17f52cb77",
+          "arsId": "12018"
+        },
+        {
+          "hubId": "seoul-bus-111000928",
+          "fingerprint": "40211b9502b9a671bacc13c667da5afcb24777c5e31558870dc225c8b6343c38",
+          "arsId": "12017"
+        }
+      ]
+    },
+    {
+      "key": "bus:강서구청사거리.서울디지털대학교",
+      "kind": "bus",
+      "name": "강서구청사거리.서울디지털대학교",
+      "maxStraightLineMeters": 132.9,
+      "farthestPair": [
+        "seoul-bus-115000588",
+        "seoul-bus-115000589"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000588",
+          "fingerprint": "296f619c6dfb8932b1663c1336aacc8776c57c58a866b5b8062ea75edd7462ec",
+          "arsId": "16007"
+        },
+        {
+          "hubId": "seoul-bus-115000589",
+          "fingerprint": "0011a6df2cd0649cda8d175a82907c12ecbf928a2734935d2ccb3e08a2f8676d",
+          "arsId": "16008"
+        }
+      ]
+    },
+    {
+      "key": "rail:교대(법원.검찰청)",
+      "kind": "rail",
+      "name": "교대(법원.검찰청)",
+      "maxStraightLineMeters": 129.9,
+      "farthestPair": [
+        "seoul-rail-0223",
+        "seoul-rail-0330"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0223",
+          "fingerprint": "af49e9698e71fd282c40d2e55acc288b3807b81cbf34adcf1091dfa5e62cb85b",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-0330",
+          "fingerprint": "005ee63570d955f7abf5902cc5a9a30a0172dedf40bc2efe2fbd18c576251f10",
+          "route": "3호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:강남",
+      "kind": "rail",
+      "name": "강남",
+      "maxStraightLineMeters": 129.3,
+      "farthestPair": [
+        "seoul-rail-0222",
+        "seoul-rail-4307"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0222",
+          "fingerprint": "ed8cb313efddc4fe6b225e09947941bb8c473b5a1ccd3858f277c251512c6459",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-4307",
+          "fingerprint": "a914e1675d7d038e9ded3c95e1b591c96786727fe228939b707c77af7313170a",
+          "route": "신분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:금천우체국",
+      "kind": "bus",
+      "name": "금천우체국",
+      "maxStraightLineMeters": 128.8,
+      "farthestPair": [
+        "seoul-bus-117000003",
+        "seoul-bus-117000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000003",
+          "fingerprint": "69b9b69d9033ac24f3063ecc9428556daed2fa3662f26e299793ed8154354a40",
+          "arsId": "18003"
+        },
+        {
+          "hubId": "seoul-bus-117000004",
+          "fingerprint": "6a02c49c8230c9cb00a7b9d1337b61139857af501139171ef7b1cf73395ec9a0",
+          "arsId": "18004"
+        }
+      ]
+    },
+    {
+      "key": "bus:마포역",
+      "kind": "bus",
+      "name": "마포역",
+      "maxStraightLineMeters": 127.6,
+      "farthestPair": [
+        "seoul-bus-113000001",
+        "seoul-bus-113000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000001",
+          "fingerprint": "8fd5f655c950eef3a5bb649995aecaba3215e6bfb4223b0cbf989ea498099c9d",
+          "arsId": "14001"
+        },
+        {
+          "hubId": "seoul-bus-113000002",
+          "fingerprint": "691c27e0de906e86c35bbce6041a648be982a6e0389044b80de050bf275dd9e0",
+          "arsId": "14002"
+        }
+      ]
+    },
+    {
+      "key": "bus:염곡마을.서초50플러스센터",
+      "kind": "bus",
+      "name": "염곡마을.서초50플러스센터",
+      "maxStraightLineMeters": 127.6,
+      "farthestPair": [
+        "seoul-bus-121001332",
+        "seoul-bus-121001333"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001332",
+          "fingerprint": "90be631d7c956479f60034f0efd27c5e7bb22009b7c28ed5ca38bf35d22a2e62",
+          "arsId": "22036"
+        },
+        {
+          "hubId": "seoul-bus-121001333",
+          "fingerprint": "0bba151b8a6794c5ed50d72fd6e9869988a986d5f8a3ff524b5b96d1b97e1de1",
+          "arsId": "22035"
+        }
+      ]
+    },
+    {
+      "key": "bus:동대문역.흥인지문",
+      "kind": "bus",
+      "name": "동대문역.흥인지문",
+      "maxStraightLineMeters": 127.4,
+      "farthestPair": [
+        "seoul-bus-100000365",
+        "seoul-bus-100000398"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000365",
+          "fingerprint": "7113bb253c8b7ea05d4b836c81cef5e47447d56af7824452e5f4d27fccdadf54",
+          "arsId": "01037"
+        },
+        {
+          "hubId": "seoul-bus-100000398",
+          "fingerprint": "3f86e23ef49512791029e8e3432d881555965b35a538a452f84f4efa3adf1f83",
+          "arsId": "01023"
+        }
+      ]
+    },
+    {
+      "key": "bus:등촌역.강서보건소",
+      "kind": "bus",
+      "name": "등촌역.강서보건소",
+      "maxStraightLineMeters": 127.4,
+      "farthestPair": [
+        "seoul-bus-115000003",
+        "seoul-bus-115000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000003",
+          "fingerprint": "0bad4fa81146c0a4a33e87275807cf29ca2f8bd44ed49cfa667c9b0fb7d5284f",
+          "arsId": "16003"
+        },
+        {
+          "hubId": "seoul-bus-115000004",
+          "fingerprint": "c22f7d37b947c4bb75e9aa8b4108f286bcdec7544a9b1f6321bd31c2da502f9b",
+          "arsId": "16004"
+        }
+      ]
+    },
+    {
+      "key": "bus:뱅뱅사거리",
+      "kind": "bus",
+      "name": "뱅뱅사거리",
+      "maxStraightLineMeters": 127.1,
+      "farthestPair": [
+        "seoul-bus-121000005",
+        "seoul-bus-121000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000005",
+          "fingerprint": "3aff330d0519f9c76ead35567ba26aa052e5e21705c64a309057b6eb5601731d",
+          "arsId": "22005"
+        },
+        {
+          "hubId": "seoul-bus-121000006",
+          "fingerprint": "e7bd86e1c2122b43af13ff35e028ba90db3ebb6f7e86cd34e830a74386bcf137",
+          "arsId": "22006"
+        }
+      ]
+    },
+    {
+      "key": "bus:구로디지털단지역",
+      "kind": "bus",
+      "name": "구로디지털단지역",
+      "maxStraightLineMeters": 126.9,
+      "farthestPair": [
+        "seoul-bus-116000013",
+        "seoul-bus-120000674"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-116000013",
+          "fingerprint": "1c7f246ac26457603c811ee4b72da795172319871971981c7eaeaaa81a28cd2a",
+          "arsId": "17013"
+        },
+        {
+          "hubId": "seoul-bus-120000001",
+          "fingerprint": "2c79eb3646ffc58e05cee0053fdf8d0578d9bc8fae08efc3558cb90592d24977",
+          "arsId": "21001"
+        },
+        {
+          "hubId": "seoul-bus-120000674",
+          "fingerprint": "346104fa6ed6e31fa3970455fcdfc5a2240be4a0cd52e9ac59efeb2bc20a0505",
+          "arsId": "21002"
+        }
+      ]
+    },
+    {
+      "key": "rail:정자",
+      "kind": "rail",
+      "name": "정자",
+      "maxStraightLineMeters": 126.2,
+      "farthestPair": [
+        "seoul-rail-1857",
+        "seoul-rail-4312"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1857",
+          "fingerprint": "38e5828ddddea1e9245889ecd4f952d388bc97ad7dcd183905e2b3067eebfacf",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-4312",
+          "fingerprint": "f42846173f04fdddba46348f45a9ff71847853798f6460c32a5910a73cfed36e",
+          "route": "신분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:중곡동입구삼거리",
+      "kind": "bus",
+      "name": "중곡동입구삼거리",
+      "maxStraightLineMeters": 125.9,
+      "farthestPair": [
+        "seoul-bus-104000005",
+        "seoul-bus-104000299"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000005",
+          "fingerprint": "3ed4bdb80f041c2a51cb4d3d0e006a96462dcb7e6325e394c6bc20ef76755d54",
+          "arsId": "05005"
+        },
+        {
+          "hubId": "seoul-bus-104000299",
+          "fingerprint": "b0ec2e75e9a343ded96b7315a7bf9db93ee80d0c61a4e0f9debfa4a94609a70e",
+          "arsId": "05008"
+        }
+      ]
+    },
+    {
+      "key": "rail:동묘앞",
+      "kind": "rail",
+      "name": "동묘앞",
+      "maxStraightLineMeters": 125.4,
+      "farthestPair": [
+        "seoul-rail-0159",
+        "seoul-rail-2637"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0159",
+          "fingerprint": "31e7c709b3757623f48c4c2d5a8eecfa8277f2a2d24f8dedd66fec2abc7d00a0",
+          "route": "1호선"
+        },
+        {
+          "hubId": "seoul-rail-2637",
+          "fingerprint": "8f6e546a4f0b6f93f6fa510e31eccc99603a93d01d93974d57e5dec7f83d9edf",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:지하철2호선강남역",
+      "kind": "bus",
+      "name": "지하철2호선강남역",
+      "maxStraightLineMeters": 125.3,
+      "farthestPair": [
+        "seoul-bus-121000011",
+        "seoul-bus-121000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000011",
+          "fingerprint": "68e208bc541e2d655e81dc2057d9824d3dfc37cb9500011be543e9d9be216edb",
+          "arsId": "22011"
+        },
+        {
+          "hubId": "seoul-bus-121000012",
+          "fingerprint": "0bc0b98be004a4f808aaa5c5480c646eadcd86a2430776be6e5afd892cbb23ac",
+          "arsId": "22012"
+        }
+      ]
+    },
+    {
+      "key": "rail:수서",
+      "kind": "rail",
+      "name": "수서",
+      "maxStraightLineMeters": 123.7,
+      "farthestPair": [
+        "seoul-rail-1030",
+        "seoul-rail-9007"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0339",
+          "fingerprint": "c619c59aa828474fa843ed042c6efefb8d1eddddb060ba11b3d06f46a47957b9",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-1030",
+          "fingerprint": "65e82bb6c9bda1674a548745ac56587b2ebae237146d0e249ba5f58fd51fa530",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-9007",
+          "fingerprint": "f019a52dce7bb736564ab47b0fe6c05b4930e8f20c52c79dc10d518eb4ff56f0",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "rail:태릉입구",
+      "kind": "rail",
+      "name": "태릉입구",
+      "maxStraightLineMeters": 121.2,
+      "farthestPair": [
+        "seoul-rail-2646",
+        "seoul-rail-2719"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2646",
+          "fingerprint": "0fef5a7f09ac501abab84982e1bc0e41ba0ff0190d9350fb9a6a6288329ddf38",
+          "route": "6호선"
+        },
+        {
+          "hubId": "seoul-rail-2719",
+          "fingerprint": "a13c8b61470a099ac046d6b9c3468c5ddd67fa6690307d09340e804e3ea2a315",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:세명컴퓨터고등학교",
+      "kind": "bus",
+      "name": "세명컴퓨터고등학교",
+      "maxStraightLineMeters": 118.8,
+      "farthestPair": [
+        "seoul-bus-111000925",
+        "seoul-bus-111000926"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000925",
+          "fingerprint": "0e578c348eb7f0b5d10c8e771f2bc1e15e55214d7d1c2d35e6aff8f2b5c9a785",
+          "arsId": "12016"
+        },
+        {
+          "hubId": "seoul-bus-111000926",
+          "fingerprint": "bd9650e7ae2753c48473761f1328ade1c534b4fcca42c20439ff9ee226ba8fb4",
+          "arsId": "12015"
+        }
+      ]
+    },
+    {
+      "key": "rail:이촌(국립중앙박물관)",
+      "kind": "rail",
+      "name": "이촌(국립중앙박물관)",
+      "maxStraightLineMeters": 117.9,
+      "farthestPair": [
+        "seoul-rail-0430",
+        "seoul-rail-1008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0430",
+          "fingerprint": "3d5f04d98e53605344efff0a25040516902f497cf0e73433584a7088ab853e4e",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-1008",
+          "fingerprint": "602a14a9e2f4d2da110bb407de10fd403ce96fe834a56f726b876516f2246865",
+          "route": "경원선"
+        }
+      ]
+    },
+    {
+      "key": "bus:광나루역",
+      "kind": "bus",
+      "name": "광나루역",
+      "maxStraightLineMeters": 117.4,
+      "farthestPair": [
+        "seoul-bus-104000297",
+        "seoul-bus-104000298"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000297",
+          "fingerprint": "ac9412d28b41f849bce3ef005d84a983506f28edad3995e663d76a4e12f20908",
+          "arsId": "05012"
+        },
+        {
+          "hubId": "seoul-bus-104000298",
+          "fingerprint": "d6c0b24132a30a3cca3727d404b309940a60097a6f0f0009e37496a0da62ce4b",
+          "arsId": "05011"
+        }
+      ]
+    },
+    {
+      "key": "bus:고속터미널",
+      "kind": "bus",
+      "name": "고속터미널",
+      "maxStraightLineMeters": 117.1,
+      "farthestPair": [
+        "seoul-bus-121000019",
+        "seoul-bus-121000020"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000019",
+          "fingerprint": "11858702f9600936ad22470818b538b4510b2b44081c52d5aaace76f6ccc4847",
+          "arsId": "22019"
+        },
+        {
+          "hubId": "seoul-bus-121000020",
+          "fingerprint": "da577396a3fa6343d7fe6ba80a55f28a32092c029cedb2f79feeb92fbe8e4bc1",
+          "arsId": "22020"
+        }
+      ]
+    },
+    {
+      "key": "bus:삼육서울병원.삼육보건대학교",
+      "kind": "bus",
+      "name": "삼육서울병원.삼육보건대학교",
+      "maxStraightLineMeters": 116.4,
+      "farthestPair": [
+        "seoul-bus-105000011",
+        "seoul-bus-105000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000011",
+          "fingerprint": "ec64341464f5f79608ded2dd8626ede4ebc1ab2705fa76f21cef64de0f39b232",
+          "arsId": "06011"
+        },
+        {
+          "hubId": "seoul-bus-105000012",
+          "fingerprint": "d4c113cba1bcb0bf8146a3383ff5e47381dc7dbbc67ad1d2a61ea963ee95e3fc",
+          "arsId": "06012"
+        }
+      ]
+    },
+    {
+      "key": "bus:가락시장.가락시장역",
+      "kind": "bus",
+      "name": "가락시장.가락시장역",
+      "maxStraightLineMeters": 113.8,
+      "farthestPair": [
+        "seoul-bus-123000009",
+        "seoul-bus-123000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000009",
+          "fingerprint": "63c0809f5374ec2e23cb76382dd4a9e36eeec491cd552c7489521dfd9da6866d",
+          "arsId": "24009"
+        },
+        {
+          "hubId": "seoul-bus-123000010",
+          "fingerprint": "81c555d6c2e9a12a678c03101f7f056d18b852bf29af2cdd64a08a9cf0b7a9eb",
+          "arsId": "24010"
+        }
+      ]
+    },
+    {
+      "key": "bus:마곡역",
+      "kind": "bus",
+      "name": "마곡역",
+      "maxStraightLineMeters": 113.8,
+      "farthestPair": [
+        "seoul-bus-115000895",
+        "seoul-bus-115000896"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000895",
+          "fingerprint": "b30faf0d206698e51dccb6c0a4f8b36e7375e53afebd60035c11fdc39d0bb836",
+          "arsId": "16018"
+        },
+        {
+          "hubId": "seoul-bus-115000896",
+          "fingerprint": "4db226861bcbdb4c26d2131b0ec7e182761d7821b97b9ea49ac5476fadea27f1",
+          "arsId": "16019"
+        }
+      ]
+    },
+    {
+      "key": "bus:논현역",
+      "kind": "bus",
+      "name": "논현역",
+      "maxStraightLineMeters": 113.6,
+      "farthestPair": [
+        "seoul-bus-121000013",
+        "seoul-bus-121000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000013",
+          "fingerprint": "c2406e0cf4a7cd8b51d687e2a6de34289d27742aecd48aee36ccaf593ae58edf",
+          "arsId": "22013"
+        },
+        {
+          "hubId": "seoul-bus-121000014",
+          "fingerprint": "1ec827b2a0e3337a52acc26cb66af57b8bfee41f673699a434424010350dd971",
+          "arsId": "22014"
+        }
+      ]
+    },
+    {
+      "key": "bus:동명여고.천주교불광동성당",
+      "kind": "bus",
+      "name": "동명여고.천주교불광동성당",
+      "maxStraightLineMeters": 113.5,
+      "farthestPair": [
+        "seoul-bus-111000929",
+        "seoul-bus-111000930"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000929",
+          "fingerprint": "dfcec5b7ffcc49036e7ce5d1978e7044eea068415ce45b73cdf1781e508fb092",
+          "arsId": "12020"
+        },
+        {
+          "hubId": "seoul-bus-111000930",
+          "fingerprint": "eb7504b1f9906208f88651a9661040c001fcdd70f722f9ac88f09fd5260ac5fb",
+          "arsId": "12019"
+        }
+      ]
+    },
+    {
+      "key": "rail:복정",
+      "kind": "rail",
+      "name": "복정",
+      "maxStraightLineMeters": 111.9,
+      "farthestPair": [
+        "seoul-rail-1031",
+        "seoul-rail-2821"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1031",
+          "fingerprint": "6f7f5b6737d52a2f89bdf3625239f14f903e15dece4b5b9c4e3683c82cfe93c2",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-2821",
+          "fingerprint": "373845e60c980d9b83494b66fc599f4561836bc72b27a8d0f09e50cbe9a58eda",
+          "route": "8호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:신설동역",
+      "kind": "bus",
+      "name": "신설동역",
+      "maxStraightLineMeters": 111.8,
+      "farthestPair": [
+        "seoul-bus-105000485",
+        "seoul-bus-105000486"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000485",
+          "fingerprint": "640a715f96e2b33241885f9e82d94f257a5ec912b7d36672d1d52330e4e4f36e",
+          "arsId": "06028"
+        },
+        {
+          "hubId": "seoul-bus-105000486",
+          "fingerprint": "b373c6503cac8fd25fee8e697be065ef1a8a9c2334bb3636904151b4bad22f52",
+          "arsId": "06027"
+        }
+      ]
+    },
+    {
+      "key": "bus:송파역",
+      "kind": "bus",
+      "name": "송파역",
+      "maxStraightLineMeters": 111.6,
+      "farthestPair": [
+        "seoul-bus-123000007",
+        "seoul-bus-123000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000007",
+          "fingerprint": "15a9d93b468252eb2c8ab95c88c247b45662f05c42ec689a9370affd8675c044",
+          "arsId": "24007"
+        },
+        {
+          "hubId": "seoul-bus-123000008",
+          "fingerprint": "167b07ff0c530a6a3d299ae725c7efd3568949e3b4e3e16adcd91e8adecdf839",
+          "arsId": "24008"
+        }
+      ]
+    },
+    {
+      "key": "bus:양재역.서초문화예술회관",
+      "kind": "bus",
+      "name": "양재역.서초문화예술회관",
+      "maxStraightLineMeters": 111.5,
+      "farthestPair": [
+        "seoul-bus-121000003",
+        "seoul-bus-121000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000003",
+          "fingerprint": "66e2f2238a91cd3367fb48645abd73ad691685405f8ace7b7199ee1d04adf2df",
+          "arsId": "22003"
+        },
+        {
+          "hubId": "seoul-bus-121000004",
+          "fingerprint": "b4aa947632c79e182dcfabaafb63087e2ef3b232dc782f831790f8c8c778fed3",
+          "arsId": "22004"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로6가.동대문종합시장",
+      "kind": "bus",
+      "name": "종로6가.동대문종합시장",
+      "maxStraightLineMeters": 111,
+      "farthestPair": [
+        "seoul-bus-100000396",
+        "seoul-bus-100000397"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000396",
+          "fingerprint": "9c74de905d4c27756a17121b52458456ee1e391dc0203a26958752790a4cbe42",
+          "arsId": "01021"
+        },
+        {
+          "hubId": "seoul-bus-100000397",
+          "fingerprint": "d756d07c397fc80b1fb5801284f8213c384e44cf11af31414c535982c0c2c175",
+          "arsId": "01022"
+        }
+      ]
+    },
+    {
+      "key": "bus:홍제역.서대문세무서",
+      "kind": "bus",
+      "name": "홍제역.서대문세무서",
+      "maxStraightLineMeters": 110.9,
+      "farthestPair": [
+        "seoul-bus-112000407",
+        "seoul-bus-112000408"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000407",
+          "fingerprint": "cb841e50584576bca65af87b20e163bd57323241523b6569399c36659cc357ff",
+          "arsId": "13028"
+        },
+        {
+          "hubId": "seoul-bus-112000408",
+          "fingerprint": "2fe36d85abcf801f3cc348c1452b524372e1890160fd5f0f8076dd0fa63db519",
+          "arsId": "13029"
+        }
+      ]
+    },
+    {
+      "key": "bus:길음2동주민센터",
+      "kind": "bus",
+      "name": "길음2동주민센터",
+      "maxStraightLineMeters": 109.9,
+      "farthestPair": [
+        "seoul-bus-107000001",
+        "seoul-bus-107000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-107000001",
+          "fingerprint": "cb63e41d468a9bca7cabdaa5c5a942d86b7ee1b78a908c95441988127afc2caa",
+          "arsId": "08001"
+        },
+        {
+          "hubId": "seoul-bus-107000002",
+          "fingerprint": "29cbd8580fd9921aca2ab2e1f0f8d691691dc3df74c1939a40c15de16446054c",
+          "arsId": "08002"
+        }
+      ]
+    },
+    {
+      "key": "rail:춘의",
+      "kind": "rail",
+      "name": "춘의",
+      "maxStraightLineMeters": 109.7,
+      "farthestPair": [
+        "seoul-rail-2755",
+        "seoul-rail-3755"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2755",
+          "fingerprint": "a87e25a526df501311c3f8e638c89d9b516692d51f889f4fa21eaea3e3aece66",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3755",
+          "fingerprint": "fd34aaa9d2df0c6fd0b6cb25bbfaa19a223a070e1ace083eaefa1e5978c83b53",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:도봉세무서.성암국제무역고",
+      "kind": "bus",
+      "name": "도봉세무서.성암국제무역고",
+      "maxStraightLineMeters": 108.1,
+      "farthestPair": [
+        "seoul-bus-108000009",
+        "seoul-bus-108000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000009",
+          "fingerprint": "89fe8e5b20cd411f03f3cfd6ae4460a0e8db271f7158edaab753b7ec920feb3a",
+          "arsId": "09009"
+        },
+        {
+          "hubId": "seoul-bus-108000010",
+          "fingerprint": "1085e01c297f3a816e56737cc03d0330f29ad84e390ef3fec7faecc093ee8017",
+          "arsId": "09010"
+        }
+      ]
+    },
+    {
+      "key": "bus:신분당선강남역",
+      "kind": "bus",
+      "name": "신분당선강남역",
+      "maxStraightLineMeters": 107.8,
+      "farthestPair": [
+        "seoul-bus-121000009",
+        "seoul-bus-121000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000009",
+          "fingerprint": "c442f95c0d9cd7efc6420f203fef51b1e5711b8a41f52250ef9bf2be640aaccd",
+          "arsId": "22009"
+        },
+        {
+          "hubId": "seoul-bus-121000010",
+          "fingerprint": "bd549a58576a88f563a6d0cd1d140936103ed18fc8f45bbb53b39d712222c232",
+          "arsId": "22010"
+        }
+      ]
+    },
+    {
+      "key": "bus:공덕역",
+      "kind": "bus",
+      "name": "공덕역",
+      "maxStraightLineMeters": 107.3,
+      "farthestPair": [
+        "seoul-bus-113000003",
+        "seoul-bus-113000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000003",
+          "fingerprint": "9b0fc8ee38a8d3e6ca898656e876d96d08f6ac961c1bf78cbf436a1eabe6da8f",
+          "arsId": "14003"
+        },
+        {
+          "hubId": "seoul-bus-113000004",
+          "fingerprint": "0b3ea4c1d8bc9125f1f8a4f4d76a4b88905bcbafae8c5af4f0c30581f4bfe410",
+          "arsId": "14004"
+        }
+      ]
+    },
+    {
+      "key": "bus:구파발역입구",
+      "kind": "bus",
+      "name": "구파발역입구",
+      "maxStraightLineMeters": 107.1,
+      "farthestPair": [
+        "seoul-bus-111000011",
+        "seoul-bus-111000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000011",
+          "fingerprint": "4cfb62854bf5ed282558ac1bc8ced527b35517cf42a1c7419b5b96a9d0eec686",
+          "arsId": "12011"
+        },
+        {
+          "hubId": "seoul-bus-111000012",
+          "fingerprint": "7a738662f0f25638712062b504f0155f657eeef5e54a99ab93bd345631679e96",
+          "arsId": "12012"
+        }
+      ]
+    },
+    {
+      "key": "bus:염창역.서울도시가스",
+      "kind": "bus",
+      "name": "염창역.서울도시가스",
+      "maxStraightLineMeters": 107.1,
+      "farthestPair": [
+        "seoul-bus-115000001",
+        "seoul-bus-115000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000001",
+          "fingerprint": "ad3a7395e20092ec8bc2c2bf75c287b70db7c6187977f5ab4b9b6ae6babf79e1",
+          "arsId": "16001"
+        },
+        {
+          "hubId": "seoul-bus-115000002",
+          "fingerprint": "a622a7a07f7740c08f0d4d02195b267d5ba7ed5ea651ce8813ec1867d3f89fb8",
+          "arsId": "16002"
+        }
+      ]
+    },
+    {
+      "key": "bus:홍대입구역",
+      "kind": "bus",
+      "name": "홍대입구역",
+      "maxStraightLineMeters": 106.9,
+      "farthestPair": [
+        "seoul-bus-113000414",
+        "seoul-bus-113000422"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000414",
+          "fingerprint": "b5a56ea6c4db2bd5eb52f4d4ed2d428b91f89a313b1cbe1d9b4092d2fe63d826",
+          "arsId": "14016"
+        },
+        {
+          "hubId": "seoul-bus-113000422",
+          "fingerprint": "82dd285f719e52a5e9abb01045bf85c56611e99c87d8099bf1a134a87eb5fd9c",
+          "arsId": "14015"
+        }
+      ]
+    },
+    {
+      "key": "bus:말죽거리공원사거리",
+      "kind": "bus",
+      "name": "말죽거리공원사거리",
+      "maxStraightLineMeters": 106.4,
+      "farthestPair": [
+        "seoul-bus-121000001",
+        "seoul-bus-121000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000001",
+          "fingerprint": "85e41f9fcceb5c57ddebb9d8d2cea57915dc0195d9983dc0c872224a50633746",
+          "arsId": "22001"
+        },
+        {
+          "hubId": "seoul-bus-121000002",
+          "fingerprint": "d98adda548a828e11866ba5782bec709ed8c3ab36ddc3ca757d1248da18f3b5e",
+          "arsId": "22002"
+        }
+      ]
+    },
+    {
+      "key": "bus:중랑역.동부시장",
+      "kind": "bus",
+      "name": "중랑역.동부시장",
+      "maxStraightLineMeters": 105.8,
+      "farthestPair": [
+        "seoul-bus-106000005",
+        "seoul-bus-106000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000005",
+          "fingerprint": "3bd87d770f88fd44e8b0376a19611252abd05f84fec91bd09668295ff591a822",
+          "arsId": "07005"
+        },
+        {
+          "hubId": "seoul-bus-106000006",
+          "fingerprint": "f42c00ee3295e8804e5fd352844bd5cb12d63e6e4d37144f00261b6f9e123066",
+          "arsId": "07006"
+        }
+      ]
+    },
+    {
+      "key": "bus:장한평역",
+      "kind": "bus",
+      "name": "장한평역",
+      "maxStraightLineMeters": 105.4,
+      "farthestPair": [
+        "seoul-bus-103000003",
+        "seoul-bus-105000003"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-103000003",
+          "fingerprint": "52ff783254a1b6d0b66594245294a98bcfb4ad30e0fd98d9c98cd9c635a1462d",
+          "arsId": "04003"
+        },
+        {
+          "hubId": "seoul-bus-105000003",
+          "fingerprint": "a17c1e53b59bba3b1a16ddfcaaf38943b4f94c2ee4fd96b79bcef7a33c77b99b",
+          "arsId": "06003"
+        }
+      ]
+    },
+    {
+      "key": "bus:수유시장.성신여대미아캠퍼스앞",
+      "kind": "bus",
+      "name": "수유시장.성신여대미아캠퍼스앞",
+      "maxStraightLineMeters": 104.9,
+      "farthestPair": [
+        "seoul-bus-108000005",
+        "seoul-bus-108000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000005",
+          "fingerprint": "2b2bf449db4bf240b2726e4b0efaf6575297c5078762f5329ec2ef7381dccc7f",
+          "arsId": "09005"
+        },
+        {
+          "hubId": "seoul-bus-108000006",
+          "fingerprint": "6526e6deac8cb922474fde2cbe527ec657348adf20f7702ae240a42999b3f5f6",
+          "arsId": "09006"
+        }
+      ]
+    },
+    {
+      "key": "bus:시흥사거리",
+      "kind": "bus",
+      "name": "시흥사거리",
+      "maxStraightLineMeters": 104,
+      "farthestPair": [
+        "seoul-bus-117000009",
+        "seoul-bus-117000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000009",
+          "fingerprint": "b7be640693877ca4cd09f92f39e70a4e265fd3ebe63bf75f166b2453cba5ef45",
+          "arsId": "18009"
+        },
+        {
+          "hubId": "seoul-bus-117000010",
+          "fingerprint": "392a5ef55133d63f6f2ea307feb4f6b6f569034bce112a17cff58a3405ddc2bf",
+          "arsId": "18010"
+        }
+      ]
+    },
+    {
+      "key": "bus:래미안아파트.파이낸셜뉴스",
+      "kind": "bus",
+      "name": "래미안아파트.파이낸셜뉴스",
+      "maxStraightLineMeters": 103.5,
+      "farthestPair": [
+        "seoul-bus-121000007",
+        "seoul-bus-121000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000007",
+          "fingerprint": "17d5782ff392d2a749ddbe3c7c7e6b185e559847226509b73a273e118728083e",
+          "arsId": "22007"
+        },
+        {
+          "hubId": "seoul-bus-121000008",
+          "fingerprint": "86edc168f057ec38fa4b7cf232f7e09666d5b7ccdd37638651e025dbbf8de4f6",
+          "arsId": "22008"
+        }
+      ]
+    },
+    {
+      "key": "rail:효창공원앞",
+      "kind": "rail",
+      "name": "효창공원앞",
+      "maxStraightLineMeters": 102.9,
+      "farthestPair": [
+        "seoul-rail-1261",
+        "seoul-rail-2628"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1261",
+          "fingerprint": "432f84249baa0946e6502cc52945f36fafc533c52231f2b40688864f398309c8",
+          "route": "경의중앙선"
+        },
+        {
+          "hubId": "seoul-rail-2628",
+          "fingerprint": "589a8638e2678b5f5999e9a8b0e8cf96740dfdd3f5640259be2968bf07a00c6e",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:온수(성공회대입구)",
+      "kind": "rail",
+      "name": "온수(성공회대입구)",
+      "maxStraightLineMeters": 101.2,
+      "farthestPair": [
+        "seoul-rail-1821",
+        "seoul-rail-2752"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1821",
+          "fingerprint": "db49cc3961b3c7a15ab565b6af3f82d851222de2540a734442899f76b250cd3e",
+          "route": "경인선"
+        },
+        {
+          "hubId": "seoul-rail-2752",
+          "fingerprint": "ed9e53b9b13abcea941f3f10dca8861aca82d2ee1366ea22d5a8701b37965069",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:동부제일병원.망우역사문화공원",
+      "kind": "bus",
+      "name": "동부제일병원.망우역사문화공원",
+      "maxStraightLineMeters": 101,
+      "farthestPair": [
+        "seoul-bus-106000428",
+        "seoul-bus-106000429"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000428",
+          "fingerprint": "e0818aaed76fc0cc0add3bad9e0bbf730737ee57d708b7677c2f7655ec4faf07",
+          "arsId": "07013"
+        },
+        {
+          "hubId": "seoul-bus-106000429",
+          "fingerprint": "9678bbd9a53473c4dfc58fb3e3b65f857caf5e8178c0022ce107ae22419bd38d",
+          "arsId": "07014"
+        }
+      ]
+    },
+    {
+      "key": "rail:성남",
+      "kind": "rail",
+      "name": "성남",
+      "maxStraightLineMeters": 99.8,
+      "farthestPair": [
+        "seoul-rail-1512",
+        "seoul-rail-9008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1512",
+          "fingerprint": "5e3b2ff5cc392f30f76ed1cfab6a4ac7a7d0078b07ab0c02dbda4e28742e517b",
+          "route": "경강선"
+        },
+        {
+          "hubId": "seoul-rail-9008",
+          "fingerprint": "628466384ddae65c39f78158a4a641f7b435c9bba13619ce5bc635ad41a9ca23",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "bus:미아사거리역",
+      "kind": "bus",
+      "name": "미아사거리역",
+      "maxStraightLineMeters": 99.6,
+      "farthestPair": [
+        "seoul-bus-108000011",
+        "seoul-bus-108000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000011",
+          "fingerprint": "b6b585f443da5f18ef281ae3648bcb1810796aababcdfb58aadb326f7092abbf",
+          "arsId": "09011"
+        },
+        {
+          "hubId": "seoul-bus-108000012",
+          "fingerprint": "fb16221ae0004594b3a1ad451a0c76795723d2d604f7e72b720b5e2de1fc23a7",
+          "arsId": "09012"
+        }
+      ]
+    },
+    {
+      "key": "bus:미아리고개.미아리예술극장",
+      "kind": "bus",
+      "name": "미아리고개.미아리예술극장",
+      "maxStraightLineMeters": 99.5,
+      "farthestPair": [
+        "seoul-bus-107000005",
+        "seoul-bus-107000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-107000005",
+          "fingerprint": "80e3b0555e121e04da32a4a99b32d8805d5e8db119dc9c3afd7a400b56b0acc5",
+          "arsId": "08005"
+        },
+        {
+          "hubId": "seoul-bus-107000006",
+          "fingerprint": "34ac5b22cff1982d7742b05d44e2c354ccb83d434113fb4cd95f528369458767",
+          "arsId": "08006"
+        }
+      ]
+    },
+    {
+      "key": "rail:양재(서초구청)",
+      "kind": "rail",
+      "name": "양재(서초구청)",
+      "maxStraightLineMeters": 99.5,
+      "farthestPair": [
+        "seoul-rail-0332",
+        "seoul-rail-4308"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0332",
+          "fingerprint": "4bc449eb9772f10f9827be8fa30306ce33d6cae7bca6d945ee10188c8a09c81f",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-4308",
+          "fingerprint": "f0b526cc6a557f727fb92c2c1af5b64df74fc3c7114029723e3c86198efe400c",
+          "route": "신분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:길음뉴타운",
+      "kind": "bus",
+      "name": "길음뉴타운",
+      "maxStraightLineMeters": 99.3,
+      "farthestPair": [
+        "seoul-bus-107000003",
+        "seoul-bus-107000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-107000003",
+          "fingerprint": "c9ab5537022e1ee1570dd59f4d5d36e9b532a4ba1753e9a77dfe0383cf4a35c8",
+          "arsId": "08003"
+        },
+        {
+          "hubId": "seoul-bus-107000004",
+          "fingerprint": "9df5db61ece58679ee92724b26ad37d00c632cf66a86c01448c305339b4aa477",
+          "arsId": "08004"
+        }
+      ]
+    },
+    {
+      "key": "bus:신반포역.세화여중고",
+      "kind": "bus",
+      "name": "신반포역.세화여중고",
+      "maxStraightLineMeters": 99.3,
+      "farthestPair": [
+        "seoul-bus-121000021",
+        "seoul-bus-121000022"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000021",
+          "fingerprint": "0a84425d26d0173aa35f3583f11fd7bb29f968f540ad988ee8b266257e491522",
+          "arsId": "22021"
+        },
+        {
+          "hubId": "seoul-bus-121000022",
+          "fingerprint": "26fceb70b9d2d243cc527226e9f90bb7822f308b150ae44a2e896652c5ed7c45",
+          "arsId": "22022"
+        }
+      ]
+    },
+    {
+      "key": "bus:삼각지역.전쟁기념관",
+      "kind": "bus",
+      "name": "삼각지역.전쟁기념관",
+      "maxStraightLineMeters": 98.8,
+      "farthestPair": [
+        "seoul-bus-102000007",
+        "seoul-bus-102000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000007",
+          "fingerprint": "6d71463359feed6faee0859cf7aa167927c06e4d541acc86b4746b1d780f1037",
+          "arsId": "03007"
+        },
+        {
+          "hubId": "seoul-bus-102000008",
+          "fingerprint": "7744237e5805e09dc8d86744c587de4fd1f04e6b65da6c81cc409eb8c542fe15",
+          "arsId": "03008"
+        }
+      ]
+    },
+    {
+      "key": "bus:신도림동.구로역",
+      "kind": "bus",
+      "name": "신도림동.구로역",
+      "maxStraightLineMeters": 98.8,
+      "farthestPair": [
+        "seoul-bus-116000003",
+        "seoul-bus-116000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-116000003",
+          "fingerprint": "174a4c5606e9953055f488e0c5ea76b55441a88be91597fcd711bc43a2e79b0b",
+          "arsId": "17003"
+        },
+        {
+          "hubId": "seoul-bus-116000004",
+          "fingerprint": "ad8393276161e456e9bf019510d11ff318e2d5d330a591deb36b462c585064d2",
+          "arsId": "17004"
+        }
+      ]
+    },
+    {
+      "key": "bus:송정역",
+      "kind": "bus",
+      "name": "송정역",
+      "maxStraightLineMeters": 98.6,
+      "farthestPair": [
+        "seoul-bus-115000633",
+        "seoul-bus-115000634"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000633",
+          "fingerprint": "b4295e775e73f1745338bcb669f1d4a1fcea56615bd598c25c1ba3c7a9942756",
+          "arsId": "16015"
+        },
+        {
+          "hubId": "seoul-bus-115000634",
+          "fingerprint": "a9a22e37f28763b5c52d98d21683dd824ff86399f5795ec20e85c913e938df62",
+          "arsId": "16014"
+        }
+      ]
+    },
+    {
+      "key": "rail:삼산체육관",
+      "kind": "rail",
+      "name": "삼산체육관",
+      "maxStraightLineMeters": 97.6,
+      "farthestPair": [
+        "seoul-rail-2759",
+        "seoul-rail-3759"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2759",
+          "fingerprint": "077fcaee7a4e5ff0f78d251413ffd631d55b9b8b9eeb33c3cb75cc8e8f0f0609",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3759",
+          "fingerprint": "91423a1c735f20083b2cdf3e5ba440624b7ba5772724c61f999031f11db54739",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:여의도환승센터",
+      "kind": "bus",
+      "name": "여의도환승센터",
+      "maxStraightLineMeters": 97.1,
+      "farthestPair": [
+        "seoul-bus-118000512",
+        "seoul-bus-118000513"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000007",
+          "fingerprint": "4d3ba020b3badbce0638aab378ee82f94d038e1d6cd13199f08c452c70d88e67",
+          "arsId": "19007"
+        },
+        {
+          "hubId": "seoul-bus-118000008",
+          "fingerprint": "4f900be18722d6229fd2c333aaafd4c0088fbadcbc891701578c66e65ae8013d",
+          "arsId": "19008"
+        },
+        {
+          "hubId": "seoul-bus-118000512",
+          "fingerprint": "00dbaa6ef519393568b91c06f5e340ce4bb7979ababfcfbe9c2cbeedcf53b939",
+          "arsId": "19016"
+        },
+        {
+          "hubId": "seoul-bus-118000513",
+          "fingerprint": "e652250629181f0d7a141fefb469f689851e9e3fa92080c16b24ab96e0784e55",
+          "arsId": "19017"
+        }
+      ]
+    },
+    {
+      "key": "bus:합정역",
+      "kind": "bus",
+      "name": "합정역",
+      "maxStraightLineMeters": 96.7,
+      "farthestPair": [
+        "seoul-bus-113000412",
+        "seoul-bus-113000424"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000412",
+          "fingerprint": "92da1c066e04890632da16ba92231014fc427d53606c061abf0c3968fc9b0356",
+          "arsId": "14012"
+        },
+        {
+          "hubId": "seoul-bus-113000424",
+          "fingerprint": "9778af3acd596eef8fdce37dd2f4c0caf2cedd6b70a7afba989eaa567fac6c4f",
+          "arsId": "14011"
+        }
+      ]
+    },
+    {
+      "key": "rail:굴포천",
+      "kind": "rail",
+      "name": "굴포천",
+      "maxStraightLineMeters": 95.8,
+      "farthestPair": [
+        "seoul-rail-2760",
+        "seoul-rail-3760"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2760",
+          "fingerprint": "b97f8f2a8f8961802eb6de5fd5c5377143565228f5a11e682d002dcbf7b01afa",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3760",
+          "fingerprint": "1ef83cedf933115d7a6d28664b9715c33822fa3f41d137cc529026bb914c6b87",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:동묘앞.서울혜화경찰서",
+      "kind": "bus",
+      "name": "동묘앞.서울혜화경찰서",
+      "maxStraightLineMeters": 95,
+      "farthestPair": [
+        "seoul-bus-100000366",
+        "seoul-bus-100000367"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000366",
+          "fingerprint": "9c1f77db0103b7ab5d84f84cb090fe1336d8c6884313f5d6eb1b7e9595d6c0c3",
+          "arsId": "01041"
+        },
+        {
+          "hubId": "seoul-bus-100000367",
+          "fingerprint": "5e394bb29627695c16e440775662854f3f587c0f5b1209998213f88e461ee188",
+          "arsId": "01044"
+        }
+      ]
+    },
+    {
+      "key": "bus:석촌역",
+      "kind": "bus",
+      "name": "석촌역",
+      "maxStraightLineMeters": 94.8,
+      "farthestPair": [
+        "seoul-bus-123000005",
+        "seoul-bus-123000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000005",
+          "fingerprint": "4f6f53cab8dc9826e21eadc72f320e59e30ba8494f3b79ed32e51b9d3350655e",
+          "arsId": "24005"
+        },
+        {
+          "hubId": "seoul-bus-123000006",
+          "fingerprint": "b008cdbd29a71b11dcba199ccb453e5e837392f0ebabd3d7bd996bc7585bed97",
+          "arsId": "24006"
+        }
+      ]
+    },
+    {
+      "key": "bus:아현초등학교",
+      "kind": "bus",
+      "name": "아현초등학교",
+      "maxStraightLineMeters": 93.5,
+      "farthestPair": [
+        "seoul-bus-113000009",
+        "seoul-bus-113000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000009",
+          "fingerprint": "2031f25b35e3cde9d97a7d3b0046ad975655ff14de6b87d0b674f0485a01de76",
+          "arsId": "14009"
+        },
+        {
+          "hubId": "seoul-bus-113000010",
+          "fingerprint": "bc5dc2c125f37d510153ef45937afa852d3c82949c719978b07d9d2c4f1bf538",
+          "arsId": "14010"
+        }
+      ]
+    },
+    {
+      "key": "bus:웨딩타운",
+      "kind": "bus",
+      "name": "웨딩타운",
+      "maxStraightLineMeters": 92.8,
+      "farthestPair": [
+        "seoul-bus-113000475",
+        "seoul-bus-113000476"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000475",
+          "fingerprint": "ae212641b12fc5143945ed9dee71334ed5df5b46ef69bc8ed609ecaf375dc576",
+          "arsId": "13042"
+        },
+        {
+          "hubId": "seoul-bus-113000476",
+          "fingerprint": "daae15a51e58a513b5396ea8b671e9b731e152f11dc7d8e387be11789b8f7eab",
+          "arsId": "14067"
+        }
+      ]
+    },
+    {
+      "key": "bus:보라매역.동작세무서",
+      "kind": "bus",
+      "name": "보라매역.동작세무서",
+      "maxStraightLineMeters": 92.7,
+      "farthestPair": [
+        "seoul-bus-118000013",
+        "seoul-bus-119000005"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000013",
+          "fingerprint": "9b10664b49a7407eb5325e89f1c4dfa73d76cafd8678dbe3898d1fe52daa2cfd",
+          "arsId": "19013"
+        },
+        {
+          "hubId": "seoul-bus-119000005",
+          "fingerprint": "a1471ab347a10695862871a765e73d7c360ee5ae77a90a173318900a0eae31a5",
+          "arsId": "20005"
+        }
+      ]
+    },
+    {
+      "key": "rail:신내",
+      "kind": "rail",
+      "name": "신내",
+      "maxStraightLineMeters": 92.6,
+      "farthestPair": [
+        "seoul-rail-1311",
+        "seoul-rail-2649"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1311",
+          "fingerprint": "c2fd33d1e5a4da6d043e239832fcf581580713513a445fe57aee9726c8396e5d",
+          "route": "경춘선"
+        },
+        {
+          "hubId": "seoul-rail-2649",
+          "fingerprint": "9ae677f5727eadea7e179cdfa39049cade8f3bf1ff56fab3c67616bb895d26ca",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:동교동삼거리",
+      "kind": "bus",
+      "name": "동교동삼거리",
+      "maxStraightLineMeters": 92.4,
+      "farthestPair": [
+        "seoul-bus-113000415",
+        "seoul-bus-113000421"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000415",
+          "fingerprint": "431bf8e1f013839fb73b94f00405310431ed42c76a3047e558eadd26502f286b",
+          "arsId": "13019"
+        },
+        {
+          "hubId": "seoul-bus-113000421",
+          "fingerprint": "56da594d4a578492d182d3ab4b62040c24c892178e8a8020b6845fcd6ea4e029",
+          "arsId": "14061"
+        }
+      ]
+    },
+    {
+      "key": "bus:수유역.강북구청",
+      "kind": "bus",
+      "name": "수유역.강북구청",
+      "maxStraightLineMeters": 92.1,
+      "farthestPair": [
+        "seoul-bus-108000004",
+        "seoul-bus-108000378"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000004",
+          "fingerprint": "9eb3dc345d5f6e202bb93061a99b2acac3688ca59abe0133ef2f2cc553d07b82",
+          "arsId": "09004"
+        },
+        {
+          "hubId": "seoul-bus-108000378",
+          "fingerprint": "b1832e851087b0b2b110dad1e4b240677ad71790e95021866f914bf4556b140f",
+          "arsId": "09013"
+        }
+      ]
+    },
+    {
+      "key": "bus:신도림역",
+      "kind": "bus",
+      "name": "신도림역",
+      "maxStraightLineMeters": 92,
+      "farthestPair": [
+        "seoul-bus-116000001",
+        "seoul-bus-116000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-116000001",
+          "fingerprint": "2cea1457a7d1c171cbd407e7e744d06d83446f1db0b0526b1e4f7dd30a240115",
+          "arsId": "17001"
+        },
+        {
+          "hubId": "seoul-bus-116000002",
+          "fingerprint": "72bffb833a06849ebe62c73f765a2b1611c2c45f72550900a2c0b89cdf58b25a",
+          "arsId": "17002"
+        }
+      ]
+    },
+    {
+      "key": "rail:가락시장",
+      "kind": "rail",
+      "name": "가락시장",
+      "maxStraightLineMeters": 91.2,
+      "farthestPair": [
+        "seoul-rail-0340",
+        "seoul-rail-2818"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0340",
+          "fingerprint": "03c03272b9ac2f93e7eff96f45b825d05a9efcd07b33643d595784ea1f7b6a69",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2818",
+          "fingerprint": "e6758a51749a542947be0658d7b2074ca23172cd0c522b0b7aae9c80d6e7dac3",
+          "route": "8호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:동양미래대학.구로성심병원",
+      "kind": "bus",
+      "name": "동양미래대학.구로성심병원",
+      "maxStraightLineMeters": 91,
+      "farthestPair": [
+        "seoul-bus-116000007",
+        "seoul-bus-116000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-116000007",
+          "fingerprint": "1ccaa306b048a6aa987847891c9d979b08175e95c0c23dbdcf88ee678b3c5dda",
+          "arsId": "17007"
+        },
+        {
+          "hubId": "seoul-bus-116000008",
+          "fingerprint": "4311cc1a6db5b91359344e9b953ed89efc90ca3c700c867717d3d349bb66f8d3",
+          "arsId": "17008"
+        }
+      ]
+    },
+    {
+      "key": "bus:총신대입구역.남성사계시장입구앞",
+      "kind": "bus",
+      "name": "총신대입구역.남성사계시장입구앞",
+      "maxStraightLineMeters": 90.9,
+      "farthestPair": [
+        "seoul-bus-119000286",
+        "seoul-bus-121000532"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-119000286",
+          "fingerprint": "e2daab82baa5285b0c237c4e9ffe87ff4eb48150a73796dfb06bd904c4d4689e",
+          "arsId": "20018"
+        },
+        {
+          "hubId": "seoul-bus-121000532",
+          "fingerprint": "126c1abc2624147cf0389a0c70fc1fa416330a41458bcb95e5929cde52d439c8",
+          "arsId": "22029"
+        }
+      ]
+    },
+    {
+      "key": "bus:신도봉시장.도봉구청.방학역북부",
+      "kind": "bus",
+      "name": "신도봉시장.도봉구청.방학역북부",
+      "maxStraightLineMeters": 89.7,
+      "farthestPair": [
+        "seoul-bus-109000019",
+        "seoul-bus-109000020"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000019",
+          "fingerprint": "13d7d2e67cf509ab906835e521652884eeed81718a0e8e4c7f3b6b3819635a85",
+          "arsId": "10019"
+        },
+        {
+          "hubId": "seoul-bus-109000020",
+          "fingerprint": "2b45ac09b8319e78f5dd474bff3de17be7ccde3b3c8256958719649127b3dc84",
+          "arsId": "10020"
+        }
+      ]
+    },
+    {
+      "key": "bus:시흥유통센터",
+      "kind": "bus",
+      "name": "시흥유통센터",
+      "maxStraightLineMeters": 88.5,
+      "farthestPair": [
+        "seoul-bus-117000013",
+        "seoul-bus-117000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-117000013",
+          "fingerprint": "4bfb839f76c7a51034058a2dfadbb008bfca6fd2e26dacf9d498b3a187cac93a",
+          "arsId": "18013"
+        },
+        {
+          "hubId": "seoul-bus-117000014",
+          "fingerprint": "1423889ca88d2bb0bcf21baf09e21a46838d8b3ad7f0dc18d81e5497a5b79d60",
+          "arsId": "18014"
+        }
+      ]
+    },
+    {
+      "key": "rail:샛강",
+      "kind": "rail",
+      "name": "샛강",
+      "maxStraightLineMeters": 88.4,
+      "farthestPair": [
+        "seoul-rail-4116",
+        "seoul-rail-4401"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-4116",
+          "fingerprint": "464802d8364331282f802c7f3f480d8978e1e5e411381cbffe3814a524c13025",
+          "route": "9호선"
+        },
+        {
+          "hubId": "seoul-rail-4401",
+          "fingerprint": "76f9f6f48dcb1d65ba5a766f463b3240a9009b7ed011330588e248d7f94dfd86",
+          "route": "신림선"
+        }
+      ]
+    },
+    {
+      "key": "rail:판교",
+      "kind": "rail",
+      "name": "판교",
+      "maxStraightLineMeters": 88.3,
+      "farthestPair": [
+        "seoul-rail-1501",
+        "seoul-rail-4311"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1501",
+          "fingerprint": "ce8cbd924da0a85e87b6ef3a52c8eeb433c3ee9c419867ae18629042126fea04",
+          "route": "경강선"
+        },
+        {
+          "hubId": "seoul-rail-4311",
+          "fingerprint": "24722883ffa364db05e7e6d3944a86ddf0b9515db4cf7efea4f631ae07ddcf6e",
+          "route": "신분당선"
+        }
+      ]
+    },
+    {
+      "key": "rail:이매",
+      "kind": "rail",
+      "name": "이매",
+      "maxStraightLineMeters": 88.2,
+      "farthestPair": [
+        "seoul-rail-1502",
+        "seoul-rail-1860"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1502",
+          "fingerprint": "1efc03ce53beb8e8b6f2432c85c779b29f21385c8d5c6991df258896d8173802",
+          "route": "경강선"
+        },
+        {
+          "hubId": "seoul-rail-1860",
+          "fingerprint": "9733c2efd2b8956a02f3ec03e055c7c2ccd341d1d88176f4b5dcfe09588d12ee",
+          "route": "분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:디지털미디어시티역",
+      "kind": "bus",
+      "name": "디지털미디어시티역",
+      "maxStraightLineMeters": 88.1,
+      "farthestPair": [
+        "seoul-bus-111000007",
+        "seoul-bus-111000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000007",
+          "fingerprint": "92bb9e2d6f21e43fc3cd897a921bbda80b9b0361a44bb4f76f44c5a83c8af466",
+          "arsId": "12007"
+        },
+        {
+          "hubId": "seoul-bus-111000008",
+          "fingerprint": "b03be81b410d574eea5ec91d2c5bf11f684a6fdf9e363563f71e87a1aa643264",
+          "arsId": "12008"
+        }
+      ]
+    },
+    {
+      "key": "rail:인천시청",
+      "kind": "rail",
+      "name": "인천시청",
+      "maxStraightLineMeters": 88,
+      "farthestPair": [
+        "seoul-rail-3124",
+        "seoul-rail-3221"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-3124",
+          "fingerprint": "47d8b2cd0ae97531cdc52d65cfe9f6f47414efe67bf22f7a30ff51d994830c63",
+          "route": "인천1호선"
+        },
+        {
+          "hubId": "seoul-rail-3221",
+          "fingerprint": "f50d84e2c0c109ae3afdb137c417ad690995f3963b0d33e5248113614cd62d5a",
+          "route": "인천2호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:구반포역.세화고등학교",
+      "kind": "bus",
+      "name": "구반포역.세화고등학교",
+      "maxStraightLineMeters": 87.6,
+      "farthestPair": [
+        "seoul-bus-121000023",
+        "seoul-bus-121000024"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000023",
+          "fingerprint": "d45929bc1a4544fd972a9268bdc273f1a501a2c810c4f34890b8f3fe1cd93b97",
+          "arsId": "22023"
+        },
+        {
+          "hubId": "seoul-bus-121000024",
+          "fingerprint": "ec9a7ace9dfe0ed119992890f3bbad75f4672704b3c8fae2d2b1fce83d5d2a61",
+          "arsId": "22024"
+        }
+      ]
+    },
+    {
+      "key": "bus:쌍문역",
+      "kind": "bus",
+      "name": "쌍문역",
+      "maxStraightLineMeters": 87.3,
+      "farthestPair": [
+        "seoul-bus-109000015",
+        "seoul-bus-109000016"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000015",
+          "fingerprint": "e4a050b9ce646f36aa741f2c3fc39dc1eecff7920164c011bb949c2783c83bac",
+          "arsId": "10015"
+        },
+        {
+          "hubId": "seoul-bus-109000016",
+          "fingerprint": "629069fdd27b60296c484cd918a056046ce98301b13aec97aee33fecb446ac70",
+          "arsId": "10016"
+        }
+      ]
+    },
+    {
+      "key": "bus:길동사거리.강동세무서",
+      "kind": "bus",
+      "name": "길동사거리.강동세무서",
+      "maxStraightLineMeters": 86.6,
+      "farthestPair": [
+        "seoul-bus-124000358",
+        "seoul-bus-124000365"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000358",
+          "fingerprint": "fde47229095b81a50e49e30702067202750f6c505e9f2f808272813c8c768ede",
+          "arsId": "25009"
+        },
+        {
+          "hubId": "seoul-bus-124000365",
+          "fingerprint": "6c06e778a80a19015a4817e81ce3d4bd2dc6067c609fc1d01e09cbc382ae6beb",
+          "arsId": "25010"
+        }
+      ]
+    },
+    {
+      "key": "rail:을지로4가",
+      "kind": "rail",
+      "name": "을지로4가",
+      "maxStraightLineMeters": 86.3,
+      "farthestPair": [
+        "seoul-rail-0204",
+        "seoul-rail-2536"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0204",
+          "fingerprint": "ff8a7c1428b08302a8dbe8c3c8fae91bcf463da9d9c68082b1e97c24155a5eff",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2536",
+          "fingerprint": "0a72fa77971669bb74fbe67d7d90d66cd236570a0f3c6328710dc10934644df8",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:강동역",
+      "kind": "bus",
+      "name": "강동역",
+      "maxStraightLineMeters": 85.4,
+      "farthestPair": [
+        "seoul-bus-124000357",
+        "seoul-bus-124000366"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000357",
+          "fingerprint": "8c134e0420f2bbf94ec590b90022125c792d9b379b3b70078a36b087708fdec7",
+          "arsId": "25011"
+        },
+        {
+          "hubId": "seoul-bus-124000366",
+          "fingerprint": "4f4cd6caf58c60dd72f1ddd01e3b4064c1f554fc26b08b6c79bc9a5ed0abeb29",
+          "arsId": "25012"
+        }
+      ]
+    },
+    {
+      "key": "rail:을지로3가",
+      "kind": "rail",
+      "name": "을지로3가",
+      "maxStraightLineMeters": 85.4,
+      "farthestPair": [
+        "seoul-rail-0203",
+        "seoul-rail-0320"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0203",
+          "fingerprint": "85f5afb3cb084a48fed80419722c322fa8cf4c07ccf3d29917dc6e3e8a8efdce",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-0320",
+          "fingerprint": "81a6877469cc7cacfc831ad618a1bb88c755287cf39bfbb6176d502271642d83",
+          "route": "3호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:길동주민센터.둔촌2동주민센터",
+      "kind": "bus",
+      "name": "길동주민센터.둔촌2동주민센터",
+      "maxStraightLineMeters": 84.8,
+      "farthestPair": [
+        "seoul-bus-124000359",
+        "seoul-bus-124000364"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000359",
+          "fingerprint": "b26c8d131bc1a0b53444091ed49eb2312fb823d1da205fc22d6f262df5961256",
+          "arsId": "25007"
+        },
+        {
+          "hubId": "seoul-bus-124000364",
+          "fingerprint": "8aa7762fe499d75513069a6df5ab0557d59994f87f5449187f9d4aece3e63236",
+          "arsId": "25008"
+        }
+      ]
+    },
+    {
+      "key": "bus:아현동주민센터",
+      "kind": "bus",
+      "name": "아현동주민센터",
+      "maxStraightLineMeters": 84.6,
+      "farthestPair": [
+        "seoul-bus-113000005",
+        "seoul-bus-113000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000005",
+          "fingerprint": "6c3e2fe9bbe7905834ff0b582b2bfeb92de25a37b82d9999d9e141f4677a4316",
+          "arsId": "14005"
+        },
+        {
+          "hubId": "seoul-bus-113000006",
+          "fingerprint": "af6e084a6324a00a82e96b248aa07bc86ee5de9a4f8ec0fd8fb341fc6152eb7f",
+          "arsId": "14006"
+        }
+      ]
+    },
+    {
+      "key": "bus:군자역.용마초등학교",
+      "kind": "bus",
+      "name": "군자역.용마초등학교",
+      "maxStraightLineMeters": 83,
+      "farthestPair": [
+        "seoul-bus-104000003",
+        "seoul-bus-104000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000003",
+          "fingerprint": "8be3f92194cc0a725ae9dcaf5555e95391c6d7afe2282aba97e809afa72c0712",
+          "arsId": "05003"
+        },
+        {
+          "hubId": "seoul-bus-104000004",
+          "fingerprint": "a5e09022802681f68a23e5b0bfce189f6f9f67b4c28ec1a3f1591e77dc3edd68",
+          "arsId": "05004"
+        }
+      ]
+    },
+    {
+      "key": "rail:선릉",
+      "kind": "rail",
+      "name": "선릉",
+      "maxStraightLineMeters": 82.8,
+      "farthestPair": [
+        "seoul-rail-0220",
+        "seoul-rail-1023"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0220",
+          "fingerprint": "d3bbf1e464d329213602a7dd8138474009d127cfb6a9cc75bb411dbd6eb38dbf",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-1023",
+          "fingerprint": "12c51c52aa3375dfc76ded291eda465c33fd72a45f21493362469138f7aa3c98",
+          "route": "분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:샘마을.서울특별시어린이병원",
+      "kind": "bus",
+      "name": "샘마을.서울특별시어린이병원",
+      "maxStraightLineMeters": 82.3,
+      "farthestPair": [
+        "seoul-bus-121001338",
+        "seoul-bus-121001339"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001338",
+          "fingerprint": "9171aa155336bf0f4654f05c1a2f7c4d0ca5a5ff48c9be70ff660d87e246e051",
+          "arsId": "22042"
+        },
+        {
+          "hubId": "seoul-bus-121001339",
+          "fingerprint": "e1c8c344c17b259ae765ff017893d168cdae279c9fefab004e87502200af9542",
+          "arsId": "22041"
+        }
+      ]
+    },
+    {
+      "key": "bus:불광역3.6호선",
+      "kind": "bus",
+      "name": "불광역3.6호선",
+      "maxStraightLineMeters": 82.2,
+      "farthestPair": [
+        "seoul-bus-111000931",
+        "seoul-bus-111000932"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000931",
+          "fingerprint": "53721310e59baad0a65de42ae0133850beea2e38bd508de513788b277b8c3cb5",
+          "arsId": "12022"
+        },
+        {
+          "hubId": "seoul-bus-111000932",
+          "fingerprint": "3e276ac4a59dfb271926e645a3aac2b776ac6070c1c9fdf56519585e41eb7b16",
+          "arsId": "12021"
+        }
+      ]
+    },
+    {
+      "key": "bus:중랑교",
+      "kind": "bus",
+      "name": "중랑교",
+      "maxStraightLineMeters": 82.2,
+      "farthestPair": [
+        "seoul-bus-105000009",
+        "seoul-bus-105000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000009",
+          "fingerprint": "3709131334a6ebb1de0f413d9deec892e889b7f6b05955f95393df516a37a3b1",
+          "arsId": "06009"
+        },
+        {
+          "hubId": "seoul-bus-105000010",
+          "fingerprint": "1fe7497b1186a7801740233f3cde153043945f21040ae704736520d4c424d719",
+          "arsId": "06010"
+        }
+      ]
+    },
+    {
+      "key": "bus:청량리역환승센터",
+      "kind": "bus",
+      "name": "청량리역환승센터",
+      "maxStraightLineMeters": 81.2,
+      "farthestPair": [
+        "seoul-bus-105000016",
+        "seoul-bus-105000402"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000015",
+          "fingerprint": "00860c1ba52fe6a7d83a07b557a519adc6fd5e8d09227fd48c70b61d4712d8ec",
+          "arsId": "06015"
+        },
+        {
+          "hubId": "seoul-bus-105000016",
+          "fingerprint": "50d1123adf88781ccf9d6bc72d721feafa5b6a1cd2bf72237bbf10b4f8820fcd",
+          "arsId": "06016"
+        },
+        {
+          "hubId": "seoul-bus-105000402",
+          "fingerprint": "27ac10ecae866b7039a2c9f087c31023a459a56a0303b6205d9ea3a1022efaba",
+          "arsId": "06020"
+        },
+        {
+          "hubId": "seoul-bus-105000446",
+          "fingerprint": "3516f7a8c3fd9617523b1f5b5bdfacf0460022e7924eed75493978fc1179b447",
+          "arsId": "06019"
+        },
+        {
+          "hubId": "seoul-bus-105000447",
+          "fingerprint": "08dbb455f85bbfec8d64fa8cb336c406492351d31d55ca172cdc6289b4ef2966",
+          "arsId": "06018"
+        }
+      ]
+    },
+    {
+      "key": "rail:신림",
+      "kind": "rail",
+      "name": "신림",
+      "maxStraightLineMeters": 81.2,
+      "farthestPair": [
+        "seoul-rail-0230",
+        "seoul-rail-4408"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0230",
+          "fingerprint": "f6431bea5f282c1071739859fd8fa911ed2fd6472eeb1509a5467f84b160b64d",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-4408",
+          "fingerprint": "a91f443ed8c44dfff5e5bece399daf7b431ce1862ad02d40e67e07695c8269ef",
+          "route": "신림선"
+        }
+      ]
+    },
+    {
+      "key": "bus:매헌시민의숲사거리",
+      "kind": "bus",
+      "name": "매헌시민의숲사거리",
+      "maxStraightLineMeters": 80.9,
+      "farthestPair": [
+        "seoul-bus-121001341",
+        "seoul-bus-121001342"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001341",
+          "fingerprint": "c7221f629e2ab00dbdcde8bdeb6f37702622925ba6895c8ea00cc1b83aad01d2",
+          "arsId": "22043"
+        },
+        {
+          "hubId": "seoul-bus-121001342",
+          "fingerprint": "f66f78e01f3665eabb4f3959238aa4ce7bb81211f865b472b795e406f272c53e",
+          "arsId": "22044"
+        }
+      ]
+    },
+    {
+      "key": "bus:노량진역",
+      "kind": "bus",
+      "name": "노량진역",
+      "maxStraightLineMeters": 80.2,
+      "farthestPair": [
+        "seoul-bus-119000011",
+        "seoul-bus-119000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-119000011",
+          "fingerprint": "8701fef537d0d3bfe77483ee0eaa88a87f2729b5c5c1a53bd63e55bef99d97dc",
+          "arsId": "20011"
+        },
+        {
+          "hubId": "seoul-bus-119000012",
+          "fingerprint": "2011144c6b21eee47a07299ee2a6db64112bbaf475495a59f56e7b31934975b6",
+          "arsId": "20012"
+        }
+      ]
+    },
+    {
+      "key": "bus:반포역",
+      "kind": "bus",
+      "name": "반포역",
+      "maxStraightLineMeters": 79.8,
+      "farthestPair": [
+        "seoul-bus-121000017",
+        "seoul-bus-121000018"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121000017",
+          "fingerprint": "0cd3cfba54bc84eca68502f26ffa0a7e553f55a6bc7a9fd101987907d16d5bb3",
+          "arsId": "22017"
+        },
+        {
+          "hubId": "seoul-bus-121000018",
+          "fingerprint": "a151569824cb2c890149f317f4717983cb4d54c2e5645ccdd7364edc68ceacd6",
+          "arsId": "22018"
+        }
+      ]
+    },
+    {
+      "key": "bus:서대문우체국",
+      "kind": "bus",
+      "name": "서대문우체국",
+      "maxStraightLineMeters": 79.5,
+      "farthestPair": [
+        "seoul-bus-112000010",
+        "seoul-bus-112000011"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000010",
+          "fingerprint": "dac3664c0ac92c00182386a0d28f5c900bedf7bff12458e848a72f2505ffedf4",
+          "arsId": "13010"
+        },
+        {
+          "hubId": "seoul-bus-112000011",
+          "fingerprint": "d502a80678e86fd168bb5f2a95e0ff815f6cda88f1adae70828f971af5a6432f",
+          "arsId": "13011"
+        }
+      ]
+    },
+    {
+      "key": "rail:기흥",
+      "kind": "rail",
+      "name": "기흥",
+      "maxStraightLineMeters": 79.5,
+      "farthestPair": [
+        "seoul-rail-1865",
+        "seoul-rail-4501"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1865",
+          "fingerprint": "0f60ae7839c25a8abc80095c9e0281b146d8b7f5bcae55003c02346dd27e00eb",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-4501",
+          "fingerprint": "78f1337dce8bf2e9841a264c669d26dec0d955ce5e15b53522d31ae77a292da0",
+          "route": "에버라인선"
+        }
+      ]
+    },
+    {
+      "key": "bus:수색역앞",
+      "kind": "bus",
+      "name": "수색역앞",
+      "maxStraightLineMeters": 78.7,
+      "farthestPair": [
+        "seoul-bus-111000005",
+        "seoul-bus-111000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000005",
+          "fingerprint": "3c2951b82d74c022cb4bb32522ad99038f199397832466285c44099014ea75f3",
+          "arsId": "12005"
+        },
+        {
+          "hubId": "seoul-bus-111000006",
+          "fingerprint": "65f12be442921eb5f44e61db5e90ed9c253992a0a8ce15299b9d600fa20bc107",
+          "arsId": "12006"
+        }
+      ]
+    },
+    {
+      "key": "bus:신용산역",
+      "kind": "bus",
+      "name": "신용산역",
+      "maxStraightLineMeters": 78.7,
+      "farthestPair": [
+        "seoul-bus-102000003",
+        "seoul-bus-102000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000003",
+          "fingerprint": "5a0e490eb2f716f22c7bf9f22652b9bd402f3918da3a521396e9ed506747f0b2",
+          "arsId": "03003"
+        },
+        {
+          "hubId": "seoul-bus-102000004",
+          "fingerprint": "68ec0e4c034a241a22c46fece6494f4d4087e260bae6b646cdedd60fc2c4a977",
+          "arsId": "03004"
+        }
+      ]
+    },
+    {
+      "key": "rail:부천종합운동장",
+      "kind": "rail",
+      "name": "부천종합운동장",
+      "maxStraightLineMeters": 77.1,
+      "farthestPair": [
+        "seoul-rail-1982",
+        "seoul-rail-3754"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1982",
+          "fingerprint": "e9939e24f783e12a5ae3e4cedc928bc9934649aa84e311f80cb3b0edd2011877",
+          "route": "서해선"
+        },
+        {
+          "hubId": "seoul-rail-2754",
+          "fingerprint": "3a338526cd1439776d9abbf67cd9472ac9a5a3135f6b1c60bed6710296cf45b6",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3754",
+          "fingerprint": "0af0730477a3ef5c61a854507e5f0d9039acd0d561caeb4190f67d6f14da89e2",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:덕은교.은평차고지앞",
+      "kind": "bus",
+      "name": "덕은교.은평차고지앞",
+      "maxStraightLineMeters": 76.3,
+      "farthestPair": [
+        "seoul-bus-111000001",
+        "seoul-bus-111000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000001",
+          "fingerprint": "3e88d801bc9dadb652ad2c63d5eef5e9b13e26d259f9e958c9130d86f5f4e036",
+          "arsId": "12001"
+        },
+        {
+          "hubId": "seoul-bus-111000002",
+          "fingerprint": "371e24994eae8da08aa242d1ba2d729a3655f3cb6f50b34a4296effb160f561e",
+          "arsId": "12002"
+        }
+      ]
+    },
+    {
+      "key": "bus:도봉산역",
+      "kind": "bus",
+      "name": "도봉산역",
+      "maxStraightLineMeters": 75.4,
+      "farthestPair": [
+        "seoul-bus-109000001",
+        "seoul-bus-109000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000001",
+          "fingerprint": "72987ac106ebd673515039e6a1e3c415661856d1ed2e97ffad8e6c1e95537af6",
+          "arsId": "10001"
+        },
+        {
+          "hubId": "seoul-bus-109000002",
+          "fingerprint": "3cab33e08add68a3a0664c22eef2400d3e3f5b6579f67bcdef698293cfb86fa2",
+          "arsId": "10002"
+        }
+      ]
+    },
+    {
+      "key": "bus:한전서대문은평.북한산푸르지오",
+      "kind": "bus",
+      "name": "한전서대문은평.북한산푸르지오",
+      "maxStraightLineMeters": 75.4,
+      "farthestPair": [
+        "seoul-bus-111000935",
+        "seoul-bus-111000936"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000935",
+          "fingerprint": "bfcdc67c13bfa9752846bc82ca425a2b8605cdec819ed816c23ed077d65d13db",
+          "arsId": "12026"
+        },
+        {
+          "hubId": "seoul-bus-111000936",
+          "fingerprint": "2b4e13517fdabc026ec3796cd1b40fe3cd178a000fc9db54e4f66921ae53369b",
+          "arsId": "12025"
+        }
+      ]
+    },
+    {
+      "key": "rail:연신내",
+      "kind": "rail",
+      "name": "연신내",
+      "maxStraightLineMeters": 75.3,
+      "farthestPair": [
+        "seoul-rail-0311",
+        "seoul-rail-2615"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0311",
+          "fingerprint": "d7b3b4dcaf1aa13e4ccae406114b3cf166135c11f55d20669cbc6dd225d16d2b",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2615",
+          "fingerprint": "50ac524e106bc6b1d45611e4c26ba166872d66739cbb9b1586baf771e92e4179",
+          "route": "6호선"
+        },
+        {
+          "hubId": "seoul-rail-9004",
+          "fingerprint": "4f4c192c3388f44da9f11c168aa980edf7b394de27f15055a965f63f9f0c06a7",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "rail:별내",
+      "kind": "rail",
+      "name": "별내",
+      "maxStraightLineMeters": 74.8,
+      "farthestPair": [
+        "seoul-rail-1313",
+        "seoul-rail-2805"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1313",
+          "fingerprint": "70c08edefc3a5e3d04bdb1271dcfa6e76f314dcfc793b3f2301a7424b2e1a591",
+          "route": "경춘선"
+        },
+        {
+          "hubId": "seoul-rail-2805",
+          "fingerprint": "9f93fe491aa2f7e2150b18c11babb498b88f046c09e0be779ff7d8593d5c60e4",
+          "route": "별내선"
+        }
+      ]
+    },
+    {
+      "key": "bus:우이교.한일병원입구",
+      "kind": "bus",
+      "name": "우이교.한일병원입구",
+      "maxStraightLineMeters": 74.2,
+      "farthestPair": [
+        "seoul-bus-109000017",
+        "seoul-bus-109000018"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000017",
+          "fingerprint": "b9944c0cdd270a35ea2bc1438fdba6504a29244c0b8b00cbd7b3f9b1446e5925",
+          "arsId": "10017"
+        },
+        {
+          "hubId": "seoul-bus-109000018",
+          "fingerprint": "731f0bf402c42f96e5be9f9376aa0a4f8cd9634cefef5301a3b9c65b45754aab",
+          "arsId": "10018"
+        }
+      ]
+    },
+    {
+      "key": "bus:사당역",
+      "kind": "bus",
+      "name": "사당역",
+      "maxStraightLineMeters": 74.1,
+      "farthestPair": [
+        "seoul-bus-121001314",
+        "seoul-bus-121001315"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001314",
+          "fingerprint": "f373a487e02588b5d459a9dc8f547ff8d6b0c0f182abfe6596fabbba3f9902b6",
+          "arsId": "21028"
+        },
+        {
+          "hubId": "seoul-bus-121001315",
+          "fingerprint": "9014ec77e373f548e64f8e22ee50cd54e647211b3cfe10314c35fef045efcaf2",
+          "arsId": "22028"
+        }
+      ]
+    },
+    {
+      "key": "bus:상일초교",
+      "kind": "bus",
+      "name": "상일초교",
+      "maxStraightLineMeters": 74.1,
+      "farthestPair": [
+        "seoul-bus-124000361",
+        "seoul-bus-124000362"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000361",
+          "fingerprint": "ed300a7da8374c19c726f105b393d01c4f1f0f5064436c5faa6240b1fdde81bb",
+          "arsId": "25001"
+        },
+        {
+          "hubId": "seoul-bus-124000362",
+          "fingerprint": "18ce73daccf394f9ecd609f35269f40eadbb446f13a0acdcfc7502fe73dfa934",
+          "arsId": "25002"
+        }
+      ]
+    },
+    {
+      "key": "bus:등촌중학교.백석초등학교",
+      "kind": "bus",
+      "name": "등촌중학교.백석초등학교",
+      "maxStraightLineMeters": 73.6,
+      "farthestPair": [
+        "seoul-bus-115000005",
+        "seoul-bus-115000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000005",
+          "fingerprint": "d3cc30d70b0e07647d3304d1eb2927c1ebe5b4154b0546b585d7a15ece7a7145",
+          "arsId": "16005"
+        },
+        {
+          "hubId": "seoul-bus-115000006",
+          "fingerprint": "3adbc7565768ee0fdc49e3ad308eb9ebedbd48956ed2179cad67f0d2dc1679fb",
+          "arsId": "16006"
+        }
+      ]
+    },
+    {
+      "key": "bus:미아역.신일중고",
+      "kind": "bus",
+      "name": "미아역.신일중고",
+      "maxStraightLineMeters": 72.8,
+      "farthestPair": [
+        "seoul-bus-108000007",
+        "seoul-bus-108000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000007",
+          "fingerprint": "9cfc222d4f2a04f9c0fca0177bf70022365c23b5f6dfc81c5b82221e0206426d",
+          "arsId": "09007"
+        },
+        {
+          "hubId": "seoul-bus-108000008",
+          "fingerprint": "77c97f49989ee5145cef16765cf4bb5500d4ba8a2a60915668cd010282ec02d1",
+          "arsId": "09008"
+        }
+      ]
+    },
+    {
+      "key": "rail:회룡",
+      "kind": "rail",
+      "name": "회룡",
+      "maxStraightLineMeters": 70.3,
+      "farthestPair": [
+        "seoul-rail-1905",
+        "seoul-rail-4602"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1905",
+          "fingerprint": "5ea5489f7b1ca033907981079b2a3a5834cec8893920e9e7a5cbebc62839204e",
+          "route": "경원선"
+        },
+        {
+          "hubId": "seoul-rail-4602",
+          "fingerprint": "c5190351a8e6bce62447c97596057012c0ebd2e7cf89f6b87543e0ae6daa5985",
+          "route": "의정부선"
+        }
+      ]
+    },
+    {
+      "key": "bus:서교동",
+      "kind": "bus",
+      "name": "서교동",
+      "maxStraightLineMeters": 70.2,
+      "farthestPair": [
+        "seoul-bus-113000413",
+        "seoul-bus-113000423"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000413",
+          "fingerprint": "e45d4cde2322acbce85a46bed21477bf08dbcd5762b2e8b74258a1f8eb403184",
+          "arsId": "14014"
+        },
+        {
+          "hubId": "seoul-bus-113000423",
+          "fingerprint": "8857ba15c6a7849795887f84fba8b2fb4cdc759ae81aa04b070e0c826d3c73b6",
+          "arsId": "14013"
+        }
+      ]
+    },
+    {
+      "key": "bus:영천시장",
+      "kind": "bus",
+      "name": "영천시장",
+      "maxStraightLineMeters": 70.1,
+      "farthestPair": [
+        "seoul-bus-100000362",
+        "seoul-bus-100000363"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000362",
+          "fingerprint": "09010a0fb5765755abab4ff77221a0d1f2d6013d39d9f082f47bc35517af3be9",
+          "arsId": "13037"
+        },
+        {
+          "hubId": "seoul-bus-100000363",
+          "fingerprint": "161e23614c723bec997644bd5e9bc74b9cf5e206c6cc547505b471d20cd80fff",
+          "arsId": "13036"
+        }
+      ]
+    },
+    {
+      "key": "rail:소사",
+      "kind": "rail",
+      "name": "소사",
+      "maxStraightLineMeters": 69.1,
+      "farthestPair": [
+        "seoul-rail-1814",
+        "seoul-rail-4804"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1814",
+          "fingerprint": "29d5c7d9f85c59cafafda27b9fbe738183972d27b6738487e4151c01775e2c61",
+          "route": "경인선"
+        },
+        {
+          "hubId": "seoul-rail-4804",
+          "fingerprint": "ae0d0e85ee7ba2b7224fac5710f17820139a4c75dc67b7383224514aa2b94694",
+          "route": "서해선"
+        }
+      ]
+    },
+    {
+      "key": "rail:약수",
+      "kind": "rail",
+      "name": "약수",
+      "maxStraightLineMeters": 69.1,
+      "farthestPair": [
+        "seoul-rail-0323",
+        "seoul-rail-2634"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0323",
+          "fingerprint": "d632499a3886d46b10fd904ac2741079ff7a296a0b0b11f7590026bfbf89d0ff",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2634",
+          "fingerprint": "d24a5a24d3b92e60eef78057606c1bb315f339aa0cb8c7c1bcd6e21cb7612bca",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:서대문역사거리",
+      "kind": "bus",
+      "name": "서대문역사거리",
+      "maxStraightLineMeters": 68.5,
+      "farthestPair": [
+        "seoul-bus-101000304",
+        "seoul-bus-101000305"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-101000304",
+          "fingerprint": "8cc94dfab25fe343dc8c81ca483ffa48bb2e6d0f1686ab1d9e4e03843b38d75c",
+          "arsId": "13047"
+        },
+        {
+          "hubId": "seoul-bus-101000305",
+          "fingerprint": "a3eb07d4c3dd62115d66c6af8c0c05d227714ed1eb44bbdef2d39cbddc2aaa87",
+          "arsId": "01006"
+        }
+      ]
+    },
+    {
+      "key": "bus:녹번역",
+      "kind": "bus",
+      "name": "녹번역",
+      "maxStraightLineMeters": 68.1,
+      "farthestPair": [
+        "seoul-bus-111000937",
+        "seoul-bus-111000938"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000937",
+          "fingerprint": "3c06239748adff108649e50f2634a7755ffad11c91a6e8d6160de33ed97e5f3d",
+          "arsId": "12028"
+        },
+        {
+          "hubId": "seoul-bus-111000938",
+          "fingerprint": "00a7589e66465aa9b116328813739318828aff543a66c95e3e713d7e6c92e08a",
+          "arsId": "12027"
+        }
+      ]
+    },
+    {
+      "key": "bus:도봉구민회관.도봉문화원",
+      "kind": "bus",
+      "name": "도봉구민회관.도봉문화원",
+      "maxStraightLineMeters": 68,
+      "farthestPair": [
+        "seoul-bus-109000013",
+        "seoul-bus-109000014"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000013",
+          "fingerprint": "d63b22bd63c697738966c7757446041722854336bcfa15911a731f82be7fa11d",
+          "arsId": "10013"
+        },
+        {
+          "hubId": "seoul-bus-109000014",
+          "fingerprint": "17326e4fb80864c318b39e4930d02ad0cd7cee87d07aa024821dffa6316f4993",
+          "arsId": "10014"
+        }
+      ]
+    },
+    {
+      "key": "bus:용산우체국",
+      "kind": "bus",
+      "name": "용산우체국",
+      "maxStraightLineMeters": 68,
+      "farthestPair": [
+        "seoul-bus-102000005",
+        "seoul-bus-102000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000005",
+          "fingerprint": "5b9636fe9ebcba197099bcfd8505b77bec17359cf3359da1d253b87521cd9d94",
+          "arsId": "03005"
+        },
+        {
+          "hubId": "seoul-bus-102000006",
+          "fingerprint": "12c61db61061aa5fac7bbff8b01b30436f3f5b8d5417d5e9849c1cdeb8fc50ed",
+          "arsId": "03006"
+        }
+      ]
+    },
+    {
+      "key": "bus:돈암사거리.성신여대입구",
+      "kind": "bus",
+      "name": "돈암사거리.성신여대입구",
+      "maxStraightLineMeters": 67.5,
+      "farthestPair": [
+        "seoul-bus-107000007",
+        "seoul-bus-107000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-107000007",
+          "fingerprint": "5c05c7be80b8a6a4433df0753f6a5995fa79f3a8574db7dd37cf0763b53b41a2",
+          "arsId": "08007"
+        },
+        {
+          "hubId": "seoul-bus-107000008",
+          "fingerprint": "887438cae061dac2bb08ec649ebe146069f4afde7152421c18cca60b38a3113d",
+          "arsId": "08008"
+        }
+      ]
+    },
+    {
+      "key": "bus:불광역3호선.서울혁신파크",
+      "kind": "bus",
+      "name": "불광역3호선.서울혁신파크",
+      "maxStraightLineMeters": 67.5,
+      "farthestPair": [
+        "seoul-bus-111000933",
+        "seoul-bus-111000934"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-111000933",
+          "fingerprint": "b9a2e5bae31d4c607f4440f76123918d61b898ce23e7c2356465a8eb1f78395c",
+          "arsId": "12024"
+        },
+        {
+          "hubId": "seoul-bus-111000934",
+          "fingerprint": "3646f205ededfdefc6315e5e0068286c714def584e24faa751508031a40628b9",
+          "arsId": "12023"
+        }
+      ]
+    },
+    {
+      "key": "bus:군자교입구",
+      "kind": "bus",
+      "name": "군자교입구",
+      "maxStraightLineMeters": 66,
+      "farthestPair": [
+        "seoul-bus-104000001",
+        "seoul-bus-104000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000001",
+          "fingerprint": "d0bd7281f065439fd370d496148e68c82db665953a78d5c24e7a0b73b67faea0",
+          "arsId": "05001"
+        },
+        {
+          "hubId": "seoul-bus-104000002",
+          "fingerprint": "93d1a93b3ba259bce65da16767820aa9071433989155da9fb55e453106da96ee",
+          "arsId": "05002"
+        }
+      ]
+    },
+    {
+      "key": "bus:답십리역사거리",
+      "kind": "bus",
+      "name": "답십리역사거리",
+      "maxStraightLineMeters": 65.4,
+      "farthestPair": [
+        "seoul-bus-103000001",
+        "seoul-bus-105000001"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-103000001",
+          "fingerprint": "7d6470803961e1f5e66e911fadd7f02ad3fb6ac1950421eb7fc467539a805f99",
+          "arsId": "04001"
+        },
+        {
+          "hubId": "seoul-bus-105000001",
+          "fingerprint": "9bfe4c8124c47f06232f6d72d6c30f21a234f9f4703cb2757b6378b5d185c7a1",
+          "arsId": "06001"
+        }
+      ]
+    },
+    {
+      "key": "bus:망우역",
+      "kind": "bus",
+      "name": "망우역",
+      "maxStraightLineMeters": 64.4,
+      "farthestPair": [
+        "seoul-bus-106000001",
+        "seoul-bus-106000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000001",
+          "fingerprint": "0dd953a86de8c9ba35dad8d0da168882a9ad37ce3dae4d286cfef6df72d9de68",
+          "arsId": "07001"
+        },
+        {
+          "hubId": "seoul-bus-106000002",
+          "fingerprint": "739d77127069ad50a70644bf1569c37d86bacd1120b03f6f5f03b326e44fdc79",
+          "arsId": "07002"
+        }
+      ]
+    },
+    {
+      "key": "bus:서울역버스환승센터",
+      "kind": "bus",
+      "name": "서울역버스환승센터",
+      "maxStraightLineMeters": 64.4,
+      "farthestPair": [
+        "seoul-bus-101000003",
+        "seoul-bus-101000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-101000003",
+          "fingerprint": "7d702690a116309cb6ea3185292a2875aa253adf161e88601eb39b2971ad2390",
+          "arsId": "02003"
+        },
+        {
+          "hubId": "seoul-bus-101000004",
+          "fingerprint": "10f00f804bd3e2695a459b23ae152e0ace67594692722bef5cf8ad9a1a694608",
+          "arsId": "02004"
+        },
+        {
+          "hubId": "seoul-bus-101000005",
+          "fingerprint": "8e601409a8ba17ba230ccbd1642fc0b263b8a46cb94337176900e603877b504f",
+          "arsId": "02005"
+        },
+        {
+          "hubId": "seoul-bus-101000006",
+          "fingerprint": "87997a8938e988d359e5942f45d2abe50fd780008c1ee48d60386caf11b8098c",
+          "arsId": "02006"
+        }
+      ]
+    },
+    {
+      "key": "bus:마포경찰서",
+      "kind": "bus",
+      "name": "마포경찰서",
+      "maxStraightLineMeters": 64,
+      "farthestPair": [
+        "seoul-bus-113000007",
+        "seoul-bus-113000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-113000007",
+          "fingerprint": "bd3aeab92407e08465e8049bac8cce1c0404c824649079b6a5006dce8c9fd568",
+          "arsId": "14007"
+        },
+        {
+          "hubId": "seoul-bus-113000008",
+          "fingerprint": "ed0efc901444407e713150c6f10524ca085465e67ce4aa65835e48b893bc7164",
+          "arsId": "14008"
+        }
+      ]
+    },
+    {
+      "key": "bus:북가좌동삼거리",
+      "kind": "bus",
+      "name": "북가좌동삼거리",
+      "maxStraightLineMeters": 64,
+      "farthestPair": [
+        "seoul-bus-112000001",
+        "seoul-bus-112000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000001",
+          "fingerprint": "cef8d518a54a145f5ab3f9ba96c8c2a492cffe23e75f46ee92d0035afcd36e35",
+          "arsId": "13001"
+        },
+        {
+          "hubId": "seoul-bus-112000002",
+          "fingerprint": "951434d9b25eb7c9714c30019ca3eb3846e5bb3f7b4fae2c10abc183c2e7eabf",
+          "arsId": "13002"
+        }
+      ]
+    },
+    {
+      "key": "bus:DMC래미안e편한세상.요진아파트",
+      "kind": "bus",
+      "name": "DMC래미안e편한세상.요진아파트",
+      "maxStraightLineMeters": 63,
+      "farthestPair": [
+        "seoul-bus-112000003",
+        "seoul-bus-112000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000003",
+          "fingerprint": "f2888f71f5ae375b777a830321523786d152052e69e52f3ba044fd72490b9c85",
+          "arsId": "13003"
+        },
+        {
+          "hubId": "seoul-bus-112000004",
+          "fingerprint": "03ff3539e85e682e5fb7d9eadf449ed9d4523eb6c4d63516131fab8c9ac3b796",
+          "arsId": "13004"
+        }
+      ]
+    },
+    {
+      "key": "bus:연희104고지앞.궁동근린공원",
+      "kind": "bus",
+      "name": "연희104고지앞.궁동근린공원",
+      "maxStraightLineMeters": 62.5,
+      "farthestPair": [
+        "seoul-bus-112000008",
+        "seoul-bus-112000009"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000008",
+          "fingerprint": "abe8afa761edb4d39b2b5bde3f65c766345012d7f5054664d41f180a91fe0e22",
+          "arsId": "13008"
+        },
+        {
+          "hubId": "seoul-bus-112000009",
+          "fingerprint": "29b5b96087d6b02f9d6046d81f6eeced35ab743f1716d37abbd56cbdf44ad02e",
+          "arsId": "13009"
+        }
+      ]
+    },
+    {
+      "key": "bus:금란교회",
+      "kind": "bus",
+      "name": "금란교회",
+      "maxStraightLineMeters": 62.3,
+      "farthestPair": [
+        "seoul-bus-106000430",
+        "seoul-bus-106000431"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000430",
+          "fingerprint": "9742e78ce39b47edf162d34492218cfe1da98631976c06ef4cc83f33db8686cf",
+          "arsId": "07012"
+        },
+        {
+          "hubId": "seoul-bus-106000431",
+          "fingerprint": "37163a46f31c17cd4abfee02bf6c9ac2a649346a065a25e870f8b03679e3b94d",
+          "arsId": "07011"
+        }
+      ]
+    },
+    {
+      "key": "bus:신도봉사거리",
+      "kind": "bus",
+      "name": "신도봉사거리",
+      "maxStraightLineMeters": 62.2,
+      "farthestPair": [
+        "seoul-bus-109000007",
+        "seoul-bus-109000008"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000007",
+          "fingerprint": "8f4beacde73133c020a87024d9dc0e4f9937f44e170660118f63370d5e1e6fd3",
+          "arsId": "10007"
+        },
+        {
+          "hubId": "seoul-bus-109000008",
+          "fingerprint": "3c9c7bf84c3ceabff3ae3ef412490607194eab78b7500291b9781bc6eb553262",
+          "arsId": "10008"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로4가.종묘",
+      "kind": "bus",
+      "name": "종로4가.종묘",
+      "maxStraightLineMeters": 61.1,
+      "farthestPair": [
+        "seoul-bus-100000392",
+        "seoul-bus-100000393"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000392",
+          "fingerprint": "6917c1ee07af6dc119ceae9e0ad5747ed726f672683b5a7dac63ded405bbfaab",
+          "arsId": "01017"
+        },
+        {
+          "hubId": "seoul-bus-100000393",
+          "fingerprint": "abc8e4b9c67b6f750d11aeed10f71f130ec5e244bffd7bac8e8b73b24ee446c8",
+          "arsId": "01018"
+        }
+      ]
+    },
+    {
+      "key": "bus:석촌호수.한솔병원",
+      "kind": "bus",
+      "name": "석촌호수.한솔병원",
+      "maxStraightLineMeters": 61,
+      "farthestPair": [
+        "seoul-bus-123000003",
+        "seoul-bus-123000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-123000003",
+          "fingerprint": "d34125054f1fc506f8c278b0252e2deed7857099fe135680a0954c2b767fb14c",
+          "arsId": "24003"
+        },
+        {
+          "hubId": "seoul-bus-123000004",
+          "fingerprint": "01cb171ddda2569cbb9d02140aa88b76a0e7b8166b15660c0a3529fd3ea38820",
+          "arsId": "24004"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로3가.탑골공원",
+      "kind": "bus",
+      "name": "종로3가.탑골공원",
+      "maxStraightLineMeters": 60.7,
+      "farthestPair": [
+        "seoul-bus-100000390",
+        "seoul-bus-100000391"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000390",
+          "fingerprint": "d92f2b5494f302c6b686b8dce9c3d6a862d969b59e17725eec07886e5dc02b43",
+          "arsId": "01015"
+        },
+        {
+          "hubId": "seoul-bus-100000391",
+          "fingerprint": "ba5935709596ad3b4c586eb18fa6527d21c4fdb7528b7b03f842057dbbd15ac2",
+          "arsId": "01016"
+        }
+      ]
+    },
+    {
+      "key": "bus:이대후문",
+      "kind": "bus",
+      "name": "이대후문",
+      "maxStraightLineMeters": 59.9,
+      "farthestPair": [
+        "seoul-bus-112000016",
+        "seoul-bus-112000017"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000016",
+          "fingerprint": "e7a5608c6dcbe058b1dd65cf2c791efce04d3bf94bc6b5bce2b15d990a53b87b",
+          "arsId": "13016"
+        },
+        {
+          "hubId": "seoul-bus-112000017",
+          "fingerprint": "735b2182b46b7cdeb82bb269d806d82ab988b0f2d4778c57ccb5a2d30d608b01",
+          "arsId": "13017"
+        }
+      ]
+    },
+    {
+      "key": "bus:산골고개.e편한세상서대문",
+      "kind": "bus",
+      "name": "산골고개.e편한세상서대문",
+      "maxStraightLineMeters": 58.9,
+      "farthestPair": [
+        "seoul-bus-112000405",
+        "seoul-bus-112000406"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000405",
+          "fingerprint": "390c553692f5e274886332e66e4e4ca8b2e9ccbeaaa8089485ec6cbd41ff2434",
+          "arsId": "13026"
+        },
+        {
+          "hubId": "seoul-bus-112000406",
+          "fingerprint": "840b76b7348b81f7c5f3baaa2cbdf2735eea2a097843e701c7a80ed3e03255d0",
+          "arsId": "13027"
+        }
+      ]
+    },
+    {
+      "key": "rail:천호(풍납토성)",
+      "kind": "rail",
+      "name": "천호(풍납토성)",
+      "maxStraightLineMeters": 58.8,
+      "farthestPair": [
+        "seoul-rail-2548",
+        "seoul-rail-2812"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2548",
+          "fingerprint": "677fe496c6a6c9c21c1937a138ab53c46b11d3d67560e0e4ceeceb191aa21b3d",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-2812",
+          "fingerprint": "e0ac687e0a212f4d9d649a2c26d5103e6bc59431bafb3999ce9f12ced676bae9",
+          "route": "8호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:인천",
+      "kind": "rail",
+      "name": "인천",
+      "maxStraightLineMeters": 58.7,
+      "farthestPair": [
+        "seoul-rail-1812",
+        "seoul-rail-1891"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1812",
+          "fingerprint": "9fa4f8c6e2093638ac13e9fd81e760f2d3501a5bee08b2b21592aa26e981045f",
+          "route": "경인선"
+        },
+        {
+          "hubId": "seoul-rail-1891",
+          "fingerprint": "abb3a42725e45320e8e2b096210248c8d33280fa80c8f43f5097e33f84216f65",
+          "route": "수인선"
+        }
+      ]
+    },
+    {
+      "key": "bus:강서세무서",
+      "kind": "bus",
+      "name": "강서세무서",
+      "maxStraightLineMeters": 58.3,
+      "farthestPair": [
+        "seoul-bus-115000946",
+        "seoul-bus-115000947"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-115000946",
+          "fingerprint": "5a29b834011ba0d86545e5a5d018b982d0a16a899ff6451ef002ab8f43522270",
+          "arsId": "16024"
+        },
+        {
+          "hubId": "seoul-bus-115000947",
+          "fingerprint": "bc8cb56d23c48ae3ea2f9cb5f36559ef337ec8617b24a51e3f3ce54acdcee65b",
+          "arsId": "16023"
+        }
+      ]
+    },
+    {
+      "key": "bus:수유3동우체국",
+      "kind": "bus",
+      "name": "수유3동우체국",
+      "maxStraightLineMeters": 58.3,
+      "farthestPair": [
+        "seoul-bus-108000001",
+        "seoul-bus-108000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-108000001",
+          "fingerprint": "b74b6730da665d971bf91b9b22987a277b1e017e59ac5cf2768149b60063d722",
+          "arsId": "09001"
+        },
+        {
+          "hubId": "seoul-bus-108000002",
+          "fingerprint": "2773fd4bffa175d6400b8441beca63d31ef2465c4e491906dd7be60f28d7f85e",
+          "arsId": "09002"
+        }
+      ]
+    },
+    {
+      "key": "rail:대방",
+      "kind": "rail",
+      "name": "대방",
+      "maxStraightLineMeters": 58,
+      "farthestPair": [
+        "seoul-rail-1005",
+        "seoul-rail-4402"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1005",
+          "fingerprint": "051692173cf25d7dc1d2331ed4bea3ede9e07f25fec638e2485cc943a0fe89a3",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-4402",
+          "fingerprint": "094609f5784a6419dd6b688bd3e180e8d9d9d6a35c1b6c9ab29bd9600156f9d4",
+          "route": "신림선"
+        }
+      ]
+    },
+    {
+      "key": "bus:숙대입구역",
+      "kind": "bus",
+      "name": "숙대입구역",
+      "maxStraightLineMeters": 57.9,
+      "farthestPair": [
+        "seoul-bus-102000009",
+        "seoul-bus-102000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000009",
+          "fingerprint": "4b279a26840155648adecc376783e6b0e8422fbf4396950f93177d0f7bf69103",
+          "arsId": "03009"
+        },
+        {
+          "hubId": "seoul-bus-102000010",
+          "fingerprint": "6e29cbadafebffa08f25325e3dc896b531ee5499addf9fc4477df8159cf3cbd2",
+          "arsId": "03010"
+        }
+      ]
+    },
+    {
+      "key": "rail:주안",
+      "kind": "rail",
+      "name": "주안",
+      "maxStraightLineMeters": 57.2,
+      "farthestPair": [
+        "seoul-rail-1809",
+        "seoul-rail-3218"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1809",
+          "fingerprint": "c02ceef6c0d1490df3065a5d9d4d223adc078bbb2352475df9f18dc2f927eb6a",
+          "route": "경인선"
+        },
+        {
+          "hubId": "seoul-rail-3218",
+          "fingerprint": "f1eb004846259a2f43c238956c903264fa76463da1942784c0801b80a9086a58",
+          "route": "인천2호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:서울북부지방법원.검찰청.도봉역성황당",
+      "kind": "bus",
+      "name": "서울북부지방법원.검찰청.도봉역성황당",
+      "maxStraightLineMeters": 56.9,
+      "farthestPair": [
+        "seoul-bus-109000005",
+        "seoul-bus-109000006"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000005",
+          "fingerprint": "e6a4a7cbfe88930b157855c2cda49d63102f013e41ba2ca1d0dff5adede9423e",
+          "arsId": "10005"
+        },
+        {
+          "hubId": "seoul-bus-109000006",
+          "fingerprint": "cbe0e9bf789af89b37278a8ce60b97252bef4c7a82777ec22e00fda4f1810415",
+          "arsId": "10006"
+        }
+      ]
+    },
+    {
+      "key": "rail:올림픽공원(한국체대)",
+      "kind": "rail",
+      "name": "올림픽공원(한국체대)",
+      "maxStraightLineMeters": 56.5,
+      "farthestPair": [
+        "seoul-rail-2556",
+        "seoul-rail-4136"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2556",
+          "fingerprint": "c095e8fad0cc1f871dc8f3a825bbc03bca7f045fafebdf03ae71cdf81b7ec738",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-4136",
+          "fingerprint": "3edd6bba7434c155f36c2109d13a24fa6e7486381b0b703c549b96ab985724de",
+          "route": "9호선(연장)"
+        }
+      ]
+    },
+    {
+      "key": "bus:도봉소방서.방학역남부",
+      "kind": "bus",
+      "name": "도봉소방서.방학역남부",
+      "maxStraightLineMeters": 56.4,
+      "farthestPair": [
+        "seoul-bus-109000009",
+        "seoul-bus-109000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-109000009",
+          "fingerprint": "031fbc6344f64c29f3f2d48679bc7058241d64f122f90ede73086e1cfe5eea94",
+          "arsId": "10009"
+        },
+        {
+          "hubId": "seoul-bus-109000010",
+          "fingerprint": "cdb00fcbd91461d49d3c84fdc16b08fcbecf04688e2bd1dbfdf60a527d445278",
+          "arsId": "10010"
+        }
+      ]
+    },
+    {
+      "key": "rail:선정릉",
+      "kind": "rail",
+      "name": "선정릉",
+      "maxStraightLineMeters": 56.4,
+      "farthestPair": [
+        "seoul-rail-1850",
+        "seoul-rail-4127"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1850",
+          "fingerprint": "0a004f5da9d78c6a5c069f55f5dd6aeab1ca9584fd0dec7bd773d506dc51b5f3",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-4127",
+          "fingerprint": "04504d4f6543972036b6f6a6c15357c5f583237067e4f6fc3659c9187a9292e8",
+          "route": "9호선(연장)"
+        }
+      ]
+    },
+    {
+      "key": "bus:망우역.망우지구대",
+      "kind": "bus",
+      "name": "망우역.망우지구대",
+      "maxStraightLineMeters": 55.7,
+      "farthestPair": [
+        "seoul-bus-106000434",
+        "seoul-bus-106000435"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000434",
+          "fingerprint": "f880dd4b00d4b6ecaced616dc92de5c6c469ea2af0b7cdf0e6732b0616d274c1",
+          "arsId": "07007"
+        },
+        {
+          "hubId": "seoul-bus-106000435",
+          "fingerprint": "dfd085c6a47ac73e9605f6a4c34d417ec29aabc631c3871432305b9c9556a78c",
+          "arsId": "07008"
+        }
+      ]
+    },
+    {
+      "key": "bus:초이동",
+      "kind": "bus",
+      "name": "초이동",
+      "maxStraightLineMeters": 55.7,
+      "farthestPair": [
+        "seoul-bus-124000369",
+        "seoul-bus-124000370"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-124000369",
+          "fingerprint": "c795022df6829dcfdab3b7db8f9ebeed4e9a0aa7d5f99f7e1e2732f946860bb9",
+          "arsId": "25003"
+        },
+        {
+          "hubId": "seoul-bus-124000370",
+          "fingerprint": "ec24bfe5cc7219360124a6f5c3b3205f515b915fd2ef77341509b483cfb6cf97",
+          "arsId": "25004"
+        }
+      ]
+    },
+    {
+      "key": "bus:서울역사박물관.경희궁앞",
+      "kind": "bus",
+      "name": "서울역사박물관.경희궁앞",
+      "maxStraightLineMeters": 53.6,
+      "farthestPair": [
+        "seoul-bus-100000379",
+        "seoul-bus-100000380"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000379",
+          "fingerprint": "ba7a887860b4ea2082ff77fe9f29f38d64a18245e79b17b07b0721de92f285a9",
+          "arsId": "01008"
+        },
+        {
+          "hubId": "seoul-bus-100000380",
+          "fingerprint": "da3ab24c7052af675e09725536b4a4cd0c37b2fb3c7f2258a1e3811fbb19ce28",
+          "arsId": "01007"
+        }
+      ]
+    },
+    {
+      "key": "rail:도봉산",
+      "kind": "rail",
+      "name": "도봉산",
+      "maxStraightLineMeters": 52,
+      "farthestPair": [
+        "seoul-rail-1903",
+        "seoul-rail-2712"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1903",
+          "fingerprint": "d54cc1e862b5cb1cf4ab6a0e9357933405441ff073d4d7edcaadd3085f512f2d",
+          "route": "경원선"
+        },
+        {
+          "hubId": "seoul-rail-2712",
+          "fingerprint": "ed99fe8b49fa147ddfc3c1955754415df038fbb4142330d89b5491dc85777be6",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:불광",
+      "kind": "rail",
+      "name": "불광",
+      "maxStraightLineMeters": 52,
+      "farthestPair": [
+        "seoul-rail-0312",
+        "seoul-rail-2613"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0312",
+          "fingerprint": "640ccbc51ba0cd843592b57c1646f8992db9af0188b110152437ef89d081a8d8",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2613",
+          "fingerprint": "08b470bf423dd866c548f96618ddfe6ddb26ea45c9266ca6db0aa0340928b7e3",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:계양",
+      "kind": "rail",
+      "name": "계양",
+      "maxStraightLineMeters": 51.6,
+      "farthestPair": [
+        "seoul-rail-3110",
+        "seoul-rail-4208"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-3110",
+          "fingerprint": "56f360f7fe36eb12d981665b4b149f06486a5ac14d3f5b7f5acfd2e7fbabfed1",
+          "route": "인천1호선"
+        },
+        {
+          "hubId": "seoul-rail-4208",
+          "fingerprint": "f79ac51b114550ecfb83b7275c79ca18cdbdceff3b9155b2382927ad4bc28420",
+          "route": "공항철도1호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로1가",
+      "kind": "bus",
+      "name": "종로1가",
+      "maxStraightLineMeters": 51.4,
+      "farthestPair": [
+        "seoul-bus-100000386",
+        "seoul-bus-100000387"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000386",
+          "fingerprint": "352337dde526c63ff18c57e52c54deb5c544cf4446ce28f476bdd5f3ea77872d",
+          "arsId": "01011"
+        },
+        {
+          "hubId": "seoul-bus-100000387",
+          "fingerprint": "4cea386c770689e1a8a18148e404f1487beb589102b67d2ab1381bf66db19397",
+          "arsId": "01012"
+        }
+      ]
+    },
+    {
+      "key": "bus:종로5가.광장시장",
+      "kind": "bus",
+      "name": "종로5가.광장시장",
+      "maxStraightLineMeters": 50.5,
+      "farthestPair": [
+        "seoul-bus-100000394",
+        "seoul-bus-100000395"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-100000394",
+          "fingerprint": "b70240a3df4dbb9868f67f2b2f62cb050ef634d18692ee8d41cdc67d2c4973ae",
+          "arsId": "01019"
+        },
+        {
+          "hubId": "seoul-bus-100000395",
+          "fingerprint": "3cc9945d4e3e1c25f87b5545e7335ee5ff192c7d09e5059176ee17f0cdcb4f4d",
+          "arsId": "01020"
+        }
+      ]
+    },
+    {
+      "key": "bus:새밭교회",
+      "kind": "bus",
+      "name": "새밭교회",
+      "maxStraightLineMeters": 50.3,
+      "farthestPair": [
+        "seoul-bus-104000295",
+        "seoul-bus-104000296"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-104000295",
+          "fingerprint": "502647166f47b57021361e90ed0c3ec6a7acebc518dfc627172cbaa53fe7a4d9",
+          "arsId": "05010"
+        },
+        {
+          "hubId": "seoul-bus-104000296",
+          "fingerprint": "5cc07b7c02c68f6ff7652a840d609a080b31c7c02602adf570b80394813d895b",
+          "arsId": "05009"
+        }
+      ]
+    },
+    {
+      "key": "rail:수원",
+      "kind": "rail",
+      "name": "수원",
+      "maxStraightLineMeters": 49.5,
+      "farthestPair": [
+        "seoul-rail-1713",
+        "seoul-rail-1846"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1713",
+          "fingerprint": "7a06a9896373620c5e493302ff34fa21390039d860711331c3578d2373881351",
+          "route": "경부선"
+        },
+        {
+          "hubId": "seoul-rail-1846",
+          "fingerprint": "256b7dcf4b734e1dd19c0dc564c9ddbb18a6f431a3c22ca2f32c4a215e1954c1",
+          "route": "분당선"
+        }
+      ]
+    },
+    {
+      "key": "rail:석계",
+      "kind": "rail",
+      "name": "석계",
+      "maxStraightLineMeters": 48.2,
+      "farthestPair": [
+        "seoul-rail-1018",
+        "seoul-rail-2645"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1018",
+          "fingerprint": "5658cc307d027526d7da67adf177d34e117106b972f3317091ed868915f9faab",
+          "route": "경원선"
+        },
+        {
+          "hubId": "seoul-rail-2645",
+          "fingerprint": "75a3f6443c6195eb6a400736361e21d88becdd34588f08a584aab576ff644d11",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:청구",
+      "kind": "rail",
+      "name": "청구",
+      "maxStraightLineMeters": 47.9,
+      "farthestPair": [
+        "seoul-rail-2538",
+        "seoul-rail-2635"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2538",
+          "fingerprint": "d180fcd31b7ecc0c06fa4a5e4f91acec2b4055d62280c02a7cd4ab0654794f7e",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-2635",
+          "fingerprint": "5b0cb9582fcb9106866c7bd84ffdfee8aad6abf0f11721316c8a80d33d0e9def",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:합정",
+      "kind": "rail",
+      "name": "합정",
+      "maxStraightLineMeters": 47.7,
+      "farthestPair": [
+        "seoul-rail-0238",
+        "seoul-rail-2623"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0238",
+          "fingerprint": "ef6a5b5cd188030f139548aeaed043814df7f3e511be2249f2a86c963273f9cc",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-2623",
+          "fingerprint": "394b23d4d895bf4289a01df8dd4ac7327b9accf300cc61b50670eae7b972b499",
+          "route": "6호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:사당",
+      "kind": "rail",
+      "name": "사당",
+      "maxStraightLineMeters": 47.3,
+      "farthestPair": [
+        "seoul-rail-0226",
+        "seoul-rail-0433"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0226",
+          "fingerprint": "ce8372bdeda15cc4a8dedcd0578a5fe2e7eaa6cd235e0915e46745129617cd9b",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-0433",
+          "fingerprint": "7224979f13086533519abe04c5b97a786740d1ea2a55a6db43da1f7789f9e08c",
+          "route": "4호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:상봉역.중랑우체국",
+      "kind": "bus",
+      "name": "상봉역.중랑우체국",
+      "maxStraightLineMeters": 47,
+      "farthestPair": [
+        "seoul-bus-106000003",
+        "seoul-bus-106000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000003",
+          "fingerprint": "84f100d99a3570b97320315d132ef6946cc7a150afd10013d56578e17fae2755",
+          "arsId": "07003"
+        },
+        {
+          "hubId": "seoul-bus-106000004",
+          "fingerprint": "959fda004900bd84c70fa0e3110e08586a8569a778d520db544f1be65a6775fa",
+          "arsId": "07004"
+        }
+      ]
+    },
+    {
+      "key": "bus:세브란스병원앞",
+      "kind": "bus",
+      "name": "세브란스병원앞",
+      "maxStraightLineMeters": 45.6,
+      "farthestPair": [
+        "seoul-bus-112000014",
+        "seoul-bus-112000015"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000014",
+          "fingerprint": "3db91980dd13ad434d2acd327130ca8d376e91986fbef1e815e4a99d2039b226",
+          "arsId": "13014"
+        },
+        {
+          "hubId": "seoul-bus-112000015",
+          "fingerprint": "9395f7a20fb9c199914bffdc5ccf8e9e2e39dd79251ea6841613946b7bc4c1f7",
+          "arsId": "13015"
+        }
+      ]
+    },
+    {
+      "key": "rail:보라매",
+      "kind": "rail",
+      "name": "보라매",
+      "maxStraightLineMeters": 44.7,
+      "farthestPair": [
+        "seoul-rail-2744",
+        "seoul-rail-4404"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2744",
+          "fingerprint": "5e984bc9b7f00ff89f7a58a1bfd3311e01a64873778075bb2ed354f7009b94d2",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-4404",
+          "fingerprint": "7debb5deeb6adc12dbd5af25851fbea41773bfc8b69aa99258cdac05474053eb",
+          "route": "신림선"
+        }
+      ]
+    },
+    {
+      "key": "bus:우림시장.망우사거리",
+      "kind": "bus",
+      "name": "우림시장.망우사거리",
+      "maxStraightLineMeters": 43.5,
+      "farthestPair": [
+        "seoul-bus-106000432",
+        "seoul-bus-106000433"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-106000432",
+          "fingerprint": "68d64a0564f9c33cdf56352e83b3209ca1529c6b2e50c0c81847ff1beec2e6eb",
+          "arsId": "07010"
+        },
+        {
+          "hubId": "seoul-bus-106000433",
+          "fingerprint": "7aed36168f9afd2ef71dfc0acb97e412b9cc89430b6f97efee134188fc3ec508",
+          "arsId": "07009"
+        }
+      ]
+    },
+    {
+      "key": "rail:석촌",
+      "kind": "rail",
+      "name": "석촌",
+      "maxStraightLineMeters": 42.9,
+      "farthestPair": [
+        "seoul-rail-2816",
+        "seoul-rail-4133"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2816",
+          "fingerprint": "ca154b8c0aadf056ddfd016904e005cbca3e7e425e86ee92a26b64f2b1f0925b",
+          "route": "8호선"
+        },
+        {
+          "hubId": "seoul-rail-4133",
+          "fingerprint": "19a8cc5be795ca3790395c6d48edf9ba56d9ae713b8c095033084d17f78d584e",
+          "route": "9호선(연장)"
+        }
+      ]
+    },
+    {
+      "key": "rail:도곡",
+      "kind": "rail",
+      "name": "도곡",
+      "maxStraightLineMeters": 41,
+      "farthestPair": [
+        "seoul-rail-0334",
+        "seoul-rail-1025"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0334",
+          "fingerprint": "66469f6998527e66b02439f3f198deb712a18d7226e9895a9c92bf8540829f39",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-1025",
+          "fingerprint": "76883a39b71cf9beb069d3f1819081e172a5b02cc2ac87991ea9b5e888fc8cd5",
+          "route": "분당선"
+        }
+      ]
+    },
+    {
+      "key": "bus:신답초등학교.청계한신휴플러스",
+      "kind": "bus",
+      "name": "신답초등학교.청계한신휴플러스",
+      "maxStraightLineMeters": 38.4,
+      "farthestPair": [
+        "seoul-bus-105000004",
+        "seoul-bus-105000005"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-105000004",
+          "fingerprint": "d7fa8bb211d270caa0c189f6473d5c225dbb9c7fd100944b2f71ad4bed5c7bac",
+          "arsId": "06004"
+        },
+        {
+          "hubId": "seoul-bus-105000005",
+          "fingerprint": "e6a4671133df924798a6873ffb2245d9db37278bd281d46d92edc988085e3988",
+          "arsId": "06005"
+        }
+      ]
+    },
+    {
+      "key": "bus:노량진수산시장.CTS기독교TV",
+      "kind": "bus",
+      "name": "노량진수산시장.CTS기독교TV",
+      "maxStraightLineMeters": 36.7,
+      "farthestPair": [
+        "seoul-bus-119000009",
+        "seoul-bus-119000010"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-119000009",
+          "fingerprint": "5a4a43be80da137273175a629f149c4a4438d0dd01f6e9765d78ad61cf2faa60",
+          "arsId": "20009"
+        },
+        {
+          "hubId": "seoul-bus-119000010",
+          "fingerprint": "8f9941f3ac1c154f0b54598150e44c10965f22fe1e53de271b9e6e426b3d1be1",
+          "arsId": "20010"
+        }
+      ]
+    },
+    {
+      "key": "rail:신중동",
+      "kind": "rail",
+      "name": "신중동",
+      "maxStraightLineMeters": 36.6,
+      "farthestPair": [
+        "seoul-rail-2756",
+        "seoul-rail-3756"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2756",
+          "fingerprint": "297a2140f5f866d79f23ea8cf9f8705cc6331096d92a71fea186a7ba74f86eda",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3756",
+          "fingerprint": "c47c773f80da63ed35fd848c66b27b3f1151083a781e4b4a73aa4f14a2d45f35",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:경인중학교.개봉사거리",
+      "kind": "bus",
+      "name": "경인중학교.개봉사거리",
+      "maxStraightLineMeters": 34.9,
+      "farthestPair": [
+        "seoul-bus-116000011",
+        "seoul-bus-116000012"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-116000011",
+          "fingerprint": "4989f9bfd7921db81a13c19edfcd67dcc64952a1e04e5b45f4327b32913be489",
+          "arsId": "17011"
+        },
+        {
+          "hubId": "seoul-bus-116000012",
+          "fingerprint": "1e3128767dc25b9bd26b7846c00054d1c5edeaf19b89aa08d3d1b9ca5ed0ef07",
+          "arsId": "17012"
+        }
+      ]
+    },
+    {
+      "key": "rail:오금",
+      "kind": "rail",
+      "name": "오금",
+      "maxStraightLineMeters": 34.6,
+      "farthestPair": [
+        "seoul-rail-0342",
+        "seoul-rail-2558"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0342",
+          "fingerprint": "b3a7edf6798643ae9426bffa22352cb204aca55cf716be23944d3e07b715c4c0",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-2558",
+          "fingerprint": "c5e2ca969f53f2ec908780a91149c163ed841bc70f0260ccb05d4dfe02f30cee",
+          "route": "5호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:강남구청",
+      "kind": "rail",
+      "name": "강남구청",
+      "maxStraightLineMeters": 33.5,
+      "farthestPair": [
+        "seoul-rail-1849",
+        "seoul-rail-2732"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1849",
+          "fingerprint": "02eb5e70b3972abf225c38f0d71bb7184713c3fdd4528f53852759743e3331a7",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-2732",
+          "fingerprint": "799295a4c8b3c954a5e064ed4e4325b10055da84b4bc0cd77fb573eb703f515f",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:대곡",
+      "kind": "rail",
+      "name": "대곡",
+      "maxStraightLineMeters": 32.9,
+      "farthestPair": [
+        "seoul-rail-1953",
+        "seoul-rail-9002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1953",
+          "fingerprint": "acd1d7c4762e3bbfba88f4745348f4e8ceff6878fd59fa74505cbbc13127438a",
+          "route": "일산선"
+        },
+        {
+          "hubId": "seoul-rail-9002",
+          "fingerprint": "3360148061a75de90bfbf4961c3c99918aa3f9cb99f1a1eadf2d071c6121878d",
+          "route": "수도권 광역급행철도"
+        }
+      ]
+    },
+    {
+      "key": "rail:군자(능동)",
+      "kind": "rail",
+      "name": "군자(능동)",
+      "maxStraightLineMeters": 29.9,
+      "farthestPair": [
+        "seoul-rail-2545",
+        "seoul-rail-2727"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2545",
+          "fingerprint": "f3999049727423d23f5fa9d9dca35446101a07c514d2c800fba0ea16b4e6cf09",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-2727",
+          "fingerprint": "ee49d9fd33218cb619dff4374635fe3e32bc4c675e35f24cefa6a6f68a02621b",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:한강대교북단.LG유플러스",
+      "kind": "bus",
+      "name": "한강대교북단.LG유플러스",
+      "maxStraightLineMeters": 29,
+      "farthestPair": [
+        "seoul-bus-102000001",
+        "seoul-bus-102000002"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-102000001",
+          "fingerprint": "f32fa352ae7a547ea5c7a013b2f5daa2727c09887fb5e1f76080e243704db20e",
+          "arsId": "03001"
+        },
+        {
+          "hubId": "seoul-bus-102000002",
+          "fingerprint": "99fcefa1bed3379badd68f7fc2df867ebeec5a59ab1968a461f0b8930cda7552",
+          "arsId": "03002"
+        }
+      ]
+    },
+    {
+      "key": "rail:여의도",
+      "kind": "rail",
+      "name": "여의도",
+      "maxStraightLineMeters": 28.9,
+      "farthestPair": [
+        "seoul-rail-2527",
+        "seoul-rail-4115"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2527",
+          "fingerprint": "4a29e8a0fc666bdde7d506c9b976104a14558473bb9021b28a31290d273e6715",
+          "route": "5호선"
+        },
+        {
+          "hubId": "seoul-rail-4115",
+          "fingerprint": "97c1084cc0d7c5374c159a3f7c43e1110255c1fbb6c37ee766cdbea14aee2207",
+          "route": "9호선"
+        }
+      ]
+    },
+    {
+      "key": "bus:연세대앞",
+      "kind": "bus",
+      "name": "연세대앞",
+      "maxStraightLineMeters": 26.5,
+      "farthestPair": [
+        "seoul-bus-112000012",
+        "seoul-bus-112000013"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-112000012",
+          "fingerprint": "af724da9913d5a227b18e7a9d26f87e01592f4f0c517c7f67ee977e3d6a8c952",
+          "arsId": "13012"
+        },
+        {
+          "hubId": "seoul-bus-112000013",
+          "fingerprint": "cd5fe24481ebac7c8bb6645072c59f2a6f5b65e803fcc0cc69b9c7dc4f595950",
+          "arsId": "13013"
+        }
+      ]
+    },
+    {
+      "key": "rail:충무로",
+      "kind": "rail",
+      "name": "충무로",
+      "maxStraightLineMeters": 24.8,
+      "farthestPair": [
+        "seoul-rail-0321",
+        "seoul-rail-0423"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0321",
+          "fingerprint": "dfda7ccc7db8dbfa665f2a06c6082f2fa74789f6b59dbbd3621fe3f376649556",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-0423",
+          "fingerprint": "428b488ee1a00c3da671a5e9322797946286c68321102829d3dba2afd2fa9ab0",
+          "route": "4호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:부천시청",
+      "kind": "rail",
+      "name": "부천시청",
+      "maxStraightLineMeters": 23.1,
+      "farthestPair": [
+        "seoul-rail-2757",
+        "seoul-rail-3757"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2757",
+          "fingerprint": "a41ed4e5d4678c42d4b2d18aef41520b61d0f0a45de376e65fa39ef98b8df95c",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3757",
+          "fingerprint": "b36aff97b1f514ab95b863c34b3cdd1c169eb56bb5f31011278bf8229a50e447",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "bus:보라매공원",
+      "kind": "bus",
+      "name": "보라매공원",
+      "maxStraightLineMeters": 22.8,
+      "farthestPair": [
+        "seoul-bus-118000012",
+        "seoul-bus-119000004"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-118000012",
+          "fingerprint": "c1555dcbe4bfd662203369049e33f21cbdf4f29a27262f2eb815479959ff40d8",
+          "arsId": "19012"
+        },
+        {
+          "hubId": "seoul-bus-119000004",
+          "fingerprint": "474f69ce07b2829d8a42e1fcfdd03ca7c716f6d8441500dd39869c1f768a491e",
+          "arsId": "20004"
+        }
+      ]
+    },
+    {
+      "key": "bus:탑성마을.서초포레스타입구",
+      "kind": "bus",
+      "name": "탑성마을.서초포레스타입구",
+      "maxStraightLineMeters": 21,
+      "farthestPair": [
+        "seoul-bus-121001334",
+        "seoul-bus-121001335"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001334",
+          "fingerprint": "e96d6e5e8086a165b24b2c68e42da3b8a4c75087af9c855e6d4b0ff62a91bf18",
+          "arsId": "22038"
+        },
+        {
+          "hubId": "seoul-bus-121001335",
+          "fingerprint": "57eee44a659b35f680f4aa269db64d5224eb47aae753a5028c7fc3ca440faa0c",
+          "arsId": "22037"
+        }
+      ]
+    },
+    {
+      "key": "rail:신도림",
+      "kind": "rail",
+      "name": "신도림",
+      "maxStraightLineMeters": 20.1,
+      "farthestPair": [
+        "seoul-rail-0234",
+        "seoul-rail-1007"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0234",
+          "fingerprint": "7aa3389af5892dbf4ba2b48ed9025fbe166ee0a40e1c43745cf26461a5816d83",
+          "route": "2호선"
+        },
+        {
+          "hubId": "seoul-rail-1007",
+          "fingerprint": "c24399be0ffba2e1e91f84a2c7a013ad97d7cec474e9be1797aa5e5efafd24eb",
+          "route": "경부선"
+        }
+      ]
+    },
+    {
+      "key": "rail:성신여대입구(돈암)",
+      "kind": "rail",
+      "name": "성신여대입구(돈암)",
+      "maxStraightLineMeters": 17.4,
+      "farthestPair": [
+        "seoul-rail-0418",
+        "seoul-rail-4711"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0418",
+          "fingerprint": "5ea44e792f2a93e944a1cf115213c44e4f72163d5373c6ff820c5f4fdcebbfb6",
+          "route": "4호선"
+        },
+        {
+          "hubId": "seoul-rail-4711",
+          "fingerprint": "f2aae062ae8d4f03cc805c5c3695196633744cd4adc33db8be682aaa58d1a565",
+          "route": "우이신설선"
+        }
+      ]
+    },
+    {
+      "key": "bus:안골마을.서울언남초등학교",
+      "kind": "bus",
+      "name": "안골마을.서울언남초등학교",
+      "maxStraightLineMeters": 16.5,
+      "farthestPair": [
+        "seoul-bus-121001336",
+        "seoul-bus-121001337"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-bus-121001336",
+          "fingerprint": "af97d266661084af9f12f2cffbb06b3d4906bb166994e606611cfc6c5ae3d286",
+          "arsId": "22040"
+        },
+        {
+          "hubId": "seoul-bus-121001337",
+          "fingerprint": "ad88f3d7e6021b038178e5b2163ab830d2f0e86221c5210a36ad9e55878cf9d2",
+          "arsId": "22039"
+        }
+      ]
+    },
+    {
+      "key": "rail:미금",
+      "kind": "rail",
+      "name": "미금",
+      "maxStraightLineMeters": 10.6,
+      "farthestPair": [
+        "seoul-rail-1858",
+        "seoul-rail-4313"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1858",
+          "fingerprint": "2e0e0ac4b63f20ebcc56f95daa329e09e3e9a55e0fec222c0df52e33a4a96c4d",
+          "route": "분당선"
+        },
+        {
+          "hubId": "seoul-rail-4313",
+          "fingerprint": "6eeab7dc99ded6a69a24148dcf3a5079a8fb2df6005876c6a0dd73e75ff3d7a7",
+          "route": "신분당선(연장)"
+        }
+      ]
+    },
+    {
+      "key": "rail:까치울",
+      "kind": "rail",
+      "name": "까치울",
+      "maxStraightLineMeters": 8.6,
+      "farthestPair": [
+        "seoul-rail-2753",
+        "seoul-rail-3753"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2753",
+          "fingerprint": "66d35fbaa6e3ab1403184f1e9c8bb082f156fbdd2507ca3ed4fa4b20523c7149",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3753",
+          "fingerprint": "a23a22efb5a5c03fdc5fb7b3ee12cc00c67738d6ad9e0061884c5fd1fb9dc71d",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "rail:상동",
+      "kind": "rail",
+      "name": "상동",
+      "maxStraightLineMeters": 8,
+      "farthestPair": [
+        "seoul-rail-2758",
+        "seoul-rail-3758"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2758",
+          "fingerprint": "7de567e3655f5cb65ceb480a6ecde2b5fc830de3c41154a6e00135ca57bc4471",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-3758",
+          "fingerprint": "715a0ee4bc874fe394ad4513926e8a80a8be4e9757d9423edd1a3d633a6d9e3b",
+          "route": "7호선(인천)"
+        }
+      ]
+    },
+    {
+      "key": "rail:석남(거북시장)",
+      "kind": "rail",
+      "name": "석남(거북시장)",
+      "maxStraightLineMeters": 8,
+      "farthestPair": [
+        "seoul-rail-3213",
+        "seoul-rail-3763"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-3213",
+          "fingerprint": "0beef0455b0f8eab6f5b31a41c1dc923dd60b61587801eed4398e403908dab33",
+          "route": "인천2호선"
+        },
+        {
+          "hubId": "seoul-rail-3763",
+          "fingerprint": "b0e87bd88e4995f645d441349385f336520cbfd02336a619a32b72dd1940f60d",
+          "route": "7호선"
+        }
+      ]
+    },
+    {
+      "key": "rail:지축",
+      "kind": "rail",
+      "name": "지축",
+      "maxStraightLineMeters": 5,
+      "farthestPair": [
+        "seoul-rail-0309",
+        "seoul-rail-1949"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0309",
+          "fingerprint": "b2ec078081ff483427104acbbddbb64fb20f8a05ed033b0b2e704c481b78c79b",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-1949",
+          "fingerprint": "6bdc892f70d4acab9c0a85154de59951e1744d65e41739282f6191a7226b98e2",
+          "route": "일산선"
+        }
+      ]
+    },
+    {
+      "key": "rail:보문",
+      "kind": "rail",
+      "name": "보문",
+      "maxStraightLineMeters": 3,
+      "farthestPair": [
+        "seoul-rail-2639",
+        "seoul-rail-4712"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2639",
+          "fingerprint": "a3cccd03e29a85b406223ec61289ce46b9019c2f90f8cabf5a30277989d5d2a7",
+          "route": "6호선"
+        },
+        {
+          "hubId": "seoul-rail-4712",
+          "fingerprint": "d3b101d8470c36aa2b0070857e0e9f1b51a67900742ca62c40b965c3063e2e6a",
+          "route": "우이신설선"
+        }
+      ]
+    },
+    {
+      "key": "rail:금정",
+      "kind": "rail",
+      "name": "금정",
+      "maxStraightLineMeters": 1.7,
+      "farthestPair": [
+        "seoul-rail-1458",
+        "seoul-rail-1708"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-1458",
+          "fingerprint": "d7071cbe572f39a5553b487824ca9ecfbbe1637b249865621108c94ec42ddcd7",
+          "route": "과천선"
+        },
+        {
+          "hubId": "seoul-rail-1708",
+          "fingerprint": "09abcf9f6469d738c90c392dbad99952b6cd14535288a2d509b2c3a84d41e13e",
+          "route": "경부선"
+        }
+      ]
+    },
+    {
+      "key": "rail:논현",
+      "kind": "rail",
+      "name": "논현",
+      "maxStraightLineMeters": 0,
+      "farthestPair": [
+        "seoul-rail-2734",
+        "seoul-rail-4305"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-2734",
+          "fingerprint": "53efbc4b5006cae6c62bab54ecee9aa10a724e857e89283b96f46588fb232fb2",
+          "route": "7호선"
+        },
+        {
+          "hubId": "seoul-rail-4305",
+          "fingerprint": "2285b78b2dcda891adf445da15f7817c842b1b9b014389f1de9a7e4fc7a65da1",
+          "route": "신분당선(연장2)"
+        }
+      ]
+    },
+    {
+      "key": "rail:신논현",
+      "kind": "rail",
+      "name": "신논현",
+      "maxStraightLineMeters": 0,
+      "farthestPair": [
+        "seoul-rail-4125",
+        "seoul-rail-4306"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-4125",
+          "fingerprint": "001804a90e800539d975596c919f4d27d762145112e0108dd1c7d622e1a83e68",
+          "route": "9호선"
+        },
+        {
+          "hubId": "seoul-rail-4306",
+          "fingerprint": "12639c6e1a8af6e5331dcaadf2b206b0f499484283a3734875751b5c8acd4c52",
+          "route": "신분당선(연장2)"
+        }
+      ]
+    },
+    {
+      "key": "rail:신사",
+      "kind": "rail",
+      "name": "신사",
+      "maxStraightLineMeters": 0,
+      "farthestPair": [
+        "seoul-rail-0327",
+        "seoul-rail-4304"
+      ],
+      "members": [
+        {
+          "hubId": "seoul-rail-0327",
+          "fingerprint": "e72405ccc800e0fabc72f02ccd80d0bf513d89ecc07c587c8353f7fbc2ae72f3",
+          "route": "3호선"
+        },
+        {
+          "hubId": "seoul-rail-4304",
+          "fingerprint": "1ba3872af136c6e522720a875ed9b661ea2408f68d9c2335f21edc5d12162a30",
+          "route": "신분당선(연장2)"
+        }
+      ]
+    }
+  ]
+}
