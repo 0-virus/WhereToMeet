@@ -66,27 +66,31 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
       low=probe.seconds;
     }
   }
+  const checked=new Set<string>(),routes:CandidateRoutes[]=[];
   async function validate(candidates:Hub[]){
-    if(candidates.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
-    return provider.matrix(request,candidates);
-  }
-  const routes=await validate(finalCandidates),ranked=finish(routes);
-  if(ranked.length){
-    if(ranked[0].maxBurdenSeconds>high){
-      // Approximate maps can exclude a better hub observed at an earlier, wider probe.
-      const wider=[...samples].filter(([seconds])=>seconds>=ranked[0].maxBurdenSeconds).sort(([a],[b])=>a-b)[0];
-      if(wider){
-        const checked=new Set(finalCandidates.map(h=>h.id));
-        const additional=hubs.filter(h=>!checked.has(h.id)&&originIds.every(id=>wider[1].get(id)!.has(h.id)));
-        if(finalCandidates.length+additional.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
-        if(additional.length) return finish([...routes,...await validate(additional)]);
-      }
+    const additional=candidates.filter(h=>!checked.has(h.id));
+    if(checked.size+additional.length>maxCandidates) throw new RoutingError('routing_candidate_budget_exceeded',503);
+    if(additional.length){
+      routes.push(...await provider.matrix(request,additional));
+      additional.forEach(h=>checked.add(h.id));
     }
-    return ranked;
+    return finish(routes);
   }
-  const enlarged=Math.min(high+180,currentCap());
-  if(enlarged<=high) return [];
-  return finish(await validate((await candidatesAt(enlarged)).candidates));
+  let ranked=await validate(finalCandidates);
+  while(!ranked.length){
+    if(checked.size===hubs.length) return [];
+    const cap=currentCap();
+    const next=[...samples.keys()].filter(seconds=>seconds>high&&seconds<=cap).sort((a,b)=>a-b)[0]??Math.min(high+180,cap);
+    if(next<=high) return [];
+    probe=await candidatesAt(next);high=probe.seconds;
+    ranked=await validate(probe.candidates);
+  }
+  if(ranked[0].maxBurdenSeconds>high){
+    // Approximate maps can exclude a better hub observed at an earlier, wider probe.
+    const wider=[...samples].filter(([seconds])=>seconds>=ranked[0].maxBurdenSeconds).sort(([a],[b])=>a-b)[0];
+    if(wider) return validate(hubs.filter(h=>originIds.every(id=>wider[1].get(id)!.has(h.id))));
+  }
+  return ranked;
 }
 export function rankCandidates(candidates:CandidateRoutes[],originIds:string[],meetingAt:string,now:string,options:{limit?:number|null}={}):Recommendation[] {
   const meeting = Date.parse(meetingAt), current = Date.parse(now);

@@ -80,17 +80,20 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
   const deadline=now()+budgetMs, wallDeadline=Date.now()+budgetMs;
   const maxHits=options.maxHits??120;
   if(!Number.isInteger(maxHits)||maxHits<1) throw new RoutingError('invalid_routing_budget',503);
-  let hits=0;
+  let hits=0,pendingHits=0;
   const check=()=>{
     if(options.signal?.aborted) throw new RoutingError('cancelled',499);
     if(now()>=deadline || Date.now()>=wallDeadline) throw new RoutingError('routing_timeout',504);
   };
 
-  async function post(endpoint:string,body:unknown,cost:number):Promise<unknown>{
+  async function post(endpoint:string,body:unknown,cost:number,signal=options.signal):Promise<unknown>{
     for(let attempt=0;attempt<2;attempt++){
       check();
-      if(hits+cost>maxHits) throw new RoutingError('routing_budget_exceeded',503);
+      if(signal?.aborted) throw new RoutingError('cancelled',499);
+      if(hits+pendingHits+cost>maxHits) throw new RoutingError('routing_budget_exceeded',503);
       if(!options.appId||!options.apiKey) throw new RoutingError('provider_not_configured',503);
+      pendingHits+=cost;
+      let reserved=true;
       const controller=new AbortController();
       let timer:ReturnType<typeof setTimeout>|undefined;
       let retryTimer:ReturnType<typeof setTimeout>|undefined;
@@ -98,7 +101,7 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
       let abort:()=>void=()=>{};
       const stopped=new Promise<never>((_resolve,reject)=>{
         abort=()=>{controller.abort();reject(new RoutingError('cancelled',499));};
-        options.signal?.addEventListener('abort',abort,{once:true});
+        signal?.addEventListener('abort',abort,{once:true});
         timer=setTimeout(()=>{controller.abort();reject(new RoutingError('routing_timeout',504));},Math.max(1,Math.min(deadline-now(),wallDeadline-Date.now())));
       });
       try{
@@ -106,6 +109,7 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
           try{await options.beforeRequest?.(cost);}catch(error){throw error instanceof RoutingError ? error : new RoutingError('quota_unavailable',503);}
           check();
           if(controller.signal.aborted) throw new RoutingError('routing_timeout',504);
+          pendingHits-=cost;reserved=false;
           hits+=cost;
           let response:Response;
           try{response=await fetchImpl(`https://api.traveltimeapp.com/v4/${endpoint}`,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json','X-Application-Id':options.appId,'X-Api-Key':options.apiKey},body:JSON.stringify(body),signal:controller.signal});}
@@ -151,7 +155,8 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
         }
         throw safe;
       }finally{
-        clearTimeout(timer);clearTimeout(retryTimer);options.signal?.removeEventListener('abort',abort);
+        if(reserved) pendingHits-=cost;
+        clearTimeout(timer);clearTimeout(retryTimer);signal?.removeEventListener('abort',abort);
       }
     }
     throw new RoutingError('provider_unavailable',503);
@@ -188,11 +193,11 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
       if(travelTime<1) return [];
       const candidates:CandidateRoutes[]=hubs.map(h=>({hubId:h.id,routes:request.origins.filter(o=>same(o,h)).map(o=>zeroRoute(o,request.meetingAt))}));
       const needed=hubs.map((h,i)=>({h,i})).filter(({h})=>request.origins.some(o=>!same(o,h)));
-      for(let offset=0;offset<needed.length;offset+=10){
+      async function validateBatch(offset:number,signal:AbortSignal){
         const batch=needed.slice(offset,offset+10);
         const searches=batch.map(({h,i})=>({id:`h${i}`,arrival_location_id:`h${i}`,departure_location_ids:request.origins.flatMap((o,j)=>same(o,h)?[]:[`o${j}`]),arrival_time:request.meetingAt,travel_time:travelTime,transportation:transportation(travelTime),properties:['travel_time','route']}));
         const locations=[...request.origins.map((o,j)=>({id:`o${j}`,coords:{lat:o.lat,lng:o.lng}})),...batch.map(({h,i})=>({id:`h${i}`,coords:{lat:h.lat,lng:h.lng}}))];
-        const mapped=results(await post('time-filter',{locations,arrival_searches:searches},searches.length),searches.map(s=>s.id));
+        const mapped=results(await post('time-filter',{locations,arrival_searches:searches},searches.length,signal),searches.map(s=>s.id));
         for(const {i} of batch){
           const result=mapped.get(`h${i}`)!, search=searches.find(s=>s.id===`h${i}`)!;
           const seen=new Set<string>();
@@ -209,6 +214,14 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
           if(seen.size!==search.departure_location_ids.length) invalid();
           candidates[i].routes.sort((a,b)=>request.origins.findIndex(o=>o.id===a.originId)-request.origins.findIndex(o=>o.id===b.originId));
         }
+      }
+      for(let offset=0;offset<needed.length;offset+=20){
+        const controller=new AbortController();
+        const signal=options.signal?AbortSignal.any([options.signal,controller.signal]):controller.signal;
+        const pending=[validateBatch(offset,signal)];
+        if(offset+10<needed.length) pending.push(validateBatch(offset+10,signal));
+        try{await Promise.all(pending);}
+        catch(error){controller.abort();await Promise.allSettled(pending);throw error;}
       }
       check();return candidates;
     }

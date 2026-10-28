@@ -139,11 +139,53 @@ test('arrival fallback rechecks cached departures and rejects incomplete added r
   assert.equal(calls,2);
 });
 
-test('all invalid arrival routes trigger only one 180-second enlargement',async()=>{
+test('invalid arrivals reuse wider snapshots without querying checked hubs again',async()=>{
+  const probes:number[]=[],batches:string[][]=[];
+  const p=fake({async reachable(r,hs,seconds){probes.push(seconds);return overshootReachable(r,hs,seconds);},async matrix(r,hs){
+    batches.push(hs.map(h=>h.id));return hs.map(h=>h.id==='h1'?burdenRoute(r,h.id,2200):{hubId:h.id,routes:[]});
+  }});
+  assert.deepEqual((await recommend(req,hubs,p,{maxCandidates:5})).map(r=>r.hubId),['h1']);
+  assert.deepEqual(probes,[1800,3600,2700,2250,2025,2137]);
+  assert.deepEqual(batches,[['h0'],['h1','h2','h3','h4']]);
+});
+
+test('invalid arrivals extend beyond stored maps and enforce a cumulative candidate budget',async()=>{
+  for(const maxCandidates of [1,2]){
+    const probes:number[]=[],batches:string[][]=[];
+    const p=fake({async reachable(_r,_h,seconds){
+      probes.push(seconds);const ids=seconds>=1980?['h0','h1']:seconds>=900?['h0']:[];return {a:ids,b:ids};
+    },async matrix(r,hs){batches.push(hs.map(h=>h.id));return hs.map(h=>h.id==='h1'?burdenRoute(r,h.id,1900):{hubId:h.id,routes:[]});}});
+    if(maxCandidates===1) await assert.rejects(recommend(req,hubs,p,{maxCandidates}),e=>e instanceof RoutingError&&e.code==='routing_candidate_budget_exceeded');
+    else assert.deepEqual((await recommend(req,hubs,p,{maxCandidates})).map(r=>r.hubId),['h1']);
+    assert.deepEqual(probes,[1800,900,450,675,787,1980]);
+    assert.deepEqual(batches,maxCandidates===1?[['h0']]:[['h0'],['h1']]);
+  }
+});
+
+test('invalid-arrival expansion propagates provider errors and still checks monotonicity',async()=>{
+  for(const failure of ['routing_timeout','non_monotonic_reachability']){
+    let calls=0;
+    const p=fake({async reachable(_r,_h,seconds){
+      if(seconds>=1980&&failure==='non_monotonic_reachability')return {a:[],b:['h0']};
+      const ids=seconds>=1980?['h0','h1']:seconds>=900?['h0']:[];return {a:ids,b:ids};
+    },async matrix(){calls++;if(calls>1)throw new RoutingError('routing_timeout',504);return [];}});
+    await assert.rejects(recommend(req,hubs,p),e=>e instanceof RoutingError&&e.code===failure);
+    assert.equal(calls,failure==='routing_timeout'?2:1);
+  }
+});
+
+test('all checked candidates terminate invalid-arrival expansion without redundant work',async()=>{
   const probes:number[]=[];let calls=0;
   const p=fake({async reachable(_r,_h,seconds){probes.push(seconds);return {a:['h0'],b:['h0']};},async matrix(){calls++;return [];}});
-  assert.deepEqual(await recommend(req,hubs,p),[]);
-  assert.equal(calls,2);assert.deepEqual(probes,[1800,900,450,225,112,292]);
+  assert.deepEqual(await recommend(req,hubs.slice(0,1),p),[]);
+  assert.equal(calls,1);assert.deepEqual(probes,[1800,900,450,225,112]);
+});
+
+test('invalid arrivals stop at the meeting cap when no untested candidates appear',async()=>{
+  const probes:number[]=[];let calls=0;
+  const p=fake({async reachable(_r,_h,seconds){probes.push(seconds);return {a:['h0'],b:['h0']};},async matrix(){calls++;return [];}});
+  assert.deepEqual(await recommend({...req,meetingAt:'2026-10-06T00:10:00Z'},hubs,p),[]);
+  assert.equal(calls,1);assert.deepEqual(probes,[600,300,150]);
 });
 
 test('response-time clock excludes routes that became past while provider was running',async()=>{

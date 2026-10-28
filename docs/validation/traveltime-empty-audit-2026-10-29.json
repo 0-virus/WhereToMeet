@@ -1,0 +1,660 @@
+{
+  "schemaVersion": 1,
+  "scope": "두 실패 사례 수정의 순차/병렬 실측 오프라인 검산. 추가 API 0건. 전체20개 성능·실제최적성·현장·출시승인 아님",
+  "latencyRule": "할당량 대기가 있는 단계는 처리와 대기가 겹칠 수 있으므로 serviceMs=null로 정규화하고 성능 표본에서 제외한다. 기존 원시 JSON은 수정하지 않는다.",
+  "validationSourceLfSha256": "ebf2cae4242e2242d5dd9c0be328b9020498bcfe1af8e474e766ca8f375e9129",
+  "runs": [
+    {
+      "sourceFile": "traveltime-empty-sequential-2026-10-29.json",
+      "schemaVersion": 1,
+      "sourceSha256": "8e748836e09a39a528647aabb63150df376e25cfa2389a2771e552b7efb5bd58",
+      "sourceLfSha256": "8e748836e09a39a528647aabb63150df376e25cfa2389a2771e552b7efb5bd58",
+      "sourceHashNote": "원문 바이트 해시와 LF 정규화 해시를 함께 기록한다. Git 체크아웃의 줄바꿈 변환 후에는 LF 해시로 대조한다.",
+      "sourceBaseCommit": "46512ccf51488e23544b0693e07f591bbfc2a2c6",
+      "sourceCatalogVersion": "seoul-20261005-2b17e7c9e6f7",
+      "sourceFinishedAt": "2026-10-28T15:39:09.066Z",
+      "scope": "실측 결과의 오프라인 검산; 추가API0요청. 4시간 Arrival 응답 비교이며 실제최적성/현장/출시승인 아님",
+      "planned": 2,
+      "attempted": 2,
+      "recommendationErrors": 1,
+      "matrixErrors": 0,
+      "matrixSucceeded": 2,
+      "matrixRoutable": 2,
+      "matrixUnmeasured": 0,
+      "within180RateAmongAllMeasuredRoutable": 0.5,
+      "paired": 1,
+      "within180": 1,
+      "within180RateAmongPairs": 1,
+      "within180RateAmongAllPlanned": 0.5,
+      "emptyDespiteRoutable": [],
+      "latency": {
+        "allAttempts": {
+          "count": 2,
+          "p50Ms": 19453,
+          "p95Ms": 30012
+        },
+        "successfulResponses": {
+          "count": 1,
+          "p50Ms": 19453,
+          "p95Ms": 19453
+        },
+        "nonemptyRecommendations": {
+          "count": 1,
+          "p50Ms": 19453,
+          "p95Ms": 19453
+        }
+      },
+      "observedProbeMembershipLossCount": 0,
+      "observedProbeCommonLossCount": 0,
+      "extendedMonotonicityProbesRepeated": false,
+      "note": "원시 summary.monotonicityLosses는 별도검사값을 채우지 않아0이다. 여기서는 저장된 탐색 도형의 인접범위 손실을 계산하며 미관측도형의손실0을 뜻하지 않는다.",
+      "requests": 47,
+      "hits": 336,
+      "rollingPeak": 120,
+      "httpStatuses": {
+        "200": 46,
+        "NO_RESPONSE": 1
+      },
+      "providerErrors": 0,
+      "scenarios": [
+        {
+          "scenarioId": "weekday-suwon-three",
+          "status": "MEASURED",
+          "recommendationError": null,
+          "matrixError": null,
+          "recommendationCount": 1,
+          "baselineValidCount": 12,
+          "comparison": {
+            "baselineRoutable": true,
+            "emptyAgreement": false,
+            "differenceSeconds": 0,
+            "unvalidatedRecommendations": 0,
+            "within180Seconds": true,
+            "bestHubMatches": true,
+            "topFourOverlap": 1
+          },
+          "unsafeRecommendations": 0,
+          "serviceMs": 19453,
+          "preScenarioWaitMs": 0,
+          "recommendationHits": 53,
+          "matrixHits": 100,
+          "validationBatchSizes": [
+            15,
+            16,
+            1
+          ],
+          "uniqueValidatedCount": 32,
+          "observedCommonUnionCount": 32,
+          "baselineBest": {
+            "hubId": "seoul-rail-1751",
+            "maxBurdenSeconds": 3736,
+            "sumBurdenSeconds": 10007,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 2970
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 3301
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3736
+              }
+            ]
+          },
+          "baselineBestWasValidated": true,
+          "baselineBestObservedInAnyCommonSnapshot": true,
+          "baselineValidAmongValidated": 1,
+          "bestBaselineAmongObservedCommon": {
+            "hubId": "seoul-rail-1751",
+            "maxBurdenSeconds": 3736,
+            "sumBurdenSeconds": 10007,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 2970
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 3301
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3736
+              }
+            ]
+          },
+          "individualMembershipLosses": [],
+          "commonMembershipLosses": []
+        },
+        {
+          "scenarioId": "weekend-cross-region-four",
+          "status": "ERROR",
+          "recommendationError": "routing_timeout",
+          "matrixError": null,
+          "recommendationCount": null,
+          "baselineValidCount": 22,
+          "comparison": null,
+          "unsafeRecommendations": 0,
+          "serviceMs": 30012,
+          "preScenarioWaitMs": 56980,
+          "recommendationHits": 83,
+          "matrixHits": 100,
+          "validationBatchSizes": [
+            2,
+            4
+          ],
+          "uniqueValidatedCount": 6,
+          "observedCommonUnionCount": 83,
+          "baselineBest": {
+            "hubId": "seoul-bus-117000310",
+            "maxBurdenSeconds": 4662,
+            "sumBurdenSeconds": 14703,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 3562
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 4662
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3076
+              },
+              {
+                "originId": "p4",
+                "burdenSeconds": 3403
+              }
+            ]
+          },
+          "baselineBestWasValidated": false,
+          "baselineBestObservedInAnyCommonSnapshot": true,
+          "baselineValidAmongValidated": 0,
+          "bestBaselineAmongObservedCommon": {
+            "hubId": "seoul-bus-117000310",
+            "maxBurdenSeconds": 4662,
+            "sumBurdenSeconds": 14703,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 3562
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 4662
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3076
+              },
+              {
+                "originId": "p4",
+                "burdenSeconds": 3403
+              }
+            ]
+          },
+          "individualMembershipLosses": [],
+          "commonMembershipLosses": []
+        }
+      ],
+      "generatedAt": "2026-10-28T15:35:32.688Z",
+      "sourceLfSha256ByFile": {
+        "server/recommend.ts": "61757536ab0346fdc99ac286b2007b10eb4e6eb625b40114780a51a266ecdc30"
+      },
+      "validationImplementationNote": "공급자와 검증 계측은 baseCommit 버전, 추천만 새 LF해시 버전이다. 순차 처리 시간 원문은 보존하되 현재 보수적 성능 규칙으로 대기 표본은 제외한다.",
+      "correctedSummary": {
+        "status": "FAIL",
+        "completedScenarios": 1,
+        "comparedScenarios": 1,
+        "baselineRoutableScenarios": 1,
+        "emptyAgreements": 0,
+        "within180SecondsRate": 1,
+        "unsafeRecommendations": 0,
+        "monotonicityLosses": 0,
+        "p50ServiceMs": 19453,
+        "p95ServiceMs": 30012,
+        "over30Seconds": 1,
+        "latencyExcludesQuotaWaiting": true,
+        "isochrone": {
+          "samples": 2,
+          "latencySamples": 2,
+          "averageHits": 68,
+          "maxHits": 83,
+          "totalRequests": 27,
+          "totalQuotaWaitMs": 0,
+          "p50ServiceMs": 19453,
+          "p95ServiceMs": 30012
+        },
+        "matrix": {
+          "samples": 2,
+          "latencySamples": 0,
+          "averageHits": 100,
+          "maxHits": 100,
+          "totalRequests": 20,
+          "totalQuotaWaitMs": 44595,
+          "p50ServiceMs": null,
+          "p95ServiceMs": null
+        }
+      },
+      "measurements": [
+        {
+          "scenarioId": "weekday-suwon-three",
+          "recommendation": {
+            "elapsedMs": 19453,
+            "serviceMs": 19453,
+            "metrics": {
+              "requests": 12,
+              "hits": 53,
+              "quotaWaitMs": 0,
+              "networkMs": 18371,
+              "routeSamples": 96,
+              "earlyArrivalSamples": 93,
+              "travelTimeEqualsJourney": 3,
+              "travelTimeEqualsBurden": 96,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 32,
+              "busParts": 77,
+              "railParts": 97,
+              "mixedRoutes": 35
+            }
+          },
+          "matrix": {
+            "elapsedMs": 53312,
+            "serviceMs": null,
+            "metrics": {
+              "requests": 10,
+              "hits": 100,
+              "quotaWaitMs": 21160,
+              "networkMs": 31239,
+              "routeSamples": 300,
+              "earlyArrivalSamples": 294,
+              "travelTimeEqualsJourney": 6,
+              "travelTimeEqualsBurden": 300,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 98,
+              "busParts": 228,
+              "railParts": 406,
+              "mixedRoutes": 113
+            }
+          }
+        },
+        {
+          "scenarioId": "weekend-cross-region-four",
+          "recommendation": {
+            "elapsedMs": 30012,
+            "serviceMs": 30012,
+            "metrics": {
+              "requests": 15,
+              "hits": 83,
+              "quotaWaitMs": 0,
+              "networkMs": 26708,
+              "routeSamples": 184,
+              "earlyArrivalSamples": 184,
+              "travelTimeEqualsJourney": 0,
+              "travelTimeEqualsBurden": 184,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 43,
+              "busParts": 178,
+              "railParts": 224,
+              "mixedRoutes": 92
+            }
+          },
+          "matrix": {
+            "elapsedMs": 56603,
+            "serviceMs": null,
+            "metrics": {
+              "requests": 10,
+              "hits": 100,
+              "quotaWaitMs": 23435,
+              "networkMs": 31902,
+              "routeSamples": 400,
+              "earlyArrivalSamples": 400,
+              "travelTimeEqualsJourney": 0,
+              "travelTimeEqualsBurden": 400,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 85,
+              "busParts": 414,
+              "railParts": 546,
+              "mixedRoutes": 169
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sourceFile": "traveltime-empty-parallel-2026-10-29.json",
+      "schemaVersion": 1,
+      "sourceSha256": "68cfb77f9aabf20a5ff32585cc804a442655b14c14f7964e160608a7ac251e8a",
+      "sourceLfSha256": "68cfb77f9aabf20a5ff32585cc804a442655b14c14f7964e160608a7ac251e8a",
+      "sourceHashNote": "원문 바이트 해시와 LF 정규화 해시를 함께 기록한다. Git 체크아웃의 줄바꿈 변환 후에는 LF 해시로 대조한다.",
+      "sourceBaseCommit": "46512ccf51488e23544b0693e07f591bbfc2a2c6",
+      "sourceCatalogVersion": "seoul-20261005-2b17e7c9e6f7",
+      "sourceFinishedAt": "2026-10-28T15:56:09.087Z",
+      "scope": "실측 결과의 오프라인 검산; 추가API0요청. 4시간 Arrival 응답 비교이며 실제최적성/현장/출시승인 아님",
+      "planned": 2,
+      "attempted": 2,
+      "recommendationErrors": 0,
+      "matrixErrors": 0,
+      "matrixSucceeded": 2,
+      "matrixRoutable": 2,
+      "matrixUnmeasured": 0,
+      "within180RateAmongAllMeasuredRoutable": 1,
+      "paired": 2,
+      "within180": 2,
+      "within180RateAmongPairs": 1,
+      "within180RateAmongAllPlanned": 1,
+      "emptyDespiteRoutable": [],
+      "latency": {
+        "allAttempts": {
+          "count": 2,
+          "p50Ms": 14878,
+          "p95Ms": 27350
+        },
+        "successfulResponses": {
+          "count": 2,
+          "p50Ms": 14878,
+          "p95Ms": 27350
+        },
+        "nonemptyRecommendations": {
+          "count": 2,
+          "p50Ms": 14878,
+          "p95Ms": 27350
+        }
+      },
+      "observedProbeMembershipLossCount": 0,
+      "observedProbeCommonLossCount": 0,
+      "extendedMonotonicityProbesRepeated": false,
+      "note": "원시 summary.monotonicityLosses는 별도검사값을 채우지 않아0이다. 여기서는 저장된 탐색 도형의 인접범위 손실을 계산하며 미관측도형의손실0을 뜻하지 않는다.",
+      "requests": 47,
+      "hits": 336,
+      "rollingPeak": 120,
+      "httpStatuses": {
+        "200": 47
+      },
+      "providerErrors": 0,
+      "scenarios": [
+        {
+          "scenarioId": "weekday-suwon-three",
+          "status": "MEASURED",
+          "recommendationError": null,
+          "matrixError": null,
+          "recommendationCount": 1,
+          "baselineValidCount": 12,
+          "comparison": {
+            "baselineRoutable": true,
+            "emptyAgreement": false,
+            "differenceSeconds": 0,
+            "unvalidatedRecommendations": 0,
+            "within180Seconds": true,
+            "bestHubMatches": true,
+            "topFourOverlap": 1
+          },
+          "unsafeRecommendations": 0,
+          "serviceMs": 14878,
+          "preScenarioWaitMs": 0,
+          "recommendationHits": 53,
+          "matrixHits": 100,
+          "validationBatchSizes": [
+            15,
+            16,
+            1
+          ],
+          "uniqueValidatedCount": 32,
+          "observedCommonUnionCount": 32,
+          "baselineBest": {
+            "hubId": "seoul-rail-1751",
+            "maxBurdenSeconds": 3736,
+            "sumBurdenSeconds": 10007,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 2970
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 3301
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3736
+              }
+            ]
+          },
+          "baselineBestWasValidated": true,
+          "baselineBestObservedInAnyCommonSnapshot": true,
+          "baselineValidAmongValidated": 1,
+          "bestBaselineAmongObservedCommon": {
+            "hubId": "seoul-rail-1751",
+            "maxBurdenSeconds": 3736,
+            "sumBurdenSeconds": 10007,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 2970
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 3301
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3736
+              }
+            ]
+          },
+          "individualMembershipLosses": [],
+          "commonMembershipLosses": []
+        },
+        {
+          "scenarioId": "weekend-cross-region-four",
+          "status": "MEASURED",
+          "recommendationError": null,
+          "matrixError": null,
+          "recommendationCount": 3,
+          "baselineValidCount": 22,
+          "comparison": {
+            "baselineRoutable": true,
+            "emptyAgreement": false,
+            "differenceSeconds": 0,
+            "unvalidatedRecommendations": 0,
+            "within180Seconds": true,
+            "bestHubMatches": true,
+            "topFourOverlap": 3
+          },
+          "unsafeRecommendations": 0,
+          "serviceMs": 27350,
+          "preScenarioWaitMs": 56106,
+          "recommendationHits": 83,
+          "matrixHits": 100,
+          "validationBatchSizes": [
+            2,
+            4,
+            45
+          ],
+          "uniqueValidatedCount": 51,
+          "observedCommonUnionCount": 83,
+          "baselineBest": {
+            "hubId": "seoul-bus-117000310",
+            "maxBurdenSeconds": 4662,
+            "sumBurdenSeconds": 14703,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 3562
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 4662
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3076
+              },
+              {
+                "originId": "p4",
+                "burdenSeconds": 3403
+              }
+            ]
+          },
+          "baselineBestWasValidated": true,
+          "baselineBestObservedInAnyCommonSnapshot": true,
+          "baselineValidAmongValidated": 3,
+          "bestBaselineAmongObservedCommon": {
+            "hubId": "seoul-bus-117000310",
+            "maxBurdenSeconds": 4662,
+            "sumBurdenSeconds": 14703,
+            "participantBurdens": [
+              {
+                "originId": "p1",
+                "burdenSeconds": 3562
+              },
+              {
+                "originId": "p2",
+                "burdenSeconds": 4662
+              },
+              {
+                "originId": "p3",
+                "burdenSeconds": 3076
+              },
+              {
+                "originId": "p4",
+                "burdenSeconds": 3403
+              }
+            ]
+          },
+          "individualMembershipLosses": [],
+          "commonMembershipLosses": []
+        }
+      ],
+      "generatedAt": "2026-10-28T15:52:38.620Z",
+      "sourceLfSha256ByFile": {
+        "server/recommend.ts": "61757536ab0346fdc99ac286b2007b10eb4e6eb625b40114780a51a266ecdc30",
+        "server/travel-time.ts": "169590cad0e937041d28c5631ed3d6c5fca6d24482b5d61be0a80bcafb286f03",
+        "scripts/validate-routing.ts": "23a1eccb577e51dfc3734cd12edd5ea4588cc659eb0ddfc70b73f0339ff40ae8"
+      },
+      "validationImplementationNote": "실행 중 이미 로드된 계측 코드에는 대기 합집합/요청 인덱스 수정이 있으나 serviceMs=null 제외 규칙은 아직 없었다. 원시 Matrix serviceMs와 그 백분위는 무효이며 이 파일의 correctedSummary로 대체한다. 추천 대기는0이므로 추천 시간은 유효하다.",
+      "correctedSummary": {
+        "status": "FAIL",
+        "completedScenarios": 2,
+        "comparedScenarios": 2,
+        "baselineRoutableScenarios": 2,
+        "emptyAgreements": 0,
+        "within180SecondsRate": 1,
+        "unsafeRecommendations": 0,
+        "monotonicityLosses": 0,
+        "p50ServiceMs": 14878,
+        "p95ServiceMs": 27350,
+        "over30Seconds": 0,
+        "latencyExcludesQuotaWaiting": true,
+        "isochrone": {
+          "samples": 2,
+          "latencySamples": 2,
+          "averageHits": 68,
+          "maxHits": 83,
+          "totalRequests": 27,
+          "totalQuotaWaitMs": 0,
+          "p50ServiceMs": 14878,
+          "p95ServiceMs": 27350
+        },
+        "matrix": {
+          "samples": 2,
+          "latencySamples": 0,
+          "averageHits": 100,
+          "maxHits": 100,
+          "totalRequests": 20,
+          "totalQuotaWaitMs": 75762,
+          "p50ServiceMs": null,
+          "p95ServiceMs": null
+        }
+      },
+      "measurements": [
+        {
+          "scenarioId": "weekday-suwon-three",
+          "recommendation": {
+            "elapsedMs": 14878,
+            "serviceMs": 14878,
+            "metrics": {
+              "requests": 12,
+              "hits": 53,
+              "quotaWaitMs": 0,
+              "networkMs": 20239,
+              "routeSamples": 96,
+              "earlyArrivalSamples": 93,
+              "travelTimeEqualsJourney": 3,
+              "travelTimeEqualsBurden": 96,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 32,
+              "busParts": 77,
+              "railParts": 97,
+              "mixedRoutes": 35
+            }
+          },
+          "matrix": {
+            "elapsedMs": 55293,
+            "serviceMs": null,
+            "metrics": {
+              "requests": 10,
+              "hits": 100,
+              "quotaWaitMs": 36202,
+              "networkMs": 36303,
+              "routeSamples": 300,
+              "earlyArrivalSamples": 294,
+              "travelTimeEqualsJourney": 6,
+              "travelTimeEqualsBurden": 300,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 98,
+              "busParts": 228,
+              "railParts": 406,
+              "mixedRoutes": 113
+            }
+          }
+        },
+        {
+          "scenarioId": "weekend-cross-region-four",
+          "recommendation": {
+            "elapsedMs": 27350,
+            "serviceMs": 27350,
+            "metrics": {
+              "requests": 15,
+              "hits": 83,
+              "quotaWaitMs": 0,
+              "networkMs": 32259,
+              "routeSamples": 204,
+              "earlyArrivalSamples": 204,
+              "travelTimeEqualsJourney": 0,
+              "travelTimeEqualsBurden": 204,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 48,
+              "busParts": 186,
+              "railParts": 272,
+              "mixedRoutes": 97
+            }
+          },
+          "matrix": {
+            "elapsedMs": 56825,
+            "serviceMs": null,
+            "metrics": {
+              "requests": 10,
+              "hits": 100,
+              "quotaWaitMs": 39560,
+              "networkMs": 33198,
+              "routeSamples": 400,
+              "earlyArrivalSamples": 400,
+              "travelTimeEqualsJourney": 0,
+              "travelTimeEqualsBurden": 400,
+              "lateArrivalSamples": 0,
+              "unknownModeParts": 85,
+              "busParts": 414,
+              "railParts": 546,
+              "mixedRoutes": 169
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

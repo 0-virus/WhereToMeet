@@ -9,7 +9,7 @@ import { publicOrigins, scenarioDefinitions } from '../tests/fixtures/routing-sc
 type Scenario = { id: string; intent: string; request: RecommendRequest };
 type Snapshot = { seconds: number; reachable: Record<string, string[]> };
 type Metrics = { requests: number; hits: number; quotaWaitMs: number; networkMs: number; routeSamples: number; earlyArrivalSamples: number; travelTimeEqualsJourney: number; travelTimeEqualsBurden: number; lateArrivalSamples: number; unknownModeParts: number; busParts: number; railParts: number; mixedRoutes: number };
-type Measurement = { elapsedMs: number; serviceMs: number; metrics: Metrics };
+type Measurement = { elapsedMs: number; serviceMs: number | null; metrics: Metrics };
 type Comparison = { baselineRoutable: boolean; emptyAgreement: boolean; within180Seconds: boolean; differenceSeconds: number | null; unvalidatedRecommendations: number; bestHubMatches: boolean; topFourOverlap: number };
 type ScenarioResult = { scenarioId: string; meetingAt?: string; status: 'MEASURED' | 'ERROR'; errorCode?: string; comparison?: Comparison; unsafeRecommendations?: number; monotonicityLosses?: number; isochrone?: Measurement; matrix?: Measurement; probes?: Measurement; intent: string };
 const emptyMetrics = (): Metrics => ({ requests: 0, hits: 0, quotaWaitMs: 0, networkMs: 0, routeSamples: 0, earlyArrivalSamples: 0, travelTimeEqualsJourney: 0, travelTimeEqualsBurden: 0, lateArrivalSamples: 0, unknownModeParts: 0, busParts: 0, railParts: 0, mixedRoutes: 0 });
@@ -97,16 +97,19 @@ export function summarize(results: ScenarioResult[], blockers: string[], catalog
   const routable = compared.filter(r => r.comparison!.baselineRoutable);
   const emptyAgreements = compared.filter(r => r.comparison!.emptyAgreement).length;
   const accuracy = routable.length ? routable.filter(r => r.comparison!.within180Seconds).length / routable.length : null;
-  const times = results.flatMap(r => r.isochrone ? [r.isochrone.serviceMs] : []);
+  // Parallel work can overlap quota waits; subtracting them would hide real processing time.
+  const latency = (measurements: Measurement[]) => measurements.flatMap(m => m.metrics.quotaWaitMs === 0 && m.serviceMs !== null ? [m.serviceMs] : []);
+  const times = latency(results.flatMap(r => r.isochrone ? [r.isochrone] : []));
   const p50 = percentile(times, .5), p95 = percentile(times, .95);
   const unsafe = results.reduce((n, r) => n + (r.unsafeRecommendations ?? 0) + (r.comparison?.unvalidatedRecommendations ?? 0), 0);
   const losses = results.reduce((n, r) => n + (r.monotonicityLosses ?? 0), 0);
   const failures = unsafe > 0 || losses > 0 || (accuracy !== null && accuracy < .95) || (p50 !== null && p50 > 5000) || (p95 !== null && p95 > 10000) || times.some(t => t > 30000) || results.some(r => r.status === 'ERROR');
-  const complete = results.length === 20 && compared.length === 20 && routable.length > 0 && results.every(r => r.probes) && catalogVerified && blockers.length === 0;
+  const complete = results.length === 20 && times.length === 20 && compared.length === 20 && routable.length > 0 && results.every(r => r.probes) && catalogVerified && blockers.length === 0;
   const usage = (mode: 'isochrone' | 'matrix') => {
     const measurements = results.flatMap(r => r[mode] ? [r[mode]!] : []);
     const hits = measurements.map(m => m.metrics.hits);
-    return { samples: hits.length, averageHits: hits.length ? hits.reduce((a, b) => a + b, 0) / hits.length : null, maxHits: hits.length ? Math.max(...hits) : null, totalRequests: measurements.reduce((n, m) => n + m.metrics.requests, 0), totalQuotaWaitMs: measurements.reduce((n, m) => n + m.metrics.quotaWaitMs, 0), p50ServiceMs: percentile(measurements.map(m => m.serviceMs), .5), p95ServiceMs: percentile(measurements.map(m => m.serviceMs), .95) };
+    const times = latency(measurements);
+    return { samples: hits.length, latencySamples: times.length, averageHits: hits.length ? hits.reduce((a, b) => a + b, 0) / hits.length : null, maxHits: hits.length ? Math.max(...hits) : null, totalRequests: measurements.reduce((n, m) => n + m.metrics.requests, 0), totalQuotaWaitMs: measurements.reduce((n, m) => n + m.metrics.quotaWaitMs, 0), p50ServiceMs: percentile(times, .5), p95ServiceMs: percentile(times, .95) };
   };
   return { status: failures ? 'FAIL' : complete ? 'PASS' : 'BLOCKED', completedScenarios: results.filter(r => r.status === 'MEASURED').length, comparedScenarios: compared.length, baselineRoutableScenarios: routable.length, emptyAgreements, within180SecondsRate: accuracy, unsafeRecommendations: unsafe, monotonicityLosses: losses, p50ServiceMs: p50, p95ServiceMs: p95, over30Seconds: times.filter(t => t > 30000).length, latencyExcludesQuotaWaiting: true, isochrone: usage('isochrone'), matrix: usage('matrix') };
 }
@@ -216,6 +219,7 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
   const now = options.now ?? Date.now;
   const implementation = options.fetchImpl ?? fetch;
   let recent: { at: number; hits: number }[] = [];
+  let waiting = 0, waitStarted = 0;
   const measured: typeof fetch = async (input, init) => {
     if (options.stopOnHttpError && diagnostics.providerErrors.length) fail(`PROVIDER_HTTP_${diagnostics.providerErrors[0].status}`);
     const signal = init?.signal ?? (input instanceof Request ? input.signal : undefined);
@@ -230,15 +234,17 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
     recent = recent.filter(entry => entry.at > now() - 60000);
     while (recent.reduce((sum, entry) => sum + entry.hits, 0) + hits > options.hitsPerMinute) {
       const wait = Math.max(1, recent[0].at + 60001 - now());
-      const start = now();
+      if (waiting++ === 0) waitStarted = now();
       try { await quotaWait(wait, signal ?? undefined, options.sleep); }
-      finally { metrics.quotaWaitMs += now() - start; }
+      finally { if (--waiting === 0) metrics.quotaWaitMs += now() - waitStarted; }
       signal?.throwIfAborted();
       recent = recent.filter(entry => entry.at > now() - 60000);
     }
     signal?.throwIfAborted();
+    if (options.stopOnHttpError && diagnostics.providerErrors.length) fail(`PROVIDER_HTTP_${diagnostics.providerErrors[0].status}`);
     recent.push({ at: now(), hits });
     const diagnostic: RequestDiagnostic = { at: new Date(now()).toISOString(), endpoint: url.pathname, hits, rollingHits: recent.reduce((sum, entry) => sum + entry.hits, 0), searches: searches.map(s => ({ seconds: s.travel_time, time: s.departure_time ?? s.arrival_time, transportation: s.transportation?.type, walkingSeconds: s.transportation?.walking_time })) };
+    const requestIndex = diagnostics.requests.length;
     if (options.stopOnHttpError) diagnostics.requests.push(diagnostic);
     metrics.requests++; metrics.hits += hits;
     const start = now();
@@ -246,7 +252,7 @@ export function createMeasuredFetch(options: { appId: string; apiKey: string; hi
       const response = await implementation(input, { ...init, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
       diagnostic.status = response.status;
       if (!response.ok && options.stopOnHttpError) {
-        const failure: ErrorDiagnostic = { requestIndex: diagnostics.requests.length - 1, status: response.status, bodyStatus: 'PENDING' };
+        const failure: ErrorDiagnostic = { requestIndex, status: response.status, bodyStatus: 'PENDING' };
         diagnostics.providerErrors.push(failure);
         Object.assign(failure, await diagnoseError(response, body, [options.appId, options.apiKey]));
         // This diagnostic run stops on refusal; do not wait for Retry-After or permit another network call.
@@ -310,7 +316,7 @@ async function main() {
       const value = await operation();
       const delta = Object.fromEntries(Object.entries(measured.metrics).map(([key, number]) => [key, number - before[key as keyof Metrics]])) as Metrics;
       const elapsedMs = Date.now() - start;
-      return { value, measurement: { elapsedMs, serviceMs: elapsedMs - delta.quotaWaitMs, metrics: delta } };
+      return { value, measurement: { elapsedMs, serviceMs: delta.quotaWaitMs === 0 ? elapsedMs : null, metrics: delta } };
     };
     for (const scenario of scenarios) {
       const firstRequest = diagnostics.requests.length;

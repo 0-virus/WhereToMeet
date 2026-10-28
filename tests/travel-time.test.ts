@@ -49,6 +49,71 @@ test('arrival matrix checks all 11 destinations in batches of ten and maps rever
   assert.equal(candidates[0].routes[0].departureAt,'2026-10-06T05:40:00Z');
 });
 
+test('matrix runs at most two batches together and keeps candidate order',async()=>{
+  let release!:()=>void,active=0,peak=0,calls=0;
+  const ready=new Promise<void>(resolve=>{release=resolve;});
+  const p=provider(async(_url,init)=>{
+    const body=JSON.parse(String(init?.body));calls++;active++;peak=Math.max(peak,active);
+    await ready;
+    if(body.arrival_searches[0].id==='h0')await new Promise<void>(resolve=>setImmediate(resolve));
+    active--;
+    return json({results:body.arrival_searches.map((s:any)=>({search_id:s.id,locations:s.departure_location_ids.map((id:string)=>({id,properties:[property()]})),unreachable:[]}))});
+  });
+  const pending=p.matrix(request,Array.from({length:25},(_,i)=>hub(`h${i}`)));
+  await new Promise<void>(resolve=>setImmediate(resolve));
+  try{assert.equal(calls,2);assert.equal(peak,2);}finally{release();await pending;}
+  const result=await pending;
+  assert.equal(calls,3);assert.equal(peak,2);assert.equal(p.hits,25);
+  assert.deepEqual(result.map(r=>r.hubId),Array.from({length:25},(_,i)=>`h${i}`));
+  assert(result.every(r=>r.routes.length===2));
+});
+
+test('matrix aborts its sibling batch on invalid response and never starts the next pair',async()=>{
+  let calls=0,aborted=0;
+  const p=provider(async(_url,init)=>{
+    calls++;
+    if(calls===1){await new Promise<void>(resolve=>setImmediate(resolve));return json({results:[]});}
+    return new Promise<Response>((_resolve,reject)=>init!.signal!.addEventListener('abort',()=>{aborted++;reject(new Error('aborted'));},{once:true}));
+  });
+  await assert.rejects(p.matrix(request,Array.from({length:25},(_,i)=>hub(`h${i}`))),e=>e instanceof RoutingError&&e.code==='provider_invalid_response');
+  assert.equal(calls,2);assert.equal(aborted,1);assert.equal(p.hits,20);
+});
+
+test('matrix cancellation stops both pending batches without starting later work',async()=>{
+  const controller=new AbortController();let calls=0,aborted=0;
+  const p=provider(async(_url,init)=>{
+    calls++;return new Promise<Response>((_resolve,reject)=>init!.signal!.addEventListener('abort',()=>{aborted++;reject(new Error('aborted'));},{once:true}));
+  },{signal:controller.signal});
+  const pending=p.matrix(request,Array.from({length:25},(_,i)=>hub(`h${i}`)));
+  const rejected=assert.rejects(pending,e=>e instanceof RoutingError&&e.code==='cancelled');
+  await new Promise<void>(resolve=>setImmediate(resolve));controller.abort();await rejected;
+  assert.equal(calls,2);assert.equal(aborted,2);assert.equal(p.hits,20);
+});
+
+test('matrix reserves pending hit costs and never fetches after an aborted quota wait',async()=>{
+  let release!:()=>void,calls=0,reservations=0;
+  const ready=new Promise<void>(resolve=>{release=resolve;});
+  const p=provider(async(_url,init)=>{
+    calls++;const body=JSON.parse(String(init?.body));return json({results:body.arrival_searches.map((s:any)=>({search_id:s.id,locations:[],unreachable:s.departure_location_ids}))});
+  },{maxHits:15,beforeRequest:async()=>{reservations++;await ready;}});
+  const outcome=p.matrix(request,Array.from({length:20},(_,i)=>hub(`h${i}`))).then(()=>null,error=>error);
+  await new Promise<void>(resolve=>setImmediate(resolve));release();
+  const error=await outcome;await new Promise<void>(resolve=>setImmediate(resolve));
+  assert(error instanceof RoutingError&&error.code==='routing_budget_exceeded');
+  assert.equal(reservations,1);assert.equal(calls,0);assert.equal(p.hits,0);
+});
+
+test('matrix retries cannot spend hits already used by the sibling batch',async()=>{
+  let calls=0,aborted=0;
+  const p=provider(async(_url,init)=>{
+    calls++;
+    if(calls===1){await new Promise<void>(resolve=>setImmediate(resolve));return new Response('',{status:503});}
+    return new Promise<Response>((_resolve,reject)=>init!.signal!.addEventListener('abort',()=>{aborted++;reject(new Error('aborted'));},{once:true}));
+  },{maxHits:20});
+  await assert.rejects(p.matrix(request,Array.from({length:20},(_,i)=>hub(`h${i}`))),e=>e instanceof RoutingError&&e.code==='routing_budget_exceeded');
+  assert.equal(calls,2);assert.equal(aborted,1);assert.equal(p.hits,20);
+});
+
 test('known urban modes survive; prohibited, unknown or missing route modes never survive',async()=>{
   for(const [mode,valid] of [['bus',true],['rail_underground',true],['rail_overground',true],['walk',true],['coach',false],['car',false],['ferry',false],['train',false],['rail_national',false],['underground',false]] as const){
     const p=provider(async(_url,init)=>{const body=JSON.parse(String(init?.body));return json({results:body.arrival_searches.map((s:any)=>({search_id:s.id,locations:s.departure_location_ids.map((id:string)=>({id,properties:[property(mode)]})),unreachable:[]}))});});

@@ -150,6 +150,27 @@ test('safe error reporting preserves current engine diagnostic codes only', () =
   assert.equal(safeError(new RoutingError('private-origin-secret', 503)), 'VALIDATION_ERROR');
 });
 
+test('quota-contaminated latency cannot improve percentiles or pass the launch gate', () => {
+  const metrics = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10 }).metrics;
+  const clean = { elapsedMs: 4000, serviceMs: 4000, metrics };
+  const comparison = compareResults([recommendation('a', 1000)], [recommendation('a', 1000)]);
+  const results = Array.from({ length: 20 }, (_, i) => ({ scenarioId: String(i), intent: 'test', status: 'MEASURED' as const, isochrone: clean, matrix: clean, probes: clean, comparison }));
+  assert.equal(summarize(results, [], true).status, 'PASS');
+  for (const serviceMs of [1000, null]) {
+    const contaminated = { elapsedMs: 61001, serviceMs, metrics: { ...metrics, quotaWaitMs: 60001 } };
+    const summary = summarize(results.map((r, i) => i ? r : { ...r, isochrone: contaminated, matrix: contaminated }), [], true);
+    assert.equal(summary.status, 'BLOCKED');
+    assert.equal(summary.isochrone.latencySamples, 19);
+    assert.equal(summary.matrix.latencySamples, 19);
+    assert.equal(summary.p50ServiceMs, 4000);
+  }
+  const waiting = { elapsedMs: 61001, serviceMs: null, metrics: { ...metrics, quotaWaitMs: 60001 } };
+  const none = summarize(results.map(r => ({ ...r, isochrone: waiting })), [], true);
+  assert.equal(none.p50ServiceMs, null);
+  assert.equal(none.p95ServiceMs, null);
+  assert.equal(none.status, 'BLOCKED');
+});
+
 test('instrumentation preserves real provider malformed JSON classification and retry count', async () => {
   const outcome = async (wrapped: boolean) => {
     let calls = 0;
@@ -236,4 +257,52 @@ test('raw timestamp semantics become aggregate observations only', async () => {
   assert.equal(measured.metrics.travelTimeEqualsBurden, 0);
   assert.equal(measured.metrics.mixedRoutes, 1);
   assert.doesNotMatch(JSON.stringify(measured.metrics), /private-origin|2026/);
+});
+
+test('overlapping quota waits count wall time once and preserve the rolling limit', async () => {
+  let clock = 100000;
+  const waiting: (() => void)[] = [];
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, stopOnHttpError: true, now: () => clock, sleep: () => new Promise<void>(resolve => waiting.push(resolve)), fetchImpl: async () => Response.json({ results: [] }) });
+  const body = JSON.stringify({ arrival_searches: Array.from({ length: 10 }, (_, i) => ({ id: String(i) })) });
+  await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  const pending = [measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body }), measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body })];
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(waiting.length, 2);
+  clock += 60001;
+  waiting.splice(0).forEach(resolve => resolve());
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(waiting.length, 1);
+  clock += 60001;
+  waiting.shift()!();
+  await Promise.all(pending);
+  assert.equal(measured.metrics.quotaWaitMs, 120002);
+  assert.deepEqual(measured.diagnostics.requests.map(r => r.rollingHits), [10, 10, 10]);
+});
+
+test('a provider refusal stops an already queued request after its quota wait', async () => {
+  let clock = 100000, calls = 0, finish!: () => void, wake!: () => void;
+  const response = new Promise<void>(resolve => { finish = resolve; });
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, stopOnHttpError: true, now: () => clock, sleep: () => new Promise<void>(resolve => { wake = resolve; }), fetchImpl: async () => { calls++; await response; return new Response(null, { status: 422 }); } });
+  const body = JSON.stringify({ arrival_searches: Array.from({ length: 10 }, (_, i) => ({ id: String(i) })) });
+  const first = measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  const queued = measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  finish();
+  await first;
+  clock += 60001; wake();
+  await assert.rejects(queued, /PROVIDER_HTTP_422/);
+  assert.equal(calls, 1);
+});
+
+test('parallel diagnostic errors keep their original request index', async () => {
+  let calls = 0, finish!: () => void;
+  const firstResponse = new Promise<void>(resolve => { finish = resolve; });
+  const measured = createMeasuredFetch({ appId: 'x', apiKey: 'y', hitsPerMinute: 10, stopOnHttpError: true, fetchImpl: async () => {
+    if (++calls === 1) { await firstResponse; return new Response(null, { status: 422 }); }
+    return Response.json({ results: [] });
+  } });
+  const body = JSON.stringify({ arrival_searches: [{ id: 'h' }] });
+  const first = measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  await measured.fetch('https://api.traveltimeapp.com/v4/time-filter', { body });
+  finish(); await first;
+  assert.equal(measured.diagnostics.providerErrors[0].requestIndex, 0);
 });
