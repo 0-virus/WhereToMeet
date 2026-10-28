@@ -99,6 +99,27 @@ test('route validation rejects missing participants, late arrival, past departur
     (r: Recommendation) => { r.sumBurdenSeconds = 0; },
   ]) { const changed = structuredClone(valid); mutate(changed); assert.equal(validateRecommendations([changed], input, [hub('a')], now), 1); }
 });
+
+test('route validation checks returned ranking before comparison sorts it', () => {
+  const input = { origins: ['p1', 'p2'].map(id => ({ id, label: id, lat: 37.5, lng: 127 })), meetingAt: at };
+  const a = recommendation('a', 1000), b = recommendation('b', 1100);
+  const lowerSum = recommendation('b', 1000);
+  lowerSum.participantRoutes[1] = recommendation('b', 900).participantRoutes[1];
+  lowerSum.sumBurdenSeconds = 1900;
+  const lowerId = recommendation('A', 1000);
+  const hubs = [hub('a'), hub('b'), hub('A')];
+  for (const ordered of [[a, b], [lowerSum, a], [lowerId, a]]) {
+    assert.equal(validateRecommendations(ordered, input, hubs, now), 0);
+    const reversed = ordered.toReversed();
+    assert.equal(compareResults(reversed, ordered).within180Seconds, true);
+    const invalid = validateRecommendations(reversed, input, hubs, now);
+    assert.equal(invalid, 1);
+    assert.equal(summarize([{ scenarioId: 'ranking', intent: 'test', status: 'MEASURED', unsafeRecommendations: invalid }], [], true).status, 'FAIL');
+  }
+  const matrix = Array.from({ length: 5 }, (_, i) => recommendation(`h${i}`, 1000+i));
+  assert.equal(validateRecommendations(matrix, input, matrix.map(r => hub(r.hubId)), now), 0);
+  assert.equal(validateRecommendations([], input, hubs, now), 0);
+});
 test('monotonicity checks each participant, even when the intersection hides a loss', () => {
   assert.equal(monotonicityLosses([{ seconds: 900, reachable: { p1: ['a', 'b'], p2: [] } }, { seconds: 1800, reachable: { p1: ['a'], p2: ['a'] } }]), 1);
 });

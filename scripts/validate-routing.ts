@@ -15,6 +15,7 @@ type ScenarioResult = { scenarioId: string; meetingAt?: string; status: 'MEASURE
 const emptyMetrics = (): Metrics => ({ requests: 0, hits: 0, quotaWaitMs: 0, networkMs: 0, routeSamples: 0, earlyArrivalSamples: 0, travelTimeEqualsJourney: 0, travelTimeEqualsBurden: 0, lateArrivalSamples: 0, unknownModeParts: 0, busParts: 0, railParts: 0, mixedRoutes: 0 });
 function fail(code: string): never { throw new Error(code); }
 const normalizedName = (name: string) => name.replace(/\([^)]*\)/g, '').replace(/역$/, '').trim();
+const rank = (a: Recommendation, b: Recommendation) => a.maxBurdenSeconds - b.maxBurdenSeconds || a.sumBurdenSeconds - b.sumBurdenSeconds || (a.hubId < b.hubId ? -1 : a.hubId > b.hubId ? 1 : 0);
 
 export function selectHubs(hubs: Hub[], count = 100): Hub[] {
   if (!Number.isInteger(count) || count < 1) fail('CATALOG_SIZE_INVALID');
@@ -50,8 +51,8 @@ export function validateRecommendations(results: Recommendation[], input: Recomm
   const meeting = Date.parse(input.meetingAt);
   const hubIds = new Set(hubs.map(h => h.id));
   const seen = new Set<string>();
-  return results.filter(candidate => {
-    let invalid = !hubIds.has(candidate.hubId) || seen.has(candidate.hubId);
+  return results.filter((candidate, index) => {
+    let invalid = !hubIds.has(candidate.hubId) || seen.has(candidate.hubId) || (index > 0 && rank(results[index - 1], candidate) > 0);
     seen.add(candidate.hubId);
     const routes = candidate.participantRoutes;
     if (!Array.isArray(routes) || routes.length !== expected.size || new Set(routes.map(r => r.originId)).size !== expected.size) return true;
@@ -67,7 +68,6 @@ export function validateRecommendations(results: Recommendation[], input: Recomm
 }
 
 export function compareResults(isochrone: Recommendation[], matrix: Recommendation[]): Comparison {
-  const rank = (a: Recommendation, b: Recommendation) => a.maxBurdenSeconds - b.maxBurdenSeconds || a.sumBurdenSeconds - b.sumBurdenSeconds || a.hubId.localeCompare(b.hubId, 'en');
   const iso = [...isochrone].sort(rank), full = [...matrix].sort(rank);
   const baseline = new Map(full.map(r => [r.hubId, r]));
   const unvalidatedRecommendations = iso.filter(r => !baseline.has(r.hubId) || baseline.get(r.hubId)!.maxBurdenSeconds !== r.maxBurdenSeconds || baseline.get(r.hubId)!.sumBurdenSeconds !== r.sumBurdenSeconds).length;

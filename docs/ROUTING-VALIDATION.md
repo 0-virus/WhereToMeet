@@ -181,6 +181,8 @@ node --env-file=.dev.vars scripts/validate-routing.ts --mode compare --catalog d
 
 보고서에서는 `summary`의 판정·표본 수 → `results`의 사례별 비교·오류 → `diagnostics.providerErrors[].requestIndex`에 해당하는 `diagnostics.requests` 순서로 읽는다. `totalUsage`는 실패 단계를 포함한 소모량이다. 기존 보고서는 덮어쓰지 않고 별도 파일로 남긴다.
 
+2026-10-28부터 결과 계약 검사는 **반환된 순서 그대로** 최대 부담→부담 합계→안정적인 거점ID 정렬을 확인한다. `compareResults`가 정확도 비교를 위해 정렬하더라도 원래 순서 위반은 `unsafeRecommendations`에 집계되어 최종 FAIL이 된다. 이 필드는 참가자·시간·합계·순서 등의 계약 위반 수이며 현장의 물리적 위험 건수가 아니다. 추천은 기존 최대4개 검사도 유지하고, 전체 Matrix는4개를 넘는 정상 정렬 결과를 허용한다. 과거 실측JSON을 소급 수정하거나 이 로컬 검사로 공급자 정확도 문제를 해결한 것으로 기록하지 않는다.
+
 ## 부록. 입력 출처와 공급자 해석의 한계
 
 출처·좌표·확인일은 [공개 시나리오 파일](../tests/fixtures/routing-scenarios.ts)에 있다. 서울 역사마스터와 [관광공사 수원 위치](https://data.visitkorea.or.kr/linkedview/3075791), [인천 위치](https://data.visitkorea.or.kr/linkedview/947611), [수원 기관 안내](https://yeyak.syf.or.kr/www/119), [성남 좌표표](https://www.seongnam.go.kr/contents/down/10458_9.pdf)를 사용했다. 2026-10-05 확인 기록이며 성남 PDF는 검색 색인 표로 확인했고 직접 다운로드는 시간 초과했다. 공개 좌표는 검수된 만남 출입구가 아니며 중복 승강장·대표점 검토도 남아 있다.
