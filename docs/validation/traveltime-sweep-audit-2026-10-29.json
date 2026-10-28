@@ -1,0 +1,1395 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "8fc68b7689bf0795e521ba8cbeb5be80faba42f3e268df28f8bca6f2c898af5c",
+  "sourceLfSha256": "8fc68b7689bf0795e521ba8cbeb5be80faba42f3e268df28f8bca6f2c898af5c",
+  "sourceHashNote": "원문 바이트 해시와 LF 정규화 해시를 함께 기록한다. Git 체크아웃의 줄바꿈 변환 후에는 LF 해시로 대조한다.",
+  "sourceBaseCommit": "656c211eed27e06f76970cd0f2c9ecaef9ddc845",
+  "sourceCatalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "sourceFinishedAt": "2026-10-28T15:19:27.010Z",
+  "scope": "실측 결과의 오프라인 검산; 추가API0요청. 4시간 Arrival 응답 비교이며 실제최적성/현장/출시승인 아님",
+  "planned": 20,
+  "attempted": 20,
+  "recommendationErrors": 1,
+  "matrixErrors": 0,
+  "matrixSucceeded": 20,
+  "matrixRoutable": 20,
+  "matrixUnmeasured": 0,
+  "within180RateAmongAllMeasuredRoutable": 0.85,
+  "paired": 19,
+  "within180": 17,
+  "within180RateAmongPairs": 0.8947368421052632,
+  "within180RateAmongAllPlanned": 0.85,
+  "emptyDespiteRoutable": [
+    "weekday-suwon-three",
+    "weekend-cross-region-four"
+  ],
+  "latency": {
+    "allAttempts": {
+      "count": 20,
+      "p50Ms": 4700,
+      "p95Ms": 17912
+    },
+    "successfulResponses": {
+      "count": 19,
+      "p50Ms": 4816,
+      "p95Ms": 23290
+    },
+    "nonemptyRecommendations": {
+      "count": 17,
+      "p50Ms": 4700,
+      "p95Ms": 14584
+    }
+  },
+  "observedProbeMembershipLossCount": 2,
+  "observedProbeCommonLossCount": 0,
+  "extendedMonotonicityProbesRepeated": false,
+  "note": "원시 summary.monotonicityLosses는 별도검사값을 채우지 않아0이다. 여기서는 저장된 탐색 도형의 인접범위 손실을 계산하며 미관측도형의손실0을 뜻하지 않는다.",
+  "requests": 345,
+  "hits": 2423,
+  "rollingPeak": 120,
+  "httpStatuses": {
+    "200": 345
+  },
+  "providerErrors": 0,
+  "scenarios": [
+    {
+      "scenarioId": "weekday-east-west",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 95,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 2
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4816,
+      "preScenarioWaitMs": 0,
+      "recommendationHits": 14,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        4
+      ],
+      "uniqueValidatedCount": 4,
+      "observedCommonUnionCount": 4,
+      "baselineBest": {
+        "hubId": "seoul-rail-0232",
+        "maxBurdenSeconds": 1454,
+        "sumBurdenSeconds": 2728,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1454
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1274
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 4,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-0232",
+        "maxBurdenSeconds": 1454,
+        "sumBurdenSeconds": 2728,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1454
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1274
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-north-south",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 94,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 6241,
+      "preScenarioWaitMs": 57241,
+      "recommendationHits": 17,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        5
+      ],
+      "uniqueValidatedCount": 5,
+      "observedCommonUnionCount": 50,
+      "baselineBest": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1902,
+        "sumBurdenSeconds": 3705,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1803
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1902
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 5,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1902,
+        "sumBurdenSeconds": 3705,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1803
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1902
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-suwon-three",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 0,
+      "baselineValidCount": 12,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": null,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": false,
+        "bestHubMatches": false,
+        "topFourOverlap": 0
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 23290,
+      "preScenarioWaitMs": 57040,
+      "recommendationHits": 67,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        15,
+        31
+      ],
+      "uniqueValidatedCount": 31,
+      "observedCommonUnionCount": 31,
+      "baselineBest": {
+        "hubId": "seoul-rail-1751",
+        "maxBurdenSeconds": 3736,
+        "sumBurdenSeconds": 10007,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2970
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3301
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3736
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": false,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": null,
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-incheon-four",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 3,
+      "baselineValidCount": 92,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 14584,
+      "preScenarioWaitMs": 57009,
+      "recommendationHits": 35,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3
+      ],
+      "uniqueValidatedCount": 3,
+      "observedCommonUnionCount": 89,
+      "baselineBest": {
+        "hubId": "seoul-bus-118000015",
+        "maxBurdenSeconds": 3822,
+        "sumBurdenSeconds": 9737,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3822
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1119
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3423
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1373
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 3,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-118000015",
+        "maxBurdenSeconds": 3822,
+        "sumBurdenSeconds": 9737,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3822
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1119
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3423
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1373
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-east-west",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 3,
+      "baselineValidCount": 94,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 3979,
+      "preScenarioWaitMs": 56922,
+      "recommendationHits": 13,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3
+      ],
+      "uniqueValidatedCount": 3,
+      "observedCommonUnionCount": 8,
+      "baselineBest": {
+        "hubId": "seoul-bus-101000007",
+        "maxBurdenSeconds": 1547,
+        "sumBurdenSeconds": 2468,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1547
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 921
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 3,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-101000007",
+        "maxBurdenSeconds": 1547,
+        "sumBurdenSeconds": 2468,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1547
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 921
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-north-south",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "matrixError": null,
+      "recommendationCount": null,
+      "baselineValidCount": 97,
+      "comparison": null,
+      "unsafeRecommendations": 0,
+      "serviceMs": 4228,
+      "preScenarioWaitMs": 57763,
+      "recommendationHits": 12,
+      "matrixHits": 100,
+      "validationBatchSizes": [],
+      "uniqueValidatedCount": 0,
+      "observedCommonUnionCount": 56,
+      "baselineBest": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1983,
+        "sumBurdenSeconds": 3675,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1983
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1692
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1983,
+        "sumBurdenSeconds": 3675,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1983
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1692
+          }
+        ]
+      },
+      "individualMembershipLosses": [
+        {
+          "from": 1800,
+          "to": 1912,
+          "origin": "p2",
+          "ids": [
+            "seoul-bus-101000001",
+            "seoul-bus-101000002"
+          ]
+        }
+      ],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-cross-region-four",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 0,
+      "baselineValidCount": 22,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": null,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": false,
+        "bestHubMatches": false,
+        "topFourOverlap": 0
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 17912,
+      "preScenarioWaitMs": 57058,
+      "recommendationHits": 44,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        2,
+        6
+      ],
+      "uniqueValidatedCount": 6,
+      "observedCommonUnionCount": 83,
+      "baselineBest": {
+        "hubId": "seoul-bus-117000310",
+        "maxBurdenSeconds": 4662,
+        "sumBurdenSeconds": 14703,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3562
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4662
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3076
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 3403
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-117000310",
+        "maxBurdenSeconds": 4662,
+        "sumBurdenSeconds": 14703,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3562
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 4662
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3076
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 3403
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-bus-morning",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 99,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 5798,
+      "preScenarioWaitMs": 56948,
+      "recommendationHits": 17,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        1,
+        4
+      ],
+      "uniqueValidatedCount": 5,
+      "observedCommonUnionCount": 27,
+      "baselineBest": {
+        "hubId": "seoul-bus-123000579",
+        "maxBurdenSeconds": 2113,
+        "sumBurdenSeconds": 4164,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2113
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 5,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-123000579",
+        "maxBurdenSeconds": 2113,
+        "sumBurdenSeconds": 4164,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2113
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2051
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-suwon-bus",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 1,
+      "baselineValidCount": 38,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 47,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 1
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 7662,
+      "preScenarioWaitMs": 58372,
+      "recommendationHits": 13,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        1
+      ],
+      "uniqueValidatedCount": 1,
+      "observedCommonUnionCount": 1,
+      "baselineBest": {
+        "hubId": "seoul-rail-1861",
+        "maxBurdenSeconds": 3304,
+        "sumBurdenSeconds": 6146,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3304
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2842
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": false,
+      "baselineValidAmongValidated": 1,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-4318",
+        "maxBurdenSeconds": 3351,
+        "sumBurdenSeconds": 5713,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 3351
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2362
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-late",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 2,
+      "baselineValidCount": 97,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 20,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 2
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4534,
+      "preScenarioWaitMs": 57155,
+      "recommendationHits": 12,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        2
+      ],
+      "uniqueValidatedCount": 2,
+      "observedCommonUnionCount": 2,
+      "baselineBest": {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 1747,
+        "sumBurdenSeconds": 3320,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1747
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1573
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": false,
+      "baselineValidAmongValidated": 2,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-105000007",
+        "maxBurdenSeconds": 1767,
+        "sumBurdenSeconds": 3294,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1767
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1527
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekday-midnight",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 3,
+      "baselineValidCount": 98,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 3959,
+      "preScenarioWaitMs": 57302,
+      "recommendationHits": 13,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3
+      ],
+      "uniqueValidatedCount": 3,
+      "observedCommonUnionCount": 3,
+      "baselineBest": {
+        "hubId": "seoul-bus-107000009",
+        "maxBurdenSeconds": 1683,
+        "sumBurdenSeconds": 2835,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1152
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1683
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 3,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-107000009",
+        "maxBurdenSeconds": 1683,
+        "sumBurdenSeconds": 2835,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1152
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1683
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-midnight",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 100,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 7235,
+      "preScenarioWaitMs": 57358,
+      "recommendationHits": 24,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3,
+        9
+      ],
+      "uniqueValidatedCount": 12,
+      "observedCommonUnionCount": 69,
+      "baselineBest": {
+        "hubId": "seoul-rail-1701",
+        "maxBurdenSeconds": 2049,
+        "sumBurdenSeconds": 2614,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 565
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2049
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 12,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-1701",
+        "maxBurdenSeconds": 2049,
+        "sumBurdenSeconds": 2614,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 565
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2049
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-early",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 83,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4002,
+      "preScenarioWaitMs": 57478,
+      "recommendationHits": 18,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        8
+      ],
+      "uniqueValidatedCount": 8,
+      "observedCommonUnionCount": 19,
+      "baselineBest": {
+        "hubId": "seoul-bus-105000484",
+        "maxBurdenSeconds": 1322,
+        "sumBurdenSeconds": 2470,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1322
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1148
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 8,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-105000484",
+        "maxBurdenSeconds": 1322,
+        "sumBurdenSeconds": 2470,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1322
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1148
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "same-origin-two",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 2,
+      "baselineValidCount": 99,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 1,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 2
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 3774,
+      "preScenarioWaitMs": 59193,
+      "recommendationHits": 7,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        2
+      ],
+      "uniqueValidatedCount": 2,
+      "observedCommonUnionCount": 27,
+      "baselineBest": {
+        "hubId": "seoul-rail-0225",
+        "maxBurdenSeconds": 494,
+        "sumBurdenSeconds": 988,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 494
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 494
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 2,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-0225",
+        "maxBurdenSeconds": 494,
+        "sumBurdenSeconds": 988,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 494
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 494
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "same-origin-four",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 1,
+      "baselineValidCount": 93,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 1
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4083,
+      "preScenarioWaitMs": 57706,
+      "recommendationHits": 6,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        1
+      ],
+      "uniqueValidatedCount": 1,
+      "observedCommonUnionCount": 36,
+      "baselineBest": {
+        "hubId": "seoul-bus-101000007",
+        "maxBurdenSeconds": 388,
+        "sumBurdenSeconds": 1552,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 388
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 1,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-101000007",
+        "maxBurdenSeconds": 388,
+        "sumBurdenSeconds": 1552,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 388
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 388
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "duplicate-plus-distant",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 2,
+      "baselineValidCount": 97,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 2
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4700,
+      "preScenarioWaitMs": 57078,
+      "recommendationHits": 12,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        2
+      ],
+      "uniqueValidatedCount": 2,
+      "observedCommonUnionCount": 2,
+      "baselineBest": {
+        "hubId": "seoul-bus-105000007",
+        "maxBurdenSeconds": 1628,
+        "sumBurdenSeconds": 4823,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1628
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1628
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1567
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 2,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-105000007",
+        "maxBurdenSeconds": 1628,
+        "sumBurdenSeconds": 4823,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1628
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1628
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1567
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "transfer-north",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 3,
+      "baselineValidCount": 97,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4558,
+      "preScenarioWaitMs": 57019,
+      "recommendationHits": 18,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3
+      ],
+      "uniqueValidatedCount": 3,
+      "observedCommonUnionCount": 3,
+      "baselineBest": {
+        "hubId": "seoul-bus-100000005",
+        "maxBurdenSeconds": 1473,
+        "sumBurdenSeconds": 3623,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1473
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1348
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 802
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 3,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-100000005",
+        "maxBurdenSeconds": 1473,
+        "sumBurdenSeconds": 3623,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1473
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1348
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 802
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "bus-rail-transfer",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 2,
+      "baselineValidCount": 96,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 2
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 6336,
+      "preScenarioWaitMs": 55043,
+      "recommendationHits": 20,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        2
+      ],
+      "uniqueValidatedCount": 2,
+      "observedCommonUnionCount": 50,
+      "baselineBest": {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 2014,
+        "sumBurdenSeconds": 5250,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1723
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2014
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1513
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 2,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 2014,
+        "sumBurdenSeconds": 5250,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1723
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2014
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1513
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "late-four",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 95,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 57,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": false,
+        "topFourOverlap": 0
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 7088,
+      "preScenarioWaitMs": 57137,
+      "recommendationHits": 31,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        7
+      ],
+      "uniqueValidatedCount": 7,
+      "observedCommonUnionCount": 42,
+      "baselineBest": {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 2346,
+        "sumBurdenSeconds": 7953,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2346
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2215
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1573
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1819
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 7,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-121000015",
+        "maxBurdenSeconds": 2346,
+        "sumBurdenSeconds": 7953,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2346
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2215
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 1573
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1819
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "early-four",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 90,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 3
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 4517,
+      "preScenarioWaitMs": 57069,
+      "recommendationHits": 30,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        3,
+        3
+      ],
+      "uniqueValidatedCount": 6,
+      "observedCommonUnionCount": 33,
+      "baselineBest": {
+        "hubId": "seoul-bus-100000004",
+        "maxBurdenSeconds": 2526,
+        "sumBurdenSeconds": 5887,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2526
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1722
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 424
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1215
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 6,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-bus-100000004",
+        "maxBurdenSeconds": 2526,
+        "sumBurdenSeconds": 5887,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2526
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1722
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 424
+          },
+          {
+            "originId": "p4",
+            "burdenSeconds": 1215
+          }
+        ]
+      },
+      "individualMembershipLosses": [],
+      "commonMembershipLosses": []
+    }
+  ]
+}
