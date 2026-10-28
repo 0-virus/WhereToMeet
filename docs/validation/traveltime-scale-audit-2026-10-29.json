@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "6899e5bc5c0da4ea3d88c17efcd78222244a35ba403a67bcb83f7677a2f1cf79",
+  "sourceLfSha256": "6899e5bc5c0da4ea3d88c17efcd78222244a35ba403a67bcb83f7677a2f1cf79",
+  "sourceHashNote": "원문 바이트 해시와 LF 정규화 해시를 함께 기록한다. Git 체크아웃의 줄바꿈 변환 후에는 LF 해시로 대조한다.",
+  "sourceBaseCommit": "9139e16dd6aadcb85edf0f4749622ab4e92f1783",
+  "sourceCatalogVersion": "seoul-20261005-a74a00301aab",
+  "sourceFinishedAt": "2026-10-28T16:25:22.518Z",
+  "scope": "실측 결과의 오프라인 검산; 추가API0요청. 4시간 Arrival 응답 비교이며 실제최적성/현장/출시승인 아님",
+  "planned": 3,
+  "attempted": 3,
+  "recommendationErrors": 3,
+  "matrixErrors": 0,
+  "matrixSucceeded": 1,
+  "matrixRoutable": 1,
+  "matrixUnmeasured": 2,
+  "within180RateAmongAllMeasuredRoutable": 0,
+  "paired": 0,
+  "within180": 0,
+  "within180RateAmongPairs": null,
+  "within180RateAmongAllPlanned": 0,
+  "emptyDespiteRoutable": [],
+  "latency": {
+    "allAttempts": {
+      "count": 3,
+      "p50Ms": 2943,
+      "p95Ms": 7267
+    },
+    "successfulResponses": {
+      "count": 0,
+      "p50Ms": null,
+      "p95Ms": null
+    },
+    "nonemptyRecommendations": {
+      "count": 0,
+      "p50Ms": null,
+      "p95Ms": null
+    }
+  },
+  "observedProbeMembershipLossCount": 4,
+  "observedProbeCommonLossCount": 0,
+  "extendedMonotonicityProbesRepeated": false,
+  "note": "원시 summary.monotonicityLosses는 별도검사값을 채우지 않아0이다. 여기서는 저장된 탐색 도형의 인접범위 손실을 계산하며 미관측도형의손실0을 뜻하지 않는다.",
+  "requests": 72,
+  "hits": 626,
+  "rollingPeak": 120,
+  "httpStatuses": {
+    "200": 72
+  },
+  "providerErrors": 0,
+  "scenarios": [
+    {
+      "scenarioId": "weekday-suwon-three",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "matrixError": null,
+      "recommendationCount": null,
+      "baselineValidCount": 101,
+      "comparison": null,
+      "unsafeRecommendations": 0,
+      "serviceMs": 2456,
+      "preScenarioWaitMs": 0,
+      "recommendationHits": 9,
+      "matrixHits": 589,
+      "validationBatchSizes": [],
+      "uniqueValidatedCount": 0,
+      "observedCommonUnionCount": 97,
+      "baselineBest": {
+        "hubId": "seoul-rail-1707",
+        "maxBurdenSeconds": 3492,
+        "sumBurdenSeconds": 8945,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2470
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2983
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3492
+          }
+        ]
+      },
+      "baselineBestWasValidated": false,
+      "baselineBestObservedInAnyCommonSnapshot": false,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": null,
+      "individualMembershipLosses": [
+        {
+          "from": 2700,
+          "to": 3600,
+          "origin": "p2",
+          "ids": [
+            "seoul-rail-1270"
+          ]
+        }
+      ],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-north-south",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "matrixError": null,
+      "recommendationCount": null,
+      "baselineValidCount": 0,
+      "comparison": null,
+      "unsafeRecommendations": null,
+      "serviceMs": 2943,
+      "preScenarioWaitMs": 56785,
+      "recommendationHits": 12,
+      "matrixHits": 0,
+      "validationBatchSizes": [],
+      "uniqueValidatedCount": 0,
+      "observedCommonUnionCount": 234,
+      "baselineBest": null,
+      "baselineBestWasValidated": null,
+      "baselineBestObservedInAnyCommonSnapshot": null,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": null,
+      "individualMembershipLosses": [
+        {
+          "from": 1800,
+          "to": 1912,
+          "origin": "p2",
+          "ids": [
+            "seoul-bus-101000001",
+            "seoul-bus-101000002"
+          ]
+        }
+      ],
+      "commonMembershipLosses": []
+    },
+    {
+      "scenarioId": "weekend-cross-region-four",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "matrixError": null,
+      "recommendationCount": null,
+      "baselineValidCount": 0,
+      "comparison": null,
+      "unsafeRecommendations": null,
+      "serviceMs": 7267,
+      "preScenarioWaitMs": 59737,
+      "recommendationHits": 16,
+      "matrixHits": 0,
+      "validationBatchSizes": [],
+      "uniqueValidatedCount": 0,
+      "observedCommonUnionCount": 424,
+      "baselineBest": null,
+      "baselineBestWasValidated": null,
+      "baselineBestObservedInAnyCommonSnapshot": null,
+      "baselineValidAmongValidated": 0,
+      "bestBaselineAmongObservedCommon": null,
+      "individualMembershipLosses": [
+        {
+          "from": 5400,
+          "to": 7200,
+          "origin": "p1",
+          "ids": [
+            "seoul-rail-1272"
+          ]
+        }
+      ],
+      "commonMembershipLosses": []
+    }
+  ],
+  "phaseMeasurements": [
+    {
+      "scenarioId": "weekday-suwon-three",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "phases": [
+        {
+          "type": "map",
+          "seconds": 1800,
+          "elapsedMs": 885,
+          "hits": 3,
+          "commonCandidates": 0
+        },
+        {
+          "type": "map",
+          "seconds": 3600,
+          "elapsedMs": 1015,
+          "hits": 3,
+          "commonCandidates": 97
+        },
+        {
+          "type": "map",
+          "seconds": 2700,
+          "elapsedMs": 554,
+          "hits": 3,
+          "commonCandidates": 1
+        }
+      ],
+      "mapMs": 2454,
+      "matrixMs": 0,
+      "measurement": {
+        "elapsedMs": 2456,
+        "serviceMs": 2456,
+        "metrics": {
+          "requests": 3,
+          "hits": 9,
+          "quotaWaitMs": 0,
+          "networkMs": 1944,
+          "routeSamples": 0,
+          "earlyArrivalSamples": 0,
+          "travelTimeEqualsJourney": 0,
+          "travelTimeEqualsBurden": 0,
+          "lateArrivalSamples": 0,
+          "unknownModeParts": 0,
+          "busParts": 0,
+          "railParts": 0,
+          "mixedRoutes": 0
+        }
+      }
+    },
+    {
+      "scenarioId": "weekend-north-south",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "phases": [
+        {
+          "type": "map",
+          "seconds": 1800,
+          "elapsedMs": 522,
+          "hits": 2,
+          "commonCandidates": 0
+        },
+        {
+          "type": "map",
+          "seconds": 3600,
+          "elapsedMs": 959,
+          "hits": 2,
+          "commonCandidates": 234
+        },
+        {
+          "type": "map",
+          "seconds": 2700,
+          "elapsedMs": 474,
+          "hits": 2,
+          "commonCandidates": 66
+        },
+        {
+          "type": "map",
+          "seconds": 2250,
+          "elapsedMs": 366,
+          "hits": 2,
+          "commonCandidates": 10
+        },
+        {
+          "type": "map",
+          "seconds": 2025,
+          "elapsedMs": 304,
+          "hits": 2,
+          "commonCandidates": 2
+        },
+        {
+          "type": "map",
+          "seconds": 1912,
+          "elapsedMs": 317,
+          "hits": 2,
+          "commonCandidates": 0
+        }
+      ],
+      "mapMs": 2942,
+      "matrixMs": 0,
+      "measurement": {
+        "elapsedMs": 2943,
+        "serviceMs": 2943,
+        "metrics": {
+          "requests": 6,
+          "hits": 12,
+          "quotaWaitMs": 0,
+          "networkMs": 2532,
+          "routeSamples": 0,
+          "earlyArrivalSamples": 0,
+          "travelTimeEqualsJourney": 0,
+          "travelTimeEqualsBurden": 0,
+          "lateArrivalSamples": 0,
+          "unknownModeParts": 0,
+          "busParts": 0,
+          "railParts": 0,
+          "mixedRoutes": 0
+        }
+      }
+    },
+    {
+      "scenarioId": "weekend-cross-region-four",
+      "status": "ERROR",
+      "recommendationError": "non_monotonic_reachability",
+      "phases": [
+        {
+          "type": "map",
+          "seconds": 1800,
+          "elapsedMs": 785,
+          "hits": 4,
+          "commonCandidates": 0
+        },
+        {
+          "type": "map",
+          "seconds": 3600,
+          "elapsedMs": 1095,
+          "hits": 4,
+          "commonCandidates": 0
+        },
+        {
+          "type": "map",
+          "seconds": 7200,
+          "elapsedMs": 3364,
+          "hits": 4,
+          "commonCandidates": 424
+        },
+        {
+          "type": "map",
+          "seconds": 5400,
+          "elapsedMs": 2019,
+          "hits": 4,
+          "commonCandidates": 209
+        }
+      ],
+      "mapMs": 7263,
+      "matrixMs": 0,
+      "measurement": {
+        "elapsedMs": 7267,
+        "serviceMs": 7267,
+        "metrics": {
+          "requests": 4,
+          "hits": 16,
+          "quotaWaitMs": 0,
+          "networkMs": 5290,
+          "routeSamples": 0,
+          "earlyArrivalSamples": 0,
+          "travelTimeEqualsJourney": 0,
+          "travelTimeEqualsBurden": 0,
+          "lateArrivalSamples": 0,
+          "unknownModeParts": 0,
+          "busParts": 0,
+          "railParts": 0,
+          "mixedRoutes": 0
+        }
+      }
+    }
+  ],
+  "fullMatrixLowerBounds": [
+    {
+      "hubs": 100,
+      "arrivalSearchesPerRecommendation": 100,
+      "requestsWithoutRetry": 10,
+      "hitsFor100Recommendations": 10000,
+      "requiredHpmForOneRecommendationPerMinute": 100,
+      "minimumRollingWindowSpanMsAt120Hpm": 0
+    },
+    {
+      "hubs": 589,
+      "arrivalSearchesPerRecommendation": 589,
+      "requestsWithoutRetry": 59,
+      "hitsFor100Recommendations": 58900,
+      "requiredHpmForOneRecommendationPerMinute": 589,
+      "minimumRollingWindowSpanMsAt120Hpm": 240000
+    },
+    {
+      "hubs": 1000,
+      "arrivalSearchesPerRecommendation": 1000,
+      "requestsWithoutRetry": 100,
+      "hitsFor100Recommendations": 100000,
+      "requiredHpmForOneRecommendationPerMinute": 1000,
+      "minimumRollingWindowSpanMsAt120Hpm": 480000
+    },
+    {
+      "hubs": 3000,
+      "arrivalSearchesPerRecommendation": 3000,
+      "requestsWithoutRetry": 300,
+      "hitsFor100Recommendations": 300000,
+      "requiredHpmForOneRecommendationPerMinute": 3000,
+      "minimumRollingWindowSpanMsAt120Hpm": 1440000
+    }
+  ],
+  "lowerBoundNote": "전수 Arrival을 모든 목적지에 실제 검색하는 경우의 계산상 하한. 동일 출발지/거점의 무호출0경로·재시도·사전도형·동시사용자는 제외. 첫120hits즉시전송 가능 가정이며 시간값은 네트워크/파싱을 포함하지 않은 사용량 창 간격이다. 운영 견적/계약 증거 아님",
+  "baselineMeasurements": [
+    {
+      "scenarioId": "weekday-suwon-three",
+      "measurement": {
+        "elapsedMs": 265885,
+        "serviceMs": null,
+        "metrics": {
+          "requests": 59,
+          "hits": 589,
+          "quotaWaitMs": 156125,
+          "networkMs": 204815,
+          "routeSamples": 1761,
+          "earlyArrivalSamples": 1753,
+          "travelTimeEqualsJourney": 8,
+          "travelTimeEqualsBurden": 1761,
+          "lateArrivalSamples": 0,
+          "unknownModeParts": 555,
+          "busParts": 1075,
+          "railParts": 2907,
+          "mixedRoutes": 544
+        }
+      },
+      "validCandidates": 101
+    }
+  ],
+  "sampleRestrictionComparison": [
+    {
+      "scenarioId": "weekday-suwon-three",
+      "scope": "같은589개 Matrix 응답에서100개표본ID에만한정한오프라인비교. 새추천실행이나실제최적성아님",
+      "sampleVersion": "seoul-20261005-2b17e7c9e6f7",
+      "sampleLfSha256": "8d29255fbe4d4aef9b09433c6f1a35582e4cb49f7cefd69e683fb57c0956f1ec",
+      "fullValidCount": 101,
+      "sampleValidCount": 12,
+      "fullBest": {
+        "hubId": "seoul-rail-1707",
+        "maxBurdenSeconds": 3492,
+        "sumBurdenSeconds": 8945,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2470
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 2983
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3492
+          }
+        ]
+      },
+      "sampleBest": {
+        "hubId": "seoul-rail-1751",
+        "maxBurdenSeconds": 3736,
+        "sumBurdenSeconds": 10007,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 2970
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 3301
+          },
+          {
+            "originId": "p3",
+            "burdenSeconds": 3736
+          }
+        ]
+      },
+      "differenceSeconds": 244
+    }
+  ]
+}
