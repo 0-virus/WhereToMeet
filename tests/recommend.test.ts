@@ -71,7 +71,58 @@ test('no intersection expands through four hours, while near meetings cap at cur
 
 test('monotonicity is checked per participant even while both intersections are empty',async()=>{
   const p=fake({async reachable(_r,_h,seconds){return seconds===1800?{a:['h0'],b:[]}:{a:[],b:['h0']};}});
-  await assert.rejects(recommend(req,hubs,p),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
+  await assert.rejects(recommend(req,hubs,p,{maxCandidates:1}),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
+});
+
+const nonMonotonic:TravelTimeProvider['reachable']=async(_r,_h,seconds)=>seconds===1800?{a:['h0'],b:[]}:{a:[],b:['h0']};
+test('nonmonotonic maps stop probing and validate the entire catalog before ranking',async()=>{
+  const probes:number[]=[],batches:string[][]=[];
+  const p=fake({async reachable(r,hs,seconds){probes.push(seconds);return nonMonotonic(r,hs,seconds);},async matrix(r,hs){
+    batches.push(hs.map(h=>h.id));return hs.map(h=>burdenRoute(r,h.id,h.id==='h11'?1000:1200));
+  }});
+  const result=await recommend(req,hubs,p);
+  assert.deepEqual(probes,[1800,3600]);
+  assert.deepEqual(batches,[hubs.map(h=>h.id)]);
+  assert.equal(result[0].hubId,'h11');assert.equal(result.length,4);
+});
+
+test('nonmonotonic fallback never truncates the catalog to fit the candidate budget',async()=>{
+  let calls=0;
+  const p=fake({reachable:nonMonotonic,async matrix(){calls++;return [];}});
+  await assert.rejects(recommend(req,hubs,p,{maxCandidates:11}),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
+  assert.equal(calls,0);
+});
+
+test('nonmonotonic fallback propagates provider limits and cancellation without partial success',async()=>{
+  for(const code of ['routing_timeout','routing_budget_exceeded','cancelled','provider_invalid_response']){
+    let calls=0;
+    const p=fake({reachable:nonMonotonic,async matrix(){calls++;throw new RoutingError(code,503);}});
+    await assert.rejects(recommend(req,hubs,p),e=>e instanceof RoutingError&&e.code===code);
+    assert.equal(calls,1);
+  }
+});
+
+test('nonmonotonic fallback reuses checked candidates and checks new routes at response time',async()=>{
+  let current=now;
+  const batches:string[][]=[];
+  const p=fake({now:()=>current,async reachable(_r,_h,seconds){
+    const ids=seconds>=1980?[]:seconds>=900?['h0']:[];return {a:ids,b:seconds>=1980?['h0']:ids};
+  },async matrix(r,hs){
+    batches.push(hs.map(h=>h.id));
+    if(batches.length===1)return [{hubId:'h0',routes:[]}];
+    current=Date.parse(r.meetingAt)-1100*1000;
+    return hs.map(h=>h.id==='h1'?burdenRoute(r,h.id,1000):h.id==='h2'?{hubId:h.id,routes:[]}:
+      h.id==='h3'?{hubId:h.id,routes:burdenRoute(r,h.id,900).routes.map(p=>({...p,arrivalAt:new Date(Date.parse(r.meetingAt)+1000).toISOString()}))}:burdenRoute(r,h.id,1200));
+  }});
+  assert.deepEqual((await recommend(req,hubs,p)).map(r=>r.hubId),['h1']);
+  assert.deepEqual(batches,[['h0'],hubs.slice(1).map(h=>h.id)]);
+});
+
+test('invalid reachability responses never trigger the nonmonotonic fallback',async()=>{
+  let calls=0;
+  const p=fake({async reachable(){return {a:['unknown'],b:[]};},async matrix(){calls++;return [];}});
+  await assert.rejects(recommend(req,hubs,p),e=>e instanceof RoutingError&&e.code==='provider_invalid_response');
+  assert.equal(calls,0);
 });
 
 test('candidate budget fails before matrix rather than returning a biased subset',async()=>{
@@ -169,7 +220,7 @@ test('invalid-arrival expansion propagates provider errors and still checks mono
       if(seconds>=1980&&failure==='non_monotonic_reachability')return {a:[],b:['h0']};
       const ids=seconds>=1980?['h0','h1']:seconds>=900?['h0']:[];return {a:ids,b:ids};
     },async matrix(){calls++;if(calls>1)throw new RoutingError('routing_timeout',504);return [];}});
-    await assert.rejects(recommend(req,hubs,p),e=>e instanceof RoutingError&&e.code===failure);
+    await assert.rejects(recommend(req,hubs,p,{maxCandidates:2}),e=>e instanceof RoutingError&&e.code===failure);
     assert.equal(calls,failure==='routing_timeout'?2:1);
   }
 });
@@ -240,5 +291,5 @@ test('a clock-adjusted upper bound still checks participant monotonicity',async(
     if(seconds===1800){current+=1000;return {a:['h0'],b:[]};}
     assert.equal(seconds,2399);return {a:[],b:['h0']};
   }});
-  await assert.rejects(recommend({...req,meetingAt:'2026-10-06T00:40:00Z'},hubs,p),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
+  await assert.rejects(recommend({...req,meetingAt:'2026-10-06T00:40:00Z'},hubs,p,{maxCandidates:1}),e=>e instanceof RoutingError&&e.code==='non_monotonic_reachability');
 });

@@ -51,21 +51,6 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
       return {seconds,candidates:hubs.filter(h=>originIds.every(id=>sample!.get(id)!.has(h.id)))};
     }
   }
-  let probe=await candidatesAt(1800);
-  let low=0,high=probe.seconds,finalCandidates=probe.candidates;
-  while(!finalCandidates.length){
-    const next=Math.min(high*2,currentCap());
-    if(next<=high) return [];
-    low=high;probe=await candidatesAt(next);high=probe.seconds;finalCandidates=probe.candidates;
-  }
-  while(high-low>180){
-    probe=await candidatesAt(Math.floor((low+high)/2));
-    if(probe.candidates.length){high=probe.seconds;finalCandidates=probe.candidates;}
-    else{
-      if(probe.seconds<=low) return [];
-      low=probe.seconds;
-    }
-  }
   const checked=new Set<string>(),routes:CandidateRoutes[]=[];
   async function validate(candidates:Hub[]){
     const additional=candidates.filter(h=>!checked.has(h.id));
@@ -76,21 +61,42 @@ export async function recommend(request:RecommendRequest,hubs:Hub[],provider:Tra
     }
     return finish(routes);
   }
-  let ranked=await validate(finalCandidates);
-  while(!ranked.length){
-    if(checked.size===hubs.length) return [];
-    const cap=currentCap();
-    const next=[...samples.keys()].filter(seconds=>seconds>high&&seconds<=cap).sort((a,b)=>a-b)[0]??Math.min(high+180,cap);
-    if(next<=high) return [];
-    probe=await candidatesAt(next);high=probe.seconds;
-    ranked=await validate(probe.candidates);
+  try{
+    let probe=await candidatesAt(1800);
+    let low=0,high=probe.seconds,finalCandidates=probe.candidates;
+    while(!finalCandidates.length){
+      const next=Math.min(high*2,currentCap());
+      if(next<=high) return [];
+      low=high;probe=await candidatesAt(next);high=probe.seconds;finalCandidates=probe.candidates;
+    }
+    while(high-low>180){
+      probe=await candidatesAt(Math.floor((low+high)/2));
+      if(probe.candidates.length){high=probe.seconds;finalCandidates=probe.candidates;}
+      else{
+        if(probe.seconds<=low) return [];
+        low=probe.seconds;
+      }
+    }
+    let ranked=await validate(finalCandidates);
+    while(!ranked.length){
+      if(checked.size===hubs.length) return [];
+      const cap=currentCap();
+      const next=[...samples.keys()].filter(seconds=>seconds>high&&seconds<=cap).sort((a,b)=>a-b)[0]??Math.min(high+180,cap);
+      if(next<=high) return [];
+      probe=await candidatesAt(next);high=probe.seconds;
+      ranked=await validate(probe.candidates);
+    }
+    if(ranked[0].maxBurdenSeconds>high){
+      // Approximate maps can exclude a better hub observed at an earlier, wider probe.
+      const wider=[...samples].filter(([seconds])=>seconds>=ranked[0].maxBurdenSeconds).sort(([a],[b])=>a-b)[0];
+      if(wider) return validate(hubs.filter(h=>originIds.every(id=>wider[1].get(id)!.has(h.id))));
+    }
+    return ranked;
+  }catch(error){
+    if(!(error instanceof RoutingError)||error.code!=='non_monotonic_reachability'||hubs.length>maxCandidates) throw error;
+    // A broken pruning assumption requires every hub, never a convenient subset.
+    return validate(hubs);
   }
-  if(ranked[0].maxBurdenSeconds>high){
-    // Approximate maps can exclude a better hub observed at an earlier, wider probe.
-    const wider=[...samples].filter(([seconds])=>seconds>=ranked[0].maxBurdenSeconds).sort(([a],[b])=>a-b)[0];
-    if(wider) return validate(hubs.filter(h=>originIds.every(id=>wider[1].get(id)!.has(h.id))));
-  }
-  return ranked;
 }
 export function rankCandidates(candidates:CandidateRoutes[],originIds:string[],meetingAt:string,now:string,options:{limit?:number|null}={}):Recommendation[] {
   const meeting = Date.parse(meetingAt), current = Date.parse(now);

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "a6e0e349e5a6b6d516c2c6122f1634c7b789f255f77d132ae07967ef06827772",
+  "sourceLfSha256": "a6e0e349e5a6b6d516c2c6122f1634c7b789f255f77d132ae07967ef06827772",
+  "sourceHashNote": "원문 바이트 해시와 LF 정규화 해시를 함께 기록한다. Git 체크아웃의 줄바꿈 변환 후에는 LF 해시로 대조한다.",
+  "sourceBaseCommit": "24d48cad8536cbea9528d6733e1b31c6dffe8c7d",
+  "sourceCatalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "sourceFinishedAt": "2026-10-28T16:11:11.084Z",
+  "scope": "실측 결과의 오프라인 검산; 추가API0요청. 4시간 Arrival 응답 비교이며 실제최적성/현장/출시승인 아님",
+  "planned": 1,
+  "attempted": 1,
+  "recommendationErrors": 0,
+  "matrixErrors": 0,
+  "matrixSucceeded": 1,
+  "matrixRoutable": 1,
+  "matrixUnmeasured": 0,
+  "within180RateAmongAllMeasuredRoutable": 1,
+  "paired": 1,
+  "within180": 1,
+  "within180RateAmongPairs": 1,
+  "within180RateAmongAllPlanned": 1,
+  "emptyDespiteRoutable": [],
+  "latency": {
+    "allAttempts": {
+      "count": 1,
+      "p50Ms": 22044,
+      "p95Ms": 22044
+    },
+    "successfulResponses": {
+      "count": 1,
+      "p50Ms": 22044,
+      "p95Ms": 22044
+    },
+    "nonemptyRecommendations": {
+      "count": 1,
+      "p50Ms": 22044,
+      "p95Ms": 22044
+    }
+  },
+  "observedProbeMembershipLossCount": 2,
+  "observedProbeCommonLossCount": 0,
+  "extendedMonotonicityProbesRepeated": false,
+  "note": "원시 summary.monotonicityLosses는 별도검사값을 채우지 않아0이다. 여기서는 저장된 탐색 도형의 인접범위 손실을 계산하며 미관측도형의손실0을 뜻하지 않는다.",
+  "requests": 26,
+  "hits": 212,
+  "rollingPeak": 120,
+  "httpStatuses": {
+    "200": 26
+  },
+  "providerErrors": 0,
+  "scenarios": [
+    {
+      "scenarioId": "weekend-north-south",
+      "status": "MEASURED",
+      "recommendationError": null,
+      "matrixError": null,
+      "recommendationCount": 4,
+      "baselineValidCount": 97,
+      "comparison": {
+        "baselineRoutable": true,
+        "emptyAgreement": false,
+        "differenceSeconds": 0,
+        "unvalidatedRecommendations": 0,
+        "within180Seconds": true,
+        "bestHubMatches": true,
+        "topFourOverlap": 4
+      },
+      "unsafeRecommendations": 0,
+      "serviceMs": 22044,
+      "preScenarioWaitMs": 0,
+      "recommendationHits": 112,
+      "matrixHits": 100,
+      "validationBatchSizes": [
+        100
+      ],
+      "uniqueValidatedCount": 100,
+      "observedCommonUnionCount": 56,
+      "baselineBest": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1983,
+        "sumBurdenSeconds": 3675,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1983
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1692
+          }
+        ]
+      },
+      "baselineBestWasValidated": true,
+      "baselineBestObservedInAnyCommonSnapshot": true,
+      "baselineValidAmongValidated": 97,
+      "bestBaselineAmongObservedCommon": {
+        "hubId": "seoul-rail-0318",
+        "maxBurdenSeconds": 1983,
+        "sumBurdenSeconds": 3675,
+        "participantBurdens": [
+          {
+            "originId": "p1",
+            "burdenSeconds": 1983
+          },
+          {
+            "originId": "p2",
+            "burdenSeconds": 1692
+          }
+        ]
+      },
+      "individualMembershipLosses": [
+        {
+          "from": 1800,
+          "to": 1912,
+          "origin": "p2",
+          "ids": [
+            "seoul-bus-101000001",
+            "seoul-bus-101000002"
+          ]
+        }
+      ],
+      "commonMembershipLosses": []
+    }
+  ]
+}
