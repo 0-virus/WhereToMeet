@@ -1,0 +1,1900 @@
+{
+  "reviewedAt": "2026-10-29",
+  "source": {
+    "id": "OA-21231",
+    "sourceUrl": "https://data.seoul.go.kr/dataList/OA-21231/S/1/datasetView.do",
+    "pageDataUpdatedAt": "2026-10-22",
+    "retrievedAt": "2026-10-29",
+    "bytes": 2154101,
+    "sha256": "224bc5a152e5ca92d93a9d1fc57928c07406f77159659f16faa19280b55207b1",
+    "license": "공공누리 1유형·서울특별시 출처표시",
+    "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/sheet/json/download.do",
+    "downloadForm": {
+      "srvType": "S",
+      "infId": "OA-21231",
+      "serviceKind": "1",
+      "pageNo": "1",
+      "gridTotalCnt": "",
+      "ssUserId": "SAMPLE_VIEW",
+      "strWhere": "",
+      "strOrderby": "CRTR_ID ASC",
+      "filterCol": "필터선택",
+      "txtFilter": ""
+    }
+  },
+  "priorEvidence": {
+    "path": "data/review-evidence/bus-route-links-2026-10-29.json",
+    "normalizedLfSha256": "496595341bea71a6270e11c38c3c0ee149d43414046906078f2833ab88ba1c22"
+  },
+  "method": [
+    "정류소 ID 정확한 일치만 사용하며 명칭·ARS·유형·좌표 차이를 별도로 보존.",
+    "페이지 갱신일은 각 정류소의 현장 조사일이 아니다. 같은 서울시 TOPIS 원천의 일치를 독립 현장 증거로 세지 않음.",
+    "신규 ID는 두 파일의 차집합이며 신규 설치나 출시 후보 확정이 아님. 가상정류장·선착장도 포함될 수 있음.",
+    "현재 후보 61개·검수 대상 120개의 미변경은 이 다섯 필드만의 대조 결과이며 현재 운행·보행·대기 공간 승인 아님.",
+    "좌표에 다수결을 적용하거나 자동 교체하지 않음. 충돌 판정은 모두 미해결로 유지."
+  ],
+  "summary": {
+    "masterRows": 11503,
+    "locationRows": 11236,
+    "matchedLocationIds": 11236,
+    "locationIdsMissingFromMaster": 0,
+    "additionalMasterIds": 267,
+    "changedExistingStops": 138,
+    "changedCoordinateStops": 43,
+    "changedByField": {
+      "name": 89,
+      "ARS_ID": 0,
+      "type": 8,
+      "lat": 41,
+      "lng": 41
+    },
+    "additionalMasterIdsByType": {
+      "가로변전일": 2,
+      "가상정류장": 124,
+      "마을버스": 79,
+      "일반차로": 60,
+      "중앙차로": 2
+    },
+    "reviewTargets": 120,
+    "targetsMissingFromMaster": 0,
+    "changedTargets": 0,
+    "previewBusIds": 61,
+    "previewBusIdsMissingFromMaster": 0,
+    "changedPreviewBusIds": 0,
+    "priorCoordinateConflictStops": 9,
+    "masterExactlyMatchesLocationPoint": 8,
+    "masterExactlyMatchesRoutePoint": 0
+  },
+  "changedExistingStops": [
+    {
+      "sourceId": "100000018",
+      "changes": {
+        "name": {
+          "before": "사직단.어린이도서관",
+          "after": "사직단.사직근린공원"
+        }
+      }
+    },
+    {
+      "sourceId": "100000019",
+      "changes": {
+        "name": {
+          "before": "경복궁역1번출구",
+          "after": "서울경찰청.경복궁역1번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "100000032",
+      "changes": {
+        "name": {
+          "before": "서울경찰청.경복궁역",
+          "after": "서울경찰청.경복궁역7번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "100000033",
+      "changes": {
+        "name": {
+          "before": "사직단",
+          "after": "사직단.사직근린공원"
+        }
+      }
+    },
+    {
+      "sourceId": "100000035",
+      "changes": {
+        "lat": {
+          "before": 37.5757693863,
+          "after": 37.5758665944
+        },
+        "lng": {
+          "before": 126.981972246,
+          "after": 126.9819874128
+        }
+      }
+    },
+    {
+      "sourceId": "100000386",
+      "changes": {
+        "name": {
+          "before": "종로1가",
+          "after": "종로1가.종각역"
+        }
+      }
+    },
+    {
+      "sourceId": "100000387",
+      "changes": {
+        "name": {
+          "before": "종로1가",
+          "after": "종로1가.종각역"
+        }
+      }
+    },
+    {
+      "sourceId": "100000390",
+      "changes": {
+        "name": {
+          "before": "종로3가.탑골공원",
+          "after": "종로3가역.탑골공원"
+        }
+      }
+    },
+    {
+      "sourceId": "100000391",
+      "changes": {
+        "name": {
+          "before": "종로3가.탑골공원",
+          "after": "종로3가역.탑골공원"
+        }
+      }
+    },
+    {
+      "sourceId": "100000394",
+      "changes": {
+        "name": {
+          "before": "종로5가.광장시장",
+          "after": "종로5가역.광장시장"
+        }
+      }
+    },
+    {
+      "sourceId": "100000395",
+      "changes": {
+        "name": {
+          "before": "종로5가.광장시장",
+          "after": "종로5가역.광장시장"
+        }
+      }
+    },
+    {
+      "sourceId": "100900110",
+      "changes": {
+        "name": {
+          "before": "성균관대학교",
+          "after": "성균관대정문"
+        }
+      }
+    },
+    {
+      "sourceId": "101900010",
+      "changes": {
+        "lat": {
+          "before": 37.553304657300004,
+          "after": 37.5533046573
+        }
+      }
+    },
+    {
+      "sourceId": "102000009",
+      "changes": {
+        "name": {
+          "before": "숙대입구역",
+          "after": "숙대입구.서울시교육청역"
+        }
+      }
+    },
+    {
+      "sourceId": "102000010",
+      "changes": {
+        "name": {
+          "before": "숙대입구역",
+          "after": "숙대입구.서울시교육청역"
+        }
+      }
+    },
+    {
+      "sourceId": "102000011",
+      "changes": {
+        "name": {
+          "before": "갈월동",
+          "after": "동자동"
+        }
+      }
+    },
+    {
+      "sourceId": "102000029",
+      "changes": {
+        "name": {
+          "before": "한강대교북단",
+          "after": "한강초등학교"
+        }
+      }
+    },
+    {
+      "sourceId": "102000034",
+      "changes": {
+        "name": {
+          "before": "숙대입구역.청파동주민센터",
+          "after": "청파동주민센터.숙대입구역"
+        }
+      }
+    },
+    {
+      "sourceId": "102000035",
+      "changes": {
+        "name": {
+          "before": "숙대입구역.청파동주민센터",
+          "after": "청파동주민센터.숙대입구역"
+        }
+      }
+    },
+    {
+      "sourceId": "102000100",
+      "changes": {
+        "name": {
+          "before": "한남동주민센터",
+          "after": "한남동주민센터.리움미술관"
+        }
+      }
+    },
+    {
+      "sourceId": "102000109",
+      "changes": {
+        "name": {
+          "before": "용산중고",
+          "after": "용산중고.삼광초등학교"
+        }
+      }
+    },
+    {
+      "sourceId": "102000114",
+      "changes": {
+        "name": {
+          "before": "남영우체국",
+          "after": "남영우체국.숙대입구역3번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "102000115",
+      "changes": {
+        "name": {
+          "before": "갈월동사회복지관.남영우체국",
+          "after": "남영동주민센터.갈월동사회복지관"
+        }
+      }
+    },
+    {
+      "sourceId": "102000135",
+      "changes": {
+        "name": {
+          "before": "숙대입구역",
+          "after": "청파치안센터.숙대입구역"
+        }
+      }
+    },
+    {
+      "sourceId": "102000142",
+      "changes": {
+        "name": {
+          "before": "효창공원후문",
+          "after": "효창공원후문.용산데시앙포레"
+        }
+      }
+    },
+    {
+      "sourceId": "102000151",
+      "changes": {
+        "name": {
+          "before": "중앙하이츠빌라앞",
+          "after": "용문동중앙빌라앞"
+        }
+      }
+    },
+    {
+      "sourceId": "102000152",
+      "changes": {
+        "name": {
+          "before": "중앙하이츠빌라앞",
+          "after": "용문동중앙빌라앞"
+        }
+      }
+    },
+    {
+      "sourceId": "102000185",
+      "changes": {
+        "lat": {
+          "before": 37.528342,
+          "after": 37.528008
+        },
+        "lng": {
+          "before": 126.999026,
+          "after": 126.999303
+        }
+      }
+    },
+    {
+      "sourceId": "102000297",
+      "changes": {
+        "name": {
+          "before": "용산꿈나무종합타운",
+          "after": "용산꿈나무종합타운.원효로우체국"
+        }
+      }
+    },
+    {
+      "sourceId": "103000034",
+      "changes": {
+        "name": {
+          "before": "왕십리역",
+          "after": "왕십리역9번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000035",
+      "changes": {
+        "name": {
+          "before": "왕십리역",
+          "after": "왕십리역8번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000046",
+      "changes": {
+        "name": {
+          "before": "신금호역",
+          "after": "신금호역3번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000047",
+      "changes": {
+        "name": {
+          "before": "신금호역",
+          "after": "신금호역2번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000049",
+      "changes": {
+        "name": {
+          "before": "금호고등학교.금호자이1차아파트입구",
+          "after": "금호고등학교.금호센트럴자이입구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000141",
+      "changes": {
+        "name": {
+          "before": "경동초등학교입구",
+          "after": "경동초등학교.경일중고등학교"
+        }
+      }
+    },
+    {
+      "sourceId": "103000142",
+      "changes": {
+        "name": {
+          "before": "경동초등학교입구",
+          "after": "경동초등학교.경일중고등학교"
+        }
+      }
+    },
+    {
+      "sourceId": "103000162",
+      "changes": {
+        "name": {
+          "before": "뚝섬서울숲",
+          "after": "서울숲10번출입구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000164",
+      "changes": {
+        "name": {
+          "before": "서울숲1번출입구",
+          "after": "서울숲주차장.서울숲15번출입구"
+        }
+      }
+    },
+    {
+      "sourceId": "103000517",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "103000519",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "103900024",
+      "changes": {
+        "lat": {
+          "before": 37.545277754,
+          "after": 37.545575
+        },
+        "lng": {
+          "before": 127.0246947943,
+          "after": 127.024831
+        }
+      }
+    },
+    {
+      "sourceId": "103900075",
+      "changes": {
+        "name": {
+          "before": "중앙병원",
+          "after": "열린금호교육문화관"
+        }
+      }
+    },
+    {
+      "sourceId": "103900097",
+      "changes": {
+        "name": {
+          "before": "중앙병원앞",
+          "after": "열린금호교육문화관"
+        }
+      }
+    },
+    {
+      "sourceId": "103900110",
+      "changes": {
+        "lat": {
+          "before": 37.5452561903,
+          "after": 37.545517
+        },
+        "lng": {
+          "before": 127.0243937555,
+          "after": 127.024517
+        }
+      }
+    },
+    {
+      "sourceId": "103900253",
+      "changes": {
+        "name": {
+          "before": "이마트.서울숲힐스테이트아파트",
+          "after": "서울숲힐스테이트아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "103900259",
+      "changes": {
+        "name": {
+          "before": "이마트.서울숲힐스테이트아파트",
+          "after": "서울숲힐스테이트아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "104000315",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "105000211",
+      "changes": {
+        "name": {
+          "before": "청랑리한신아파트.청량사입구",
+          "after": "청량리한신아파트.청량사입구"
+        }
+      }
+    },
+    {
+      "sourceId": "105000231",
+      "changes": {
+        "lat": {
+          "before": 37.5945213658,
+          "after": 37.5944
+        },
+        "lng": {
+          "before": 127.0653057725,
+          "after": 127.06603
+        }
+      }
+    },
+    {
+      "sourceId": "105000269",
+      "changes": {
+        "name": {
+          "before": "동대문노인종합복지관",
+          "after": "동대문노인종합복지관.청소년센터"
+        }
+      }
+    },
+    {
+      "sourceId": "106000058",
+      "changes": {
+        "name": {
+          "before": "서울창업카페상봉점",
+          "after": "중랑구시설관리공단"
+        }
+      }
+    },
+    {
+      "sourceId": "106000059",
+      "changes": {
+        "name": {
+          "before": "서울창업카페상봉점",
+          "after": "중랑구시설관리공단"
+        }
+      }
+    },
+    {
+      "sourceId": "106000086",
+      "changes": {
+        "name": {
+          "before": "면목시장",
+          "after": "제2방정환교육지원센터.면목시장"
+        }
+      }
+    },
+    {
+      "sourceId": "106000106",
+      "changes": {
+        "lat": {
+          "before": 37.5822693524,
+          "after": 37.582036
+        },
+        "lng": {
+          "before": 127.0933286447,
+          "after": 127.093299
+        }
+      }
+    },
+    {
+      "sourceId": "106000113",
+      "changes": {
+        "lat": {
+          "before": 37.5733815658,
+          "after": 37.573637
+        },
+        "lng": {
+          "before": 127.0866708555,
+          "after": 127.086809
+        }
+      }
+    },
+    {
+      "sourceId": "106000117",
+      "changes": {
+        "name": {
+          "before": "묵동구길",
+          "after": "묵동도깨비시장"
+        }
+      }
+    },
+    {
+      "sourceId": "106000118",
+      "changes": {
+        "name": {
+          "before": "묵동구길",
+          "after": "묵동도깨비시장"
+        }
+      }
+    },
+    {
+      "sourceId": "106000216",
+      "changes": {
+        "lat": {
+          "before": 37.5924652462,
+          "after": 37.592134
+        },
+        "lng": {
+          "before": 127.0932383267,
+          "after": 127.093286
+        }
+      }
+    },
+    {
+      "sourceId": "106000220",
+      "changes": {
+        "lat": {
+          "before": 37.5871759203,
+          "after": 37.587484
+        },
+        "lng": {
+          "before": 127.0942915914,
+          "after": 127.094241
+        }
+      }
+    },
+    {
+      "sourceId": "106000462",
+      "changes": {
+        "lat": {
+          "before": 37.612606,
+          "after": 37.613025
+        },
+        "lng": {
+          "before": 127.109738,
+          "after": 127.10769
+        }
+      }
+    },
+    {
+      "sourceId": "106000463",
+      "changes": {
+        "lat": {
+          "before": 37.612494,
+          "after": 37.612874
+        },
+        "lng": {
+          "before": 127.109838,
+          "after": 127.107912
+        }
+      }
+    },
+    {
+      "sourceId": "107000233",
+      "changes": {
+        "lat": {
+          "before": 37.6082685042,
+          "after": 37.608328
+        },
+        "lng": {
+          "before": 127.0292316503,
+          "after": 127.029292
+        }
+      }
+    },
+    {
+      "sourceId": "107000521",
+      "changes": {
+        "lat": {
+          "before": 37.6188534243,
+          "after": 37.6186405449
+        },
+        "lng": {
+          "before": 127.0526589415,
+          "after": 127.0523622747
+        }
+      }
+    },
+    {
+      "sourceId": "107900017",
+      "changes": {
+        "lat": {
+          "before": 37.5847416354,
+          "after": 37.585032
+        },
+        "lng": {
+          "before": 127.0110898368,
+          "after": 127.011092
+        }
+      }
+    },
+    {
+      "sourceId": "107900145",
+      "changes": {
+        "lat": {
+          "before": 37.5878763191,
+          "after": 37.587649
+        },
+        "lng": {
+          "before": 127.010448131,
+          "after": 127.010544
+        }
+      }
+    },
+    {
+      "sourceId": "108000081",
+      "changes": {
+        "lat": {
+          "before": 37.6140963114,
+          "after": 37.614767
+        },
+        "lng": {
+          "before": 127.0223138592,
+          "after": 127.022266
+        }
+      }
+    },
+    {
+      "sourceId": "108900004",
+      "changes": {
+        "lat": {
+          "before": 37.6102684942,
+          "after": 37.610208
+        },
+        "lng": {
+          "before": 127.0304500466,
+          "after": 127.030441
+        }
+      }
+    },
+    {
+      "sourceId": "108900020",
+      "changes": {
+        "name": {
+          "before": "로얄공인중계사무소",
+          "after": "신가네남원추어탕"
+        }
+      }
+    },
+    {
+      "sourceId": "108900071",
+      "changes": {
+        "name": {
+          "before": "로얄공인중계사무소",
+          "after": "신가네남원추어탕"
+        }
+      }
+    },
+    {
+      "sourceId": "109900108",
+      "changes": {
+        "lat": {
+          "before": 37.6496562587,
+          "after": 37.6498089039
+        },
+        "lng": {
+          "before": 127.0220348239,
+          "after": 127.0215698707
+        }
+      }
+    },
+    {
+      "sourceId": "109900180",
+      "changes": {
+        "lat": {
+          "before": 37.6711168303,
+          "after": 37.6711476146
+        },
+        "lng": {
+          "before": 127.0450448623,
+          "after": 127.0457274845
+        }
+      }
+    },
+    {
+      "sourceId": "110000182",
+      "changes": {
+        "name": {
+          "before": "월계1동경로당",
+          "after": "월계어르신휴센터"
+        }
+      }
+    },
+    {
+      "sourceId": "110000375",
+      "changes": {
+        "name": {
+          "before": "월계1동경로당",
+          "after": "월계어르신휴센터"
+        }
+      }
+    },
+    {
+      "sourceId": "110900044",
+      "changes": {
+        "name": {
+          "before": "월계1동경로당.농협",
+          "after": "월계어르신휴센터"
+        }
+      }
+    },
+    {
+      "sourceId": "110900091",
+      "changes": {
+        "lat": {
+          "before": 37.61641,
+          "after": 37.615922
+        },
+        "lng": {
+          "before": 127.059951,
+          "after": 127.060777
+        }
+      }
+    },
+    {
+      "sourceId": "111000020",
+      "changes": {
+        "name": {
+          "before": "연신내역",
+          "after": "연신내역3번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "111000030",
+      "changes": {
+        "name": {
+          "before": "신한은행갈현지점",
+          "after": "갈현대경아르체"
+        }
+      }
+    },
+    {
+      "sourceId": "111000031",
+      "changes": {
+        "name": {
+          "before": "연신내역",
+          "after": "연신내역4번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "111000039",
+      "changes": {
+        "lat": {
+          "before": 37.601346,
+          "after": 37.601417
+        },
+        "lng": {
+          "before": 126.925956,
+          "after": 126.926305
+        }
+      }
+    },
+    {
+      "sourceId": "111000156",
+      "changes": {
+        "name": {
+          "before": "역촌역.역촌오거리",
+          "after": "역촌역3번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "111000203",
+      "changes": {
+        "lat": {
+          "before": 37.6138828478,
+          "after": 37.613808
+        },
+        "lng": {
+          "before": 126.9319923595,
+          "after": 126.932017
+        }
+      }
+    },
+    {
+      "sourceId": "111000320",
+      "changes": {
+        "name": {
+          "before": "응암정보도서관",
+          "after": "구립응암도서관"
+        }
+      }
+    },
+    {
+      "sourceId": "111000321",
+      "changes": {
+        "name": {
+          "before": "응암정보도서관",
+          "after": "구립응암도서관"
+        }
+      }
+    },
+    {
+      "sourceId": "113000065",
+      "changes": {
+        "lat": {
+          "before": 37.5668726108,
+          "after": 37.566629
+        },
+        "lng": {
+          "before": 126.9104194588,
+          "after": 126.910708
+        }
+      }
+    },
+    {
+      "sourceId": "113000118",
+      "changes": {
+        "lat": {
+          "before": 37.5557990945,
+          "after": 37.55567
+        },
+        "lng": {
+          "before": 126.946020578,
+          "after": 126.946025
+        }
+      }
+    },
+    {
+      "sourceId": "113000513",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "114000198",
+      "changes": {
+        "name": {
+          "before": "신정1동주민센터.신오새마을금고",
+          "after": "신정1동주민센터.으뜸새마을금고"
+        }
+      }
+    },
+    {
+      "sourceId": "114000271",
+      "changes": {
+        "lat": {
+          "before": 37.5087014007,
+          "after": 37.5086216094
+        },
+        "lng": {
+          "before": 126.8376467183,
+          "after": 126.8376427773
+        }
+      }
+    },
+    {
+      "sourceId": "114000426",
+      "changes": {
+        "name": {
+          "before": "신정1동주민센터.신오새마을금고",
+          "after": "신정1동주민센터.으뜸새마을금고"
+        }
+      }
+    },
+    {
+      "sourceId": "115000091",
+      "changes": {
+        "name": {
+          "before": "화곡동유림아파트",
+          "after": "유림노르웨이숲.까치산지구대"
+        }
+      }
+    },
+    {
+      "sourceId": "115000092",
+      "changes": {
+        "name": {
+          "before": "화곡동유림아파트",
+          "after": "유림노르웨이숲.까치산지구대"
+        }
+      }
+    },
+    {
+      "sourceId": "115000151",
+      "changes": {
+        "name": {
+          "before": "염창동새마을금고",
+          "after": "염창동새마을금고.한아름아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "115000952",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "115900074",
+      "changes": {
+        "lat": {
+          "before": 37.5360346554,
+          "after": 37.536098
+        },
+        "lng": {
+          "before": 126.8530365707,
+          "after": 126.853029
+        }
+      }
+    },
+    {
+      "sourceId": "115900106",
+      "changes": {
+        "name": {
+          "before": "로미오이발클럽",
+          "after": "로미오이발클럽.푸른숲아파트"
+        },
+        "lat": {
+          "before": 37.5361571618,
+          "after": 37.536249
+        },
+        "lng": {
+          "before": 126.8531190695,
+          "after": 126.852885
+        }
+      }
+    },
+    {
+      "sourceId": "115900108",
+      "changes": {
+        "lat": {
+          "before": 37.5352210016,
+          "after": 37.535528
+        },
+        "lng": {
+          "before": 126.8538280474,
+          "after": 126.853795
+        }
+      }
+    },
+    {
+      "sourceId": "115900113",
+      "changes": {
+        "lat": {
+          "before": 37.5338305389,
+          "after": 37.533751
+        },
+        "lng": {
+          "before": 126.8540194871,
+          "after": 126.854072
+        }
+      }
+    },
+    {
+      "sourceId": "115900114",
+      "changes": {
+        "lat": {
+          "before": 37.5336888926,
+          "after": 37.533721
+        },
+        "lng": {
+          "before": 126.854174736,
+          "after": 126.854163
+        }
+      }
+    },
+    {
+      "sourceId": "115900115",
+      "changes": {
+        "name": {
+          "before": "새마을금고",
+          "after": "새마을금고.삼성한아름아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "117900083",
+      "changes": {
+        "lat": {
+          "before": 37.4735235187,
+          "after": 37.473595
+        },
+        "lng": {
+          "before": 126.8924060994,
+          "after": 126.892111
+        }
+      }
+    },
+    {
+      "sourceId": "118000524",
+      "changes": {
+        "name": {
+          "before": "CM병원",
+          "after": "CM병원.독도체험관"
+        }
+      }
+    },
+    {
+      "sourceId": "118000622",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "119000056",
+      "changes": {
+        "name": {
+          "before": "상도초등학교입구",
+          "after": "동작구청.장승배기역3번출구"
+        }
+      }
+    },
+    {
+      "sourceId": "119000123",
+      "changes": {
+        "lng": {
+          "before": 126.92448039760001,
+          "after": 126.9244803976
+        }
+      }
+    },
+    {
+      "sourceId": "119900109",
+      "changes": {
+        "lat": {
+          "before": 37.501955207500004,
+          "after": 37.5019552075
+        }
+      }
+    },
+    {
+      "sourceId": "120000171",
+      "changes": {
+        "lat": {
+          "before": 37.4549310083,
+          "after": 37.454746
+        },
+        "lng": {
+          "before": 126.9498437849,
+          "after": 126.949912
+        }
+      }
+    },
+    {
+      "sourceId": "121900048",
+      "changes": {
+        "name": {
+          "before": "장자터빌딩",
+          "after": "디에이치방배101동앞"
+        }
+      }
+    },
+    {
+      "sourceId": "121900072",
+      "changes": {
+        "name": {
+          "before": "동문빌라",
+          "after": "디에이치방배126동앞"
+        }
+      }
+    },
+    {
+      "sourceId": "121900091",
+      "changes": {
+        "name": {
+          "before": "세탁소",
+          "after": "디에이치방배115동앞"
+        }
+      }
+    },
+    {
+      "sourceId": "121900102",
+      "changes": {
+        "lng": {
+          "before": 127.02295725889999,
+          "after": 127.0229572589
+        }
+      }
+    },
+    {
+      "sourceId": "121900106",
+      "changes": {
+        "name": {
+          "before": "우리수퍼",
+          "after": "디에이치방배상가"
+        }
+      }
+    },
+    {
+      "sourceId": "121900238",
+      "changes": {
+        "name": {
+          "before": "대검찰청.서초경찰서",
+          "after": "공소청.서초경찰서"
+        }
+      }
+    },
+    {
+      "sourceId": "122000130",
+      "changes": {
+        "name": {
+          "before": "은마아파트",
+          "after": "은마아파트정문"
+        }
+      }
+    },
+    {
+      "sourceId": "122000694",
+      "changes": {
+        "lat": {
+          "before": 37.5062370429,
+          "after": 37.5062242763
+        },
+        "lng": {
+          "before": 127.0310907911,
+          "after": 127.0310398291
+        }
+      }
+    },
+    {
+      "sourceId": "122000716",
+      "changes": {
+        "name": {
+          "before": "글래드라이브강남호텔",
+          "after": "경복아파트사거리.트레블로지강남역삼서울"
+        },
+        "lat": {
+          "before": 37.48373,
+          "after": 37.5080807446
+        },
+        "lng": {
+          "before": 127.068697,
+          "after": 127.0369963178
+        }
+      }
+    },
+    {
+      "sourceId": "122000743",
+      "changes": {
+        "name": {
+          "before": "LH수서아파트",
+          "after": "LH수서.디아크리온강남아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "122000744",
+      "changes": {
+        "name": {
+          "before": "LH수서아파트",
+          "after": "LH수서.디아크리온강남아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "122000752",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "122000758",
+      "changes": {
+        "name": {
+          "before": "싸리고개공원교차로",
+          "after": "역삼어울림아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "122900046",
+      "changes": {
+        "lat": {
+          "before": 37.493343,
+          "after": 37.493422
+        },
+        "lng": {
+          "before": 127.044394,
+          "after": 127.044671
+        }
+      }
+    },
+    {
+      "sourceId": "123000075",
+      "changes": {
+        "lat": {
+          "before": 37.5098569453,
+          "after": 37.509661
+        },
+        "lng": {
+          "before": 127.079036654,
+          "after": 127.079103
+        }
+      }
+    },
+    {
+      "sourceId": "123000079",
+      "changes": {
+        "name": {
+          "before": "송파구민회관.구의회",
+          "after": "송파문화예술회관.구의회"
+        }
+      }
+    },
+    {
+      "sourceId": "123000080",
+      "changes": {
+        "name": {
+          "before": "송파구민회관.구의회",
+          "after": "송파문화예술회관.구의회"
+        }
+      }
+    },
+    {
+      "sourceId": "123000149",
+      "changes": {
+        "lat": {
+          "before": 37.5128834629,
+          "after": 37.512816
+        },
+        "lng": {
+          "before": 127.1261589886,
+          "after": 127.126353
+        }
+      }
+    },
+    {
+      "sourceId": "123000157",
+      "changes": {
+        "lat": {
+          "before": 37.5133215257,
+          "after": 37.51316
+        },
+        "lng": {
+          "before": 127.1293296238,
+          "after": 127.129227
+        }
+      }
+    },
+    {
+      "sourceId": "123000245",
+      "changes": {
+        "name": {
+          "before": "문정로데오거리입구",
+          "after": "가락시장역.올림픽훼밀리타운"
+        }
+      }
+    },
+    {
+      "sourceId": "123000256",
+      "changes": {
+        "name": {
+          "before": "가락현대5차아파트",
+          "after": "더샵송파루미스타아파트"
+        }
+      }
+    },
+    {
+      "sourceId": "123000273",
+      "changes": {
+        "name": {
+          "before": "문정로데오거리입구",
+          "after": "서울평화초등학교.가원중학교"
+        }
+      }
+    },
+    {
+      "sourceId": "123000535",
+      "changes": {
+        "name": {
+          "before": "잠실파크리오아파트",
+          "after": "잠실래미안아이파크.잠실파크리오"
+        }
+      }
+    },
+    {
+      "sourceId": "123000689",
+      "changes": {
+        "type": {
+          "before": "한강선착장",
+          "after": "선착장"
+        }
+      }
+    },
+    {
+      "sourceId": "123900026",
+      "changes": {
+        "name": {
+          "before": "서울동부지방법원.검찰청",
+          "after": "서울동부지방법원.공소청"
+        }
+      }
+    },
+    {
+      "sourceId": "123900032",
+      "changes": {
+        "name": {
+          "before": "서울동부지방법원.검찰청",
+          "after": "서울동부지방법원.공소청"
+        }
+      }
+    },
+    {
+      "sourceId": "124000054",
+      "changes": {
+        "lat": {
+          "before": 37.5532319019,
+          "after": 37.553463
+        },
+        "lng": {
+          "before": 127.1288157342,
+          "after": 127.128871
+        }
+      }
+    },
+    {
+      "sourceId": "124000125",
+      "changes": {
+        "name": {
+          "before": "굽은다리사거리",
+          "after": "봄담한방병원"
+        }
+      }
+    },
+    {
+      "sourceId": "124000126",
+      "changes": {
+        "name": {
+          "before": "굽은다리사거리",
+          "after": "사랑플러스병원건강증진센터"
+        }
+      }
+    },
+    {
+      "sourceId": "124000133",
+      "changes": {
+        "name": {
+          "before": "강동리바트",
+          "after": "허리나은병원"
+        }
+      }
+    },
+    {
+      "sourceId": "124000265",
+      "changes": {
+        "name": {
+          "before": "강동농협",
+          "after": "강동어린이식당.강동농협"
+        }
+      }
+    },
+    {
+      "sourceId": "124000434",
+      "changes": {
+        "name": {
+          "before": "강동농협",
+          "after": "강동어린이식당.강동농협"
+        }
+      }
+    }
+  ],
+  "additionalMasterIds": [
+    "100000420",
+    "100000423",
+    "100000424",
+    "101000250",
+    "101000325",
+    "101000327",
+    "101000329",
+    "101000330",
+    "101000340",
+    "101000341",
+    "101900013",
+    "102000259",
+    "102000270",
+    "102000271",
+    "102000299",
+    "102000300",
+    "102000301",
+    "102000303",
+    "102000305",
+    "102000307",
+    "102000308",
+    "102000309",
+    "102000313",
+    "102000315",
+    "102000319",
+    "102000320",
+    "102000321",
+    "102000323",
+    "102000324",
+    "102900013",
+    "102900016",
+    "102900017",
+    "102900018",
+    "102900021",
+    "102900028",
+    "102900059",
+    "103000520",
+    "103900083",
+    "103900114",
+    "103900248",
+    "103900249",
+    "103900271",
+    "104000288",
+    "104000289",
+    "104000304",
+    "104900134",
+    "105000209",
+    "105000217",
+    "105000558",
+    "105000565",
+    "105900013",
+    "105900014",
+    "107900098",
+    "107900181",
+    "109000035",
+    "109900078",
+    "109900131",
+    "109900132",
+    "109900134",
+    "110900125",
+    "110900129",
+    "110900137",
+    "110900138",
+    "110900139",
+    "110900140",
+    "110900141",
+    "111000468",
+    "111000907",
+    "111000908",
+    "111001130",
+    "111900130",
+    "112000183",
+    "112000365",
+    "112000394",
+    "112000395",
+    "112000434",
+    "112000435",
+    "112000438",
+    "113000427",
+    "113000429",
+    "113000460",
+    "113000462",
+    "113000463",
+    "113000464",
+    "113000465",
+    "113000481",
+    "113000482",
+    "113000483",
+    "113000484",
+    "113000497",
+    "113000498",
+    "113000499",
+    "113000500",
+    "113000505",
+    "113000506",
+    "113000508",
+    "113000509",
+    "113900090",
+    "113900100",
+    "114000260",
+    "114000263",
+    "114900004",
+    "114900053",
+    "115000068",
+    "115000338",
+    "115000520",
+    "115000537",
+    "115000621",
+    "115000626",
+    "115000627",
+    "115000637",
+    "115000902",
+    "115000903",
+    "115000904",
+    "115000905",
+    "115000906",
+    "115000907",
+    "115000928",
+    "115000929",
+    "115000934",
+    "115900003",
+    "115900153",
+    "115900255",
+    "115900277",
+    "116000196",
+    "116000197",
+    "116000292",
+    "116000346",
+    "116000352",
+    "116000354",
+    "116000357",
+    "116000607",
+    "116900201",
+    "116900261",
+    "116900271",
+    "117000321",
+    "117000933",
+    "117000934",
+    "117000936",
+    "117900020",
+    "117900044",
+    "117900105",
+    "117900158",
+    "117900168",
+    "118000083",
+    "118000169",
+    "118000240",
+    "118000244",
+    "118000495",
+    "118000510",
+    "118000551",
+    "118000552",
+    "118000553",
+    "118000554",
+    "118000555",
+    "118000556",
+    "118000557",
+    "118000581",
+    "118000582",
+    "118000583",
+    "118000584",
+    "118000585",
+    "118000586",
+    "118000587",
+    "118000588",
+    "118000589",
+    "118000590",
+    "118000612",
+    "118900064",
+    "118900074",
+    "118900079",
+    "118900090",
+    "118900100",
+    "118900122",
+    "118900124",
+    "118900183",
+    "118900201",
+    "118900202",
+    "119000297",
+    "119000298",
+    "119000299",
+    "119000300",
+    "119000304",
+    "119000305",
+    "119000306",
+    "119000307",
+    "119000309",
+    "119000310",
+    "119000311",
+    "119900084",
+    "119900155",
+    "119900210",
+    "119900211",
+    "119900308",
+    "120000236",
+    "120000237",
+    "120000397",
+    "120000398",
+    "120000400",
+    "120000426",
+    "120000428",
+    "120000429",
+    "120000434",
+    "120000452",
+    "120000453",
+    "120000675",
+    "120900167",
+    "121000558",
+    "121000963",
+    "121000965",
+    "121000966",
+    "121000967",
+    "121000968",
+    "121000987",
+    "121001311",
+    "121001312",
+    "121001319",
+    "121001331",
+    "121001340",
+    "121900002",
+    "121900005",
+    "121900012",
+    "121900055",
+    "121900242",
+    "122000604",
+    "122000648",
+    "122000649",
+    "122000672",
+    "122000706",
+    "122000707",
+    "122000708",
+    "122000709",
+    "122000710",
+    "122000711",
+    "122000712",
+    "122000713",
+    "122000715",
+    "122000731",
+    "122000759",
+    "122000760",
+    "123000707",
+    "123900003",
+    "123900006",
+    "123900039",
+    "123900040",
+    "123900045",
+    "123900052",
+    "124000509",
+    "124900027",
+    "124900061",
+    "124900067",
+    "129000023",
+    "129000024",
+    "129000025",
+    "129000030",
+    "129000031",
+    "129000032",
+    "129000033",
+    "129000034",
+    "129000035",
+    "129000036",
+    "129000038",
+    "129000043",
+    "129000044",
+    "129000045",
+    "129000110",
+    "129000111"
+  ],
+  "coordinateConflictChecks": [
+    {
+      "sourceId": "113900266",
+      "originalName": "사천고가앞",
+      "masterName": "사천고가앞",
+      "masterArsId": "14716",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.613647,
+        "lng": 127.074999
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 14803.14434605885,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "122000716",
+      "originalName": "글래드라이브강남호텔",
+      "masterName": "경복아파트사거리.트레블로지강남역삼서울",
+      "masterArsId": "23390",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5080807446,
+        "lng": 127.0369963178
+      },
+      "equalsLocationSourcePoint": false,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 3892.6843478390238,
+      "distanceToRouteSourceMetres": 0.5290301799927615,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "120900051",
+      "originalName": "삼성산주공정문",
+      "masterName": "삼성산주공정문",
+      "masterArsId": "21539",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.480443,
+        "lng": 126.914873
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 2378.775434331253,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113900038",
+      "originalName": "S마트",
+      "masterName": "S마트",
+      "masterArsId": "14541",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.547055,
+        "lng": 126.943554
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 983.6873064975404,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000318",
+      "originalName": "오륜사거리",
+      "masterName": "오륜사거리",
+      "masterArsId": "24409",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5045363345,
+        "lng": 127.1386561317
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 197.67129420618022,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "103900289",
+      "originalName": "한양종합기술연구원.생활과학대학",
+      "masterName": "한양종합기술연구원.생활과학대학",
+      "masterArsId": "04909",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5590603809,
+        "lng": 127.0449123153
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 183.32021721982727,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000200",
+      "originalName": "효사정앞",
+      "masterName": "효사정앞",
+      "masterArsId": "20660",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5103036908,
+        "lng": 126.9626136909
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 178.50539838589648,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "103900287",
+      "originalName": "한양대학교백남학술정보관",
+      "masterName": "한양대학교백남학술정보관",
+      "masterArsId": "04908",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5589963484,
+        "lng": 127.0446277378
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 176.6635472494666,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115900252",
+      "originalName": "마곡중학교",
+      "masterName": "마곡중학교",
+      "masterArsId": "16604",
+      "arsMatchesLocationSource": true,
+      "masterPoint": {
+        "lat": 37.5689619652,
+        "lng": 126.8205580115
+      },
+      "equalsLocationSourcePoint": true,
+      "equalsRouteSourcePoint": false,
+      "distanceToLocationSourceMetres": 0.0,
+      "distanceToRouteSourceMetres": 111.73198665618592,
+      "coordinateResolution": "unresolved",
+      "releaseEligible": false
+    }
+  ]
+}
