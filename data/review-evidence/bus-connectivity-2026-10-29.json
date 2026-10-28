@@ -1,0 +1,8652 @@
+{
+  "reviewedAt": "2026-10-29",
+  "purpose": "중앙차로 대리 기준의 누락과 후속 검수 후보 파악",
+  "source": {
+    "id": "OA-12913",
+    "title": "서울시 버스노선별 정류장별 시간대별 승하차 인원 정보",
+    "sourceUrl": "https://data.seoul.go.kr/dataList/OA-12913/S/1/datasetView.do",
+    "month": "202609",
+    "registeredAt": "2026-10-03",
+    "fileListedDate": "2026-10-06",
+    "retrievedAt": "2026-10-29",
+    "encoding": "cp949",
+    "bytes": 15452718,
+    "sha256": "c9400f1f13faa92435d036ba4f7ebd227b4e6ef4558a966c90a4c49f26f5fbe3",
+    "license": "공공누리 1유형·서울특별시 출처표시",
+    "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?&useCache=false",
+    "downloadForm": {
+      "infId": "OA-12913",
+      "seq": "114",
+      "seqNo": "",
+      "infSeq": "3"
+    }
+  },
+  "locationSources": [
+    {
+      "id": "OA-21232",
+      "title": "서울시 역사마스터 정보",
+      "publisher": "서울특별시",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-21232/S/1/datasetView.do",
+      "sourceDate": "2026-10-02",
+      "dateMeaning": "dataset refresh date shown on official landing page; individual station survey dates not provided",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/sheet/json/download.do",
+      "downloadMethod": "POST form",
+      "downloadForm": {
+        "srvType": "S",
+        "infId": "OA-21232",
+        "serviceKind": "0",
+        "pageNo": "1",
+        "ssUserId": "SAMPLE_VIEW",
+        "strWhere": "",
+        "strOrderby": "BLDN_ID DESC"
+      },
+      "rows": 784,
+      "files": [
+        {
+          "path": "data/raw/seoul-rail-20261002.json",
+          "sha256": "96324048e8d6926c821043205af8348f14f499abb625e62b973b32294bbf7487",
+          "role": "unaltered downloaded JSON"
+        }
+      ]
+    },
+    {
+      "id": "OA-15067",
+      "title": "서울시 버스정류소 위치정보",
+      "publisher": "서울특별시",
+      "sourceUrl": "https://data.seoul.go.kr/dataList/OA-15067/S/1/datasetView.do",
+      "sourceDate": "2026-09-02",
+      "dateMeaning": "date in official snapshot filename",
+      "downloadUrl": "https://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?useCache=false",
+      "downloadMethod": "POST form",
+      "downloadForm": {
+        "infId": "OA-15067",
+        "seq": "58",
+        "infSeq": "1",
+        "seqNo": ""
+      },
+      "rows": 11236,
+      "files": [
+        {
+          "path": "data/raw/seoul-bus-20260902.xlsx",
+          "sha256": "73eb0a5f4fd0f6128237b5e23fa361fd1c6d8a31a83bcee2884e6a48481852bb",
+          "role": "unaltered downloaded XLSX"
+        },
+        {
+          "path": "data/raw/seoul-bus-20260902.json",
+          "sha256": "41193c19046771dc2ce22b0b55c9eb984ddfea1c30f64e4b5a3ef24bf1e553be",
+          "role": "lossless field extraction by scripts/extract-hub-sources.py"
+        }
+      ]
+    }
+  ],
+  "catalogVersion": "seoul-20261005-a74a00301aab",
+  "method": [
+    "표준 정류소 ID의 정확한 일치와 ARS 일치만 사용. 이름/최근접 좌표로 합치지 않음.",
+    "같은 정류소의 (교통수단타입코드, 노선번호)를 한 번 집계. 기타는 제외.",
+    "순번·방향·노선명 변형으로 노선 수를 늘리지 않음. 실제 노선 ID·현재 시간표의 전수 연결 수가 아님.",
+    "주간·심야를 포함한 한 달의 관측이며 같은 약속 시각에 모든 노선을 이용할 수 있다는 뜻이 아님.",
+    "9월 승하차 관측은 현재 운행·모든 경기/인천 노선·보행 접근·공공 만남 지점의 증거가 아님.",
+    "철도 원본 전체의 가장 가까운 점까지 Haversine 직선거리. 출입구·보행거리·운영 상태가 아님.",
+    "상위30개씩은 수동 검수 우선순위. 방향별 정류소를 독립 만남 지점으로 확정하거나 자동 채택하지 않음."
+  ],
+  "summary": {
+    "rows": 42155,
+    "rawLocationRows": 11236,
+    "observedStopIdsIncludingUnknown": 12532,
+    "knownObservedStopIds": 12531,
+    "matchedLocationIds": 10657,
+    "observedIdsWithoutLocation": 1875,
+    "knownObservedIdsWithoutLocation": 1874,
+    "locationIdsWithoutObservation": 579,
+    "arsConflicts": 0,
+    "unknownModeRows": 8,
+    "unknownStopIdRows": 1,
+    "zeroPassengerRows": 0,
+    "rawRailPoints": 784,
+    "previewBusIds": 61,
+    "previewBusIdsWithObservation": 60,
+    "matchedStopTypes": {
+      "가로변시간": 220,
+      "가로변전일": 119,
+      "마을버스": 4172,
+      "일반차로": 5745,
+      "중앙차로": 401
+    },
+    "outsideCentralLaneWithObservedRoute": 10256,
+    "outsideCentralLaneAtLeastRoutes": {
+      "2": 5900,
+      "5": 2225,
+      "10": 401
+    },
+    "outsideCentralLaneAtLeast1kmFromRawRail": 1297,
+    "outsideCentralLaneAtLeast1kmAnd5Routes": 276,
+    "routeNumberKeysWithMultipleNames": 15
+  },
+  "currentPreview": [
+    {
+      "sourceId": "100000001",
+      "name": "종로2가사거리",
+      "arsId": "01001",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 3,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 4,
+      "nearestRawRailId": "0153",
+      "nearestRawRailName": "종로3가",
+      "nearestRawRailStraightMetres": 367.00737443229684,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000002",
+      "name": "창경궁.서울대학교병원",
+      "arsId": "01002",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "020",
+          "number": "8111"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 569.4402402466175,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000003",
+      "name": "명륜3가.성대입구",
+      "arsId": "01003",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "020",
+          "number": "8111"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 317.7876246554264,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000004",
+      "name": "종로2가.삼일교",
+      "arsId": "01004",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "040",
+          "number": "01A"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "0153",
+      "nearestRawRailName": "종로3가",
+      "nearestRawRailStraightMetres": 424.8558975206028,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000005",
+      "name": "혜화동로터리.여운형활동터",
+      "arsId": "01005",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "020",
+          "number": "8111"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 434.52793327005236,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000001",
+      "name": "명동성당.남대문세무서",
+      "arsId": "02001",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "472"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "040",
+          "number": "01A"
+        },
+        {
+          "modeCode": "050",
+          "number": "9401"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "0203",
+      "nearestRawRailName": "을지로3가",
+      "nearestRawRailStraightMetres": 395.49274114829643,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000002",
+      "name": "국가인권위.안중근활동터",
+      "arsId": "02002",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "472"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "050",
+          "number": "9401"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "0424",
+      "nearestRawRailName": "명동",
+      "nearestRawRailStraightMetres": 397.25865227282577,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000007",
+      "name": "서울역버스환승센터.강우규의거터",
+      "arsId": "02007",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "504"
+        },
+        {
+          "modeCode": "010",
+          "number": "506"
+        },
+        {
+          "modeCode": "020",
+          "number": "1711"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 16,
+      "nearestRawRailId": "9005",
+      "nearestRawRailName": "서울",
+      "nearestRawRailStraightMetres": 30.72128550013054,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000008",
+      "name": "숭례문",
+      "arsId": "02008",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 20,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "504"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "506"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "010",
+          "number": "603"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "1251",
+      "nearestRawRailName": "서울역",
+      "nearestRawRailStraightMetres": 288.4436244252587,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "103000002",
+      "name": "청년회의소.서울새활용플라자",
+      "arsId": "04002",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 8,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "130"
+        },
+        {
+          "modeCode": "010",
+          "number": "303"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "020",
+          "number": "3216"
+        },
+        {
+          "modeCode": "020",
+          "number": "3220"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 8,
+      "nearestRawRailId": "2544",
+      "nearestRawRailName": "장한평",
+      "nearestRawRailStraightMetres": 370.9295871374581,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000002",
+      "name": "청년회의소",
+      "arsId": "06002",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 8,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "130"
+        },
+        {
+          "modeCode": "010",
+          "number": "303"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "020",
+          "number": "3216"
+        },
+        {
+          "modeCode": "020",
+          "number": "3220"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 8,
+      "nearestRawRailId": "2544",
+      "nearestRawRailName": "장한평",
+      "nearestRawRailStraightMetres": 300.0686045417363,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000007",
+      "name": "서울시동부병원",
+      "arsId": "06007",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 5,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "303"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "020",
+          "number": "2112"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 5,
+      "nearestRawRailId": "0246",
+      "nearestRawRailName": "신설동",
+      "nearestRawRailStraightMetres": 538.4130609461913,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000008",
+      "name": "신설동역.서울풍물시장",
+      "arsId": "06008",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "303"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "020",
+          "number": "2112"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 6,
+      "nearestRawRailId": "0246",
+      "nearestRawRailName": "신설동",
+      "nearestRawRailStraightMetres": 77.8025756614046,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000013",
+      "name": "시조사삼거리.회기역",
+      "arsId": "06013",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "020",
+          "number": "1213"
+        },
+        {
+          "modeCode": "020",
+          "number": "1224"
+        },
+        {
+          "modeCode": "020",
+          "number": "1227"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115B"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        }
+      ],
+      "sourceRowCount": 15,
+      "nearestRawRailId": "1015",
+      "nearestRawRailName": "회기",
+      "nearestRawRailStraightMetres": 103.73383086388844,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000014",
+      "name": "떡전교사거리.동대문노인복지관",
+      "arsId": "06014",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "120"
+        },
+        {
+          "modeCode": "010",
+          "number": "147"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "020",
+          "number": "1213"
+        },
+        {
+          "modeCode": "020",
+          "number": "1222"
+        },
+        {
+          "modeCode": "020",
+          "number": "1224"
+        },
+        {
+          "modeCode": "020",
+          "number": "1227"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115B"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        }
+      ],
+      "sourceRowCount": 20,
+      "nearestRawRailId": "1015",
+      "nearestRawRailName": "회기",
+      "nearestRawRailStraightMetres": 594.563165756644,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000478",
+      "name": "청량리미주아파트.동대문세무서",
+      "arsId": "06021",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "121"
+        },
+        {
+          "modeCode": "010",
+          "number": "147"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "020",
+          "number": "1213"
+        },
+        {
+          "modeCode": "020",
+          "number": "1222"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2230"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "1014",
+      "nearestRawRailName": "청량리(서울시립대입구)",
+      "nearestRawRailStraightMetres": 224.88081799440127,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000480",
+      "name": "청량리청과물도매시장",
+      "arsId": "06022",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 21,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "147"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "020",
+          "number": "1226"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "020",
+          "number": "2233"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 24,
+      "nearestRawRailId": "0158",
+      "nearestRawRailName": "청량리(서울시립대입구)",
+      "nearestRawRailStraightMetres": 373.87338131936446,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000483",
+      "name": "용두동사거리.한국의류시험연구원",
+      "arsId": "06026",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 15,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "020",
+          "number": "2233"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "0156",
+      "nearestRawRailName": "신설동",
+      "nearestRawRailStraightMetres": 343.8968318244527,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000484",
+      "name": "용두동사거리",
+      "arsId": "06025",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "020",
+          "number": "2233"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0157",
+      "nearestRawRailName": "제기동",
+      "nearestRawRailStraightMetres": 436.86994293445053,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "107000009",
+      "name": "삼선교.한성대학교",
+      "arsId": "08009",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 22,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "109"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "1111"
+        },
+        {
+          "modeCode": "020",
+          "number": "1112"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "020",
+          "number": "8111"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 24,
+      "nearestRawRailId": "0419",
+      "nearestRawRailName": "한성대입구(삼선교)",
+      "nearestRawRailStraightMetres": 321.04475699415343,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "107000010",
+      "name": "삼선교.한성대학교.조소앙활동터",
+      "arsId": "08010",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 21,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "109"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "1111"
+        },
+        {
+          "modeCode": "020",
+          "number": "1112"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 23,
+      "nearestRawRailId": "0419",
+      "nearestRawRailName": "한성대입구(삼선교)",
+      "nearestRawRailStraightMetres": 201.72607972817877,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "108000003",
+      "name": "수유역.수유사거리",
+      "arsId": "09003",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "101"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "120"
+        },
+        {
+          "modeCode": "010",
+          "number": "130"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "141"
+        },
+        {
+          "modeCode": "010",
+          "number": "142"
+        },
+        {
+          "modeCode": "010",
+          "number": "148"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "163"
+        },
+        {
+          "modeCode": "020",
+          "number": "1138"
+        },
+        {
+          "modeCode": "020",
+          "number": "1165"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "0414",
+      "nearestRawRailName": "수유(강북구청)",
+      "nearestRawRailStraightMetres": 229.3245250327545,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "109000011",
+      "name": "도봉보건소",
+      "arsId": "10011",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "130"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "141"
+        },
+        {
+          "modeCode": "010",
+          "number": "142"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "020",
+          "number": "1127"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "0412",
+      "nearestRawRailName": "창동",
+      "nearestRawRailStraightMetres": 866.8937809708941,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "109000012",
+      "name": "도봉보건소.북한산아이파크아파트",
+      "arsId": "10012",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "130"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "141"
+        },
+        {
+          "modeCode": "010",
+          "number": "142"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "0412",
+      "nearestRawRailName": "창동",
+      "nearestRawRailStraightMetres": 823.1487914055612,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000007",
+      "name": "사천교",
+      "arsId": "13007",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "700"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "742"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "750B"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "010",
+          "number": "761"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7613"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7716"
+        },
+        {
+          "modeCode": "020",
+          "number": "7727"
+        },
+        {
+          "modeCode": "020",
+          "number": "7728"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "1265",
+      "nearestRawRailName": "가좌",
+      "nearestRawRailStraightMetres": 256.8810870640515,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000403",
+      "name": "서대문역",
+      "arsId": "13038",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 9,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "010",
+          "number": "708"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "750B"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7024"
+        }
+      ],
+      "sourceRowCount": 9,
+      "nearestRawRailId": "2533",
+      "nearestRawRailName": "서대문",
+      "nearestRawRailStraightMetres": 105.80409768483919,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000404",
+      "name": "안산초등학교",
+      "arsId": "13033",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "010",
+          "number": "703"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "010",
+          "number": "705"
+        },
+        {
+          "modeCode": "010",
+          "number": "706"
+        },
+        {
+          "modeCode": "010",
+          "number": "707"
+        },
+        {
+          "modeCode": "010",
+          "number": "708"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7025"
+        },
+        {
+          "modeCode": "030",
+          "number": "서대문11"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0315",
+      "nearestRawRailName": "무악재",
+      "nearestRawRailStraightMetres": 211.92335882326924,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000409",
+      "name": "인왕산.홍제원아파트",
+      "arsId": "13040",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "010",
+          "number": "703"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "010",
+          "number": "705"
+        },
+        {
+          "modeCode": "010",
+          "number": "706"
+        },
+        {
+          "modeCode": "010",
+          "number": "707"
+        },
+        {
+          "modeCode": "010",
+          "number": "708"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7025"
+        },
+        {
+          "modeCode": "030",
+          "number": "서대문11"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0315",
+      "nearestRawRailName": "무악재",
+      "nearestRawRailStraightMetres": 265.0385324883614,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000416",
+      "name": "홍제삼거리.인왕산한신휴플러스",
+      "arsId": "13030",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "010",
+          "number": "703"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "010",
+          "number": "705"
+        },
+        {
+          "modeCode": "010",
+          "number": "706"
+        },
+        {
+          "modeCode": "010",
+          "number": "707"
+        },
+        {
+          "modeCode": "010",
+          "number": "708"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7025"
+        },
+        {
+          "modeCode": "030",
+          "number": "서대문11"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0315",
+      "nearestRawRailName": "무악재",
+      "nearestRawRailStraightMetres": 388.7202217888401,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "116000005",
+      "name": "구일역.중앙유통상가",
+      "arsId": "17005",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "600"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "662"
+        },
+        {
+          "modeCode": "020",
+          "number": "5626"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6511"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6637"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640A"
+        },
+        {
+          "modeCode": "020",
+          "number": "6713"
+        },
+        {
+          "modeCode": "030",
+          "number": "구로13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1813",
+      "nearestRawRailName": "구일",
+      "nearestRawRailStraightMetres": 489.386948907763,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "116000006",
+      "name": "구일역.제일제당",
+      "arsId": "17006",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "600"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "662"
+        },
+        {
+          "modeCode": "020",
+          "number": "5626"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6511"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6637"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6713"
+        },
+        {
+          "modeCode": "030",
+          "number": "구로13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1813",
+      "nearestRawRailName": "구일",
+      "nearestRawRailStraightMetres": 465.1711567755572,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "116000009",
+      "name": "개봉역.영화아파트",
+      "arsId": "17009",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 9,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "662"
+        },
+        {
+          "modeCode": "020",
+          "number": "5626"
+        },
+        {
+          "modeCode": "020",
+          "number": "6637"
+        },
+        {
+          "modeCode": "020",
+          "number": "6638"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640A"
+        },
+        {
+          "modeCode": "020",
+          "number": "6713"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1801",
+      "nearestRawRailName": "개봉",
+      "nearestRawRailStraightMetres": 260.91000368920203,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "116000010",
+      "name": "개봉역.한마을아파트",
+      "arsId": "17010",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 9,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "662"
+        },
+        {
+          "modeCode": "020",
+          "number": "5626"
+        },
+        {
+          "modeCode": "020",
+          "number": "6637"
+        },
+        {
+          "modeCode": "020",
+          "number": "6638"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6713"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1801",
+      "nearestRawRailName": "개봉",
+      "nearestRawRailStraightMetres": 296.3423269733184,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "117000310",
+      "name": "석수역",
+      "arsId": "18776",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 7,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "5530"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5618"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5625"
+        },
+        {
+          "modeCode": "020",
+          "number": "5626"
+        },
+        {
+          "modeCode": "020",
+          "number": "5713"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "1704",
+      "nearestRawRailName": "석수",
+      "nearestRawRailStraightMetres": 47.39025589613392,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000009",
+      "name": "서울영림초등학교",
+      "arsId": "19009",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "5620"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5625"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5634"
+        },
+        {
+          "modeCode": "020",
+          "number": "5713"
+        },
+        {
+          "modeCode": "020",
+          "number": "6512"
+        },
+        {
+          "modeCode": "051",
+          "number": "N51"
+        }
+      ],
+      "sourceRowCount": 15,
+      "nearestRawRailId": "0232",
+      "nearestRawRailName": "구로디지털단지",
+      "nearestRawRailStraightMetres": 368.2378270160432,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000010",
+      "name": "강남성심병원.대림성모병원",
+      "arsId": "19010",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "5620"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5625"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5713"
+        },
+        {
+          "modeCode": "020",
+          "number": "6512"
+        }
+      ],
+      "sourceRowCount": 11,
+      "nearestRawRailId": "0231",
+      "nearestRawRailName": "신대방",
+      "nearestRawRailStraightMetres": 599.581333823093,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000011",
+      "name": "경남아너스빌아파트",
+      "arsId": "19011",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        }
+      ],
+      "sourceRowCount": 6,
+      "nearestRawRailId": "2745",
+      "nearestRawRailName": "신풍",
+      "nearestRawRailStraightMetres": 520.2650984270944,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000014",
+      "name": "서울지방병무청",
+      "arsId": "19014",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 9,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "461"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5634"
+        },
+        {
+          "modeCode": "020",
+          "number": "8561"
+        }
+      ],
+      "sourceRowCount": 9,
+      "nearestRawRailId": "4403",
+      "nearestRawRailName": "서울지방병무청",
+      "nearestRawRailStraightMetres": 195.24018047708816,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000015",
+      "name": "대방역",
+      "arsId": "19015",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "010",
+          "number": "605"
+        },
+        {
+          "modeCode": "010",
+          "number": "640"
+        },
+        {
+          "modeCode": "010",
+          "number": "641"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "020",
+          "number": "6211"
+        },
+        {
+          "modeCode": "020",
+          "number": "6411"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "8641"
+        },
+        {
+          "modeCode": "051",
+          "number": "N64"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "4402",
+      "nearestRawRailName": "대방",
+      "nearestRawRailStraightMetres": 107.36975941086916,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000001",
+      "name": "동작상떼빌아파트",
+      "arsId": "20001",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "5620"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5625"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5634"
+        },
+        {
+          "modeCode": "020",
+          "number": "5713"
+        },
+        {
+          "modeCode": "020",
+          "number": "6512"
+        },
+        {
+          "modeCode": "051",
+          "number": "N51"
+        }
+      ],
+      "sourceRowCount": 15,
+      "nearestRawRailId": "0232",
+      "nearestRawRailName": "구로디지털단지",
+      "nearestRawRailStraightMetres": 299.30386079353536,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000002",
+      "name": "신대방경남아파트",
+      "arsId": "20002",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "5620"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5625"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5713"
+        },
+        {
+          "modeCode": "020",
+          "number": "6512"
+        }
+      ],
+      "sourceRowCount": 11,
+      "nearestRawRailId": "0231",
+      "nearestRawRailName": "신대방",
+      "nearestRawRailStraightMetres": 579.9728544007954,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000003",
+      "name": "신대방현대아파트",
+      "arsId": "20003",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        }
+      ],
+      "sourceRowCount": 6,
+      "nearestRawRailId": "2745",
+      "nearestRawRailName": "신풍",
+      "nearestRawRailStraightMetres": 550.5950260885635,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000006",
+      "name": "강남중학교",
+      "arsId": "20006",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "461"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "5623"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "5634"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "8561"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "4403",
+      "nearestRawRailName": "서울지방병무청",
+      "nearestRawRailStraightMetres": 260.9225888028435,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000007",
+      "name": "현대아파트",
+      "arsId": "20007",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "010",
+          "number": "605"
+        },
+        {
+          "modeCode": "010",
+          "number": "640"
+        },
+        {
+          "modeCode": "010",
+          "number": "641"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "6211"
+        },
+        {
+          "modeCode": "020",
+          "number": "6411"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "8641"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작01"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작08"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N64"
+        }
+      ],
+      "sourceRowCount": 17,
+      "nearestRawRailId": "1005",
+      "nearestRawRailName": "대방",
+      "nearestRawRailStraightMetres": 446.24824546108886,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000008",
+      "name": "현대아파트.유한양행",
+      "arsId": "20008",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "010",
+          "number": "605"
+        },
+        {
+          "modeCode": "010",
+          "number": "640"
+        },
+        {
+          "modeCode": "010",
+          "number": "641"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "020",
+          "number": "5531"
+        },
+        {
+          "modeCode": "020",
+          "number": "6211"
+        },
+        {
+          "modeCode": "020",
+          "number": "6411"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "8641"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작01"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작08"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N64"
+        }
+      ],
+      "sourceRowCount": 17,
+      "nearestRawRailId": "4401",
+      "nearestRawRailName": "샛강",
+      "nearestRawRailStraightMetres": 503.056042145692,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000284",
+      "name": "방배노인종합복지관",
+      "arsId": "20020",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작09"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작16"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작18"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "0433",
+      "nearestRawRailName": "사당",
+      "nearestRawRailStraightMetres": 414.3445283709055,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000285",
+      "name": "사당동우체국앞",
+      "arsId": "20019",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "2738",
+      "nearestRawRailName": "이수",
+      "nearestRawRailStraightMetres": 220.9488428933378,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000287",
+      "name": "경문고교.배나무골앞",
+      "arsId": "20017",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초05"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초16"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "0432",
+      "nearestRawRailName": "총신대입구(이수)",
+      "nearestRawRailStraightMetres": 595.1046077012064,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000288",
+      "name": "정금마을.방배경찰서",
+      "arsId": "20016",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초05"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초16"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "0432",
+      "nearestRawRailName": "총신대입구(이수)",
+      "nearestRawRailStraightMetres": 888.0391313831026,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000289",
+      "name": "갯마을앞",
+      "arsId": "20015",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 9,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        }
+      ],
+      "sourceRowCount": 9,
+      "nearestRawRailId": "4121",
+      "nearestRawRailName": "구반포",
+      "nearestRawRailStraightMetres": 552.4160820397342,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "120000671",
+      "name": "남태령역",
+      "arsId": "22026",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "0434",
+      "nearestRawRailName": "남태령",
+      "nearestRawRailStraightMetres": 222.6505043437312,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "120000672",
+      "name": "사당자동차학원",
+      "arsId": "21027",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        }
+      ],
+      "sourceRowCount": 7,
+      "nearestRawRailId": "0226",
+      "nearestRawRailName": "사당",
+      "nearestRawRailStraightMetres": 587.1810329904982,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "121000015",
+      "name": "신사역.푸른저축은행",
+      "arsId": "22015",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "144"
+        },
+        {
+          "modeCode": "010",
+          "number": "145"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "400"
+        },
+        {
+          "modeCode": "010",
+          "number": "402"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "440"
+        },
+        {
+          "modeCode": "010",
+          "number": "441"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "050",
+          "number": "9404"
+        },
+        {
+          "modeCode": "050",
+          "number": "9409"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "0327",
+      "nearestRawRailName": "신사",
+      "nearestRawRailStraightMetres": 247.06800896425318,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "121000016",
+      "name": "신사역",
+      "arsId": "22016",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "142"
+        },
+        {
+          "modeCode": "010",
+          "number": "144"
+        },
+        {
+          "modeCode": "010",
+          "number": "145"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "400"
+        },
+        {
+          "modeCode": "010",
+          "number": "402"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "441"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "741"
+        },
+        {
+          "modeCode": "050",
+          "number": "9404"
+        },
+        {
+          "modeCode": "050",
+          "number": "9409"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        },
+        {
+          "modeCode": "051",
+          "number": "N37"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "2734",
+      "nearestRawRailName": "논현",
+      "nearestRawRailStraightMetres": 220.75560395156384,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "121000530",
+      "name": "정금마을",
+      "arsId": "22033",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작07"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초05"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초16"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "0432",
+      "nearestRawRailName": "총신대입구(이수)",
+      "nearestRawRailStraightMetres": 785.4706593642281,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "121000531",
+      "name": "경문고등학교",
+      "arsId": "22031",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작07"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작17"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초05"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초16"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "0432",
+      "nearestRawRailName": "총신대입구(이수)",
+      "nearestRawRailStraightMetres": 468.8814342195565,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "121000533",
+      "name": "이수역",
+      "arsId": "22027",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 14,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "540"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "4212"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "020",
+          "number": "5524"
+        },
+        {
+          "modeCode": "020",
+          "number": "8541"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작09"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작16"
+        },
+        {
+          "modeCode": "030",
+          "number": "동작18"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초06"
+        },
+        {
+          "modeCode": "030",
+          "number": "서초16"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "2738",
+      "nearestRawRailName": "이수",
+      "nearestRawRailStraightMetres": 321.17614164918746,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000579",
+      "name": "잠실역.롯데월드몰",
+      "arsId": "24017",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 6,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "302"
+        },
+        {
+          "modeCode": "010",
+          "number": "303"
+        },
+        {
+          "modeCode": "010",
+          "number": "320"
+        },
+        {
+          "modeCode": "010",
+          "number": "422"
+        },
+        {
+          "modeCode": "020",
+          "number": "2311"
+        },
+        {
+          "modeCode": "020",
+          "number": "2412"
+        }
+      ],
+      "sourceRowCount": 6,
+      "nearestRawRailId": "0216",
+      "nearestRawRailName": "잠실(송파구청)",
+      "nearestRawRailStraightMetres": 71.07703183015232,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "124000360",
+      "name": "강동자이.프라자아파트",
+      "arsId": "25005",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 2,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        }
+      ],
+      "sourceRowCount": 2,
+      "nearestRawRailId": "2550",
+      "nearestRawRailName": "길동",
+      "nearestRawRailStraightMetres": 788.0713436353202,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "124000363",
+      "name": "강동자이·프라자아파트",
+      "arsId": "25006",
+      "sourceStopType": "중앙차로",
+      "inPreview": true,
+      "observedRouteNumberCount": 2,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "370"
+        }
+      ],
+      "sourceRowCount": 2,
+      "nearestRawRailId": "2550",
+      "nearestRawRailName": "길동",
+      "nearestRawRailStraightMetres": 708.8576488498894,
+      "releaseEligible": false
+    }
+  ],
+  "previewIdsWithoutObservation": [
+    "123000611"
+  ],
+  "outsideCentralLaneTop30": [
+    {
+      "sourceId": "101000043",
+      "name": "명동.롯데영플라자",
+      "arsId": "02142",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 26,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "103"
+        },
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "173"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "400"
+        },
+        {
+          "modeCode": "010",
+          "number": "401"
+        },
+        {
+          "modeCode": "010",
+          "number": "406"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "504"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7022"
+        },
+        {
+          "modeCode": "050",
+          "number": "9401"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 28,
+      "nearestRawRailId": "0202",
+      "nearestRawRailName": "을지로입구",
+      "nearestRawRailStraightMetres": 352.0586587801287,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000030",
+      "name": "서울성심병원",
+      "arsId": "06114",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 25,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "120"
+        },
+        {
+          "modeCode": "010",
+          "number": "121"
+        },
+        {
+          "modeCode": "010",
+          "number": "147"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "020",
+          "number": "1213"
+        },
+        {
+          "modeCode": "020",
+          "number": "1222"
+        },
+        {
+          "modeCode": "020",
+          "number": "1224"
+        },
+        {
+          "modeCode": "020",
+          "number": "1227"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2115B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2230"
+        },
+        {
+          "modeCode": "020",
+          "number": "3216"
+        },
+        {
+          "modeCode": "020",
+          "number": "3220"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 28,
+      "nearestRawRailId": "1014",
+      "nearestRawRailName": "청량리(서울시립대입구)",
+      "nearestRawRailStraightMetres": 485.30817550595435,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000064",
+      "name": "연희동대우아파트",
+      "arsId": "13147",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 23,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "110A"
+        },
+        {
+          "modeCode": "010",
+          "number": "163"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "010",
+          "number": "761"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7613"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7716"
+        },
+        {
+          "modeCode": "020",
+          "number": "7720"
+        },
+        {
+          "modeCode": "020",
+          "number": "7727"
+        },
+        {
+          "modeCode": "020",
+          "number": "7728"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "7737"
+        },
+        {
+          "modeCode": "020",
+          "number": "7739"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 24,
+      "nearestRawRailId": "1264",
+      "nearestRawRailName": "홍대입구",
+      "nearestRawRailStraightMetres": 565.2473103966009,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000032",
+      "name": "북창동.남대문시장",
+      "arsId": "02127",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 22,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "173"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "405"
+        },
+        {
+          "modeCode": "010",
+          "number": "421"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "505"
+        },
+        {
+          "modeCode": "010",
+          "number": "506"
+        },
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 23,
+      "nearestRawRailId": "0425",
+      "nearestRawRailName": "회현(남대문시장)",
+      "nearestRawRailStraightMetres": 307.993512290869,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000114",
+      "name": "남대문시장앞.이회영활동터",
+      "arsId": "02219",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 21,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "103"
+        },
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "173"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "400"
+        },
+        {
+          "modeCode": "010",
+          "number": "406"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7022"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "0425",
+      "nearestRawRailName": "회현(남대문시장)",
+      "nearestRawRailStraightMetres": 271.2999282996637,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000132",
+      "name": "안양천입구",
+      "arsId": "19217",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 21,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "571"
+        },
+        {
+          "modeCode": "010",
+          "number": "601"
+        },
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "605"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "661"
+        },
+        {
+          "modeCode": "010",
+          "number": "672"
+        },
+        {
+          "modeCode": "010",
+          "number": "674"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6631"
+        },
+        {
+          "modeCode": "020",
+          "number": "6632"
+        },
+        {
+          "modeCode": "020",
+          "number": "6712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 23,
+      "nearestRawRailId": "4111",
+      "nearestRawRailName": "신목동",
+      "nearestRawRailStraightMetres": 356.57161956305976,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "118000130",
+      "name": "영등포아리수정수센터",
+      "arsId": "19215",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 20,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "571"
+        },
+        {
+          "modeCode": "010",
+          "number": "601"
+        },
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "605"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "660"
+        },
+        {
+          "modeCode": "010",
+          "number": "661"
+        },
+        {
+          "modeCode": "010",
+          "number": "672"
+        },
+        {
+          "modeCode": "010",
+          "number": "674"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6631"
+        },
+        {
+          "modeCode": "020",
+          "number": "6632"
+        },
+        {
+          "modeCode": "020",
+          "number": "6712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "4111",
+      "nearestRawRailName": "신목동",
+      "nearestRawRailStraightMetres": 372.3740128495275,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000123",
+      "name": "방송통신대.이화장",
+      "arsId": "01219",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "109"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "2112"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "030",
+          "number": "종로07"
+        },
+        {
+          "modeCode": "030",
+          "number": "종로08"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 480.21154306968157,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000124",
+      "name": "혜화역2번출구.마로니에공원",
+      "arsId": "01220",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "109"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "2112"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "030",
+          "number": "종로07"
+        },
+        {
+          "modeCode": "030",
+          "number": "종로08"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 140.54693438324927,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000027",
+      "name": "숭례문",
+      "arsId": "02122",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "103"
+        },
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "173"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "400"
+        },
+        {
+          "modeCode": "010",
+          "number": "401"
+        },
+        {
+          "modeCode": "010",
+          "number": "406"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7022"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "0150",
+      "nearestRawRailName": "서울역",
+      "nearestRawRailStraightMetres": 296.12685382902214,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000033",
+      "name": "소공동주민센터",
+      "arsId": "02128",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "402"
+        },
+        {
+          "modeCode": "010",
+          "number": "405"
+        },
+        {
+          "modeCode": "010",
+          "number": "472"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "502"
+        },
+        {
+          "modeCode": "010",
+          "number": "506"
+        },
+        {
+          "modeCode": "010",
+          "number": "708"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "020",
+          "number": "1711"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "040",
+          "number": "01A"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N51"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        },
+        {
+          "modeCode": "051",
+          "number": "N73"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 24,
+      "nearestRawRailId": "0201",
+      "nearestRawRailName": "시청",
+      "nearestRawRailStraightMetres": 179.4512611704101,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000040",
+      "name": "우리은행종로지점",
+      "arsId": "02139",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "103"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "173"
+        },
+        {
+          "modeCode": "010",
+          "number": "201"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "401"
+        },
+        {
+          "modeCode": "010",
+          "number": "406"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "704"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7022"
+        },
+        {
+          "modeCode": "050",
+          "number": "9401"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 22,
+      "nearestRawRailId": "0202",
+      "nearestRawRailName": "을지로입구",
+      "nearestRawRailStraightMetres": 204.10759398836532,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000041",
+      "name": "롯데백화점",
+      "arsId": "02140",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "151"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "405"
+        },
+        {
+          "modeCode": "010",
+          "number": "501"
+        },
+        {
+          "modeCode": "010",
+          "number": "701"
+        },
+        {
+          "modeCode": "010",
+          "number": "702A"
+        },
+        {
+          "modeCode": "010",
+          "number": "702B"
+        },
+        {
+          "modeCode": "010",
+          "number": "705"
+        },
+        {
+          "modeCode": "010",
+          "number": "707"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N30"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "0202",
+      "nearestRawRailName": "을지로입구",
+      "nearestRawRailStraightMetres": 171.44398104054423,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "114000267",
+      "name": "양천공영차고지",
+      "arsId": "15373",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6516"
+        },
+        {
+          "modeCode": "020",
+          "number": "6613"
+        },
+        {
+          "modeCode": "020",
+          "number": "6614"
+        },
+        {
+          "modeCode": "020",
+          "number": "6615"
+        },
+        {
+          "modeCode": "020",
+          "number": "6617"
+        },
+        {
+          "modeCode": "020",
+          "number": "6620"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640A"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6657"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N61"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "1802",
+      "nearestRawRailName": "오류동",
+      "nearestRawRailStraightMetres": 1703.483164923164,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000049",
+      "name": "잠실역.롯데월드",
+      "arsId": "24138",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "342"
+        },
+        {
+          "modeCode": "010",
+          "number": "345"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "020",
+          "number": "2415"
+        },
+        {
+          "modeCode": "020",
+          "number": "3217"
+        },
+        {
+          "modeCode": "020",
+          "number": "3313"
+        },
+        {
+          "modeCode": "020",
+          "number": "3314"
+        },
+        {
+          "modeCode": "020",
+          "number": "3315"
+        },
+        {
+          "modeCode": "020",
+          "number": "3317"
+        },
+        {
+          "modeCode": "020",
+          "number": "3323"
+        },
+        {
+          "modeCode": "020",
+          "number": "3411"
+        },
+        {
+          "modeCode": "020",
+          "number": "3412"
+        },
+        {
+          "modeCode": "020",
+          "number": "3414"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "0216",
+      "nearestRawRailName": "잠실(송파구청)",
+      "nearestRawRailStraightMetres": 214.13722199433394,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000065",
+      "name": "잠실종합운동장",
+      "arsId": "24154",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "333"
+        },
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "342"
+        },
+        {
+          "modeCode": "010",
+          "number": "345"
+        },
+        {
+          "modeCode": "010",
+          "number": "350"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "020",
+          "number": "2415"
+        },
+        {
+          "modeCode": "020",
+          "number": "3217"
+        },
+        {
+          "modeCode": "020",
+          "number": "3314"
+        },
+        {
+          "modeCode": "020",
+          "number": "3322"
+        },
+        {
+          "modeCode": "020",
+          "number": "3411"
+        },
+        {
+          "modeCode": "020",
+          "number": "3412"
+        },
+        {
+          "modeCode": "020",
+          "number": "3414"
+        },
+        {
+          "modeCode": "020",
+          "number": "3417"
+        },
+        {
+          "modeCode": "020",
+          "number": "3422"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "0218",
+      "nearestRawRailName": "종합운동장",
+      "nearestRawRailStraightMetres": 61.46326698344659,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "105000488",
+      "name": "청량리수산시장",
+      "arsId": "06426",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "105"
+        },
+        {
+          "modeCode": "010",
+          "number": "120"
+        },
+        {
+          "modeCode": "010",
+          "number": "147"
+        },
+        {
+          "modeCode": "010",
+          "number": "202"
+        },
+        {
+          "modeCode": "010",
+          "number": "241"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "261"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "420"
+        },
+        {
+          "modeCode": "010",
+          "number": "720"
+        },
+        {
+          "modeCode": "020",
+          "number": "2221"
+        },
+        {
+          "modeCode": "020",
+          "number": "2233"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "0158",
+      "nearestRawRailName": "청량리(서울시립대입구)",
+      "nearestRawRailStraightMetres": 262.0085576945824,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000026",
+      "name": "사천교",
+      "arsId": "13109",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 18,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "700"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "742"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "750B"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "010",
+          "number": "761"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7613"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7716"
+        },
+        {
+          "modeCode": "020",
+          "number": "7727"
+        },
+        {
+          "modeCode": "020",
+          "number": "7728"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "1265",
+      "nearestRawRailName": "가좌",
+      "nearestRawRailStraightMetres": 262.2434569980573,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "106000241",
+      "name": "중랑공영차고지",
+      "arsId": "07337",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "240"
+        },
+        {
+          "modeCode": "010",
+          "number": "242"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "020",
+          "number": "2012"
+        },
+        {
+          "modeCode": "020",
+          "number": "2015"
+        },
+        {
+          "modeCode": "020",
+          "number": "2016"
+        },
+        {
+          "modeCode": "020",
+          "number": "2113"
+        },
+        {
+          "modeCode": "020",
+          "number": "2114"
+        },
+        {
+          "modeCode": "020",
+          "number": "2236"
+        },
+        {
+          "modeCode": "020",
+          "number": "2311"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2416"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "2649",
+      "nearestRawRailName": "신내",
+      "nearestRawRailStraightMetres": 55.50720721589689,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "106000319",
+      "name": "중랑공영차고지.신내역",
+      "arsId": "07418",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "240"
+        },
+        {
+          "modeCode": "010",
+          "number": "242"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "020",
+          "number": "2012"
+        },
+        {
+          "modeCode": "020",
+          "number": "2015"
+        },
+        {
+          "modeCode": "020",
+          "number": "2016"
+        },
+        {
+          "modeCode": "020",
+          "number": "2113"
+        },
+        {
+          "modeCode": "020",
+          "number": "2114"
+        },
+        {
+          "modeCode": "020",
+          "number": "2236"
+        },
+        {
+          "modeCode": "020",
+          "number": "2311"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2416"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "2649",
+      "nearestRawRailName": "신내",
+      "nearestRawRailStraightMetres": 63.76569826492747,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "106000467",
+      "name": "중랑공영차고지.신내역",
+      "arsId": "07550",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "240"
+        },
+        {
+          "modeCode": "010",
+          "number": "242"
+        },
+        {
+          "modeCode": "010",
+          "number": "260"
+        },
+        {
+          "modeCode": "010",
+          "number": "262"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "020",
+          "number": "2012"
+        },
+        {
+          "modeCode": "020",
+          "number": "2015"
+        },
+        {
+          "modeCode": "020",
+          "number": "2016"
+        },
+        {
+          "modeCode": "020",
+          "number": "2113"
+        },
+        {
+          "modeCode": "020",
+          "number": "2114"
+        },
+        {
+          "modeCode": "020",
+          "number": "2236"
+        },
+        {
+          "modeCode": "020",
+          "number": "2311"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312A"
+        },
+        {
+          "modeCode": "020",
+          "number": "2312B"
+        },
+        {
+          "modeCode": "020",
+          "number": "2416"
+        },
+        {
+          "modeCode": "051",
+          "number": "N26"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "1311",
+      "nearestRawRailName": "신내",
+      "nearestRawRailStraightMetres": 50.85477842567595,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000073",
+      "name": "DMC상암센트럴파크",
+      "arsId": "14164",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "010",
+          "number": "760"
+        },
+        {
+          "modeCode": "010",
+          "number": "771"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "7711"
+        },
+        {
+          "modeCode": "020",
+          "number": "7730"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762퇴근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775퇴근"
+        },
+        {
+          "modeCode": "030",
+          "number": "마포15"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "4204",
+      "nearestRawRailName": "디지털미디어시티",
+      "nearestRawRailStraightMetres": 300.2614187599548,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000135",
+      "name": "연남동",
+      "arsId": "14226",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "110B"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "721"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "753"
+        },
+        {
+          "modeCode": "010",
+          "number": "761"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7613"
+        },
+        {
+          "modeCode": "020",
+          "number": "7716"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "7739"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "1264",
+      "nearestRawRailName": "홍대입구",
+      "nearestRawRailStraightMetres": 548.0054929890518,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000098",
+      "name": "노량진초등학교앞",
+      "arsId": "20191",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "040"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "504"
+        },
+        {
+          "modeCode": "010",
+          "number": "641"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "010",
+          "number": "742"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "5516"
+        },
+        {
+          "modeCode": "020",
+          "number": "5517"
+        },
+        {
+          "modeCode": "020",
+          "number": "5535"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "8551"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N64"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "4117",
+      "nearestRawRailName": "노량진",
+      "nearestRawRailStraightMetres": 347.6211714932161,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "119000100",
+      "name": "청화병원",
+      "arsId": "20193",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "040"
+        },
+        {
+          "modeCode": "010",
+          "number": "152"
+        },
+        {
+          "modeCode": "010",
+          "number": "500"
+        },
+        {
+          "modeCode": "010",
+          "number": "504"
+        },
+        {
+          "modeCode": "010",
+          "number": "641"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "010",
+          "number": "742"
+        },
+        {
+          "modeCode": "010",
+          "number": "752"
+        },
+        {
+          "modeCode": "020",
+          "number": "5516"
+        },
+        {
+          "modeCode": "020",
+          "number": "5517"
+        },
+        {
+          "modeCode": "020",
+          "number": "5535"
+        },
+        {
+          "modeCode": "020",
+          "number": "5536"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "8551"
+        },
+        {
+          "modeCode": "051",
+          "number": "N15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N64"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "2742",
+      "nearestRawRailName": "장승배기",
+      "nearestRawRailStraightMetres": 273.568701464824,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000053",
+      "name": "잠실엘스아파트앞",
+      "arsId": "24142",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "333"
+        },
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "342"
+        },
+        {
+          "modeCode": "010",
+          "number": "345"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "020",
+          "number": "2415"
+        },
+        {
+          "modeCode": "020",
+          "number": "3217"
+        },
+        {
+          "modeCode": "020",
+          "number": "3322"
+        },
+        {
+          "modeCode": "020",
+          "number": "3411"
+        },
+        {
+          "modeCode": "020",
+          "number": "3412"
+        },
+        {
+          "modeCode": "020",
+          "number": "3414"
+        },
+        {
+          "modeCode": "020",
+          "number": "3422"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0217",
+      "nearestRawRailName": "잠실새내",
+      "nearestRawRailStraightMetres": 245.30743135735096,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000068",
+      "name": "종합운동장사거리",
+      "arsId": "24157",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "333"
+        },
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "342"
+        },
+        {
+          "modeCode": "010",
+          "number": "345"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "020",
+          "number": "2415"
+        },
+        {
+          "modeCode": "020",
+          "number": "3217"
+        },
+        {
+          "modeCode": "020",
+          "number": "3322"
+        },
+        {
+          "modeCode": "020",
+          "number": "3411"
+        },
+        {
+          "modeCode": "020",
+          "number": "3412"
+        },
+        {
+          "modeCode": "020",
+          "number": "3414"
+        },
+        {
+          "modeCode": "020",
+          "number": "3422"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "4130",
+      "nearestRawRailName": "종합운동장",
+      "nearestRawRailStraightMetres": 290.0921153316021,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "123000069",
+      "name": "잠실새내역4번출구",
+      "arsId": "24158",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 17,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "301"
+        },
+        {
+          "modeCode": "010",
+          "number": "333"
+        },
+        {
+          "modeCode": "010",
+          "number": "341"
+        },
+        {
+          "modeCode": "010",
+          "number": "342"
+        },
+        {
+          "modeCode": "010",
+          "number": "345"
+        },
+        {
+          "modeCode": "010",
+          "number": "360"
+        },
+        {
+          "modeCode": "020",
+          "number": "2415"
+        },
+        {
+          "modeCode": "020",
+          "number": "3217"
+        },
+        {
+          "modeCode": "020",
+          "number": "3322"
+        },
+        {
+          "modeCode": "020",
+          "number": "3411"
+        },
+        {
+          "modeCode": "020",
+          "number": "3412"
+        },
+        {
+          "modeCode": "020",
+          "number": "3414"
+        },
+        {
+          "modeCode": "020",
+          "number": "3422"
+        },
+        {
+          "modeCode": "020",
+          "number": "4318"
+        },
+        {
+          "modeCode": "020",
+          "number": "4319"
+        },
+        {
+          "modeCode": "051",
+          "number": "N13"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "0217",
+      "nearestRawRailName": "잠실새내",
+      "nearestRawRailStraightMetres": 160.88576062135647,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "100000133",
+      "name": "혜화역.동성중고(장면총리가옥)",
+      "arsId": "01229",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "100"
+        },
+        {
+          "modeCode": "010",
+          "number": "102"
+        },
+        {
+          "modeCode": "010",
+          "number": "104"
+        },
+        {
+          "modeCode": "010",
+          "number": "107"
+        },
+        {
+          "modeCode": "010",
+          "number": "109"
+        },
+        {
+          "modeCode": "010",
+          "number": "140"
+        },
+        {
+          "modeCode": "010",
+          "number": "143"
+        },
+        {
+          "modeCode": "010",
+          "number": "150"
+        },
+        {
+          "modeCode": "010",
+          "number": "160"
+        },
+        {
+          "modeCode": "010",
+          "number": "162"
+        },
+        {
+          "modeCode": "010",
+          "number": "273"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "2112"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N16"
+        },
+        {
+          "modeCode": "051",
+          "number": "N31"
+        }
+      ],
+      "sourceRowCount": 18,
+      "nearestRawRailId": "0420",
+      "nearestRawRailName": "혜화",
+      "nearestRawRailStraightMetres": 245.60208909716218,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "101000018",
+      "name": "경찰청.동북아역사재단",
+      "arsId": "02110",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 16,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "172"
+        },
+        {
+          "modeCode": "010",
+          "number": "472"
+        },
+        {
+          "modeCode": "010",
+          "number": "600"
+        },
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "700"
+        },
+        {
+          "modeCode": "010",
+          "number": "706"
+        },
+        {
+          "modeCode": "010",
+          "number": "709"
+        },
+        {
+          "modeCode": "010",
+          "number": "742"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "750B"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7024"
+        },
+        {
+          "modeCode": "020",
+          "number": "8101"
+        },
+        {
+          "modeCode": "051",
+          "number": "N51"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        },
+        {
+          "modeCode": "051",
+          "number": "N73"
+        }
+      ],
+      "sourceRowCount": 19,
+      "nearestRawRailId": "2533",
+      "nearestRawRailName": "서대문",
+      "nearestRawRailStraightMetres": 373.7841051914082,
+      "releaseEligible": false
+    }
+  ],
+  "outsideCentralLaneAtLeast1kmTop30": [
+    {
+      "sourceId": "114000267",
+      "name": "양천공영차고지",
+      "arsId": "15373",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 19,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6516"
+        },
+        {
+          "modeCode": "020",
+          "number": "6613"
+        },
+        {
+          "modeCode": "020",
+          "number": "6614"
+        },
+        {
+          "modeCode": "020",
+          "number": "6615"
+        },
+        {
+          "modeCode": "020",
+          "number": "6617"
+        },
+        {
+          "modeCode": "020",
+          "number": "6620"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640A"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6657"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N61"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 21,
+      "nearestRawRailId": "1802",
+      "nearestRawRailName": "오류동",
+      "nearestRawRailStraightMetres": 1703.483164923164,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000197",
+      "name": "상암고등학교",
+      "arsId": "14291",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 15,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "010",
+          "number": "760"
+        },
+        {
+          "modeCode": "010",
+          "number": "771"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7711"
+        },
+        {
+          "modeCode": "020",
+          "number": "7715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7730"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762퇴근"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 16,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1012.7578139492776,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "111000225",
+      "name": "덕은교.은평차고지앞",
+      "arsId": "12315",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "760"
+        },
+        {
+          "modeCode": "010",
+          "number": "771"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7013A"
+        },
+        {
+          "modeCode": "020",
+          "number": "7013B"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7730"
+        },
+        {
+          "modeCode": "020",
+          "number": "7737"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1475.4836689150088,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000137",
+      "name": "명지전문대.충암중고등학교",
+      "arsId": "13220",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7018"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8774"
+        },
+        {
+          "modeCode": "030",
+          "number": "서대문15"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "2617",
+      "nearestRawRailName": "새절(신사)",
+      "nearestRawRailStraightMetres": 1136.0722174584234,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000021",
+      "name": "DMC첨단산업센터",
+      "arsId": "14111",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "760"
+        },
+        {
+          "modeCode": "010",
+          "number": "771"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7726"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1046.0518672706103,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000022",
+      "name": "DMC첨단산업센터",
+      "arsId": "14112",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "740"
+        },
+        {
+          "modeCode": "010",
+          "number": "750A"
+        },
+        {
+          "modeCode": "010",
+          "number": "760"
+        },
+        {
+          "modeCode": "010",
+          "number": "771"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7726"
+        },
+        {
+          "modeCode": "050",
+          "number": "9711"
+        },
+        {
+          "modeCode": "051",
+          "number": "N72"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1090.5953765171512,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000181",
+      "name": "월드컵파크7단지",
+      "arsId": "14272",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "171"
+        },
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "271"
+        },
+        {
+          "modeCode": "010",
+          "number": "470"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762퇴근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775퇴근"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1471.531284834092,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "114000395",
+      "name": "양천공영차고지",
+      "arsId": "15718",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 13,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6516"
+        },
+        {
+          "modeCode": "020",
+          "number": "6613"
+        },
+        {
+          "modeCode": "020",
+          "number": "6615"
+        },
+        {
+          "modeCode": "020",
+          "number": "6620"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640A"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6657"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N61"
+        }
+      ],
+      "sourceRowCount": 14,
+      "nearestRawRailId": "1802",
+      "nearestRawRailName": "오류동",
+      "nearestRawRailStraightMetres": 1695.6818705384132,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000068",
+      "name": "연희3거리",
+      "arsId": "13151",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "110B"
+        },
+        {
+          "modeCode": "010",
+          "number": "163"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7720"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "7739"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "030",
+          "number": "서대문03"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "1264",
+      "nearestRawRailName": "홍대입구",
+      "nearestRawRailStraightMetres": 1224.0303867287448,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000110",
+      "name": "DMC센트럴아이파크아파트",
+      "arsId": "13193",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "1265",
+      "nearestRawRailName": "가좌",
+      "nearestRawRailStraightMetres": 1218.6032740660016,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000111",
+      "name": "명지대",
+      "arsId": "13194",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2618",
+      "nearestRawRailName": "증산(명지대앞)",
+      "nearestRawRailStraightMetres": 1333.7208799479504,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000112",
+      "name": "명지대",
+      "arsId": "13195",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2618",
+      "nearestRawRailName": "증산(명지대앞)",
+      "nearestRawRailStraightMetres": 1364.7638218295976,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000113",
+      "name": "명지대삼거리",
+      "arsId": "13196",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2618",
+      "nearestRawRailName": "증산(명지대앞)",
+      "nearestRawRailStraightMetres": 1485.6521409860868,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000114",
+      "name": "명지대삼거리",
+      "arsId": "13197",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7713"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2618",
+      "nearestRawRailName": "증산(명지대앞)",
+      "nearestRawRailStraightMetres": 1501.4340788068107,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000135",
+      "name": "명지중고등학교",
+      "arsId": "13218",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7018"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8774"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2618",
+      "nearestRawRailName": "증산(명지대앞)",
+      "nearestRawRailStraightMetres": 1422.0690185770902,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000136",
+      "name": "명지중고등학교",
+      "arsId": "13219",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7018"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8774"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2617",
+      "nearestRawRailName": "새절(신사)",
+      "nearestRawRailStraightMetres": 1401.2883401091588,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000138",
+      "name": "명지전문대.충암중고등학교",
+      "arsId": "13221",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 12,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7018"
+        },
+        {
+          "modeCode": "020",
+          "number": "7019"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7611"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8774"
+        },
+        {
+          "modeCode": "051",
+          "number": "N75"
+        }
+      ],
+      "sourceRowCount": 13,
+      "nearestRawRailId": "2617",
+      "nearestRawRailName": "새절(신사)",
+      "nearestRawRailStraightMetres": 1160.8438673845885,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "114000012",
+      "name": "영도중.강서고입구.기아양서대리점",
+      "arsId": "15112",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6633"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "2521",
+      "nearestRawRailName": "목동",
+      "nearestRawRailStraightMetres": 1129.9255740588007,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "114000013",
+      "name": "목동시장.대일고교.배광교회",
+      "arsId": "15113",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "020",
+          "number": "5616"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6633"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "4109",
+      "nearestRawRailName": "등촌",
+      "nearestRawRailStraightMetres": 1303.0891632896676,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "114000257",
+      "name": "서부트럭터미널.신정현대아파트",
+      "arsId": "15362",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 11,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "643"
+        },
+        {
+          "modeCode": "010",
+          "number": "662"
+        },
+        {
+          "modeCode": "020",
+          "number": "6515"
+        },
+        {
+          "modeCode": "020",
+          "number": "6516"
+        },
+        {
+          "modeCode": "020",
+          "number": "6620"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6640B"
+        },
+        {
+          "modeCode": "020",
+          "number": "6657"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N61"
+        }
+      ],
+      "sourceRowCount": 12,
+      "nearestRawRailId": "0249",
+      "nearestRawRailName": "신정네거리",
+      "nearestRawRailStraightMetres": 1561.5581614767952,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000145",
+      "name": "백련시장",
+      "arsId": "13228",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "7738"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1265",
+      "nearestRawRailName": "가좌",
+      "nearestRawRailStraightMetres": 1230.8864800589442,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "112000147",
+      "name": "명지대사거리.백련시장",
+      "arsId": "13230",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "272"
+        },
+        {
+          "modeCode": "020",
+          "number": "7017"
+        },
+        {
+          "modeCode": "020",
+          "number": "7021"
+        },
+        {
+          "modeCode": "020",
+          "number": "7612"
+        },
+        {
+          "modeCode": "020",
+          "number": "7734"
+        },
+        {
+          "modeCode": "020",
+          "number": "7738"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773구산퇴"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대출"
+        },
+        {
+          "modeCode": "020",
+          "number": "8773홍대퇴"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1265",
+      "nearestRawRailName": "가좌",
+      "nearestRawRailStraightMetres": 1173.8357641025655,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "113000180",
+      "name": "월드컵파크7단지",
+      "arsId": "14271",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "270"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "010",
+          "number": "710"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "7011"
+        },
+        {
+          "modeCode": "020",
+          "number": "7016"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8762퇴근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775출근"
+        },
+        {
+          "modeCode": "020",
+          "number": "8775퇴근"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1267",
+      "nearestRawRailName": "수색",
+      "nearestRawRailStraightMetres": 1515.2805866693238,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000043",
+      "name": "강서구청.한국건강관리협회",
+      "arsId": "16139",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "652"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6642"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "4107",
+      "nearestRawRailName": "가양",
+      "nearestRawRailStraightMetres": 1032.450215949932,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000044",
+      "name": "강서구청.한국건강관리협회",
+      "arsId": "16140",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "652"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6645"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "4107",
+      "nearestRawRailName": "가양",
+      "nearestRawRailStraightMetres": 1026.9338101413784,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000045",
+      "name": "우장초등학교",
+      "arsId": "16141",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "652"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6645"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "2517",
+      "nearestRawRailName": "우장산",
+      "nearestRawRailStraightMetres": 1060.6108663721718,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000046",
+      "name": "우장초등학교",
+      "arsId": "16142",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "604"
+        },
+        {
+          "modeCode": "010",
+          "number": "606"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "652"
+        },
+        {
+          "modeCode": "010",
+          "number": "673"
+        },
+        {
+          "modeCode": "020",
+          "number": "5712"
+        },
+        {
+          "modeCode": "020",
+          "number": "6514"
+        },
+        {
+          "modeCode": "020",
+          "number": "6627"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6642"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "2517",
+      "nearestRawRailName": "우장산",
+      "nearestRawRailStraightMetres": 1010.5894633573915,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000079",
+      "name": "대일고교.임광아파트.배광교회",
+      "arsId": "16176",
+      "sourceStopType": "가로변시간",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6633"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 11,
+      "nearestRawRailId": "4109",
+      "nearestRawRailName": "등촌",
+      "nearestRawRailStraightMetres": 1205.0107351101021,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "115000080",
+      "name": "용문사.시립화곡청소년센터",
+      "arsId": "16177",
+      "sourceStopType": "가로변전일",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "602"
+        },
+        {
+          "modeCode": "010",
+          "number": "650"
+        },
+        {
+          "modeCode": "010",
+          "number": "654"
+        },
+        {
+          "modeCode": "020",
+          "number": "6623"
+        },
+        {
+          "modeCode": "020",
+          "number": "6629"
+        },
+        {
+          "modeCode": "020",
+          "number": "6633"
+        },
+        {
+          "modeCode": "020",
+          "number": "6714"
+        },
+        {
+          "modeCode": "020",
+          "number": "6715"
+        },
+        {
+          "modeCode": "020",
+          "number": "6716"
+        },
+        {
+          "modeCode": "051",
+          "number": "N62"
+        }
+      ],
+      "sourceRowCount": 11,
+      "nearestRawRailId": "2521",
+      "nearestRawRailName": "목동",
+      "nearestRawRailStraightMetres": 1234.6635574281645,
+      "releaseEligible": false
+    },
+    {
+      "sourceId": "117000098",
+      "name": "독산동정훈단지",
+      "arsId": "18184",
+      "sourceStopType": "일반차로",
+      "inPreview": false,
+      "observedRouteNumberCount": 10,
+      "observedRouteNumbers": [
+        {
+          "modeCode": "010",
+          "number": "507"
+        },
+        {
+          "modeCode": "020",
+          "number": "5413"
+        },
+        {
+          "modeCode": "020",
+          "number": "5525"
+        },
+        {
+          "modeCode": "020",
+          "number": "5619"
+        },
+        {
+          "modeCode": "020",
+          "number": "5620"
+        },
+        {
+          "modeCode": "020",
+          "number": "5621"
+        },
+        {
+          "modeCode": "020",
+          "number": "5627"
+        },
+        {
+          "modeCode": "020",
+          "number": "5633"
+        },
+        {
+          "modeCode": "020",
+          "number": "6516"
+        },
+        {
+          "modeCode": "030",
+          "number": "금천08"
+        }
+      ],
+      "sourceRowCount": 10,
+      "nearestRawRailId": "1714",
+      "nearestRawRailName": "독산",
+      "nearestRawRailStraightMetres": 1143.4162875137226,
+      "releaseEligible": false
+    }
+  ],
+  "routeNumberKeysWithMultipleNames": [
+    {
+      "modeCode": "030",
+      "number": "서대문02",
+      "names": [
+        "서대문02(독립문역.천연뜨란채아파트~독립문극동아파트)",
+        "서대문02(서대문역.천연뜨란채아파트~서대문역)"
+      ]
+    },
+    {
+      "modeCode": "030",
+      "number": "서대문09",
+      "names": [
+        "서대문09(가산빌라~홍제역)",
+        "서대문09(풍진베이스타운.안산자락길입구~홍제역)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N13",
+      "names": [
+        "N13번(상계동차고지~송파공영차고지)",
+        "N13번(송파공영차고지~상계동차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N15",
+      "names": [
+        "N15번(남태령역~우이동도선사입구)",
+        "N15번(우이동성원아파트~남태령역)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N16",
+      "names": [
+        "N16번(도봉산공영차고지~온수동차고지)",
+        "N16번(온수동차고지~도봉산공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N26",
+      "names": [
+        "N26번(강서공영차고지~중랑공영차고지)",
+        "N26번(중랑공영차고지~강서공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N31",
+      "names": [
+        "N31강동 (강동공영차고지~국민대)",
+        "N31정릉 (국민대~강동공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N37",
+      "names": [
+        "N37번(송파공영차고지~진관공영차고지)",
+        "N37번(진관공영차고지~송파공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N51",
+      "names": [
+        "N51번(시흥동차고지~하계동차고지)",
+        "N51번(하계동차고지~시흥동차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N61",
+      "names": [
+        "N61번(상계동차고지~양천공영차고지)",
+        "N61번(양천공영차고지~상계동차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N62",
+      "names": [
+        "N62번(면목동차고지~양천공영차고지)",
+        "N62번(양천공영차고지~면목동차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N64",
+      "names": [
+        "N64번(강서공영차고지~염곡공영차고지)",
+        "N64번(염곡공영차고지~강서공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N72",
+      "names": [
+        "N72은평 (은평공영차고지~중랑공영차고지)",
+        "N72중랑 (중랑공영차고지~은평공영차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N73",
+      "names": [
+        "N73구산 (구산동차고지~송파공영차고지)",
+        "N73송파 (송파공영차고지~구산동차고지)"
+      ]
+    },
+    {
+      "modeCode": "051",
+      "number": "N75",
+      "names": [
+        "N75번(신림2동차고지~진관공영차고지)",
+        "N75번(진관공영차고지~신림2동차고지)"
+      ]
+    }
+  ]
+}
