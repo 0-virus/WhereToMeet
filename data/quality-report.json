@@ -3,13 +3,13 @@
     "rail": 784,
     "bus": 11236
   },
-  "candidateCount": 600,
+  "candidateCount": 589,
   "verifiedCount": 0,
   "kinds": {
-    "rail": 539,
+    "rail": 528,
     "bus": 61
   },
-  "regionStatus": "Unknown until administrative boundary review; bounding box is not proof of service region",
+  "regionStatus": "Source-matched Kakao legal districts in 11/28/41; representative-point and pedestrian reviews remain separate",
   "excluded": [
     {
       "id": "seoul-bus-100000006",
@@ -45040,6 +45040,34 @@
       "reason": "ambiguous repeated name or coordinate; representative-point review required"
     },
     {
+      "id": "seoul-rail-1324",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1325",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1326",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1327",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1328",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1329",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1401",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
       "id": "seoul-rail-1402",
       "reason": "invalid or outside broad capital-area coordinate envelope"
     },
@@ -45090,6 +45118,22 @@
     {
       "id": "seoul-rail-1713",
       "reason": "ambiguous repeated name or coordinate; representative-point review required"
+    },
+    {
+      "id": "seoul-rail-1725",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1726",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1727",
+      "reason": "outside service region according to source-matched legal district evidence"
+    },
+    {
+      "id": "seoul-rail-1728",
+      "reason": "outside service region according to source-matched legal district evidence"
     },
     {
       "id": "seoul-rail-1758",

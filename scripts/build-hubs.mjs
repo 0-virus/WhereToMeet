@@ -68,6 +68,31 @@ export function normalizeSources({ rail, bus }, reviews = {}) {
   return { hubs: hubs.sort(compare), excluded: excluded.sort(compare) };
 }
 
+export function applyRegionChecks(result, checks) {
+  if (!Array.isArray(checks)) throw new Error('invalid region checks');
+  const byId = new Map();
+  for (const check of checks) {
+    if (!check || typeof check.hubId !== 'string' || byId.has(check.hubId)) throw new Error('duplicate or invalid region check');
+    byId.set(check.hubId, check);
+  }
+  const hubs = [];
+  const excluded = [...result.excluded];
+  for (const h of result.hubs) {
+    const check = byId.get(h.id);
+    if (!check || check.fingerprint !== reviewFingerprint(h)) throw new Error(`missing or stale region check: ${h.id}`);
+    if (check.httpStatus !== 200 || typeof check.legalCode !== 'string' || !/^\d{10}$/.test(check.legalCode) || check.regionCode !== check.legalCode.slice(0, 2) || !Number.isFinite(Date.parse(check.queriedAt))) throw new Error(`invalid region check: ${h.id}`);
+    if (h.verified && h.regionCode !== check.regionCode) throw new Error(`region check conflicts with review: ${h.id}`);
+    byId.delete(h.id);
+    if (!['11', '28', '41'].includes(check.regionCode)) {
+      excluded.push({ id:h.id, reason:'outside service region according to source-matched legal district evidence' });
+      continue;
+    }
+    hubs.push({ ...h, regionCode:check.regionCode });
+  }
+  if (byId.size) throw new Error('region check refers to excluded or missing hub');
+  return { hubs:hubs.sort(compare), excluded:excluded.sort(compare) };
+}
+
 export function makeCatalog(hubs) {
   const ordered = [...hubs].sort(compare);
   const digest = createHash('sha256').update(JSON.stringify(ordered)).digest('hex').slice(0, 12);
@@ -103,15 +128,15 @@ async function main() {
   const preview = process.argv.includes('--preview');
   if (process.argv.slice(2).some(a => a !== '--preview')) throw new Error('Usage: node scripts/build-hubs.mjs [--preview]');
   const json = async (path) => JSON.parse(await readFile(new URL(path, ROOT), 'utf8'));
-  const [rail, bus, reviews] = await Promise.all([json('data/raw/seoul-rail-20261002.json'), json('data/raw/seoul-bus-20260902.json'), json('data/reviews.json')]);
-  const { hubs, excluded } = normalizeSources({ rail: rail.DATA, bus }, reviews);
+  const [rail, bus, reviews, regionEvidence] = await Promise.all([json('data/raw/seoul-rail-20261002.json'), json('data/raw/seoul-bus-20260902.json'), json('data/reviews.json'), json('data/review-evidence/preview-2026-10-28.json')]);
+  const { hubs, excluded } = applyRegionChecks(normalizeSources({ rail: rail.DATA, bus }, reviews), regionEvidence.results);
   const catalog = makeCatalog(hubs);
   validateCatalog(catalog, { preview });
   const save = async (path, data) => writeFile(new URL(path, ROOT), `${JSON.stringify(data, null, 2)}\n`);
   if (preview) {
     await save('data/hubs.preview.json', catalog);
     await save('data/hubs.sample.json', makeCatalog(sampleHubs(hubs)));
-    await save('data/quality-report.json', { sourceCounts: { rail: rail.DATA.length, bus: bus.length }, candidateCount: hubs.length, verifiedCount: hubs.filter(h => h.verified).length, kinds: { rail: hubs.filter(h => h.kind === 'rail').length, bus: hubs.filter(h => h.kind === 'bus').length }, regionStatus: 'Unknown until administrative boundary review; bounding box is not proof of service region', excluded });
+    await save('data/quality-report.json', { sourceCounts: { rail: rail.DATA.length, bus: bus.length }, candidateCount: hubs.length, verifiedCount: hubs.filter(h => h.verified).length, kinds: { rail: hubs.filter(h => h.kind === 'rail').length, bus: hubs.filter(h => h.kind === 'bus').length }, regionStatus: 'Source-matched Kakao legal districts in 11/28/41; representative-point and pedestrian reviews remain separate', excluded });
   } else {
     await save('data/hubs.json', catalog);
   }

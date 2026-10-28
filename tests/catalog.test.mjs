@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { normalizeSources, validateCatalog, reviewFingerprint, makeCatalog, sampleHubs } from '../scripts/build-hubs.mjs';
 
+import * as catalog from '../scripts/build-hubs.mjs';
+
 const rail = (id, name, lat = '37.5', lot = '127.0') => ({ bldn_id: id, bldn_nm: name, lat, lot, route: 'test' });
 const bus = (id, name, lat = 37.51, lng = 127.01, type = '중앙차로') => ({ NODE_ID: id, ARS_ID: '01001', name, lat, lng, type });
 
@@ -85,4 +87,47 @@ test('default release command fails closed without changing the release artifact
   assert.equal(result.status, 1);
   assert.match(result.stderr, /unreviewed hub/);
   assert.equal(await readFile(path, 'utf8'), before);
+});
+
+
+test('checked-in sample excludes points outside the approved service regions', async () => {
+  const sample = JSON.parse(await readFile(new URL('../data/hubs.sample.json', import.meta.url), 'utf8'));
+  const evidence = JSON.parse(await readFile(new URL('../data/review-evidence/preview-2026-10-28.json', import.meta.url), 'utf8'));
+  for (const h of sample.hubs) {
+    const check = evidence.results.find(r => r.hubId === h.id);
+    assert.ok(check, h.id);
+    assert.ok(['11', '28', '41'].includes(check.legalCode.slice(0, 2)), h.id + ' is outside service region');
+
+    assert.equal(h.verified, false);
+  }
+});
+
+function regionCheck(h, code) {
+  return { hubId:h.id, fingerprint:reviewFingerprint(h), legalCode:code, regionCode:code.slice(0,2), httpStatus:200, queriedAt:'2026-10-28T12:00:00.000Z' };
+}
+
+test('region checks exclude outside points without approving pedestrian access', () => {
+  const input=normalizeSources({rail:[rail('1','서울'),rail('2','충남','36.81')],bus:[]});
+  const result=catalog.applyRegionChecks(input,[regionCheck(input.hubs[0],'1111010100'),regionCheck(input.hubs[1],'4413110100')]);
+  assert.deepEqual(result.hubs.map(h=>[h.id,h.regionCode,h.verified]),[['seoul-rail-1','11',false]]);
+  assert.equal(result.excluded.length,1);
+  assert.equal(result.excluded[0].id,'seoul-rail-2');
+  assert.match(result.excluded[0].reason,/outside service region/);
+  assert.equal(input.hubs.length,2);
+  assert.equal(input.hubs[0].regionCode,'unreviewed');
+});
+
+test('region checks reject missing, duplicate, unknown, stale or malformed evidence', () => {
+  const input=normalizeSources({rail:[rail('1','서울')],bus:[]});
+  const good=regionCheck(input.hubs[0],'1111010100');
+  for(const rows of [[],[good,good],[{...good,hubId:'unknown'}],[{...good,fingerprint:'old'}],[{...good,httpStatus:429}],[{...good,legalCode:'11'}],[{...good,regionCode:'41'}],[{...good,queriedAt:'invalid'}]]) {
+    assert.throws(()=>catalog.applyRegionChecks(input,rows),/region check/);
+  }
+  assert.throws(()=>catalog.applyRegionChecks({...input,hubs:[{...input.hubs[0],lat:37.6}]},[good]),/region check/);
+});
+
+test('region evidence cannot silently contradict an approved review', () => {
+  const h={...normalizeSources({rail:[rail('1','서울')],bus:[]}).hubs[0],verified:true,regionCode:'11'};
+  assert.throws(()=>catalog.applyRegionChecks({hubs:[h],excluded:[]},[regionCheck(h,'4413110100')]),/region check/);
+  assert.equal(catalog.applyRegionChecks({hubs:[h],excluded:[]},[regionCheck(h,'1111010100')]).hubs[0].verified,true);
 });
