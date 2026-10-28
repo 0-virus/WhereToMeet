@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-10-28",
+  "catalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "scope": "서울교통공사 자료에 대응하지 않았던 현재 철도 표본 중 인천 운영역 6개",
+  "method": "기관 공식 웹 텍스트의 역명·노선·역코드를 수동 대조했다. 기관 역코드와 카탈로그 sourceId는 다른 식별자다. 원문 전체나 이미지는 복제하지 않고 사실 요약과 링크만 보존한다.",
+  "limitations": [
+    "조회일은 조사일·수정일이 아니다. 페이지별 자료 기준일은 미확인이다.",
+    "웹 텍스트만 검토했으며 안내 이미지는 직접 열지 않았다.",
+    "현재 가동·폐쇄·공사, 좌표 연결, 공공 대기 공간과 현장 동선은 미검증이다."
+  ],
+  "operationalStatusSourceUrl": "https://www.ictr.or.kr/main/railway/guidance/elevator.jsp",
+  "operationalStatusChecked": false,
+  "results": [
+    {
+      "hubId": "seoul-rail-3109",
+      "name": "아라(북부법원·검찰청)",
+      "sourceStationCode": "I109",
+      "sourceStationName": "아라",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?station_no=109",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        1,
+        5
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B2",
+      "oppositePlatformCrossingListed": true,
+      "observed": "1·5번 출입구 근처 외부 엘리베이터에서 B1 대합실을 거쳐 양방향 B2 승강장으로 안내한다.",
+      "note": "공통 만남 위치와 지상 횡단 동선 확인.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "2b0487e0ef1169ae60af0e8a05f9384fc695aeb61d432872eddc0172ba41a524"
+    },
+    {
+      "hubId": "seoul-rail-3115",
+      "name": "경인교대입구",
+      "sourceStationCode": "I115",
+      "sourceStationName": "경인교대입구",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?station_no=115",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        6
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B3",
+      "oppositePlatformCrossingListed": false,
+      "observed": "6번 출입구 외부 엘리베이터에서 B1 대합실과 B3 승강장으로 연결한다. 반대편 횡단 불가능으로 안내한다.",
+      "note": "한 방향 안내 제목은 계산, 단계 설명은 임학으로 불일치한다. 운영기관 또는 현장 확인 전 방향을 확정하지 않는다.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "cd8bf62362bd25339ecaedb0695dd9143025b4214f71ef120c08df31b211fd88"
+    },
+    {
+      "hubId": "seoul-rail-3136",
+      "name": "인천대입구",
+      "sourceStationCode": "I136",
+      "sourceStationName": "인천대입구",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?station_no=136",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        2
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B2",
+      "oppositePlatformCrossingListed": true,
+      "observed": "2번 출입구 외부 엘리베이터에서 B1 대합실을 거쳐 센트럴파크·지식정보단지 방향 B2 승강장으로 안내한다.",
+      "note": "2번 출입구 주변 공공 대기 공간과 원본 거점 좌표의 동일성 확인.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "c67b334eee3db063e76561d73e20da58c064ba1f1ae141b00cd033effac6c684"
+    },
+    {
+      "hubId": "seoul-rail-3203",
+      "name": "검단사거리",
+      "sourceStationCode": "I203",
+      "sourceStationName": "검단사거리",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?line_no=2&station_no=203",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        1
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B2",
+      "oppositePlatformCrossingListed": true,
+      "observed": "이동 경로는 마전·왕길 방향으로 안내하며 출입구 번호를 생략한다. 시설표는 외부 엘리베이터3호기를 1번 출구의 1F↔B1로, 내부를 B1↔B2로 표시한다.",
+      "note": "시설표와 이동 경로의 외부 엘리베이터 동일성 및 공공 대기 위치 확인.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "eda24e5a790e9e2f26a5d0991be2f9519ae83728544fa0c9e9f67eddf719bf41"
+    },
+    {
+      "hubId": "seoul-rail-3206",
+      "name": "독정",
+      "sourceStationCode": "I206",
+      "sourceStationName": "독정",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?line_no=2&station_no=206",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        1,
+        3
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B3",
+      "oppositePlatformCrossingListed": true,
+      "observed": "완정 방향은 1번, 검암 방향은 3번 출입구 엘리베이터로 안내한다. 시설표는 외부1F↔B1 및 내부B1↔B3 연결이다.",
+      "note": "방향별 출입구가 달라 공통 만남 위치와 지상 횡단 경로 확인.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "599d63c3786a8105532c3b8b4a52b81e5809eb3dea638a618e1df3a9a3b93ba6"
+    },
+    {
+      "hubId": "seoul-rail-3217",
+      "name": "주안국가산단",
+      "sourceStationCode": "I217",
+      "sourceStationName": "주안국가산단",
+      "sourceUrl": "https://www.ictr.or.kr/main/subway/subwayStation.do?line_no=2&station_no=217",
+      "sourceUpdatedAt": null,
+      "textReviewed": true,
+      "mapVisuallyInspected": false,
+      "externalElevatorExitNumbers": [
+        1,
+        2
+      ],
+      "concourseFloor": "B1",
+      "platformFloor": "B3",
+      "oppositePlatformCrossingListed": true,
+      "observed": "양방향 이동 경로는 1번 출입구를 사용한다. 시설표에는 1·2번 외부 엘리베이터(1F↔B1)와 내부B1↔B3 연결이 있다.",
+      "note": "시설표의 2번 출구를 양방향 안내 경로로 확대 해석하지 않고 공공 만남 위치 확인.",
+      "representativePointChecked": false,
+      "pedestrianAccessChecked": false,
+      "releaseEligible": false,
+      "fingerprint": "dd26e12960efb132d6776695d894b63ede321ccac17180dfbf699cf3ba615364"
+    }
+  ]
+}
