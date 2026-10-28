@@ -4,7 +4,7 @@ import type { CandidateRoutes, ParticipantRouteInput } from './recommend.ts';
 export class RoutingError extends Error {code:string;status:number;constructor(code:string,status:number){super('Routing request failed.');this.code=code;this.status=status;}}
 export type TravelTimeProviderOptions={appId:string;apiKey:string;fetchImpl?:typeof fetch;now?:()=>number;signal?:AbortSignal;maxHits?:number;beforeRequest?:(hits:number)=>Promise<void>};
 export type TravelTimeProvider={readonly hits:number;now:()=>number;check:()=>void;reachable:(request:RecommendRequest,hubs:Hub[],seconds:number)=>Promise<Record<string,string[]>>;matrix:(request:RecommendRequest,hubs:Hub[])=>Promise<CandidateRoutes[]>};
-const TRANSPORTATION = {type:'public_transport',walking_time:900} as const;
+const transportation = (seconds:number) => ({type:'public_transport',walking_time:Math.min(900,seconds)} as const);
 const MAX_BODY_BYTES = 8 * 1024 * 1024;
 const invalid = (): never => {throw new RoutingError('provider_invalid_response',502);};
 const object = (value:unknown):Record<string,unknown> => value !== null && typeof value === 'object' && !Array.isArray(value) ? value as Record<string,unknown> : invalid();
@@ -169,7 +169,7 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
         let index=unique.findIndex(other=>same(origin,other));
         if(index<0){index=unique.length;unique.push(origin);}return index;
       });
-      const searches=unique.map((origin,i)=>({id:`o${i}`,coords:{lat:origin.lat,lng:origin.lng},transportation:TRANSPORTATION,departure_time:new Date(departure).toISOString(),travel_time:seconds}));
+      const searches=unique.map((origin,i)=>({id:`o${i}`,coords:{lat:origin.lat,lng:origin.lng},transportation:transportation(seconds),departure_time:new Date(departure).toISOString(),travel_time:seconds}));
       const sets=new Map<number,string[]>();
       for(let offset=0;offset<searches.length;offset+=10){
         const batch=searches.slice(offset,offset+10);
@@ -190,7 +190,7 @@ function createProvider(options:TravelTimeProviderOptions,budgetMs:number):Trave
       const needed=hubs.map((h,i)=>({h,i})).filter(({h})=>request.origins.some(o=>!same(o,h)));
       for(let offset=0;offset<needed.length;offset+=10){
         const batch=needed.slice(offset,offset+10);
-        const searches=batch.map(({h,i})=>({id:`h${i}`,arrival_location_id:`h${i}`,departure_location_ids:request.origins.flatMap((o,j)=>same(o,h)?[]:[`o${j}`]),arrival_time:request.meetingAt,travel_time:travelTime,transportation:TRANSPORTATION,properties:['travel_time','route']}));
+        const searches=batch.map(({h,i})=>({id:`h${i}`,arrival_location_id:`h${i}`,departure_location_ids:request.origins.flatMap((o,j)=>same(o,h)?[]:[`o${j}`]),arrival_time:request.meetingAt,travel_time:travelTime,transportation:transportation(travelTime),properties:['travel_time','route']}));
         const locations=[...request.origins.map((o,j)=>({id:`o${j}`,coords:{lat:o.lat,lng:o.lng}})),...batch.map(({h,i})=>({id:`h${i}`,coords:{lat:h.lat,lng:h.lng}}))];
         const mapped=results(await post('time-filter',{locations,arrival_searches:searches},searches.length),searches.map(s=>s.id));
         for(const {i} of batch){

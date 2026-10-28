@@ -174,3 +174,24 @@ test('HTTP-date Retry-After beyond deadline is not retried early',async()=>{
   await assert.rejects(p.reachable(request,[],1800),e=>e instanceof RoutingError&&e.status===503);
   assert.equal(p.hits,2);
 });
+
+for(const seconds of [1,450,899,900,901,1800]){
+  test(`walking allowance fits ${seconds}s map and arrival searches`,async()=>{
+    const requests:any[]=[];
+    const p=provider(async(_url,init)=>{
+      const body=JSON.parse(String(init?.body));requests.push(body);
+      return json({results:(body.departure_searches??body.arrival_searches).map((s:any)=>body.departure_searches
+        ? {search_id:s.id,shapes:[]}
+        : {search_id:s.id,locations:[],unreachable:s.departure_location_ids})});
+    });
+    await p.reachable(request,[],seconds);
+    await p.matrix({...request,meetingAt:new Date(NOW+seconds*1000).toISOString()},[hub('h')]);
+    assert.equal(requests.length,2);
+    for(const body of requests){
+      for(const search of body.departure_searches??body.arrival_searches){
+        assert.equal(search.travel_time,seconds);
+        assert.deepEqual(search.transportation,{type:'public_transport',walking_time:Math.min(900,seconds)});
+      }
+    }
+  });
+}

@@ -1,0 +1,67 @@
+{
+  "checkedAt": "2026-10-28T12:47:30.719Z",
+  "catalogVersion": "seoul-20261005-2b17e7c9e6f7",
+  "scope": "450초 요청 제약 확인. 경로 품질·계정 한도·보행 접근성 승인 아님.",
+  "scenarioId": "same-origin-two",
+  "results": [
+    {
+      "kind": "map",
+      "status": "PASS"
+    },
+    {
+      "kind": "matrix",
+      "status": "PASS"
+    }
+  ],
+  "metrics": {
+    "requests": 2,
+    "hits": 2,
+    "quotaWaitMs": 0,
+    "networkMs": 770,
+    "routeSamples": 0,
+    "earlyArrivalSamples": 0,
+    "travelTimeEqualsJourney": 0,
+    "travelTimeEqualsBurden": 0,
+    "lateArrivalSamples": 0,
+    "unknownModeParts": 0,
+    "busParts": 0,
+    "railParts": 0,
+    "mixedRoutes": 0
+  },
+  "diagnostics": {
+    "requests": [
+      {
+        "at": "2026-10-28T12:47:30.739Z",
+        "endpoint": "/v4/time-map",
+        "hits": 1,
+        "rollingHits": 1,
+        "searches": [
+          {
+            "seconds": 450,
+            "time": "2026-10-29T05:52:30.000Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 450
+          }
+        ],
+        "status": 200
+      },
+      {
+        "at": "2026-10-28T12:47:31.332Z",
+        "endpoint": "/v4/time-filter",
+        "hits": 1,
+        "rollingHits": 2,
+        "searches": [
+          {
+            "seconds": 450,
+            "time": "2026-10-28T12:55:01.332Z",
+            "transportation": "public_transport",
+            "walkingSeconds": 450
+          }
+        ],
+        "status": 200
+      }
+    ],
+    "providerErrors": []
+  },
+  "releaseApproved": false
+}
